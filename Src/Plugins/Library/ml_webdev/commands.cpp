@@ -287,11 +287,11 @@ static void CALLBACK BrowserOptions_Callback(HWND hOptions, UINT type, ULONG_PTR
 
 HRESULT Command_ShowBrowserOptions()
 {
-	HWND hWinamp = Plugin_GetWinamp();
-	if (NULL == hWinamp || NULL == OMBROWSERMNGR) 
+	HWND hWinLAMP = Plugin_GetWinLAMP();
+	if (NULL == hWinLAMP || NULL == OMBROWSERMNGR) 
 		return E_UNEXPECTED;
 
-	HRESULT hr = OMBROWSERMNGR->Initialize(NULL, hWinamp);
+	HRESULT hr = OMBROWSERMNGR->Initialize(NULL, hWinLAMP);
 	if (SUCCEEDED(hr))
 	{
 		HWND hOwner = Plugin_GetDialogOwner();

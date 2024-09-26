@@ -5,7 +5,7 @@
 #include <dsound.h>
 #include <math.h>
 #include "ds_ipc.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "res_wa2/resource.h"
 #include <shlwapi.h>
 
@@ -825,7 +825,7 @@ BOOL APIENTRY DllMain(HANDLE hMod, DWORD r, void*)
 
 extern "C"
 {
-	__declspec(dllexport) Out_Module * winampGetOutModule()
+	__declspec(dllexport) Out_Module * winlampGetOutModule()
 	{
 		HMODULE in_wm = GetModuleHandleW(L"in_wm.dll");
 		if (in_wm)

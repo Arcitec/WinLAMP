@@ -141,7 +141,7 @@
 #define IDR_ICON_SHOUTCASTRADIO         20015
 #define IDR_ICON_SHOUTCASTTV            20016
 #define IDR_ICON_SINGINGFISH            20017
-#define IDR_ICON_WINAMPMUSIC            20018
+#define IDR_ICON_WINLAMPMUSIC            20018
 #define IDR_ICON_WINAMREMOTE            20019
 #define IDR_MENUARROW_IMAGE             20020
 #define ID_RATING_VALUE_5               40106

@@ -30,9 +30,9 @@
 #include <api/service/waServiceFactory.h>
 #include "../Agave/Language/api_language.h"
 #include <api/application/api_application.h>
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
-HWND winampwnd = 0;
+HWND winlampwnd = 0;
 int isthemethere = 0;
 api_service *WASABI_API_SVC = 0;
 api_application *WASABI_API_APP = 0;
@@ -98,7 +98,7 @@ void GetLocalisationApiService(void)
 		// loader so that we can get the localisation service api for use
 		if(!WASABI_API_SVC)
 		{
-			WASABI_API_SVC = (api_service*)SendMessage(winampwnd, WM_WA_IPC, 0, IPC_GET_API_SERVICE);
+			WASABI_API_SVC = (api_service*)SendMessage(winlampwnd, WM_WA_IPC, 0, IPC_GET_API_SERVICE);
 			if (WASABI_API_SVC == (api_service*)1)
 			{
 				WASABI_API_SVC = NULL;
@@ -326,7 +326,7 @@ AudioCoderOgg::AudioCoderOgg(int nch, int srate, int bps, configtype *cfg)
 	}
 
 	vorbis_comment_init(&vc);
-	vorbis_comment_add(&vc, "ENCODEDBY=Winamp");
+	vorbis_comment_add(&vc, "ENCODEDBY=WinLAMP");
 
 	/* set up the analysis state and auxiliary encoding storage */
 	vorbis_analysis_init(&vd,&vi);
@@ -535,11 +535,11 @@ extern "C"
 		{
 			if(LOWORD(wParam) == IDC_URL1)
 			{
-				SendMessage(winampwnd, WM_WA_IPC, (WPARAM)"http://xiph.org/vorbis/", IPC_OPEN_URL);
+				SendMessage(winlampwnd, WM_WA_IPC, (WPARAM)"http://xiph.org/vorbis/", IPC_OPEN_URL);
 			}
 			else if(LOWORD(wParam) == IDC_URL2)
 			{
-				SendMessage(winampwnd, WM_WA_IPC, (WPARAM)"https://ao-yumi.github.io/aotuv_web/index.html", IPC_OPEN_URL);
+				SendMessage(winlampwnd, WM_WA_IPC, (WPARAM)"https://ao-yumi.github.io/aotuv_web/index.html", IPC_OPEN_URL);
 			}
 		}
 
@@ -587,9 +587,9 @@ extern "C"
 		return NULL;
 	}
 
-	void __declspec(dllexport) SetWinampHWND(HWND hwnd)
+	void __declspec(dllexport) SetWinLAMPHWND(HWND hwnd)
 	{
-		winampwnd = hwnd;
+		winlampwnd = hwnd;
 		isthemethere = !SendMessage(hwnd,WM_WA_IPC,IPC_ISWINTHEMEPRESENT,IPC_USE_UXTHEME_FUNC);
 	}
 };

@@ -78,7 +78,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     ---------------------------
     final touches:
         -Tests:
-            -make sure desktop still functions/responds properly when winamp paused
+            -make sure desktop still functions/responds properly when winlamp paused
             -desktop mode + multimon:
                 -try desktop mode on all monitors
                 -try moving taskbar around; make sure icons are in the
@@ -95,13 +95,13 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     ---------------------------
     KEEP IN VIEW:
         -EMBEDWND:
-            -kiv: on resize of embedwnd, it's out of our control; winamp
+            -kiv: on resize of embedwnd, it's out of our control; winlamp
                 resizes the child every time the mouse position changes,
                 and we have to cleanup & reallocate everything, b/c we
                 can't tell when the resize begins & ends.
                 [justin said he'd fix in wa5, though]
             -kiv: with embedded windows of any type (plugin, playlist, etc.)
-                you can't place the winamp main wnd over them.
+                you can't place the winlamp main wnd over them.
             -kiv: embedded windows are child windows and don't get the
                 WM_SETFOCUS or WM_KILLFOCUS messages when they get or lose
                 the focus.  (For a workaround, see milkdrop & scroll lock key.)
@@ -142,7 +142,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "resource.h"
 #include "vis.h"
 #include <multimon.h>
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "../nu/AutoCharFn.h"
 #include <mmsystem.h>
 #pragma comment(lib,"winmm.lib")    // for timeGetTime
@@ -170,7 +170,7 @@ typedef struct _SIMPLEVERTEX
 
 extern wchar_t* g_szHelp;
 extern int g_szHelp_W;
-extern winampVisModule mod1;
+extern winlampVisModule mod1;
 
 // resides in vms_desktop.dll/lib:
 void getItemData(int x);
@@ -222,9 +222,9 @@ int       CPluginShell::GetCanvasMarginY()
 {
 	if (m_lpDX && m_screenmode==WINDOWED) return (m_lpDX->m_client_height - m_lpDX->m_REAL_client_height)/2; else return 0;
 }
-HWND      CPluginShell::GetWinampWindow()
+HWND      CPluginShell::GetWinLAMPWindow()
 {
-	return m_hWndWinamp;
+	return m_hWndWinLAMP;
 }
 HINSTANCE CPluginShell::GetInstance()
 {
@@ -465,7 +465,7 @@ int CPluginShell::InitVJStuff(RECT* pClientRect)
 		               dwStyle,
 		               rect.left, rect.top,								// screen position (read from config)
 		               rect.right - rect.left, rect.bottom - rect.top,  // width & height of window (need to adjust client area later)
-		               NULL,								// parent window (winamp main window)
+		               NULL,								// parent window (winlamp main window)
 		               NULL,								// no menu
 		               GetInstance(),						// hInstance of DLL
 		               NULL
@@ -909,7 +909,7 @@ void CPluginShell::ToggleDesktop()
 }
 
 #define IPC_IS_PLAYING_VIDEO 501 // from wa_ipc.h
-#define IPC_SET_VIS_FS_FLAG 631 // a vis should send this message with 1/as param to notify winamp that it has gone to or has come back from fullscreen mode
+#define IPC_SET_VIS_FS_FLAG 631 // a vis should send this message with 1/as param to notify winlamp that it has gone to or has come back from fullscreen mode
 
 void CPluginShell::ToggleFullScreen()
 {
@@ -920,16 +920,16 @@ void CPluginShell::ToggleFullScreen()
 	case DESKTOP:
 	case WINDOWED:
 		m_screenmode = m_fake_fullscreen_mode ? FAKE_FULLSCREEN : FULLSCREEN;
-		if (m_screenmode == FULLSCREEN && SendMessage(GetWinampWindow(), WM_WA_IPC, 0, IPC_IS_PLAYING_VIDEO) > 1)
+		if (m_screenmode == FULLSCREEN && SendMessage(GetWinLAMPWindow(), WM_WA_IPC, 0, IPC_IS_PLAYING_VIDEO) > 1)
 		{
 			m_screenmode = FAKE_FULLSCREEN;
 		}
-		SendMessage(GetWinampWindow(), WM_WA_IPC, 1, IPC_SET_VIS_FS_FLAG);
+		SendMessage(GetWinLAMPWindow(), WM_WA_IPC, 1, IPC_SET_VIS_FS_FLAG);
 		break;
 	case FULLSCREEN:
 	case FAKE_FULLSCREEN:
 		m_screenmode = WINDOWED;
-		SendMessage(GetWinampWindow(), WM_WA_IPC, 0, IPC_SET_VIS_FS_FLAG);
+		SendMessage(GetWinLAMPWindow(), WM_WA_IPC, 0, IPC_SET_VIS_FS_FLAG);
 		break;
 	}
 
@@ -970,7 +970,7 @@ void CPluginShell::TogglePlaylist()
 
 int CPluginShell::InitDirectX()
 {
-	m_lpDX = new DXContext(m_hWndWinamp,m_hInstance,CLASSNAME,WINDOWCAPTION,CPluginShell::WindowProc,(LONG_PTR)this, m_minimize_winamp, m_szConfigIniFile);
+	m_lpDX = new DXContext(m_hWndWinLAMP,m_hInstance,CLASSNAME,WINDOWCAPTION,CPluginShell::WindowProc,(LONG_PTR)this, m_minimize_winlamp, m_szConfigIniFile);
 
 	if (!m_lpDX)
 	{
@@ -1015,7 +1015,7 @@ void CPluginShell::CleanUpDirectX()
 	SafeDelete(m_lpDX);
 }
 
-int CPluginShell::PluginPreInitialize(HWND hWinampWnd, HINSTANCE hWinampInstance)
+int CPluginShell::PluginPreInitialize(HWND hWinLAMPWnd, HINSTANCE hWinLAMPInstance)
 {
 	// PROTECTED CONFIG PANEL SETTINGS (also see 'private' settings, below)
 	m_start_fullscreen      = 0;
@@ -1028,7 +1028,7 @@ int CPluginShell::PluginPreInitialize(HWND hWinampWnd, HINSTANCE hWinampInstance
 	m_allow_page_tearing_w  = 1;
 	m_allow_page_tearing_fs = 0;
 	m_allow_page_tearing_dm = 0;
-	m_minimize_winamp       = 1;
+	m_minimize_winlamp       = 1;
 	m_desktop_show_icons    = 1;
 	m_desktop_textlabel_boxes = 1;
 	m_desktop_manual_icon_scoot = 0;
@@ -1131,8 +1131,8 @@ int CPluginShell::PluginPreInitialize(HWND hWinampWnd, HINSTANCE hWinampInstance
 	m_frame = 0;
 	m_time = 0;
 	m_fps = 30;
-	m_hWndWinamp = hWinampWnd;
-	m_hInstance = hWinampInstance;
+	m_hWndWinLAMP = hWinLAMPWnd;
+	m_hInstance = hWinLAMPInstance;
 	m_lpDX = NULL;
 	m_szPluginsDirPath[0] = 0;  // will be set further down
 	m_szConfigIniFile[0] = 0;  // will be set further down
@@ -1140,8 +1140,8 @@ int CPluginShell::PluginPreInitialize(HWND hWinampWnd, HINSTANCE hWinampInstance
 
 	wchar_t *p;
 
-	if (hWinampWnd
-	    && (p = (wchar_t *)SendMessage(hWinampWnd, WM_WA_IPC, 0, IPC_GETPLUGINDIRECTORYW))
+	if (hWinLAMPWnd
+	    && (p = (wchar_t *)SendMessage(hWinLAMPWnd, WM_WA_IPC, 0, IPC_GETPLUGINDIRECTORYW))
 	    && p != (wchar_t *)1)
 	{
 		swprintf(m_szPluginsDirPath, L"%s\\", p);
@@ -1155,8 +1155,8 @@ int CPluginShell::PluginPreInitialize(HWND hWinampWnd, HINSTANCE hWinampInstance
 		if (++p >= m_szPluginsDirPath) *p = 0;
 	}
 
-	if (hWinampWnd
-	    && (p = (wchar_t *)SendMessage(hWinampWnd, WM_WA_IPC, 0, IPC_GETINIDIRECTORYW))
+	if (hWinLAMPWnd
+	    && (p = (wchar_t *)SendMessage(hWinLAMPWnd, WM_WA_IPC, 0, IPC_GETINIDIRECTORYW))
 	    && p != (wchar_t *)1)
 	{
 		// load settings as well as coping with moving old settings to a contained folder
@@ -1290,7 +1290,7 @@ int CPluginShell::PluginPreInitialize(HWND hWinampWnd, HINSTANCE hWinampInstance
 	if (m_start_fullscreen)
 	{
 		m_screenmode = m_fake_fullscreen_mode ? FAKE_FULLSCREEN : FULLSCREEN;
-		if (m_screenmode == FULLSCREEN && SendMessage(GetWinampWindow(), WM_WA_IPC, 0, IPC_IS_PLAYING_VIDEO) > 1)
+		if (m_screenmode == FULLSCREEN && SendMessage(GetWinLAMPWindow(), WM_WA_IPC, 0, IPC_IS_PLAYING_VIDEO) > 1)
 		{
 			m_screenmode = FAKE_FULLSCREEN;
 		}
@@ -1329,9 +1329,9 @@ void CPluginShell::PluginQuit()
 	CleanUpNondx9Stuff();
 	CleanUpDirectX();
 
-	SetFocus(m_hWndWinamp);
-	SetActiveWindow(m_hWndWinamp);
-	SetForegroundWindow(m_hWndWinamp);
+	SetFocus(m_hWndWinLAMP);
+	SetActiveWindow(m_hWndWinLAMP);
+	SetForegroundWindow(m_hWndWinLAMP);
 }
 
 wchar_t* BuildSettingName(wchar_t* name, int number){
@@ -1411,7 +1411,7 @@ void CPluginShell::ReadConfig()
 	m_allow_page_tearing_w = GetPrivateProfileIntW(L"settings",L"allow_page_tearing_w",m_allow_page_tearing_w,m_szConfigIniFile);
 	m_allow_page_tearing_fs= GetPrivateProfileIntW(L"settings",L"allow_page_tearing_fs",m_allow_page_tearing_fs,m_szConfigIniFile);
 	m_allow_page_tearing_dm= GetPrivateProfileIntW(L"settings",L"allow_page_tearing_dm",m_allow_page_tearing_dm,m_szConfigIniFile);
-	m_minimize_winamp      = GetPrivateProfileIntW(L"settings",L"minimize_winamp",m_minimize_winamp,m_szConfigIniFile);
+	m_minimize_winlamp      = GetPrivateProfileIntW(L"settings",L"minimize_winlamp",m_minimize_winlamp,m_szConfigIniFile);
 	m_desktop_show_icons   = GetPrivateProfileIntW(L"settings",L"desktop_show_icons",m_desktop_show_icons,m_szConfigIniFile);
 	m_desktop_textlabel_boxes = GetPrivateProfileIntW(L"settings",L"desktop_textlabel_boxes",m_desktop_textlabel_boxes,m_szConfigIniFile);
 	m_desktop_manual_icon_scoot = GetPrivateProfileIntW(L"settings",L"desktop_manual_icon_scoot",m_desktop_manual_icon_scoot,m_szConfigIniFile);
@@ -1496,7 +1496,7 @@ void CPluginShell::WriteConfig()
 	WritePrivateProfileIntW(m_allow_page_tearing_w,L"allow_page_tearing_w",m_szConfigIniFile,L"settings");
 	WritePrivateProfileIntW(m_allow_page_tearing_fs,L"allow_page_tearing_fs",m_szConfigIniFile,L"settings");
 	WritePrivateProfileIntW(m_allow_page_tearing_dm,L"allow_page_tearing_dm",m_szConfigIniFile,L"settings");
-	WritePrivateProfileIntW(m_minimize_winamp,L"minimize_winamp",m_szConfigIniFile,L"settings");
+	WritePrivateProfileIntW(m_minimize_winlamp,L"minimize_winlamp",m_szConfigIniFile,L"settings");
 	WritePrivateProfileIntW(m_desktop_show_icons,L"desktop_show_icons",m_szConfigIniFile,L"settings");
 	WritePrivateProfileIntW(m_desktop_textlabel_boxes,L"desktop_textlabel_boxes",m_szConfigIniFile,L"settings");
 	WritePrivateProfileIntW(m_desktop_manual_icon_scoot,L"desktop_manual_icon_scoot",m_szConfigIniFile,L"settings");
@@ -1527,7 +1527,7 @@ void CPluginShell::WriteConfig()
 
 int CPluginShell::PluginRender(unsigned char *pWaveL, unsigned char *pWaveR)//, unsigned char *pSpecL, unsigned char *pSpecR)
 {
-	// return FALSE here to tell Winamp to terminate the plugin
+	// return FALSE here to tell WinLAMP to terminate the plugin
 
 	if (!m_lpDX || !m_lpDX->m_ready)
 	{
@@ -1990,7 +1990,7 @@ void CPluginShell::DoTime()
 		}
 	}
 
-	// Synchronize the audio and video by telling Winamp how many milliseconds we want the audio data,
+	// Synchronize the audio and video by telling WinLAMP how many milliseconds we want the audio data,
 	// before it's actually audible.  If we set this to the amount of time it takes to display 1 frame
 	// (1/fps), the video and audio should be perfectly synchronized.
 	if (m_fps < 2.0f)
@@ -2003,7 +2003,7 @@ void CPluginShell::DoTime()
 
 void CPluginShell::AnalyzeNewSound(unsigned char *pWaveL, unsigned char *pWaveR)
 {
-	// we get 576 samples in from winamp.
+	// we get 576 samples in from winlamp.
 	// the output of the fft has 'num_frequencies' samples,
 	//   and represents the frequency range 0 hz - 22,050 hz.
 	// usually, plugins only use half of this output (the range 0 hz - 11,025 hz),
@@ -2092,12 +2092,12 @@ void CPluginShell::AnalyzeNewSound(unsigned char *pWaveL, unsigned char *pWaveR)
 	            OutputDebugString(buf);
 
 	            // skip to next song
-	            PostMessage(m_hWndWinamp,WM_COMMAND,40048,0);
+	            PostMessage(m_hWndWinLAMP,WM_COMMAND,40048,0);
 	        }
 	        else if (m_frame%FRAMES_PER_SONG == 5)
 	        {
 	            // then advance to 0-2 minutes into the song:
-	            PostMessage(m_hWndWinamp,WM_USER,(20 + (warand()%65) + (rand()%65))*1000,106);
+	            PostMessage(m_hWndWinLAMP,WM_USER,(20 + (warand()%65) + (rand()%65))*1000,106);
 	        }
 	        else if (m_frame%FRAMES_PER_SONG >= 10)
 	        {
@@ -2300,8 +2300,8 @@ void CPluginShell::RenderPlaylist()
 	if (m_show_playlist)
 	{
 		RECT r;
-		int nSongs = SendMessage(m_hWndWinamp,WM_USER, 0, 124);
-		int now_playing = SendMessage(m_hWndWinamp,WM_USER, 0, 125);
+		int nSongs = SendMessage(m_hWndWinLAMP,WM_USER, 0, 124);
+		int now_playing = SendMessage(m_hWndWinLAMP,WM_USER, 0, 125);
 
 		if (nSongs <= 0)
 		{
@@ -2335,7 +2335,7 @@ void CPluginShell::RenderPlaylist()
 			int new_btm_idx = new_top_idx + disp_lines;
 			wchar_t buf[1024] = {0};
 
-			// ask winamp for the song names, but DO IT BEFORE getting the DC,
+			// ask winlamp for the song names, but DO IT BEFORE getting the DC,
 			// otherwise vaio will crash (~DDRAW port).
 			if (m_playlist_top_idx != new_top_idx ||
 			    m_playlist_btm_idx != new_btm_idx)
@@ -2346,7 +2346,7 @@ void CPluginShell::RenderPlaylist()
 					if (j < nSongs)
 					{
 						// clip max len. of song name to 240 chars, to prevent overflows
-						lstrcpynW(buf, (wchar_t*)SendMessage(m_hWndWinamp, WM_USER, j, IPC_GETPLAYLISTTITLEW), 240);
+						lstrcpynW(buf, (wchar_t*)SendMessage(m_hWndWinLAMP, WM_USER, j, IPC_GETPLAYLISTTITLEW), 240);
 						wsprintfW(m_playlist[i], L"%d. %s ", j+1, buf);  // leave an extra space @ end, so italicized fonts don't get clipped
 					}
 				}
@@ -2368,7 +2368,7 @@ void CPluginShell::RenderPlaylist()
 					if (j < nSongs)
 					{
 						// clip max len. of song name to 240 chars, to prevent overflows
-						//strcpy(buf, (char*)SendMessage(m_hWndWinamp, WM_USER, j, 212));
+						//strcpy(buf, (char*)SendMessage(m_hWndWinLAMP, WM_USER, j, 212));
 						//buf[240] = 0;
 						//sprintf(m_playlist[i], "%d. %s ", j+1, buf);  // leave an extra space @ end, so italicized fonts don't get clipped
 
@@ -2438,11 +2438,11 @@ void CPluginShell::SuggestHowToFreeSomeMem()
 	if (m_lpDX->m_current_mode.multisamp != D3DMULTISAMPLE_NONE)
 	{
 		if (m_lpDX->m_current_mode.screenmode == WINDOWED)
-			WASABI_API_LNGSTRINGW_BUF(IDS_TO_FREE_UP_SOME_MEMORY_RESTART_WINAMP_THEN_GO_TO_CONFIG, str, 2048);
+			WASABI_API_LNGSTRINGW_BUF(IDS_TO_FREE_UP_SOME_MEMORY_RESTART_WINLAMP_THEN_GO_TO_CONFIG, str, 2048);
 		else if (m_lpDX->m_current_mode.screenmode == FAKE_FULLSCREEN)
-			WASABI_API_LNGSTRINGW_BUF(IDS_TO_FREE_UP_SOME_MEMORY_RESTART_WINAMP_THEN_GO_TO_CONFIG_2, str, 2048);
+			WASABI_API_LNGSTRINGW_BUF(IDS_TO_FREE_UP_SOME_MEMORY_RESTART_WINLAMP_THEN_GO_TO_CONFIG_2, str, 2048);
 		else
-			WASABI_API_LNGSTRINGW_BUF(IDS_TO_FREE_UP_SOME_MEMORY_RESTART_WINAMP_THEN_GO_TO_CONFIG_3, str, 2048);
+			WASABI_API_LNGSTRINGW_BUF(IDS_TO_FREE_UP_SOME_MEMORY_RESTART_WINLAMP_THEN_GO_TO_CONFIG_3, str, 2048);
 	}
 	else
 		if (m_lpDX->m_current_mode.screenmode == FULLSCREEN)  // true fullscreen
@@ -2567,7 +2567,7 @@ LRESULT CPluginShell::PluginShellWindowProc(HWND hWnd, unsigned uMsg, WPARAM wPa
 
 	case WM_ERASEBKGND:
 		// Repaint window when song is paused and image needs to be repainted:
-		if (SendMessage(m_hWndWinamp,WM_USER,0,104)!=1 && m_lpDX && m_lpDX->m_lpDevice && GetFrame() > 0)    // WM_USER/104 return codes: 1=playing, 3=paused, other=stopped
+		if (SendMessage(m_hWndWinLAMP,WM_USER,0,104)!=1 && m_lpDX && m_lpDX->m_lpDevice && GetFrame() > 0)    // WM_USER/104 return codes: 1=playing, 3=paused, other=stopped
 		{
 			m_lpDX->m_lpDevice->Present(NULL,NULL,NULL,NULL);
 			return 0;
@@ -2700,8 +2700,8 @@ LRESULT CPluginShell::PluginShellWindowProc(HWND hWnd, unsigned uMsg, WPARAM wPa
 				}
 			}
 
-			// repaint window manually, if winamp is paused
-			if (SendMessage(m_hWndWinamp,WM_USER,0,104) != 1)
+			// repaint window manually, if winlamp is paused
+			if (SendMessage(m_hWndWinLAMP,WM_USER,0,104) != 1)
 			{
 				PushWindowToJustBeforeDesktop(GetPluginWindow());
 				DrawAndDisplay(1);
@@ -2739,8 +2739,8 @@ LRESULT CPluginShell::PluginShellWindowProc(HWND hWnd, unsigned uMsg, WPARAM wPa
 					}
 				}
 
-				// repaint window manually, if winamp is paused
-				if (SendMessage(m_hWndWinamp,WM_USER,0,104) != 1)
+				// repaint window manually, if winlamp is paused
+				if (SendMessage(m_hWndWinLAMP,WM_USER,0,104) != 1)
 				{
 					PushWindowToJustBeforeDesktop(GetPluginWindow());
 					DrawAndDisplay(1);
@@ -2751,8 +2751,8 @@ LRESULT CPluginShell::PluginShellWindowProc(HWND hWnd, unsigned uMsg, WPARAM wPa
 			{
 				m_desktop_box = 0;
 
-				// repaint window manually, if winamp is paused
-				if (SendMessage(m_hWndWinamp,WM_USER,0,104) != 1)
+				// repaint window manually, if winlamp is paused
+				if (SendMessage(m_hWndWinLAMP,WM_USER,0,104) != 1)
 				{
 					PushWindowToJustBeforeDesktop(GetPluginWindow());
 					DrawAndDisplay(1);
@@ -2881,8 +2881,8 @@ LRESULT CPluginShell::PluginShellWindowProc(HWND hWnd, unsigned uMsg, WPARAM wPa
 				}
 			}
 
-			// repaint window manually, if winamp is paused
-			if (SendMessage(m_hWndWinamp,WM_USER,0,104) != 1)
+			// repaint window manually, if winlamp is paused
+			if (SendMessage(m_hWndWinLAMP,WM_USER,0,104) != 1)
 			{
 				PushWindowToJustBeforeDesktop(GetPluginWindow());
 				DrawAndDisplay(1);
@@ -2997,7 +2997,7 @@ LRESULT CPluginShell::PluginShellWindowProc(HWND hWnd, unsigned uMsg, WPARAM wPa
 		        -(P for playlist)
 		            -when playlist showing: steal J, HOME, END, PGUP, PGDN, UP, DOWN, ESC
 		        -(BLOCK J, L)
-		    -when integrated with winamp (using embedwnd), also handle these keys:
+		    -when integrated with winlamp (using embedwnd), also handle these keys:
 		        -j, l, L, CTRL+L [windowed mode only!]
 		        -CTRL+P, CTRL+D
 		        -CTRL+TAB
@@ -3012,15 +3012,15 @@ LRESULT CPluginShell::PluginShellWindowProc(HWND hWnd, unsigned uMsg, WPARAM wPa
 			ToggleFullScreen();
 			return 0;
 		}
-		// if in embedded mode (using winamp skin), pass ALT+ keys on to winamp
+		// if in embedded mode (using winlamp skin), pass ALT+ keys on to winlamp
 		// ex: ALT+E, ALT+F, ALT+3...
 		if (m_screenmode==WINDOWED && m_lpDX->m_current_mode.m_skin)
-			return PostMessage(m_hWndWinamp, uMsg, wParam, lParam); // force-pass to winamp; required for embedwnd
+			return PostMessage(m_hWndWinLAMP, uMsg, wParam, lParam); // force-pass to winlamp; required for embedwnd
 		break;
 
 	case WM_SYSKEYUP:
 		if (m_screenmode==WINDOWED && m_lpDX->m_current_mode.m_skin)
-			return PostMessage(m_hWndWinamp, uMsg, wParam, lParam); // force-pass to winamp; required for embedwnd
+			return PostMessage(m_hWndWinLAMP, uMsg, wParam, lParam); // force-pass to winlamp; required for embedwnd
 		break;
 
 	case WM_SYSCHAR:
@@ -3044,11 +3044,11 @@ LRESULT CPluginShell::PluginShellWindowProc(HWND hWnd, unsigned uMsg, WPARAM wPa
 			{
 			case 'j':
 			case 'J':
-				m_playlist_pos = SendMessage(m_hWndWinamp,WM_USER, 0, 125);
+				m_playlist_pos = SendMessage(m_hWndWinLAMP,WM_USER, 0, 125);
 				return 0;
 			default:
 			{
-				int nSongs = SendMessage(m_hWndWinamp,WM_USER, 0, 124);
+				int nSongs = SendMessage(m_hWndWinLAMP,WM_USER, 0, 124);
 				int found = 0;
 				int orig_pos = m_playlist_pos;
 				int inc = (wParam>='A' && wParam<='Z') ? -1 : 1;
@@ -3062,7 +3062,7 @@ LRESULT CPluginShell::PluginShellWindowProc(HWND hWnd, unsigned uMsg, WPARAM wPa
 					m_playlist_pos += inc;
 
 					char buf[32];
-					strncpy(buf, (char*)SendMessage(m_hWndWinamp, WM_USER, m_playlist_pos, 212), 31);
+					strncpy(buf, (char*)SendMessage(m_hWndWinLAMP, WM_USER, m_playlist_pos, 212), 31);
 					buf[31] = 0;
 
 					// remove song # and period from beginning
@@ -3102,44 +3102,44 @@ LRESULT CPluginShell::PluginShellWindowProc(HWND hWnd, unsigned uMsg, WPARAM wPa
 		// finally, default key actions:
 		if (wParam == keyMappings[5] || wParam == keyMappings[6])	// 'z' or 'Z'
 		{
-			PostMessage(m_hWndWinamp,WM_COMMAND,40044,0);
+			PostMessage(m_hWndWinLAMP,WM_COMMAND,40044,0);
 			return 0;
 		}
 		else
 			{
 			switch (wParam)
 			{
-				// WINAMP PLAYBACK CONTROL KEYS:
+				// WINLAMP PLAYBACK CONTROL KEYS:
 			case 'x':
 			case 'X':
-				PostMessage(m_hWndWinamp,WM_COMMAND,40045,0);
+				PostMessage(m_hWndWinLAMP,WM_COMMAND,40045,0);
 				return 0;
 			case 'c':
 			case 'C':
-				PostMessage(m_hWndWinamp,WM_COMMAND,40046,0);
+				PostMessage(m_hWndWinLAMP,WM_COMMAND,40046,0);
 				return 0;
 			case 'v':
 			case 'V':
-				PostMessage(m_hWndWinamp,WM_COMMAND,40047,0);
+				PostMessage(m_hWndWinLAMP,WM_COMMAND,40047,0);
 				return 0;
 			case 'b':
 			case 'B':
-				PostMessage(m_hWndWinamp,WM_COMMAND,40048,0);
+				PostMessage(m_hWndWinLAMP,WM_COMMAND,40048,0);
 				return 0;
 			case 's':
 			case 'S':
-				//if (SendMessage(m_hWndWinamp,WM_USER,0,250))
+				//if (SendMessage(m_hWndWinLAMP,WM_USER,0,250))
 				//    sprintf(m_szUserMessage, "shuffle is now OFF");    // shuffle was on
 				//else
 				//    sprintf(m_szUserMessage, "shuffle is now ON");    // shuffle was off
 
 				// toggle shuffle
-				PostMessage(m_hWndWinamp,WM_COMMAND,40023,0);
+				PostMessage(m_hWndWinLAMP,WM_COMMAND,40023,0);
 				return 0;
 			case 'r':
 			case 'R':
 				// toggle repeat
-				PostMessage(m_hWndWinamp,WM_COMMAND,40022,0);
+				PostMessage(m_hWndWinLAMP,WM_COMMAND,40022,0);
 				return 0;
 			case 'p':
 			case 'P':
@@ -3147,17 +3147,17 @@ LRESULT CPluginShell::PluginShellWindowProc(HWND hWnd, unsigned uMsg, WPARAM wPa
 				return 0;
 			case 'l':
 				// note that this is actually correct; when you hit 'l' from the
-				// MAIN winamp window, you get an "open files" dialog; when you hit
+				// MAIN winlamp window, you get an "open files" dialog; when you hit
 				// 'l' from the playlist editor, you get an "add files to playlist" dialog.
 				// (that sends IDC_PLAYLIST_ADDMP3==1032 to the playlist, which we can't
 				//  do from here.)
-				PostMessage(m_hWndWinamp,WM_COMMAND,40029,0);
+				PostMessage(m_hWndWinLAMP,WM_COMMAND,40029,0);
 				return 0;
 			case 'L':
-				PostMessage(m_hWndWinamp,WM_COMMAND,40187,0);
+				PostMessage(m_hWndWinLAMP,WM_COMMAND,40187,0);
 				return 0;
 			case 'j':
-				PostMessage(m_hWndWinamp,WM_COMMAND,40194,0);
+				PostMessage(m_hWndWinLAMP,WM_COMMAND,40194,0);
 				return 0;
 			}
 
@@ -3219,7 +3219,7 @@ LRESULT CPluginShell::PluginShellWindowProc(HWND hWnd, unsigned uMsg, WPARAM wPa
 				return 0;
 
 			case VK_END:
-				m_playlist_pos = SendMessage(m_hWndWinamp,WM_USER, 0, 124) - 1;
+				m_playlist_pos = SendMessage(m_hWndWinLAMP,WM_USER, 0, 124) - 1;
 				return 0;
 
 			case VK_PRIOR:
@@ -3237,8 +3237,8 @@ LRESULT CPluginShell::PluginShellWindowProc(HWND hWnd, unsigned uMsg, WPARAM wPa
 				return 0;
 
 			case VK_RETURN:
-				SendMessage(m_hWndWinamp,WM_USER, m_playlist_pos, 121);	// set sel
-				SendMessage(m_hWndWinamp,WM_COMMAND, 40045, 0);	// play it
+				SendMessage(m_hWndWinLAMP,WM_USER, m_playlist_pos, 121);	// set sel
+				SendMessage(m_hWndWinLAMP,WM_COMMAND, 40045, 0);	// play it
 				return 0;
 			}
 		}
@@ -3277,7 +3277,7 @@ LRESULT CPluginShell::PluginShellWindowProc(HWND hWnd, unsigned uMsg, WPARAM wPa
 			// increase volume
 		{
 			int nRepeat = lParam & 0xFFFF;
-			for (i=0; i<nRepeat*2; i++) PostMessage(m_hWndWinamp,WM_COMMAND,40058,0);
+			for (i=0; i<nRepeat*2; i++) PostMessage(m_hWndWinLAMP,WM_COMMAND,40058,0);
 		}
 		return 0;
 
@@ -3285,7 +3285,7 @@ LRESULT CPluginShell::PluginShellWindowProc(HWND hWnd, unsigned uMsg, WPARAM wPa
 			// decrease volume
 		{
 			int nRepeat = lParam & 0xFFFF;
-			for (i=0; i<nRepeat*2; i++) PostMessage(m_hWndWinamp,WM_COMMAND,40059,0);
+			for (i=0; i<nRepeat*2; i++) PostMessage(m_hWndWinLAMP,WM_COMMAND,40059,0);
 		}
 		return 0;
 
@@ -3298,18 +3298,18 @@ LRESULT CPluginShell::PluginShellWindowProc(HWND hWnd, unsigned uMsg, WPARAM wPa
 			int reps = (bShiftHeldDown) ? 6*nRepeat : 1*nRepeat;
 
 			for (int i=0; i<reps; i++)
-				PostMessage(m_hWndWinamp,WM_COMMAND,cmd,0);
+				PostMessage(m_hWndWinLAMP,WM_COMMAND,cmd,0);
 		}
 		return 0;
 		default:
-			// pass CTRL+A thru CTRL+Z, and also CTRL+TAB, to winamp, *if we're in windowed mode* and using an embedded window.
+			// pass CTRL+A thru CTRL+Z, and also CTRL+TAB, to winlamp, *if we're in windowed mode* and using an embedded window.
 			// be careful though; uppercase chars come both here AND to WM_CHAR handler,
 			//   so we have to eat some of them here, to avoid them from acting twice.
 			if (m_screenmode==WINDOWED && m_lpDX && m_lpDX->m_current_mode.m_skin)
 			{
 				if (bCtrlHeldDown && ((wParam >= 'A' && wParam <= 'Z') || wParam==VK_TAB))
 				{
-					PostMessage(m_hWndWinamp, uMsg, wParam, lParam);
+					PostMessage(m_hWndWinLAMP, uMsg, wParam, lParam);
 					return 0;
 				}
 			}
@@ -3555,7 +3555,7 @@ LRESULT CPluginShell::PluginShellVJModeWndProc(HWND hwnd, UINT message, WPARAM w
 
 	case WM_ERASEBKGND:
 		// Repaint window when song is paused and image needs to be repainted:
-		if (SendMessage(m_hWndWinamp,WM_USER,0,104)!=1 && m_vjd3d9_device && GetFrame() > 0)    // WM_USER/104 return codes: 1=playing, 3=paused, other=stopped
+		if (SendMessage(m_hWndWinLAMP,WM_USER,0,104)!=1 && m_vjd3d9_device && GetFrame() > 0)    // WM_USER/104 return codes: 1=playing, 3=paused, other=stopped
 		{
 			m_vjd3d9_device->Present(NULL,NULL,NULL,NULL);
 			return 0;

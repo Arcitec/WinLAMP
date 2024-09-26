@@ -13,7 +13,7 @@
 #include "../nu/AutoUrl.h"
 #include <api/syscb/callbacks/authcb.h>
 
-#include "../Winamp/buildType.h"
+#include "../WinLAMP/buildType.h"
 #include <strsafe.h>
 
 //#ifdef INTERNAL

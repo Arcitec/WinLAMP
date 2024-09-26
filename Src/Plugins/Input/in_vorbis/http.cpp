@@ -2,7 +2,7 @@
 #include "../../..\Components\wac_network\wac_network_http_receiver_api.h"
 #include "rf.h"
 #include "main.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <api/service/waservicefactory.h>
 #include "../nu/AutoWide.h"
 #include "../nu/AutoChar.h"
@@ -281,7 +281,7 @@ class VorbisFile_HTTP : public VorbisFile
 int VorbisFile_HTTP::reconnect(UINT ofs)
 {
 	//	get.reset_headers();
-	get->addheader("User-Agent: WinampOGG/5.24(MPEG stream compatible)");
+	get->addheader("User-Agent: WinLAMPOGG/5.24(MPEG stream compatible)");
 	get->addheader("Accept:*/*");
 	if (ofs>0) get->addheader(StringPrintf("Range: bytes=%u-",ofs));
 	get->connect(AutoChar(url));

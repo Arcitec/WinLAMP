@@ -1,0 +1,10 @@
+; WinLAMP API
+SetOutPath $INSTDIR\WinLAMP
+File ${PROJECTS}\WinLAMP\wa_ipc.h
+File ${PROJECTS}\WinLAMP\wa_dlg.h
+File ${PROJECTS}\WinLAMP\DSP.h
+File ${PROJECTS}\WinLAMP\GEN.H
+File ${PROJECTS}\WinLAMP\ipc_pe.h
+File ${PROJECTS}\WinLAMP\IN2.H
+File ${PROJECTS}\WinLAMP\OUT.H
+

@@ -5,7 +5,7 @@
 //----------------------------------------------------------------------------------------------------------------
 
 
-extern class @{345BEEBC-0229-4921-90BE-6CB6A49A79D9}@ Object _predecl &PlEdit;	// Our Winamp Playlist Editor
+extern class @{345BEEBC-0229-4921-90BE-6CB6A49A79D9}@ Object _predecl &PlEdit;	// Our WinLAMP Playlist Editor
 extern class @{61A7ABAD-7D79-41f6-B1D0-E1808603A4F4}@ Object _predecl PlDir;	// <PlEditDirectory/>
 
 

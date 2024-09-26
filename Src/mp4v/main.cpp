@@ -13,7 +13,7 @@
 #include <Mftransform.h>
 #include <wmcodecdsp.h>
 
-api_winamp *AGAVE_API_WINAMP=0;
+api_winlamp *AGAVE_API_WINLAMP=0;
 api_service *WASABI_API_SVC = 0;
 
 class MP4VComponent : public ifc_wa5component
@@ -57,8 +57,8 @@ static SingletonServiceFactory<svc_avidecoder, AVIDecoderCreator> aviFactory;
 void MP4VComponent::RegisterServices(api_service *service)
 {
 	WASABI_API_SVC = service;
-	ServiceBuild(AGAVE_API_WINAMP, winampApiGuid);
-	if (!AGAVE_API_WINAMP || AGAVE_API_WINAMP->GetRegVer() >= 1)
+	ServiceBuild(AGAVE_API_WINLAMP, winlampApiGuid);
+	if (!AGAVE_API_WINLAMP || AGAVE_API_WINLAMP->GetRegVer() >= 1)
 	{
 		mp4Factory.Register(WASABI_API_SVC);
 		mkvFactory.Register(WASABI_API_SVC, &mkvCreator);
@@ -74,7 +74,7 @@ void MP4VComponent::DeregisterServices(api_service *service)
 }
 
 static MP4VComponent component;
-extern "C" DLLEXPORT ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" DLLEXPORT ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &component;
 }

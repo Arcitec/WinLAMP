@@ -1,0 +1,4 @@
+#ifndef NULLSOFT_WINLAMP_WPL_H
+#define NULLSOFT_WINLAMP_WPL_H
+
+#endif

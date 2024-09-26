@@ -9,7 +9,7 @@
 #include <ifc_omservice.h>
 
 #define SERVICE_ID			101
-#define SERVICE_HOMEURL		L"http://client.winamp.com/nowplaying?v=5.9&icid=navigationtree"
+#define SERVICE_HOMEURL		L"http://client.winlamp.com/nowplaying?v=5.9&icid=navigationtree"
 
 class OmService : public ifc_omservice
 {

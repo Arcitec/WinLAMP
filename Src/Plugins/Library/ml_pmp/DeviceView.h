@@ -11,8 +11,8 @@
 #include "..\..\General\gen_ml/ml.h"
 #include "..\..\General\gen_ml/itemlist.h"
 #include "..\..\General\gen_ml/childwnd.h"
-#include "../winamp/wa_ipc.h"
-#include "../winamp/ipc_pe.h"
+#include "../winlamp/wa_ipc.h"
+#include "../winlamp/ipc_pe.h"
 #include "LinkedQueue.h"
 #include "pmp.h"
 #include "resource1.h"
@@ -33,7 +33,7 @@
 extern C_Config * gen_mlconfig;
 extern LinkedQueue cloudTransferQueue, cloudFinishedTransfers;
 extern int cloudTransferProgress;
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 
 wchar_t *guessTitles(const wchar_t *filename, int *tracknum,wchar_t **artist, wchar_t **album,wchar_t **title); // free result after using artist, etc
 wchar_t* GetDefaultSaveToFolder(wchar_t* path_to_store);

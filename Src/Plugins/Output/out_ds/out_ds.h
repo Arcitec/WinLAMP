@@ -1,6 +1,6 @@
 #define STRICT
 #include <windows.h>
-#include "../Winamp/out.h"
+#include "../WinLAMP/out.h"
 #include "ds2.h"
 #include "../pfc/pfc.h"
 

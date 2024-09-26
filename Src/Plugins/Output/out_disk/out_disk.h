@@ -1,4 +1,4 @@
-#include "../Winamp/out.h"
+#include "../WinLAMP/out.h"
 #include "resource.h"
 extern Out_Module mod;
 

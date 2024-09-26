@@ -17,8 +17,8 @@ public:
 		sendTo.hwnd = 0;
 		sendTo.build_hMenu = 0;
 
-		IPC_LIBRARY_SENDTOMENU = SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINAMP_IPCMESSAGE);
-		if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)0, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
+		IPC_LIBRARY_SENDTOMENU = SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+		if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)0, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
 		{
 			sendTo.mode = 1;
 			sendTo.hwnd = hwnd;
@@ -33,7 +33,7 @@ public:
 		if (sendTo.mode == 2)
 		{
 			sendTo.menu_id = popUpReturnVal;
-			if (SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
+			if (SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
 				return true;
 		}
 		return false;
@@ -43,7 +43,7 @@ public:
 		if (sendTo.mode)
 		{
 			sendTo.mode = 4;
-			SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU); // cleanup
+			SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU); // cleanup
 		}
 		sendTo.build_hMenu = 0;
 	}
@@ -52,7 +52,7 @@ public:
 	{
 		if (wParam && (HMENU)wParam == sendTo.build_hMenu && sendTo.mode == 1)
 		{
-			if (SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
+			if (SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
 				sendTo.mode = 2;
 
 			return true;
@@ -66,7 +66,7 @@ public:
 		sendTo.data_type = ML_TYPE_ITEMRECORDLIST;
 		sendTo.mode = 3;
 		sendTo.data = (void*) & obj;
-		SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU);
+		SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU);
 	}
 
 	void SendFilenames(const wchar_t *filenames)
@@ -74,7 +74,7 @@ public:
 		sendTo.data_type = ML_TYPE_FILENAMESW;
 		sendTo.mode = 3;
 		sendTo.data = (void*)filenames;
-		SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU);
+		SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU);
 	}
 
 	LRESULT SendPlaylist(mlPlaylist *playlist)
@@ -82,7 +82,7 @@ public:
 		sendTo.data_type = ML_TYPE_PLAYLIST;
 		sendTo.mode = 3;
 		sendTo.data = (void*)playlist;
-		return SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU);
+		return SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU);
 	}
 
 	LRESULT SendPlaylists(mlPlaylist **playlists)
@@ -90,7 +90,7 @@ public:
 		sendTo.data_type = ML_TYPE_PLAYLISTS;
 		sendTo.mode = 3;
 		sendTo.data = (void*)playlists;
-		return SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU);
+		return SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU);
 	}
 
 private:

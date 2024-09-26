@@ -1,5 +1,5 @@
 #include "mp4_mp4v_decoder.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 
 MP4VMP4Decoder::MP4VMP4Decoder()

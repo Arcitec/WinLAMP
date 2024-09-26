@@ -49,9 +49,9 @@
 #define IDS_STEREO                      45
 #define IDS_X_CHANNELS                  46
 #define IDS_BY_SPACE                    47
-#define IDS_COULD_NOT_FIND_WINAMP       48
+#define IDS_COULD_NOT_FIND_WINLAMP       48
 #define IDS_ERROR                       49
-#define IDS_WINAMP_NOT_FOUND            50
+#define IDS_WINLAMP_NOT_FOUND            50
 #define IDS_VISUALIZATIONS              51
 #define IDS_STRING52                    52
 #define IDS_MEDIA_LIBRARY               52
@@ -210,9 +210,9 @@
 #define IDC_SPIN_SHOWTIME               1360
 #define IDC_SPIN_HIDETIME               1361
 #define IDD_PREFS_GENERAL               1362
-#define WINAMP_EDIT_ID3                 40188
-#define WINAMP_JUMP                     40193
-#define WINAMP_JUMPFILE                 40194
+#define WINLAMP_EDIT_ID3                 40188
+#define WINLAMP_JUMP                     40193
+#define WINLAMP_JUMPFILE                 40194
 #define ID_CONTROLMENU_OPACITY_10       42202
 #define ID_CONTROLMENU_OPACITY_20       42203
 #define ID_CONTROLMENU_OPACITY_30       42204

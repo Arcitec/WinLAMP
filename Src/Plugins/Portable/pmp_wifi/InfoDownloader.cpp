@@ -142,8 +142,8 @@ void InfoDownloader::OnInit(DownloadToken token)
 	api_httpreceiver *jnet = WAC_API_DOWNLOADMANAGER->GetReceiver(token);
 	if (jnet)
 	{
-		jnet->AddHeaderValue("X-Winamp-ID", winamp_id_str);
-		jnet->AddHeaderValue("X-Winamp-Name", winamp_name);
+		jnet->AddHeaderValue("X-WinLAMP-ID", winlamp_id_str);
+		jnet->AddHeaderValue("X-WinLAMP-Name", winlamp_name);
 	}
 }
 

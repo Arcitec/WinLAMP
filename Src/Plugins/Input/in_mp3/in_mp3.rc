@@ -482,7 +482,7 @@ STRINGTABLE
 BEGIN
     IDS_FAMILY_STRING_MPEG2_AAC "MPEG-2 Advanced Audio Coding File"
     IDS_FAMILY_STRING_DOLBY "Dolby Very Low Bitrate AAC File"
-    IDS_ABOUT_TEXT          "%s\n© 1998-2023 Winamp SA\n\nBuild date: %hs\n\nMPEG Audio Decoding provided by libmpg123"//MPEG Layer-3 audio compression technology\nlicensed by Fraunhofer IIS & THOMSON multimedia.\n\nMPEG-4 AAC decoding licensed by Fraunhofer IIS"
+    IDS_ABOUT_TEXT          "%s\n© 1998-2023 WinLAMP SA\n\nBuild date: %hs\n\nMPEG Audio Decoding provided by libmpg123"//MPEG Layer-3 audio compression technology\nlicensed by Fraunhofer IIS & THOMSON multimedia.\n\nMPEG-4 AAC decoding licensed by Fraunhofer IIS"
     IDS_LENGTH_X_PART_SECONDS "\nLength: %.2f seconds"
 END
 

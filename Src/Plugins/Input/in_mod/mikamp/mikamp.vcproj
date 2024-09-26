@@ -78,7 +78,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib int64.lib shlwapi.lib ../../nsutil/nsutil.lib"
-				OutputFile="$(ProgramFiles)\winamp\plugins\in_mod.dll"
+				OutputFile="$(ProgramFiles)\winlamp\plugins\in_mod.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				GenerateDebugInformation="true"
@@ -178,7 +178,7 @@
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
 				AdditionalDependencies="comctl32.lib int64.lib shlwapi.lib ../../nsutil/nsutil.lib"
-				OutputFile="$(ProgramFiles)\winamp\plugins\in_mod.dll"
+				OutputFile="$(ProgramFiles)\winlamp\plugins\in_mod.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				GenerateManifest="false"

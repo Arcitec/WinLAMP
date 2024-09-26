@@ -86,7 +86,7 @@ Field *TranslateObject(unsigned char Type, Table *tbl)
 #ifdef WIN32
 			if (!tbl->HasErrors())
 			{
-				//MessageBox(plugin.hwndParent, "Your database has been corrupted!\n\nWinamp will try to continue, but some of the library metadata may be lost :(", "Database Error", 0);
+				//MessageBox(plugin.hwndParent, "Your database has been corrupted!\n\nWinLAMP will try to continue, but some of the library metadata may be lost :(", "Database Error", 0);
 			}
 #else
 			printf("NDE Error: unknown field type encountered\n");

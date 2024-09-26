@@ -211,8 +211,8 @@ intptr_t MessageProc(int msg, intptr_t param1, intptr_t param2, intptr_t param3)
 }
 
 extern "C" {
-	__declspec( dllexport ) PMPDevicePlugin * winampGetPMPDevicePlugin(){return &plugin;}
-	__declspec( dllexport ) int winampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
+	__declspec( dllexport ) PMPDevicePlugin * winlampGetPMPDevicePlugin(){return &plugin;}
+	__declspec( dllexport ) int winlampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
 		int i = (int)devices.size();
 		while(i-- > 0) devices[i]->Close();
 		return PMP_PLUGIN_UNINSTALL_NOW;

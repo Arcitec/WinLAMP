@@ -64,12 +64,12 @@ static void GetPathToStore(wchar_t path_to_store[MAX_PATH])
 	GetPrivateProfileStringW( L"gen_ml_config", L"extractpath", defaultPathToStore(), path_to_store, MAX_PATH, (const wchar_t *)SendMessageW( plugin.hwndParent, WM_WA_IPC, 0, IPC_GETMLINIFILEW ) );
 }
 
-void Winamp2FrontEnd::getDownloadPath(wchar_t path2store[MAX_PATH])
+void WinLAMP2FrontEnd::getDownloadPath(wchar_t path2store[MAX_PATH])
 {
 	GetPathToStore(path2store);
 }
 
-void Winamp2FrontEnd::setDownloadPath(const wchar_t * path2store)
+void WinLAMP2FrontEnd::setDownloadPath(const wchar_t * path2store)
 {
 	WritePrivateProfileStringA( "gen_ml_config", "extractpath", AutoChar( path2store, CP_UTF8 ), (const char *)SendMessageW( plugin.hwndParent, WM_WA_IPC, 0, IPC_GETMLINIFILE ) );
 }
@@ -129,7 +129,7 @@ private:
 	wchar_t destination_filepath[ MAX_PATH ];
 };
 
-// TODO: benski> this is a big hack. we should have a MIME manager in Winamp
+// TODO: benski> this is a big hack. we should have a MIME manager in WinLAMP
 struct
 {
 	const char *mime; const char *ext;
@@ -189,7 +189,7 @@ void DownloadCallback::OnFinish(DownloadToken token)
 
 		if (!extension)
 		{
-			//   4) ask for winamp's default extension and use that (most likely mp3)
+			//   4) ask for winlamp's default extension and use that (most likely mp3)
 			extension=".mp3"; // TODO: actually use the setting and not hardcode this :)
 		}
 
@@ -277,7 +277,7 @@ void DownloadCallback::OnFinish(DownloadToken token)
 	Release();
 }
 
-int Winamp2FrontEnd::DownloadFile( const char *url, const wchar_t *destfilepath, bool addToMl, bool notifyDownloadsList )
+int WinLAMP2FrontEnd::DownloadFile( const char *url, const wchar_t *destfilepath, bool addToMl, bool notifyDownloadsList )
 {
 	DownloadCallback *callback = new DownloadCallback( destfilepath, addToMl, notifyDownloadsList );
 	DownloadToken     dt = WAC_API_DOWNLOADMANAGER->Download( url, callback );
@@ -288,7 +288,7 @@ int Winamp2FrontEnd::DownloadFile( const char *url, const wchar_t *destfilepath,
 
 	return 0;
 	/*
-	HTTPRETRIEVEFILEW func = (HTTPRETRIEVEFILEW) SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_GETHTTPGETTERW);
+	HTTPRETRIEVEFILEW func = (HTTPRETRIEVEFILEW) SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_GETHTTPGETTERW);
 	if (func || func == (HTTPRETRIEVEFILEW)1)
 		return func(NULL, url, destfilename, title);
 	else

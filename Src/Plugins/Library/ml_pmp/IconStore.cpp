@@ -2,7 +2,7 @@
 #include "resource1.h"
 #include "..\..\General\gen_ml/ml.h"
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 IconStore icon_store;
 
 static int IconStore_RegisterBitmap(HMLIMGLST imageList, int index, HINSTANCE module, const wchar_t *iconName)

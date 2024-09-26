@@ -1,0 +1,6 @@
+#ifndef NULLSOFT_WINLAMP_B4S_H
+#define NULLSOFT_WINLAMP_B4S_H
+
+
+
+#endif

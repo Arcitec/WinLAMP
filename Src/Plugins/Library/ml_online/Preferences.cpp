@@ -1,7 +1,7 @@
 #include "main.h"
 #include "./preferences.h"
 
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "./resource.h"
 #include "./api__ml_online.h"
 #include "./config.h"
@@ -25,19 +25,19 @@ BOOL Preferences_Register()
 	preferences.name = Plugin_CopyString(szBuffer);
 	preferences.where = 6; // Media Library
 
-	return (BOOL)SENDWAIPC(Plugin_GetWinamp(), IPC_ADD_PREFS_DLGW, &preferences);
+	return (BOOL)SENDWAIPC(Plugin_GetWinLAMP(), IPC_ADD_PREFS_DLGW, &preferences);
 
 }
 
 void Preferences_Unregister()
 {
-	SENDWAIPC(Plugin_GetWinamp(), IPC_REMOVE_PREFS_DLG, &preferences);
+	SENDWAIPC(Plugin_GetWinLAMP(), IPC_REMOVE_PREFS_DLG, &preferences);
 
 }
 
 BOOL Preferences_Show()
 {
-	return (BOOL)SENDWAIPC(Plugin_GetWinamp(), IPC_OPENPREFSTOPAGE, &preferences);
+	return (BOOL)SENDWAIPC(Plugin_GetWinLAMP(), IPC_OPENPREFSTOPAGE, &preferences);
 }
 
 static INT_PTR CALLBACK Preferences_DialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)

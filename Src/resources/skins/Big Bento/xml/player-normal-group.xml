@@ -382,7 +382,7 @@
 		right="window.titlebar.grid.right"
 	/>
 
-	<layer x="35" y="7" image="window.titlebar.text.winamp" ghost="1" />
+	<layer x="35" y="7" image="window.titlebar.text.winlamp" ghost="1" />
 
 	<guiobject fitparent="1" rectrgn="1" move="1" id="player.mousetrap.maximize"/>
 
@@ -424,7 +424,7 @@
 		image="window.titlebar.button.minimize.normal"
 		hoverImage="window.titlebar.button.minimize.hover"
 		downImage="window.titlebar.button.minimize.down"
-		tooltip="Minimize Winamp"
+		tooltip="Minimize WinLAMP"
 	/>
 
 	<button 
@@ -433,7 +433,7 @@
 		image="window.titlebar.button.restore.normal"
 		hoverImage="window.titlebar.button.restore.hover"
 		downImage="window.titlebar.button.restore.down"
-		tooltip="Restore Winamp"
+		tooltip="Restore WinLAMP"
 	/>
 
 	<button 
@@ -442,7 +442,7 @@
 		image="window.titlebar.button.maximize.normal"
 		hoverImage="window.titlebar.button.maximize.hover"
 		downImage="window.titlebar.button.maximize.down"
-		tooltip="Maximize Winamp"
+		tooltip="Maximize WinLAMP"
 	/>
 
 	<button 
@@ -459,7 +459,7 @@
 		x="-24" relatx="1" y="0" h="18" w="24"
 		rectrgn="1"
 		action="CLOSE"
-		tooltip="Exit Winamp"
+		tooltip="Exit WinLAMP"
 	/>
 	<button 
 		x="-24" relatx="1" y="5" h="13" w="17"
@@ -467,7 +467,7 @@
 		image="window.titlebar.button.close.normal"
 		hoverImage="window.titlebar.button.close.hover"
 		downImage="window.titlebar.button.close.down"
-		tooltip="Exit Winamp"
+		tooltip="Exit WinLAMP"
 	/>
 
 	<script file="scripts/mainmenu.maki" />

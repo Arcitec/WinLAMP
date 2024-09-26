@@ -1,5 +1,5 @@
-#ifndef NULLSOFT_WINAMP_OMBROWSER_HEADER
-#define NULLSOFT_WINAMP_OMBROWSER_HEADER
+#ifndef NULLSOFT_WINLAMP_OMBROWSER_HEADER
+#define NULLSOFT_WINLAMP_OMBROWSER_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -63,11 +63,11 @@ public:
 	} UiFlags;
 
 protected:
-	Browser(obj_ombrowser *browserMngr, HWND winampWindow, HWND hParent);
+	Browser(obj_ombrowser *browserMngr, HWND winlampWindow, HWND hParent);
 	~Browser();
 
 public:
-	static Browser *CreateInstance(obj_ombrowser *browserManager, HWND winampWindow, HWND hParent);
+	static Browser *CreateInstance(obj_ombrowser *browserManager, HWND winlampWindow, HWND hParent);
 
 public:
 
@@ -223,4 +223,4 @@ private:
 	#define BrowserDebug_PrintRefs(x)
 #endif //_DEBUG
 
-#endif //NULLSOFT_WINAMP_OMBROWSER_HEADER
+#endif //NULLSOFT_WINLAMP_OMBROWSER_HEADER

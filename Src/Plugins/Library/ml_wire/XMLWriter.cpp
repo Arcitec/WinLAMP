@@ -83,8 +83,8 @@ static void InstaTag(FILE *fp, const wchar_t *tag, __time64_t uint)
 static void BuildXMLString(FILE *fp, const RSS::Item &item)
 {
 	fputws(L"<item", fp);
-	InstaProp(fp, L"winamp:listened", item.listened);
-	InstaProp(fp, L"winamp:downloaded", item.downloaded);
+	InstaProp(fp, L"winlamp:listened", item.listened);
+	InstaProp(fp, L"winlamp:downloaded", item.downloaded);
 	fputws(L">\r\n", fp);
 
 	InstaTag(fp, L"title", item.itemName);
@@ -130,11 +130,11 @@ static void BuildXMLString(FILE *fp, Channel &channel)
 	wchar_t date_str[128] = {0};
 	MakeRFCDateString(channel.lastUpdate, date_str, 128);
 
-	InstaProp(fp, L"winamp:lastupdate", date_str);
+	InstaProp(fp, L"winlamp:lastupdate", date_str);
 	fputws(L">\r\n", fp);
 
 	// write update settings for this channel
-	fputws(L"<winamp:update", fp);
+	fputws(L"<winlamp:update", fp);
 	InstaProp(fp, L"usedefaultupdate", channel.useDefaultUpdate);
 	InstaProp(fp, L"needsrefresh",     channel.needsRefresh);
 
@@ -148,7 +148,7 @@ static void BuildXMLString(FILE *fp, Channel &channel)
 
 	if (!channel.useDefaultUpdate)
 	{
-		fputws(L"<winamp:download", fp);
+		fputws(L"<winlamp:download", fp);
 		InstaProp(fp, L"autodownload", channel.autoDownload);
 		
 		if (channel.autoDownload)
@@ -158,7 +158,7 @@ static void BuildXMLString(FILE *fp, Channel &channel)
 		fputws(L"/>\r\n", fp);
 	}
 
-	InstaTag(fp, L"winamp:url",  channel.url);
+	InstaTag(fp, L"winlamp:url",  channel.url);
 	InstaTag(fp, L"title",       channel.title);
 	InstaTag(fp, L"link",        channel.link);
 	InstaTag(fp, L"description", channel.description);
@@ -183,7 +183,7 @@ void SaveChannels(const wchar_t *fileName, ChannelList &channels)
 		wchar_t BOM = 0xFEFF;
 		fwrite(&BOM, sizeof(BOM), 1, fp);
 		fputws(L"<?xml version=\"1.0\" encoding=\"UTF-16\"?>\r\n", fp);
-		fputws(L"<rss version=\"2.0\" xmlns:winamp=\"http://www.winamp.com\">\r\n", fp);
+		fputws(L"<rss version=\"2.0\" xmlns:winlamp=\"http://www.winlamp.com\">\r\n", fp);
 
 		for (itr = channels.begin();itr != channels.end();itr++)
 			BuildXMLString(fp, *itr);
@@ -263,10 +263,10 @@ void SaveSettings(const wchar_t *fileName, DownloadList &downloads)
 		wchar_t BOM = 0xFEFF;
 		fwrite(&BOM, sizeof(BOM), 1, fp);
 		fputws(L"<?xml version=\"1.0\" encoding=\"UTF-16\"?>\r\n", fp);
-		fputws(L"<winamp:preferences xmlns:winamp=\"http://www.winamp.com\" version=\"2\">\r\n", fp);
+		fputws(L"<winlamp:preferences xmlns:winlamp=\"http://www.winlamp.com\" version=\"2\">\r\n", fp);
 		BuildXMLPreferences(fp);
 		BuildXMLDownloads(fp, downloads);
-		fputws(L"</winamp:preferences>", fp);
+		fputws(L"</winlamp:preferences>", fp);
 		fclose(fp);
 	}
 }

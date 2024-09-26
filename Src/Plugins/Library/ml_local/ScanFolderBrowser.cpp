@@ -29,7 +29,7 @@ typedef struct _FBUTTON
 
 static const FOLDER BOOKMARKS[] = 
 {
-	{PATHTYPE_STRING, (INT_PTR)L"C:\\Program Files\\Winamp", NULL, NULL },
+	{PATHTYPE_STRING, (INT_PTR)L"C:\\Program Files\\WinLAMP", NULL, NULL },
 	{PATHTYPE_CSIDL, CSIDL_MYMUSIC, NULL, NULL },
 	{PATHTYPE_CSIDL, CSIDL_MYVIDEO, NULL, NULL },
 	{PATHTYPE_CSIDL, CSIDL_PERSONAL, NULL, NULL },
@@ -90,7 +90,7 @@ static void Initialize(ScanFolderBrowser *browser, BOOL showBckScan, BOOL checkB
 	lstrcpynW(browser->selectionPath, WASABI_API_APP->path_getWorkingPath(), MAX_PATH);
 
 	browser->SetCaption(WASABI_API_LNGSTRINGW(IDS_ADD_MEDIA_TO_LIBRARY_));
-	browser->SetTitle(WASABI_API_LNGSTRINGW(IDS_SELECT_FOLDER_TO_ADD_TO_WINAMP_MEDIA_LIBRARY));
+	browser->SetTitle(WASABI_API_LNGSTRINGW(IDS_SELECT_FOLDER_TO_ADD_TO_WINLAMP_MEDIA_LIBRARY));
 	browser->SetSelection(browser->selectionPath);
 	browser->SetFlags(BIF_RETURNONLYFSDIRS | BIF_EDITBOX | BIF_VALIDATE | BIF_USENEWUI | BIF_NONEWFOLDERBUTTON | BIF_NEWDIALOGSTYLE);
 	browser->LoadBookmarks();

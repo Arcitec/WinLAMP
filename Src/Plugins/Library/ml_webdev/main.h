@@ -16,7 +16,7 @@
 DEFINE_GUID(WebDevLangUid, 0xbf4f80a7, 0x7470, 0x4b08, 0x8a, 0x4c, 0x34, 0x38, 0x2c, 0x14, 0x62, 0x2);
 
 HINSTANCE Plugin_GetInstance(void);
-HWND Plugin_GetWinamp(void);
+HWND Plugin_GetWinLAMP(void);
 HWND Plugin_GetLibrary(void);
 
 class Navigation;

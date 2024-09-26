@@ -1,23 +1,23 @@
-# Winamp
+# WinLAMP
 
 ## About
 
-Winamp is a multimedia player launched in 1997, iconic for its flexibility and wide compatibility with audio formats. Originally developed by Nullsoft, it gained massive popularity with still millions of users. Its development slowed down, but now, its source code was opened to the community, allowing developers to improve and modernize the player to meet current user needs.
+WinLAMP is a multimedia player launched in 1997, iconic for its flexibility and wide compatibility with audio formats. Originally developed by Nullsoft, it gained massive popularity with still millions of users. Its development slowed down, but now, its source code was opened to the community, allowing developers to improve and modernize the player to meet current user needs.
 
 It really whips the llama's ass.
 
 ## Usage
 
-Building of the Winamp desktop client is currently based around Visual Studio 2019 (VS2019) and Intel IPP libs (You need to use exactly v6.1.1.035).
-There are different options of how to build Winamp:
+Building of the WinLAMP desktop client is currently based around Visual Studio 2019 (VS2019) and Intel IPP libs (You need to use exactly v6.1.1.035).
+There are different options of how to build WinLAMP:
 
-1. Use the `build_winampAll_2019.cmd` script file that makes 4 versions x86/x64 (Debug and Release). In this case Visual Studio IDE not running.
-2. Use the `winampAll_2019.sln` file to build and debug in Visual Studio IDE.
+1. Use the `build_winlampAll_2019.cmd` script file that makes 4 versions x86/x64 (Debug and Release). In this case Visual Studio IDE not running.
+2. Use the `winlampAll_2019.sln` file to build and debug in Visual Studio IDE.
 
 ### Dependencies
 
-1. Use the `build_winampAll_2019.cmd` script file that makes 4 versions x86/x64 (Debug and Release). In this case Visual Studio IDE not running.
-2. Use the `winampAll_2019.sln` file to build and debug in Visual Studio IDE.
+1. Use the `build_winlampAll_2019.cmd` script file that makes 4 versions x86/x64 (Debug and Release). In this case Visual Studio IDE not running.
+2. Use the `winlampAll_2019.sln` file to build and debug in Visual Studio IDE.
 
 #### libvpx
 We take libvpx from [https://github.com/ShiftMediaProject/libvpx]([url](https://github.com/ShiftMediaProject/libvpx)), modify it and pack to archive.

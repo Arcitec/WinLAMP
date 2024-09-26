@@ -1,5 +1,5 @@
 #include "../../Library/ml_pmp/pmp.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <vector>
 #include "../nu/AutoWide.h"
 #include "../nu/AutoChar.h"
@@ -25,7 +25,7 @@ extern PMPDevicePlugin plugin = {PMPHDR_VER,0,Init,Quit,MessageProc};
 bool loading_devices[26] = {0,};
 
 // start-usb
-static const wchar_t *winampini;
+static const wchar_t *winlampini;
 static std::vector<HANDLE> loadingThreads;
 static std::vector<wchar_t*> blacklist;
 
@@ -38,11 +38,11 @@ static UINT_PTR rescanTimer = 0;
 
 static void blacklistLoad() {
 	wchar_t keyname[64] = {0};
-	int l = GetPrivateProfileIntW(L"pmp_usb", L"blacklistnum", 0, winampini);
+	int l = GetPrivateProfileIntW(L"pmp_usb", L"blacklistnum", 0, winlampini);
 	for(int i=l>100?l-100:0; i<l; i++) {
 		wchar_t buf[100] = {0};
 		StringCchPrintfW(keyname, 64, L"blacklist-%d", i);
-		GetPrivateProfileStringW(L"pmp_usb", keyname, L"", buf, 100, winampini);
+		GetPrivateProfileStringW(L"pmp_usb", keyname, L"", buf, 100, winlampini);
 		if(buf[0])
 		{
 			blacklist.push_back(_wcsdup(buf));
@@ -53,11 +53,11 @@ static void blacklistLoad() {
 static void blacklistSave() {
 	wchar_t buf[64] = {0};
 	StringCchPrintfW(buf, 64, L"%u", blacklist.size());
-	WritePrivateProfileStringW(L"pmp_usb", L"blacklistnum", buf, winampini);
+	WritePrivateProfileStringW(L"pmp_usb", L"blacklistnum", buf, winlampini);
 	for(size_t i=0; i<blacklist.size(); i++) 
 	{
 		StringCchPrintfW(buf, 64, L"blacklist-%u", i);
-		WritePrivateProfileStringW(L"pmp_usb", buf, (const wchar_t*)blacklist.at(i), winampini);
+		WritePrivateProfileStringW(L"pmp_usb", buf, (const wchar_t*)blacklist.at(i), winlampini);
 	}
 }
 
@@ -205,7 +205,7 @@ void connectDrive(wchar_t drive, bool checkSize=true, bool checkBlacklist=true)
 						drvname, towupper(drive));
 
 		if(MessageBox(plugin.hwndLibraryParent,buf,
-					  WASABI_API_LNGSTRINGW_BUF(IDS_WINAMP_PMP_SUPPORT,titleStr,128),
+					  WASABI_API_LNGSTRINGW_BUF(IDS_WINLAMP_PMP_SUPPORT,titleStr,128),
 					  MB_YESNO|MB_SETFOREGROUND|MB_SYSTEMMODAL|MB_TOPMOST) == IDNO) 
 		{
 			wchar_t * bstr = makeBlacklistString(drive);
@@ -242,7 +242,7 @@ static int Init()
 	WasabiInit();
 
 	// start-usb
-	winampini = (const wchar_t*)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_GETINIFILEW);
+	winlampini = (const wchar_t*)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_GETINIFILEW);
 	// need to have this initialised before we try to do anything with localisation features
 	WASABI_API_START_LANG(plugin.hDllInstance,PmpUSBLangGUID);
 	// end-usb
@@ -540,7 +540,7 @@ static intptr_t MessageProc(int msg, intptr_t param1, intptr_t param2, intptr_t 
 	return 0;
 }
 
-extern "C" 	__declspec(dllexport) PMPDevicePlugin *winampGetPMPDevicePlugin()
+extern "C" 	__declspec(dllexport) PMPDevicePlugin *winlampGetPMPDevicePlugin()
 {
 	return &plugin;
 }

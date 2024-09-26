@@ -134,7 +134,7 @@
       <Optimization>MinSpace</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>..\..\..;..\..\..\Wasabi;..\..\..\Winamp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..;..\..\..\Wasabi;..\..\..\WinLAMP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;_USRDLL;USELAME;LAMEDLL_EXPORTS;WINVER=0x601;WIN32_LEAN_AND_MEAN;NDEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -167,10 +167,10 @@
       <MapFileName>$(IntDir)$(TargetName).map</MapFileName>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\
 
-xcopy /Y /D /S "..\..\..\resources\libraries\lame_enc.dll" "..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Shared\" </Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\'</Message>
+xcopy /Y /D /S "..\..\..\resources\libraries\lame_enc.dll" "..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Shared\" </Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -186,7 +186,7 @@ xcopy /Y /D /S "..\..\..\resources\libraries\lame_enc.dll" "..\..\..\..\Build\Wi
       <Optimization>MinSpace</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>..\..\..;..\..\..\Wasabi;..\..\..\Winamp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..;..\..\..\Wasabi;..\..\..\WinLAMP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;_USRDLL;USELAME;LAMEDLL_EXPORTS;WINVER=0x601;WIN32_LEAN_AND_MEAN;NDEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -223,10 +223,10 @@ xcopy /Y /D /S "..\..\..\resources\libraries\lame_enc.dll" "..\..\..\..\Build\Wi
       <MapFileName>$(IntDir)$(TargetName).map</MapFileName>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\
 
-xcopy /Y /D /S "..\..\..\resources\libraries\lame_enc.dll" "..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Shared\" </Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\'</Message>
+xcopy /Y /D /S "..\..\..\resources\libraries\lame_enc.dll" "..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Shared\" </Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -240,7 +240,7 @@ xcopy /Y /D /S "..\..\..\resources\libraries\lame_enc.dll" "..\..\..\..\Build\Wi
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..;..\..\..\Wasabi;..\..\..\Winamp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..;..\..\..\Wasabi;..\..\..\WinLAMP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;_USRDLL;USELAME;LAMEDLL_EXPORTS;WINVER=0x601;WIN32_LEAN_AND_MEAN;_DEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <StructMemberAlignment>Default</StructMemberAlignment>
@@ -277,11 +277,11 @@ xcopy /Y /D /S "..\..\..\resources\libraries\lame_enc.dll" "..\..\..\..\Build\Wi
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\
-xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\
+xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\
 
-xcopy /Y /D /S "..\..\..\resources\libraries\lame_enc.dll" "..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Shared\" </Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\'</Message>
+xcopy /Y /D /S "..\..\..\resources\libraries\lame_enc.dll" "..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Shared\" </Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -295,7 +295,7 @@ xcopy /Y /D /S "..\..\..\resources\libraries\lame_enc.dll" "..\..\..\..\Build\Wi
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..;..\..\..\Wasabi;..\..\..\Winamp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..;..\..\..\Wasabi;..\..\..\WinLAMP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;_USRDLL;USELAME;LAMEDLL_EXPORTS;WINVER=0x601;WIN32_LEAN_AND_MEAN;_DEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <StructMemberAlignment>Default</StructMemberAlignment>
@@ -334,11 +334,11 @@ xcopy /Y /D /S "..\..\..\resources\libraries\lame_enc.dll" "..\..\..\..\Build\Wi
       <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\
-xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\
+xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\
 
-xcopy /Y /D /S "..\..\..\resources\libraries\lame_enc.dll" "..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Shared\" </Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\'</Message>
+xcopy /Y /D /S "..\..\..\resources\libraries\lame_enc.dll" "..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Shared\" </Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -374,7 +374,7 @@ xcopy /Y /D /S "..\..\..\resources\libraries\lame_enc.dll" "..\..\..\..\Build\Wi
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\nu\ServiceBuilder.h" />
-    <ClInclude Include="..\..\..\Winamp\Dsp.h" />
+    <ClInclude Include="..\..\..\WinLAMP\Dsp.h" />
     <ClInclude Include="api.h" />
     <ClInclude Include="crossfader\c_crossfader.h" />
     <ClInclude Include="Include\c_datapump.h" />

@@ -10,7 +10,7 @@ public:
 	{
 		INIT_ERROR_STRING_HEAP=1,
 	};
-	WASABI_SERVICE_NAME("Replicant/Winamp5 Application API");
+	WASABI_SERVICE_NAME("Replicant/WinLAMP5 Application API");
 
 	Application();
 	~Application();

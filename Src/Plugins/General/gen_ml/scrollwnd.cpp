@@ -3,7 +3,7 @@
 #include <windowsx.h>
 #include <tchar.h>
 #include "scrollwnd.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 
 #ifndef WM_MOUSEWHEEL
 #define WM_MOUSEWHEEL                   0x020A

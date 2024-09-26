@@ -2,7 +2,7 @@
 #include "../xml/obj_xml.h"
 #include "../xml/ifc_xmlreadercallback.h"
 #include "api__xspf.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include <api/service/waservicefactory.h>
 #include <shlwapi.h>
 #include <strsafe.h>
@@ -421,7 +421,7 @@ static int LoadFile(obj_xml *parser, const wchar_t *filename)
 	return IFC_PLAYLISTLOADER_SUCCESS;
 }
 
-// this get called by Winamp
+// this get called by WinLAMP
 // you a method in the passed playlist loader callback object
 // for each item in the playlist
 int XSPFLoader::Load(const wchar_t *filename, ifc_playlistloadercallback *playlist)

@@ -4,8 +4,8 @@
 #include "..\..\General\gen_ml/itemlist.h"
 #include "../nu/listview.h"
 #include "..\..\General\gen_ml/childwnd.h"
-#include "../winamp/wa_ipc.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_ipc.h"
+#include "../winlamp/wa_dlg.h"
 #include "resource1.h"
 #include "SkinnedListView.h"
 #include "DeviceView.h"
@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include <shlobj.h>
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 extern int currentViewedPlaylist;
 extern DeviceView * currentViewedDevice;
 extern HMENU m_context_menus;
@@ -1316,7 +1316,7 @@ INT_PTR CALLBACK pmp_artistalbum_dlgproc(HWND hwndDlg, UINT uMsg, WPARAM wParam,
 					else if(r == 0x4000) {
 						extern int g_prefs_openpage;
 						g_prefs_openpage = (!currentViewedDevice->isCloudDevice ? 4 : 0);
-						SendMessage(plugin.hwndWinampParent, WM_WA_IPC,(WPARAM)&currentViewedDevice->devPrefsPage,IPC_OPENPREFSTOPAGE);
+						SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC,(WPARAM)&currentViewedDevice->devPrefsPage,IPC_OPENPREFSTOPAGE);
 
 						extern HWND m_hwndTab;
 						if (IsWindow(m_hwndTab))

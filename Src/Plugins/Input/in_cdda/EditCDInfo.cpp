@@ -3,7 +3,7 @@
 #include "../nu/ListView.h"
 #include "cddbinterface.h"
 #include "../Agave/Language/api_language.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <atlbase.h>
 #include <strsafe.h>
 

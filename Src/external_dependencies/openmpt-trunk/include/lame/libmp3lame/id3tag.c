@@ -64,7 +64,7 @@ char   *strchr(), *strrchr();
 static const char *const genre_names[] = {
     /*
      * NOTE: The spelling of these genre names is identical to those found in
-     * Winamp and mp3info.
+     * WinLAMP and mp3info.
      */
     "Blues", "Classic Rock", "Country", "Dance", "Disco", "Funk", "Grunge",
     "Hip-Hop", "Jazz", "Metal", "New Age", "Oldies", "Other", "Pop", "R&B",

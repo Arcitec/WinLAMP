@@ -479,7 +479,7 @@ int SliderWnd::onMouseMove(int x, int y)
 				EQBand: minlimit -127, maxlimit 127, hotpos 0
 				PanBar: minlimit 0, maxlimit 225, hotpos 127
 
-				VSliders pos starts from top by 0 (winamp behaviour reversed!)
+				VSliders pos starts from top by 0 (winlamp behaviour reversed!)
 			*/
 
 			if (vertical)

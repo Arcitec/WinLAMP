@@ -307,7 +307,7 @@ static bool rateList(int rate)
 					buf[0] = 0;
 
 				updateFileInfo(filename, DB_FIELDNAME_rating, buf);
-				SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_WRITE_EXTENDED_FILE_INFO);
+				SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_WRITE_EXTENDED_FILE_INFO);
 			}
 			
 			g_table_dirty++;
@@ -1053,7 +1053,7 @@ INT_PTR CALLBACK view_audioDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LP
 			if((HMENU)wParam == s.build_hMenu && s.mode == 1)
 			{
 				myMenu = TRUE;
-				if (SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
+				if (SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
 					s.mode = 2;
 				myMenu = FALSE;
 			}
@@ -1730,8 +1730,8 @@ INT_PTR CALLBACK view_audioDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LP
 		s.hwnd = 0;
 		s.build_hMenu = 0;
 
-		IPC_LIBRARY_SENDTOMENU = SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINAMP_IPCMESSAGE);
-		if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)0, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
+		IPC_LIBRARY_SENDTOMENU = SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+		if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)0, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
 		{
 			s.mode = 1;
 			s.hwnd = hwndDlg;
@@ -1816,7 +1816,7 @@ INT_PTR CALLBACK view_audioDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LP
 				if (s.mode == 2)
 				{
 					s.menu_id = r;
-					if (SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
+					if (SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
 					{
 						// build my data.
 						s.mode = 3;
@@ -1825,7 +1825,7 @@ INT_PTR CALLBACK view_audioDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LP
 						buildRecordListW(&myObj, pane);
 
 						s.data = (void*) & myObj;
-						LRESULT result = SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU);
+						LRESULT result = SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU);
 						
 						if (result != 1)
 						{
@@ -1835,7 +1835,7 @@ INT_PTR CALLBACK view_audioDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LP
 							convertRecordList(&objA, &myObj);
 
 							s.data = (void*) & objA;
-							SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU);
+							SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU);
 							freeRecordList(&objA);
 						}
 						freeRecordList(&myObj);
@@ -1846,7 +1846,7 @@ INT_PTR CALLBACK view_audioDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LP
 		if (s.mode)
 		{
 			s.mode = 4;
-			SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU); // cleanup
+			SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU); // cleanup
 		}
 		sendto_hmenu = 0;
 		EatKeyboard();

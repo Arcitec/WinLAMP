@@ -25,9 +25,9 @@ public:
 	int AddItem();
 	
 
-	static const char *MapApeKeyToWinampKey(const char *ape_key);
-	static const wchar_t *MapApeKeyToWinampKeyW(const char *ape_key);
-	static const char *MapWinampKeyToApeKey(const char *winamp_key);
+	static const char *MapApeKeyToWinLAMPKey(const char *ape_key);
+	static const wchar_t *MapApeKeyToWinLAMPKeyW(const char *ape_key);
+	static const char *MapWinLAMPKeyToApeKey(const char *winlamp_key);
 
 	using APEv2::Tag::EnumValue;
 	using APEv2::Tag::EncodeSize;

@@ -1,5 +1,5 @@
 #include "JSAPI2_HistoryRecord.h"
-#include "../Winamp/JSAPI.h"
+#include "../WinLAMP/JSAPI.h"
 
 #define DISP_TABLE \
 	CHECK_ID(filename)\

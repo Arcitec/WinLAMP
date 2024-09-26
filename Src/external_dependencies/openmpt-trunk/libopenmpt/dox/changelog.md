@@ -401,8 +401,8 @@ is just a high-level summary.
  *  [**Change**] in_openmpt: `openmpt-mpg123.dll` is no longer optional and must
     be placed either into the directory of the player itself or into the same
     directory as `in_openmpt.dll`. This is dependent on how the player loads its
-    plugins. For WinAMP 5, `openmpt-mpg123.dll` needs to be in the directory
-    which contains `winamp.exe`. `in_openmpt.dll` needs to be in the `Plugins`
+    plugins. For WinLAMP 5, `openmpt-mpg123.dll` needs to be in the directory
+    which contains `winlamp.exe`. `in_openmpt.dll` needs to be in the `Plugins`
     directory.
  *  [**Change**] foo_openmpt: foo_openmpt is now packaged as a fb2k-component
     package for easier installation.
@@ -1077,7 +1077,7 @@ is just a high-level summary.
  *  [**Bug**] MT2 loader crash.
  *  [**Bug**] Saving settings in in_openmpt and xmp-openmpt did not work.
  *  [**Bug**] Load libopenmpt_settings.dll also from below Plugins directory in
-    Winamp.
+    WinLAMP.
 
  *  DBM playback improvements.
 

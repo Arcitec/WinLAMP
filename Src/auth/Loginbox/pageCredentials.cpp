@@ -2,7 +2,7 @@
 #include "./dataCredentials.h"
 #include "./common.h"
 #include "./loginGui.h"
-#include "../../winamp/commandLink.h"
+#include "../../winlamp/commandLink.h"
 #include "../resource.h"
 
 #include <commctrl.h>

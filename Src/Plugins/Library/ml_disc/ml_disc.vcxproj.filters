@@ -121,8 +121,8 @@
     <ClCompile Include="..\..\General\gen_ml\ml_lib.cpp">
       <Filter>Source Files\gen_ml</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Winamp\strutil.cpp">
-      <Filter>Source Files\Winamp</Filter>
+    <ClCompile Include="..\..\..\WinLAMP\strutil.cpp">
+      <Filter>Source Files\WinLAMP</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\nu\trace.cpp">
       <Filter>Source Files\nu</Filter>
@@ -192,8 +192,8 @@
     <ClInclude Include="..\..\General\gen_ml\menu.h">
       <Filter>Header Files\gen_ml</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Winamp\strutil.h">
-      <Filter>Header Files\Winamp</Filter>
+    <ClInclude Include="..\..\..\WinLAMP\strutil.h">
+      <Filter>Header Files\WinLAMP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -234,7 +234,7 @@
     <Filter Include="Header Files\nu">
       <UniqueIdentifier>{64766d69-e8b1-4432-a8f3-d082202e7362}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Winamp">
+    <Filter Include="Header Files\WinLAMP">
       <UniqueIdentifier>{bcf8a930-ff77-437f-a229-e985d9675be1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\nu">
@@ -243,7 +243,7 @@
     <Filter Include="Source Files\gen_ml">
       <UniqueIdentifier>{615eddd8-7e7c-4526-a8bf-1afe093a8149}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Winamp">
+    <Filter Include="Source Files\WinLAMP">
       <UniqueIdentifier>{ac350456-8c89-462f-b8c1-8868c38dede8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

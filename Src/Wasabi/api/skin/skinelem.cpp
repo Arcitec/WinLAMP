@@ -38,7 +38,7 @@ void SkinElementsMgr::init()
 		for (int i = 0;i < sizeof(elementtaglist) / sizeof(xml_elementtag);i++)
 			quickxmltaglist.addItem(&elementtaglist[i]);
 	}
-	skinXML.registerCallback(L"WinampAbstractionLayer\felements\f*", &xmlreader); //back compat
+	skinXML.registerCallback(L"WinLAMPAbstractionLayer\felements\f*", &xmlreader); //back compat
 	skinXML.registerCallback(L"WasabiXML\felements\f*", &xmlreader);
 }
 

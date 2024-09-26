@@ -2,7 +2,7 @@
 #include "api.h"
 #include "resource.h"
 #include "waveout.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../nu/AutoWide.h"
 
 #ifdef HAVE_SSRC
@@ -555,7 +555,7 @@ BOOL APIENTRY DllMain(HANDLE hMod, DWORD r, void*)
 
 extern "C"
 {
-	__declspec( dllexport ) Out_Module * winampGetOutModule()
+	__declspec( dllexport ) Out_Module * winlampGetOutModule()
 	{
 		inWMDLL = GetModuleHandleW(L"in_wm.dll");
 		if (inWMDLL)

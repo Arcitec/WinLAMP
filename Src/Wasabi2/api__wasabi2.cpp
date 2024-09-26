@@ -1,4 +1,4 @@
-#include "Winamp5ArtworkManager.h"
+#include "WinLAMP5ArtworkManager.h"
 #include "main.h"
 #include "api__wasabi2.h"
 #include "application.h"
@@ -13,7 +13,7 @@ Application application;
 static ComponentManager component_manager;
 
 static SingletonServiceFactory<Application, api_application> application_factory;
-static SingletonService<Winamp5ArtworkManager, api_artwork> artwork_factory;
+static SingletonService<WinLAMP5ArtworkManager, api_artwork> artwork_factory;
 
 static void AddComponents(const wchar_t *directory)
 {

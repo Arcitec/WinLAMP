@@ -2,7 +2,7 @@
 #include "./statusbar.h"
 #include "./graphics.h"
 #include "./browserHost.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 #include "../Plugins/General/gen_ml/ml_ipc_0313.h"
 
 #include "./ifc_skinhelper.h"

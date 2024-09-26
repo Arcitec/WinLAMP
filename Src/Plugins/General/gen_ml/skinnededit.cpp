@@ -1,5 +1,5 @@
 #include "./skinnededit.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 #include "./skinning.h"
 #include "./stockobjects.h"
 #include "./skinnedmenu.h"

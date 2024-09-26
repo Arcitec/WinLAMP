@@ -24,12 +24,12 @@
 #include "../listview.h"
 
 #include "../childwnd.h"
-#include "../../winamp/wa_dlg.h"
+#include "../../winlamp/wa_dlg.h"
 
 #include "../itemlist.h"
 
 
-// configuration section in winamp.ini
+// configuration section in winlamp.ini
 #define CONFIG_SEC "ml_ex"
 
 
@@ -66,7 +66,7 @@ typedef struct
 #define SKIP_THE_AND_WHITESPACE(x) { while (!isalnum(*x) && *x) x++; if (!_strnicmp(x,"the ",4)) x+=4; while (*x == ' ') x++; }
 
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 static int myParam; // param of our tree item
 static C_ItemList m_songs, *m_songs_sorted;
 static W_ListView m_list;
@@ -143,8 +143,8 @@ static void playFiles(int enqueue, int all)
   SongsToItemList(&obj,all);
   if (obj.Size)
   {
-    mlSendToWinampStruct s={ML_TYPE_ITEMRECORDLIST,(void*)&obj,!!enqueue};
-    SendMessage(plugin.hwndLibraryParent,WM_ML_IPC,(WPARAM)&s,ML_IPC_SENDTOWINAMP);
+    mlSendToWinLAMPStruct s={ML_TYPE_ITEMRECORDLIST,(void*)&obj,!!enqueue};
+    SendMessage(plugin.hwndLibraryParent,WM_ML_IPC,(WPARAM)&s,ML_IPC_SENDTOWINLAMP);
   }
   free(obj.Items);
 }
@@ -174,7 +174,7 @@ int init() {
     "Item Cache Example",
     1,
   };
-  conf_file=(char*)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_GETINIFILE); // get winamp.ini name :)
+  conf_file=(char*)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_GETINIFILE); // get winlamp.ini name :)
 
   SendMessage(plugin.hwndLibraryParent,WM_ML_IPC,(WPARAM)&mla,ML_IPC_ADDTREEITEM);
   myParam=mla.this_id;
@@ -869,7 +869,7 @@ int PluginMessageProc(int message_type, int param1, int param2, int param3)
   return 0;
 }
 
-winampMediaLibraryPlugin plugin =
+winlampMediaLibraryPlugin plugin =
 {
 	MLHDR_VER,
 	"ml_ex v0.1",
@@ -880,7 +880,7 @@ winampMediaLibraryPlugin plugin =
 
 extern "C" {
 
-__declspec( dllexport ) winampMediaLibraryPlugin * winampGetMediaLibraryPlugin()
+__declspec( dllexport ) winlampMediaLibraryPlugin * winlampGetMediaLibraryPlugin()
 {
 	return &plugin;
 }

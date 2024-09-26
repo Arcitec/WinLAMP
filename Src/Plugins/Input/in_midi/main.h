@@ -187,7 +187,7 @@ private:
 	static MIDI_device * device;
 };
 
-namespace MIDI_callback	//per-winamp implementations
+namespace MIDI_callback	//per-winlamp implementations
 {
 	HWND GetMainWindow();
 	HINSTANCE GetInstance();

@@ -1,7 +1,7 @@
 #include "JSAPI2_HistoryRecordList.h"
 #include "JSAPI2_HistoryRecord.h"
 #include "ml_history.h"
-#include "../Winamp/JSAPI.h"
+#include "../WinLAMP/JSAPI.h"
 #include <strsafe.h>
 
 JSAPI2::HistoryRecordList::HistoryRecordList(historyRecordList *_record)

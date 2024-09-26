@@ -85,7 +85,7 @@ System.onScriptLoaded ()
 	initWaPrivateCalls();
 
 	initAttribs_Browser();
-	BROWSER_DEFAULT_HOME = "http://www.winamp.com/";
+	BROWSER_DEFAULT_HOME = "http://www.winlamp.com/";
 
 	download = true;
 
@@ -147,7 +147,7 @@ System.onScriptLoaded ()
 	switch_dld2 = dld_mode.findObject("dlds.switch");
 	switch_scr2 = scr_mode.findObject("scraper.switch");
 
-	String nu = getPrivateString("Winamp Bento", "Browser v2 Home", "");
+	String nu = getPrivateString("WinLAMP Bento", "Browser v2 Home", "");
 	if (nu == "")
 	{
 		nu = BROWSER_DEFAULT_HOME;
@@ -155,7 +155,7 @@ System.onScriptLoaded ()
 
 	navurl.setText(nu);
 
-	if (getPrivateInt("Winamp Bento", "Browser DownloadMgr visible", 0) && !getPrivateInt("Winamp Bento", "Browser MediaMonitor autoswitch", 1))
+	if (getPrivateInt("WinLAMP Bento", "Browser DownloadMgr visible", 0) && !getPrivateInt("WinLAMP Bento", "Browser MediaMonitor autoswitch", 1))
 	{
 		scr_mode.hide();
 		dld_mode.show();
@@ -168,7 +168,7 @@ System.onScriptLoaded ()
 	browser_scr_show_attrib.onDataChanged ();
 
 	// CHASHCOW
-	browser_search_winamp_web_attrib.setData("1");
+	browser_search_winlamp_web_attrib.setData("1");
 }
 
 System.onScriptUnloading ()
@@ -226,7 +226,7 @@ System.onSetXuiParam (String param, String value)
 	{
 		hasXuiHome = true;
 		BROWSER_DEFAULT_HOME = value;
-		String navTo = getPrivateString("Winamp Bento", "Browser v2 Home", "");
+		String navTo = getPrivateString("WinLAMP Bento", "Browser v2 Home", "");
 			if (navTo == "")
 			{
 				navTo = BROWSER_DEFAULT_HOME;
@@ -307,7 +307,7 @@ bstop.onLeftClick ()
 
 bhome.onLeftClick ()
 {
-	String nu = getPrivateString("Winamp Bento", "Browser v2 Home", "");
+	String nu = getPrivateString("WinLAMP Bento", "Browser v2 Home", "");
 	if (nu == "")
 	{
 		nu = BROWSER_DEFAULT_HOME;
@@ -327,14 +327,14 @@ bhome.onRightButtonUp(int x, int y)
 
 	int ret = editmenu.popatxy(clientToScreenX(bhome.getLeft()), clientToScreenY(bhome.getTop() + bhome.getHeight()));
 
-	if (ret == 1) setPrivateString("Winamp Bento", "Browser v2 Home", navurl.getText());
-	if (ret == 2) setPrivateString("Winamp Bento", "Browser v2 Home", "");
+	if (ret == 1) setPrivateString("WinLAMP Bento", "Browser v2 Home", navurl.getText());
+	if (ret == 2) setPrivateString("WinLAMP Bento", "Browser v2 Home", "");
 
 	delete editmenu;
 	complete;
 }
 
-// Windows Vista Compatibility hack. w/ this we get not so much winamp crashes. nevertheless the editbox code must be changed in gen_ff
+// Windows Vista Compatibility hack. w/ this we get not so much winlamp crashes. nevertheless the editbox code must be changed in gen_ff
 browserReload()
 {
 	if (!navurl) return;
@@ -342,7 +342,7 @@ browserReload()
 	string t = navurl.getText();
 
 	if (!isUrl(t))
-		// t = "http://search.winamp.com/search/search?invocationType=en00-winamp-553--clientpage&query=" + prepareWebString(t, "+");
+		// t = "http://search.winlamp.com/search/search?invocationType=en00-winlamp-553--clientpage&query=" + prepareWebString(t, "+");
 		t = "http://www.google.com/search?q=" + prepareWebString(t, "+");
 
 	brw.navigateUrl(t);
@@ -373,7 +373,7 @@ navurl.onEnter ()
 	}
 
 	if (!isUrl(t))
-		// t = "http://search.winamp.com/search/search?invocationType=en00-winamp-553--clientpage&query=" + prepareWebString(t, "+");
+		// t = "http://search.winlamp.com/search/search?invocationType=en00-winlamp-553--clientpage&query=" + prepareWebString(t, "+");
 		t = "http://www.google.com/search?q=" + prepareWebString(t, "+");
 
 	navurl.setText(t);
@@ -476,30 +476,30 @@ performWebSearch (string searchstring)
 
 	// check what the current websearch is
 	if (browser_search_attrib.getData() == "Modern Skins") 
-		// searchstring = "http://www.winamp.com/skins/search/?s=m&q=" + prepareWebString(searchstring, "+");
-		searchstring = "http://www.google.com/search?q=Winamp+Skin+" + prepareWebString(searchstring, "+");
+		// searchstring = "http://www.winlamp.com/skins/search/?s=m&q=" + prepareWebString(searchstring, "+");
+		searchstring = "http://www.google.com/search?q=WinLAMP+Skin+" + prepareWebString(searchstring, "+");
 
 	else if (browser_search_attrib.getData() == "Classic Skins") 
-		// searchstring = "http://www.winamp.com/skins/search/?s=c&q=" + prepareWebString(searchstring, "+");
-		searchstring = "http://www.google.com/search?q=Winamp+Classic+Skin+" + prepareWebString(searchstring, "+");
+		// searchstring = "http://www.winlamp.com/skins/search/?s=c&q=" + prepareWebString(searchstring, "+");
+		searchstring = "http://www.google.com/search?q=WinLAMP+Classic+Skin+" + prepareWebString(searchstring, "+");
 
 	else if (browser_search_attrib.getData() == "Plug-ins") 
-		// searchstring = "http://www.winamp.com/plugins/search/?q=" + prepareWebString(searchstring, "+");
-		searchstring = "http://www.google.com/search?q=Winamp+Plugin+" + prepareWebString(searchstring, "+");
+		// searchstring = "http://www.winlamp.com/plugins/search/?q=" + prepareWebString(searchstring, "+");
+		searchstring = "http://www.google.com/search?q=WinLAMP+Plugin+" + prepareWebString(searchstring, "+");
 
 	else if (browser_search_attrib.getData() == "Web Search") 
 	{
 		if (isAutomatedSearch)
 		{
 			searchstring = "http://www.google.com/search?q=" + prepareWebString(searchstring, "+");
-			// searchstring = "http://search.winamp.com/search/search?invocationType=enus-winamp-553--as&query=" + prepareWebString(searchstring, "+");
-			// searchstring = "http://slirsredirect.search.aol.com/redirector/sredir?sredir=1841&invocationType=en00-winamp-55--as&query=" + prepareWebString(searchstring, "+");
+			// searchstring = "http://search.winlamp.com/search/search?invocationType=enus-winlamp-553--as&query=" + prepareWebString(searchstring, "+");
+			// searchstring = "http://slirsredirect.search.aol.com/redirector/sredir?sredir=1841&invocationType=en00-winlamp-55--as&query=" + prepareWebString(searchstring, "+");
 		}
 		else
 		{
 			searchstring = "http://www.google.com/search?q=" + prepareWebString(searchstring, "+");
-			// searchstring = "http://search.winamp.com/search/search?invocationType=en00-winamp-553--ws&query=" + prepareWebString(searchstring, "+");
-			//searchstring = "http://slirsredirect.search.aol.com/redirector/sredir?sredir=1840&invocationType=en00-winamp-55--ws&query=" + prepareWebString(searchstring, "+");
+			// searchstring = "http://search.winlamp.com/search/search?invocationType=en00-winlamp-553--ws&query=" + prepareWebString(searchstring, "+");
+			//searchstring = "http://slirsredirect.search.aol.com/redirector/sredir?sredir=1840&invocationType=en00-winlamp-55--ws&query=" + prepareWebString(searchstring, "+");
 		}
 	}
 
@@ -529,7 +529,7 @@ browser_search_attrib.onDataChanged ()
 	else if (getData() == "Web Search") bsearch.setXmlParam("image", "browser.button.search.google.normal");
 	else if (getData() == "Pollstar") bsearch.setXmlParam("image", "browser.button.search.pollstar.normal");
 	else if (getData() == "Wikipedia Search") bsearch.setXmlParam("image", "browser.button.search.wiki.normal");
-	else bsearch.setXmlParam("image", "browser.button.search.winamp.normal");
+	else bsearch.setXmlParam("image", "browser.button.search.winlamp.normal");
 
 	if (brw.isVisible())
 	{
@@ -609,7 +609,7 @@ createMenufromAttribList (list entries)
 	}
 	for ( int i = 0; i < submenus.getNumItems(); i++ )
 	{
-		if (dummy == 1) _menu.addSubMenu(submenus.enumItem(i), "Winamp Search"); //TODO ci.getName();
+		if (dummy == 1) _menu.addSubMenu(submenus.enumItem(i), "WinLAMP Search"); //TODO ci.getName();
 		else
 		{
 			_menu.addSubMenu(submenus.enumItem(i), "Concert Search"); //TODO ci.getName();
@@ -723,12 +723,12 @@ checkForNewLinks ()
 	if (!brw.isVisible() || !xmlReadPassed)
 		return;
 
-	/*int last = getPrivateInt("Winamp Browser", "linksupdate", 0);
+	/*int last = getPrivateInt("WinLAMP Browser", "linksupdate", 0);
 	int dt = System.getDate();
 	int now = (getDateYear(dt)-100)*1000+getDateDoy(dt);
 
 	if (last >= now) return;
-	setPrivateInt("Winamp Browser", "linksupdate", now);*/
+	setPrivateInt("WinLAMP Browser", "linksupdate", now);*/
 
 	xmlReadPassed = false;
 
@@ -862,11 +862,11 @@ int getSubFolderNum (string name)
 Function getSubFolderNameToNum(string name);
 int getSubFolderNameToNum (string name)
 {
-	int subItems = getPrivateInt("Winamp Browser QuickLinks SubMenus", "numItems", 0);
+	int subItems = getPrivateInt("WinLAMP Browser QuickLinks SubMenus", "numItems", 0);
 
 	for ( int i = 1; i <= subItems; i++ )
 	{
-		if (getPrivateString("Winamp Browser QuickLinks SubMenus", "itemText_" + integerToString(i), "ERROR") == name) return i;
+		if (getPrivateString("WinLAMP Browser QuickLinks SubMenus", "itemText_" + integerToString(i), "ERROR") == name) return i;
 	}
 	return -1;
 }
@@ -898,13 +898,13 @@ showQLEdit (int item)
 	qlparent.addItem("* root");
 	qlparent.setXmlParam("select", "* root");
 
-	int subItems = getPrivateInt("Winamp Browser QuickLinks SubMenus", "numItems", 0);
+	int subItems = getPrivateInt("WinLAMP Browser QuickLinks SubMenus", "numItems", 0);
 
 	// load all existing subfolders
 	for ( int i = 1; i <= subItems; i++ )
 	{
-		qlparent.addItem(getPrivateString("Winamp Browser QuickLinks SubMenus", "itemText_" + integerToString(i), "ERROR"));
-		if ( (item + 1000) * (-1) == i ) qlparent.setXmlParam("select", getPrivateString("Winamp Browser QuickLinks SubMenus", "itemText_" + integerToString(i), "ERROR"));
+		qlparent.addItem(getPrivateString("WinLAMP Browser QuickLinks SubMenus", "itemText_" + integerToString(i), "ERROR"));
+		if ( (item + 1000) * (-1) == i ) qlparent.setXmlParam("select", getPrivateString("WinLAMP Browser QuickLinks SubMenus", "itemText_" + integerToString(i), "ERROR"));
 	}
 
 	// standard text for a new folder
@@ -915,14 +915,14 @@ showQLEdit (int item)
 	// check if we should edit a quick link...
 	if (item > 0)
 	{
-		string name = getPrivateString("Winamp Browser QuickLinks", "itemText_" + integerToString(item), "ERROR");
+		string name = getPrivateString("WinLAMP Browser QuickLinks", "itemText_" + integerToString(item), "ERROR");
 		int sf = getSubFolderNum(name);
 		if (sf > 0)
 		{
-			qlparent.setXmlParam("select", getPrivateString("Winamp Browser QuickLinks SubMenus", "itemText_" + integerToString(sf), "ERROR"));
+			qlparent.setXmlParam("select", getPrivateString("WinLAMP Browser QuickLinks SubMenus", "itemText_" + integerToString(sf), "ERROR"));
 		}
 		qlname.setText(convertQuickLinkTempName(name, 0));
-		qlurl.setText(getPrivateString("Winamp Browser QuickLinks", "itemLink_" + integerToString(item), "ERROR"));
+		qlurl.setText(getPrivateString("WinLAMP Browser QuickLinks", "itemLink_" + integerToString(item), "ERROR"));
 	}
 	// ...or create a new one
 	else
@@ -957,8 +957,8 @@ edit_ok.onLeftClick ()
 	// If we store a new quicklink let's insert it in the end of the list.
 	if (editItemNum == 0) 
 	{
-		editItemNum = getPrivateInt("Winamp Browser QuickLinks", "numItems", -1) + 1;
-		setPrivateInt("Winamp Browser QuickLinks", "numItems", editItemNum);
+		editItemNum = getPrivateInt("WinLAMP Browser QuickLinks", "numItems", -1) + 1;
+		setPrivateInt("WinLAMP Browser QuickLinks", "numItems", editItemNum);
 	}
 	edit e = qlparent.findObject("combobox.edit");
 	string sel = e.getText();
@@ -966,7 +966,7 @@ edit_ok.onLeftClick ()
 	//store as root item
 	if (sel == "* root")
 	{
-		setPrivateString("Winamp Browser QuickLinks", "itemText_" + integerToString(editItemNum), qlname.getText());
+		setPrivateString("WinLAMP Browser QuickLinks", "itemText_" + integerToString(editItemNum), qlname.getText());
 	}
 	// store in a subfolder
 	else
@@ -975,20 +975,20 @@ edit_ok.onLeftClick ()
 		// store in a existing subfolder
 		if (i > 0)
 		{
-			setPrivateString("Winamp Browser QuickLinks", "itemText_" + integerToString(editItemNum), "[[submenu]" + integerToString(i) + "]" + qlname.getText());
+			setPrivateString("WinLAMP Browser QuickLinks", "itemText_" + integerToString(editItemNum), "[[submenu]" + integerToString(i) + "]" + qlname.getText());
 		}
 		// store in a new subfolder
 		else
 		{
-			int subitems = getPrivateInt("Winamp Browser QuickLinks SubMenus", "numItems", 0);
-			setPrivateString("Winamp Browser QuickLinks", "itemText_" + integerToString(editItemNum), "[[submenu]" + integerToString(subitems + 1) + "]" + qlname.getText());
+			int subitems = getPrivateInt("WinLAMP Browser QuickLinks SubMenus", "numItems", 0);
+			setPrivateString("WinLAMP Browser QuickLinks", "itemText_" + integerToString(editItemNum), "[[submenu]" + integerToString(subitems + 1) + "]" + qlname.getText());
 
-			setPrivateInt("Winamp Browser QuickLinks SubMenus", "numItems", subitems + 1);
-			setPrivateString("Winamp Browser QuickLinks SubMenus", "itemText_" + integerToString(subitems + 1), sel);
+			setPrivateInt("WinLAMP Browser QuickLinks SubMenus", "numItems", subitems + 1);
+			setPrivateString("WinLAMP Browser QuickLinks SubMenus", "itemText_" + integerToString(subitems + 1), sel);
 		}
 	}
 	// save link and close window
-	setPrivateString("Winamp Browser QuickLinks", "itemLink_" + integerToString(editItemNum), qlurl.getText());
+	setPrivateString("WinLAMP Browser QuickLinks", "itemLink_" + integerToString(editItemNum), qlurl.getText());
 	quicklink_name_layout.hide(); 
 }
 
@@ -1020,7 +1020,7 @@ showSMEdit (int item)
 	// load submenu text, if we edit
 	if (smEditItemNum)
 	{
-		smname.setText(getPrivateString("Winamp Browser QuickLinks SubMenus", "itemText_" + integerToString(smEditItemNum), "ERROR"));
+		smname.setText(getPrivateString("WinLAMP Browser QuickLinks SubMenus", "itemText_" + integerToString(smEditItemNum), "ERROR"));
 	}
 
 	submenu_name_layout.center();
@@ -1039,11 +1039,11 @@ sm_edit_ok.onLeftClick ()
 	// is this a new submenu?
 	if (smEditItemNum == 0) 
 	{
-		smEditItemNum = getPrivateInt("Winamp Browser QuickLinks SubMenus", "numItems", 0);
+		smEditItemNum = getPrivateInt("WinLAMP Browser QuickLinks SubMenus", "numItems", 0);
 		smEditItemNum++;
-		setPrivateInt("Winamp Browser QuickLinks SubMenus", "numItems", smEditItemNum);
+		setPrivateInt("WinLAMP Browser QuickLinks SubMenus", "numItems", smEditItemNum);
 	}
-	setPrivateString("Winamp Browser QuickLinks SubMenus", "itemText_" + integerToString(smEditItemNum), smname.getText());
+	setPrivateString("WinLAMP Browser QuickLinks SubMenus", "itemText_" + integerToString(smEditItemNum), smname.getText());
 	submenu_name_layout.hide(); 
 }
 
@@ -1097,30 +1097,30 @@ blinks.onLeftClick ()
 		int answer = messageBox (msg, translate("Confirmation") , 4, "");
 		if (answer == 4)
 		{
-			int Subitems = getPrivateInt("Winamp Browser QuickLinks Submenus", "numItems", -1);
-			int items = getPrivateInt("Winamp Browser QuickLinks", "numItems", -1);
+			int Subitems = getPrivateInt("WinLAMP Browser QuickLinks Submenus", "numItems", -1);
+			int items = getPrivateInt("WinLAMP Browser QuickLinks", "numItems", -1);
 
-			setPrivateInt("Winamp Browser QuickLinks Submenus", "numItems", Subitems - 1);
+			setPrivateInt("WinLAMP Browser QuickLinks Submenus", "numItems", Subitems - 1);
 
 			for ( int i = ret; i <= Subitems; i++ )
 			{
-				string set = getPrivateString("Winamp Browser QuickLinks Submenus", "itemText_" + integerToString(i+1), "ERROR");
-				setPrivateString("Winamp Browser QuickLinks Submenus", "itemText_" + integerToString(i), set);
+				string set = getPrivateString("WinLAMP Browser QuickLinks Submenus", "itemText_" + integerToString(i+1), "ERROR");
+				setPrivateString("WinLAMP Browser QuickLinks Submenus", "itemText_" + integerToString(i), set);
 				string vv = "[[submenu]" + integerToString(i) + "]";
 				for ( int ii = 1; ii <= items; ii++ )
 				{
-					string v = getPrivateString("Winamp Browser QuickLinks", "itemText_" + integerToString(ii), "ERROR");
+					string v = getPrivateString("WinLAMP Browser QuickLinks", "itemText_" + integerToString(ii), "ERROR");
 					if (strleft (v, strlen(vv)) == vv)
 					{
 						v = strright(v, strlen(v) - strlen(vv));
 						if (i == ret)
 						{
-							setPrivateString("Winamp Browser QuickLinks", "itemText_" + integerToString(ii), v);
+							setPrivateString("WinLAMP Browser QuickLinks", "itemText_" + integerToString(ii), v);
 						}
 						else
 						{
 							v = "[[submenu]" + integerToString(i-1) + "]" + v;
-							setPrivateString("Winamp Browser QuickLinks", "itemText_" + integerToString(ii), v);
+							setPrivateString("WinLAMP Browser QuickLinks", "itemText_" + integerToString(ii), v);
 						}
 					}
 				}
@@ -1131,7 +1131,7 @@ blinks.onLeftClick ()
 
 	if (ret <= 0) return;
 
-	int items = getPrivateInt("Winamp Browser QuickLinks", "numItems", -1);
+	int items = getPrivateInt("WinLAMP Browser QuickLinks", "numItems", -1);
 
 	if (ret > items) 
 	{
@@ -1143,16 +1143,16 @@ blinks.onLeftClick ()
 			int answer = messageBox (msg, translate("Confirmation") , 4, "");
 			if (answer == 4)
 			{
-				int items = getPrivateInt("Winamp Browser QuickLinks", "numItems", -1);
+				int items = getPrivateInt("WinLAMP Browser QuickLinks", "numItems", -1);
 
-				setPrivateInt("Winamp Browser QuickLinks", "numItems", items - 1);
+				setPrivateInt("WinLAMP Browser QuickLinks", "numItems", items - 1);
 
 				for ( int i = ret; i <= items; i++ )
 				{
-					string set = getPrivateString("Winamp Browser QuickLinks", "itemText_" + integerToString(i+1), "ERROR");
-					setPrivateString("Winamp Browser QuickLinks", "itemText_" + integerToString(i), set);
-					set = getPrivateString("Winamp Browser QuickLinks", "itemLink_" + integerToString(i+1), "ERROR");
-					setPrivateString("Winamp Browser QuickLinks", "itemLink_" + integerToString(i), set);
+					string set = getPrivateString("WinLAMP Browser QuickLinks", "itemText_" + integerToString(i+1), "ERROR");
+					setPrivateString("WinLAMP Browser QuickLinks", "itemText_" + integerToString(i), set);
+					set = getPrivateString("WinLAMP Browser QuickLinks", "itemLink_" + integerToString(i+1), "ERROR");
+					setPrivateString("WinLAMP Browser QuickLinks", "itemLink_" + integerToString(i), set);
 				}
 			}
 		}
@@ -1165,7 +1165,7 @@ blinks.onLeftClick ()
 	}
 	else if (ret > 0 && ret <= items) 
 	{
-		navurl.setText (getPrivateString("Winamp Browser QuickLinks", "itemLink_" + integerToString(ret), "ERROR"));
+		navurl.setText (getPrivateString("WinLAMP Browser QuickLinks", "itemLink_" + integerToString(ret), "ERROR"));
 		browserReload();
 	}
 
@@ -1176,8 +1176,8 @@ createCustomMenu (boolean wantAdd, int startVal)
 {
 	popupmenu _menu = new popupmenu;
 
-	int subItems = getPrivateInt("Winamp Browser QuickLinks SubMenus", "numItems", 0);
-	int items = getPrivateInt("Winamp Browser QuickLinks", "numItems", 0);
+	int subItems = getPrivateInt("WinLAMP Browser QuickLinks SubMenus", "numItems", 0);
+	int items = getPrivateInt("WinLAMP Browser QuickLinks", "numItems", 0);
 	int int_subItems = internal_LinksSubmenus.getNumItems();
 	int int_items = internal_LinksTitle.getNumItems();
 
@@ -1238,7 +1238,7 @@ createCustomMenu (boolean wantAdd, int startVal)
 				popupmenu _sub = new popupmenu;
 				for ( int ii = 1; ii <= items; ii++ )
 				{
-					string v = getPrivateString("Winamp Browser QuickLinks", "itemText_" + integerToString(ii), "ERROR");
+					string v = getPrivateString("WinLAMP Browser QuickLinks", "itemText_" + integerToString(ii), "ERROR");
 					if (strleft (v, strlen(vv)) == vv)
 					{
 						v = strright(v, strlen(v) - strlen(vv));
@@ -1246,13 +1246,13 @@ createCustomMenu (boolean wantAdd, int startVal)
 					}
 				}
 				if (_sub.getNumCommands() < 1) _sub.addCommand ("No Quick Links Stored", 0, 0, 1);
-				editmenu.AddSubMenu (_sub, getPrivateString("Winamp Browser QuickLinks SubMenus", "itemText_" + integerToString(i), "ERROR"));
+				editmenu.AddSubMenu (_sub, getPrivateString("WinLAMP Browser QuickLinks SubMenus", "itemText_" + integerToString(i), "ERROR"));
 			}
 		}
 
 		for ( int i = 1; i <= items; i++ )
 		{
-			string v = getPrivateString("Winamp Browser QuickLinks", "itemText_" + integerToString(i), "ERROR");
+			string v = getPrivateString("WinLAMP Browser QuickLinks", "itemText_" + integerToString(i), "ERROR");
 			if (strleft(v, 10) != "[[submenu]")
 			{
 				editmenu.addCommand (
@@ -1279,7 +1279,7 @@ createCustomMenu (boolean wantAdd, int startVal)
 				popupmenu _sub = new popupmenu;
 				for ( int ii = 1; ii <= items; ii++ )
 				{
-					string v = getPrivateString("Winamp Browser QuickLinks", "itemText_" + integerToString(ii), "ERROR");
+					string v = getPrivateString("WinLAMP Browser QuickLinks", "itemText_" + integerToString(ii), "ERROR");
 					string vv = "[[submenu]" + integerToString(i) + "]";
 					if (strleft (v, strlen(vv)) == vv)
 					{
@@ -1288,13 +1288,13 @@ createCustomMenu (boolean wantAdd, int startVal)
 					}
 				}
 				if (_sub.getNumCommands() < 1) _sub.addCommand ("No Quick Links Stored", 0, 0, 1);
-				editmenu2.AddSubMenu (_sub, getPrivateString("Winamp Browser QuickLinks SubMenus", "itemText_" + integerToString(i), "ERROR"));
+				editmenu2.AddSubMenu (_sub, getPrivateString("WinLAMP Browser QuickLinks SubMenus", "itemText_" + integerToString(i), "ERROR"));
 			}
 		}
 
 		for ( int i = 1; i <= items; i++ )
 		{
-			string v = getPrivateString("Winamp Browser QuickLinks", "itemText_" + integerToString(i), "ERROR");
+			string v = getPrivateString("WinLAMP Browser QuickLinks", "itemText_" + integerToString(i), "ERROR");
 			if (strleft(v, 10) != "[[submenu]")
 			{
 				
@@ -1318,7 +1318,7 @@ createCustomMenu (boolean wantAdd, int startVal)
 		for ( int i = 1; i <= subItems; i++ )
 		{
 			editmenu3.addCommand (
-				getPrivateString("Winamp Browser QuickLinks SubMenus", "itemText_" + integerToString(i), "ERROR"),
+				getPrivateString("WinLAMP Browser QuickLinks SubMenus", "itemText_" + integerToString(i), "ERROR"),
 				-20000 - i,
 				0,
 				0
@@ -1335,7 +1335,7 @@ createCustomMenu (boolean wantAdd, int startVal)
 		for ( int i = 1; i <= subItems; i++ )
 		{
 			editmenu4.addCommand (
-				getPrivateString("Winamp Browser QuickLinks SubMenus", "itemText_" + integerToString(i), "ERROR"),
+				getPrivateString("WinLAMP Browser QuickLinks SubMenus", "itemText_" + integerToString(i), "ERROR"),
 				-40000 - i,
 				0,
 				0
@@ -1385,7 +1385,7 @@ createCustomMenu (boolean wantAdd, int startVal)
 			_sub.addSeparator();
 			for ( int ii = 1; ii <= items; ii++ )
 			{
-				string v = getPrivateString("Winamp Browser QuickLinks", "itemText_" + integerToString(ii), "ERROR");
+				string v = getPrivateString("WinLAMP Browser QuickLinks", "itemText_" + integerToString(ii), "ERROR");
 				string vv = "[[submenu]" + integerToString(i) + "]";
 				if (strleft (v, strlen(vv)) == vv)
 				{
@@ -1394,7 +1394,7 @@ createCustomMenu (boolean wantAdd, int startVal)
 				}
 			}
 			if (_sub.getNumCommands() < 3) _sub.addCommand ("No Quick Links Stored", 0, 0, 1);
-			_menu.AddSubMenu (_sub, getPrivateString("Winamp Browser QuickLinks SubMenus", "itemText_" + integerToString(i), "ERROR"));
+			_menu.AddSubMenu (_sub, getPrivateString("WinLAMP Browser QuickLinks SubMenus", "itemText_" + integerToString(i), "ERROR"));
 		}
 	}
  
@@ -1418,7 +1418,7 @@ createCustomMenu (boolean wantAdd, int startVal)
 
 	for ( int i = 1; i <= items; i++ )
 	{
-		string v = getPrivateString("Winamp Browser QuickLinks", "itemText_" + integerToString(i), "ERROR");
+		string v = getPrivateString("WinLAMP Browser QuickLinks", "itemText_" + integerToString(i), "ERROR");
 		if (strleft(v, 10) != "[[submenu]")
 		{
 			_menu.addCommand (
@@ -1476,14 +1476,14 @@ brw.OnNavigateError(String url, int code)
 	if (code == 0)
 		return;
 
-	// if (url == "" || strleft(url, strlen("http://search.winamp.com/")) == "http://search.winamp.com/")
+	// if (url == "" || strleft(url, strlen("http://search.winlamp.com/")) == "http://search.winlamp.com/")
 	if (url == "" || strleft(url, strlen("http://www.google.com/")) == "http://www.google.com/")
 		return;
 
 	if (strleft(url, 11) == "javascript:")
 		return;
 
-	// String t = "http://search.winamp.com/search/afe?query=" + prepareWebString(navurl.getText(), "+") + "&invocationType=en00-winamp-553--error";
+	// String t = "http://search.winlamp.com/search/afe?query=" + prepareWebString(navurl.getText(), "+") + "&invocationType=en00-winlamp-553--error";
 	String t = "http://www.google.com/search?q=" + prepareWebString(navurl.getText(), "+");
 
 	navurl.setText(t);
@@ -1569,10 +1569,10 @@ scr_content.onResize (int x, int y, int w, int h)
 // called everytime a media link is found. you must call brw.scrape to get them!
 brw.onMediaLink (string url)
 {
-	if (getPrivateInt("Winamp Bento", "Browser MediaMonitor autoswitch", 1))
+	if (getPrivateInt("WinLAMP Bento", "Browser MediaMonitor autoswitch", 1))
 	{
 		browser_scr_show_attrib.setData("1");
-		setPrivateInt("Winamp Bento", "Browser DownloadMgr visible", 0);
+		setPrivateInt("WinLAMP Bento", "Browser DownloadMgr visible", 0);
 		scr_mode.show();
 		dld_mode.hide();
 	}
@@ -1890,10 +1890,10 @@ Function maybeShowDownloadManager();
 // downlaod a list item
 downloadListItem (int num)
 {
-	boolean storeInMl = getPrivateInt("Winamp Bento", "Store Browser Downloads in ML", 1);
+	boolean storeInMl = getPrivateInt("WinLAMP Bento", "Store Browser Downloads in ML", 1);
 
-	String storageDir = getPrivateString("Winamp Bento", "Save Browser Downloads Dir", "");
-	if (getPrivateInt("Winamp Bento", "Save Browser Downloads in CD Ripping Dir", 0))
+	String storageDir = getPrivateString("WinLAMP Bento", "Save Browser Downloads Dir", "");
+	if (getPrivateInt("WinLAMP Bento", "Save Browser Downloads in CD Ripping Dir", 0))
 		storageDir = "";
 
 	if (num > -1)
@@ -1931,9 +1931,9 @@ downloadListItem (int num)
 
 maybeShowDownloadManager ()
 {
-	if (getPrivateInt("Winamp Bento", "Browser DownloadMgr autoopen", 1))
+	if (getPrivateInt("WinLAMP Bento", "Browser DownloadMgr autoopen", 1))
 	{
-		setPrivateInt("Winamp Bento", "Browser DownloadMgr visible", 1);
+		setPrivateInt("WinLAMP Bento", "Browser DownloadMgr visible", 1);
 		scr_mode.hide();
 		dld_mode.show();
 	}
@@ -1985,7 +1985,7 @@ playDelay.onTimer ()
 
 switch_scr.onLeftClick ()
 {
-	setPrivateInt("Winamp Bento", "Browser DownloadMgr visible", 0);
+	setPrivateInt("WinLAMP Bento", "Browser DownloadMgr visible", 0);
 
 	scr_mode.show();
 	dld_mode.hide();
@@ -1994,7 +1994,7 @@ switch_scr.onLeftClick ()
 
 switch_dld.onLeftClick ()
 {
-	setPrivateInt("Winamp Bento", "Browser DownloadMgr visible", 1);
+	setPrivateInt("WinLAMP Bento", "Browser DownloadMgr visible", 1);
 
 	scr_mode.hide();
 	dld_mode.show();
@@ -2003,19 +2003,19 @@ switch_dld.onLeftClick ()
 dld_settings.onleftclick ()
 {
 
-	/*boolean b = getPrivateInt("Winamp Bento", "Browser DownloadMgr visible", 0);
+	/*boolean b = getPrivateInt("WinLAMP Bento", "Browser DownloadMgr visible", 0);
 	PopupMenu pop = new PopupMenu;
 	pop.addCommand("Media Monitor", 0, !b, false);
 	pop.addCommand("Active Downloads", 1, b, false);*/
 	PopupMenu spop = new PopupMenu;
-	spop.addCommand("Autoopen Download Manager on downloading", 101, getPrivateInt("Winamp Bento", "Browser DownloadMgr autoopen", 1), false);
-	spop.addCommand(getString("nullsoft.browser", 21), 102, getPrivateInt("Winamp Bento", "Browser MediaMonitor autoswitch", 1), false);
+	spop.addCommand("Autoopen Download Manager on downloading", 101, getPrivateInt("WinLAMP Bento", "Browser DownloadMgr autoopen", 1), false);
+	spop.addCommand(getString("nullsoft.browser", 21), 102, getPrivateInt("WinLAMP Bento", "Browser MediaMonitor autoswitch", 1), false);
 	spop.addSeparator();
-	spop.addCommand("Add downloaded files to Media Library", 103, getPrivateInt("Winamp Bento", "Store Browser Downloads in ML", 1), false);
+	spop.addCommand("Add downloaded files to Media Library", 103, getPrivateInt("WinLAMP Bento", "Store Browser Downloads in ML", 1), false);
 
 	PopupMenu spopout = new PopupMenu;
-	spopout.addCommand("CD Ripping Directory", 110, getPrivateInt("Winamp Bento", "Save Browser Downloads in CD Ripping Dir", 1), false);
-	spopout.addCommand("Custom Directory", 111, !getPrivateInt("Winamp Bento", "Save Browser Downloads in CD Ripping Dir", 1), false);
+	spopout.addCommand("CD Ripping Directory", 110, getPrivateInt("WinLAMP Bento", "Save Browser Downloads in CD Ripping Dir", 1), false);
+	spopout.addCommand("Custom Directory", 111, !getPrivateInt("WinLAMP Bento", "Save Browser Downloads in CD Ripping Dir", 1), false);
 	spopout.addSeparator();
 	spopout.addCommand("Alter CD Ripping Directory", 100, false, false);
 
@@ -2024,7 +2024,7 @@ dld_settings.onleftclick ()
 	int res = spop.popatxy(clientToScreenX(dld_settings.getLeft()), clientToScreenY(dld_settings.getTop() + dld_settings.getHeight()));
 	if (res < 100 && res > -1)
 	{
-		setPrivateInt("Winamp Bento", "Browser DownloadMgr visible", res);
+		setPrivateInt("WinLAMP Bento", "Browser DownloadMgr visible", res);
 		if (res)
 		{
 			scr_mode.hide();
@@ -2047,29 +2047,29 @@ dld_settings.onleftclick ()
 	}
 	else if (res == 101)
 	{
-		setPrivateInt("Winamp Bento", "Browser DownloadMgr autoopen", !getPrivateInt("Winamp Bento", "Browser DownloadMgr autoopen", 1));
+		setPrivateInt("WinLAMP Bento", "Browser DownloadMgr autoopen", !getPrivateInt("WinLAMP Bento", "Browser DownloadMgr autoopen", 1));
 	}
 	else if (res == 102)
 	{
-		setPrivateInt("Winamp Bento", "Browser MediaMonitor autoswitch", !getPrivateInt("Winamp Bento", "Browser MediaMonitor autoswitch", 1));
+		setPrivateInt("WinLAMP Bento", "Browser MediaMonitor autoswitch", !getPrivateInt("WinLAMP Bento", "Browser MediaMonitor autoswitch", 1));
 	}
 	else if (res == 103)
 	{
-		setPrivateInt("Winamp Bento", "Store Browser Downloads in ML", !getPrivateInt("Winamp Bento", "Store Browser Downloads in ML", 1));
+		setPrivateInt("WinLAMP Bento", "Store Browser Downloads in ML", !getPrivateInt("WinLAMP Bento", "Store Browser Downloads in ML", 1));
 	}
 	else if (res == 110)
 	{
-		setPrivateInt("Winamp Bento", "Save Browser Downloads in CD Ripping Dir", 1);
+		setPrivateInt("WinLAMP Bento", "Save Browser Downloads in CD Ripping Dir", 1);
 	}
 	else if (res == 111)
 	{
-		String path = getPrivateString("Winamp Bento", "Save Browser Downloads Dir", "");
+		String path = getPrivateString("WinLAMP Bento", "Save Browser Downloads Dir", "");
 		if (path == "") path = getDownloadPath();
 		path = selectFolder("", "Choose folder to store downloaded media.", path);
 		if (path == "")
 			return;
-		setPrivateInt("Winamp Bento", "Save Browser Downloads in CD Ripping Dir", 0);
-		setPrivateString("Winamp Bento", "Save Browser Downloads Dir", path);
+		setPrivateInt("WinLAMP Bento", "Save Browser Downloads in CD Ripping Dir", 0);
+		setPrivateString("WinLAMP Bento", "Save Browser Downloads Dir", path);
 	}
 
 	delete spop;

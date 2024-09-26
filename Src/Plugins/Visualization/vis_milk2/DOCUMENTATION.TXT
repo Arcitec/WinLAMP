@@ -1,6 +1,6 @@
 
 -----------------------------------------------------------------------
- WINAMP 2.X VISUALIZATION PLUG-IN "MEGA SDK"
+ WINLAMP 2.X VISUALIZATION PLUG-IN "MEGA SDK"
  ('Vis Mega SDK' for short)
  ('VMS' for shorter)
 -----------------------------------------------------------------------
@@ -11,8 +11,8 @@
  Author:       Ryan Geiss
  Copyright:    (c) 2002-2007 Nullsoft, Inc.
  VMS HOMEPAGE:    http://www.nullsoft.com/free/vms/
- VMS AT WINAMP:   http://www.winamp.com/nsdn/winamp2x/dev/plugins/vis.jhtml
- SUPPORT FORUM:   http://forums.winamp.com/forumdisplay.php?forumid=147
+ VMS AT WINLAMP:   http://www.winlamp.com/nsdn/winlamp2x/dev/plugins/vis.jhtml
+ SUPPORT FORUM:   http://forums.winlamp.com/forumdisplay.php?forumid=147
 -----------------------------------------------------------------------
 
 
@@ -44,7 +44,7 @@ Purpose of this package
     visualization plugins.
 
     It aims to provide a codebase that enables all developers 
-    (beginning to advanced) to easily build robust Winamp 2.x 
+    (beginning to advanced) to easily build robust WinLAMP 2.x 
     visualization plugins whose graphics are to be generated
     though the DirectX 8 API.  This codebase will 1) drastically 
     reduce the time it takes to write your plugin, 2) ensure 
@@ -83,7 +83,7 @@ Features
     -OTHER PERKS like a runtime help screen and playlist; high-precision
         timing (accurate to 10 microseconds, or 0.00001 seconds); 
         pause-filtering (so your timing code won't got haywire
-        when Winamp is unpaused); and many others.
+        when WinLAMP is unpaused); and many others.
     -CPU-FRIENDLY: when the window is minimized, or when you're
         in fullscreen mode and ALT-TAB out, the plugin sleeps to
         preserve CPU.  FPS limiting also does its best to preserve
@@ -94,8 +94,8 @@ Features
     
 Required software
 -----------------
-    1. Nullsoft Winamp 2.X (~1 MB)
-          http://www.winamp.com/
+    1. Nullsoft WinLAMP 2.X (~1 MB)
+          http://www.winlamp.com/
     2. Microsoft DirectX 8.0+ - (~11 MB)
           http://www.microsoft.com/windows/directx/
     3. Microsoft Developer Studio (Visual C++) 6.0
@@ -172,12 +172,12 @@ Starting Your Own Plugin Based on the Framework
         a. In the upper-left corner, where it says 'Settings For:',
             select 'All Configurations' from the dropdown box.
         b. Click the 'debug' tab, and under 'Executable for debug 
-            session', point it to winamp.exe (most likely 
-            c:\program files\winamp\winamp.exe).  (This will enable
+            session', point it to winlamp.exe (most likely 
+            c:\program files\winlamp\winlamp.exe).  (This will enable
             you to debug your plugin using Visual C++.)
         c. Click the 'link' tab, and under 'Output file name',
             enter the name of the .DLL to write (such as 
-            c:\program files\winamp\plugins\vis_myplugin.dll).
+            c:\program files\winlamp\plugins\vis_myplugin.dll).
             This should start with 'vis_' and end in the 
             '.dll' extension.  This DLL will be your plugin.
         d. click OK.
@@ -208,10 +208,10 @@ Starting Your Own Plugin Based on the Framework
             above.
     
     9. Copy the files 'ex_tex.jpg' and 'vms_desktop.dll' from the MyPlugin 
-        directory to your Winamp PLUGINS folder (usually c:\program files\
-        winamp\plugins).
+        directory to your WinLAMP PLUGINS folder (usually c:\program files\
+        winlamp\plugins).
 
-    10. Run Winamp, press CTRL+P to select your plugin, and make sure that
+    10. Run WinLAMP, press CTRL+P to select your plugin, and make sure that
         it appears in the list.  Notice that the name matches what you 
         entered into the 'defines.h' file as APPNAME; if you didn't change 
         it, it will appear as 'Example Plugin v1.04 / VisMegaSDK' (or 
@@ -356,10 +356,10 @@ Using Data From the Base Class (CPluginShell)
     float     GetTime();           // returns current animation time (in seconds) (starts at zero) (updated once per frame)
     float     GetFps();            // returns current estimate of framerate (frames per second)
     eScrMode  GetScreenMode();     // returns WINDOWED, FULLSCREEN, FAKE_FULLSCREEN, DESKTOP, or NOT_YET_KNOWN (if called before or during OverrideDefaults()).
-    HWND      GetWinampWindow();   // returns handle to Winamp main window
+    HWND      GetWinLAMPWindow();   // returns handle to WinLAMP main window
     HINSTANCE GetInstance();       // returns handle to the plugin DLL module; used for things like loading resources (dialogs, bitmaps, icons...) that are built into the plugin.
-    char*     GetPluginsDirPath(); // usually returns 'c:\\program files\\winamp\\plugins\\'
-    char*     GetConfigIniFile();  // usually returns 'c:\\program files\\winamp\\plugins\\something.ini' - filename is determined from identifiers in 'defines.h'
+    char*     GetPluginsDirPath(); // usually returns 'c:\\program files\\winlamp\\plugins\\'
+    char*     GetConfigIniFile();  // usually returns 'c:\\program files\\winlamp\\plugins\\something.ini' - filename is determined from identifiers in 'defines.h'
 
     // GET METHODS THAT ONLY WORK ONCE DIRECTX IS READY
     // ------------------------------------------------------------
@@ -401,7 +401,7 @@ Using Data From the Base Class (CPluginShell)
     int          m_allow_page_tearing_w;    // 0 or 1
     int          m_allow_page_tearing_fs;   // 0 or 1
     int          m_allow_page_tearing_dm;   // 0 or 1
-    int          m_minimize_winamp;         // 0 or 1
+    int          m_minimize_winlamp;         // 0 or 1
     int          m_desktop_show_icons;      // 0 or 1
     int          m_desktop_textlabel_boxes; // 0 or 1
     int          m_desktop_manual_icon_scoot; // 0 or 1
@@ -471,8 +471,8 @@ Using Visual C++ to Debug your Plugin
         (menu:Build->Configurations, then select 'debug').
     2. Go to menu:Project->Settings (ALT+F7) and click the 
         'Debug' tab.  Under 'Executable for debug session', 
-        point it to winamp.exe.  
-    3. Press F5 to start debug session; it will launch winamp.
+        point it to winlamp.exe.  
+    3. Press F5 to start debug session; it will launch winlamp.
     4. You can now configure your plugin or run it; just set a 
         breakpoint anywhere in your code (F9) and when the code
         gets to that point, it will break, and you can look at
@@ -523,7 +523,7 @@ Releasing a Plugin
         * If you added any MessageBox() commands, did you supply the right 
             HWND parameter?  (The messagebox will pop up on the same monitor
             that that HWND is on.)
-        * Did you test your plugin in Desktop Mode, while Winamp is
+        * Did you test your plugin in Desktop Mode, while WinLAMP is
             *paused*, and then try moving icons around, to make sure that
             you're properly handling the 'redraw' flag in MyRenderFn()?
         * Did you update the version numbers throughout installer.nsi?
@@ -542,7 +542,7 @@ Tips to pass on the the user, in your documentation
         Often people want to get the newest, fastest beta drivers, but 
         these drivers are almost ALWAYS riddled with new bugs.
 
-    2. If you want Winamp to listen to your sound card's Line-In or Mic-In
+    2. If you want WinLAMP to listen to your sound card's Line-In or Mic-In
         (or other audio input channel on your system) for driving the
         visuals, just do the following:
 
@@ -558,12 +558,12 @@ Tips to pass on the the user, in your documentation
             your case) is SELECTED (with a check mark) and that the volume 
             is close to, or at, the maximum.  Hit OK.           
 
-        3. TELL WINAMP TO USE LINE-IN
-            Open Winamp, and hit CTRL+L (the "Open Location" hotkey).  Now
+        3. TELL WINLAMP TO USE LINE-IN
+            Open WinLAMP, and hit CTRL+L (the "Open Location" hotkey).  Now
             type in "linein://" as the location you want to open.  (Leave out
             the quotes and make sure you use FORWARD slashes.)  Hit PLAY
-            in Winamp, and the little built-in oscilloscope (or spectrum 
-            analyzer) in Winamp should start showing your signal.
+            in WinLAMP, and the little built-in oscilloscope (or spectrum 
+            analyzer) in WinLAMP should start showing your signal.
 
         4. RUN YOUR VISUALIZATION PLUGIN OF CHOICE
             If the plugin seems to be responding too much or too little,
@@ -643,14 +643,14 @@ Other Resources
         by far, the most critical resource you have.  It fully documents 
         the entire API, and much more.  The SDK also comes with tons of
         samples and their source code.
-    2. NSDN: the Nullsoft Developer Network, where the Winamp API 
-        is published: http://www.winamp.com/nsdn/winamp2x/
+    2. NSDN: the Nullsoft Developer Network, where the WinLAMP API 
+        is published: http://www.winlamp.com/nsdn/winlamp2x/
         If you want to do anything in MyWindowProc() that involves
-        communicating with the Winamp window directly (such as
+        communicating with the WinLAMP window directly (such as
         querying for the song title/time/length, querying the playlist,
         adjusting the panning, toggling shuffle, etc.), you'll need
         to delve into NSDN.  It's all extremely straightforward and
-        simple.  For a few examples of how to talk to the main Winamp
+        simple.  For a few examples of how to talk to the main WinLAMP
         window, check out PluginShellWindowProc() in pluginshell.cpp.
     3. Here are links to a few sites with good DirectX tutorials/faqs/code:
            The X-Zone:     http://www.mvps.org/directx/
@@ -703,10 +703,10 @@ Version History
 ***      otherwise.]
 
     -added key: 'r' for repeat
-    -added SKINNING; if you have Winamp 2.90+, you can now check the
-        'integrate with winamp' checkbox and the plugin [when running in 
-        windowed mode] will be skinned just like Winamp.  The integrated 
-        window works just like any other Winamp window; it docks with 
+    -added SKINNING; if you have WinLAMP 2.90+, you can now check the
+        'integrate with winlamp' checkbox and the plugin [when running in 
+        windowed mode] will be skinned just like WinLAMP.  The integrated 
+        window works just like any other WinLAMP window; it docks with 
         other windows, CTRL+TAB cycles between them all, and lots of new 
         keys work (J, L, CTRL+P, ALT+E, etc.).
     -fixed bug (or error in judgment?) where fake fullscreen mode window 
@@ -720,7 +720,7 @@ Version History
         windows, the taskbar WILL pop up.  If you want to avoid that,
         you'll have to run in true fullscreen mode.
     -improved audio and video synchronization
-        -the current framerate is now used to tell Winamp, each frame, 
+        -the current framerate is now used to tell WinLAMP, each frame, 
             exactly how far in advance it should give us the audio data.
             For example, if we're getting 20 fps, we should get the
             audio 50 ms in advance for the proper video frame to appear
@@ -753,10 +753,10 @@ Version History
             GetFont(EXTRA_5).  You can also get their height by calling
             GetFontHeight(EXTRA_1) through GetFontHeight(EXTRA_5).
     -greatly improved the installer script.
-        -now selects winamp2 dir by default, if both winamp 2 & 3 are installed.
+        -now selects winlamp2 dir by default, if both winlamp 2 & 3 are installed.
         -fixed a bug where the plugin wasn't being correctly set as the default plugin
-            in winamp.  Also, this is no longer an option - it just automatically does it.
-        -now, when you go to install to winamp 3, it checks to see if ClassicVis
+            in winlamp.  Also, this is no longer an option - it just automatically does it.
+        -now, when you go to install to winlamp 3, it checks to see if ClassicVis
             is installed.  If it is, you're set; if not, it prompts you to go download
             it.  If you choose not to, it alerts you that the installation failed.
     -the FFT class (fft.cpp, fft.h) now has 2 extra optional init parameters.
@@ -779,7 +779,7 @@ Version History
     -added handy memset_MMX() function to utility.cpp (alongside memcpy_MMX)
     -fixed tabbing order for controls config panel tab #1 (doh) 
     -in 'defines.h', you now specify a long name + a short name for your plugin.
-        The long name is used for the description string in winamp's list of plugins;
+        The long name is used for the description string in winlamp's list of plugins;
         the short name is used for the window caption.
     -in the example plugin, in plugin.cpp, the F3 key (show song length)
         is now a three-state toggle: off, current time, and current time / total 
@@ -807,7 +807,7 @@ Version History
         2. added 'redraw' flag to MyRenderFn - see the comments
             at the top of MyRenderFn.  Make sure you respect this
             flag, or else, when the user moves icons around in
-            Desktop Mode while Winamp is paused, your plugin
+            Desktop Mode while WinLAMP is paused, your plugin
             will mysteriously start animating.
         3. added the 'MyRenderUI' function - please break your 
             text-rendering code in MyRenderFn off into this function.
@@ -843,10 +843,10 @@ Version History
             more than just the font dialog code.
         -added 'desktop_mode.cpp' and 'icon_t.h' to support Desktop Mode.
     -Changes made to the sample installer script: [installer.nsi]
-        -added UnInstall options for winamp 2 and 3
+        -added UnInstall options for winlamp 2 and 3
         -simplified things by using some !define's at the top
-        -updated it to look for Winamp 3's new executable 
-            name: winamp3.exe (in addition to the old, which was 
+        -updated it to look for WinLAMP 3's new executable 
+            name: winlamp3.exe (in addition to the old, which was 
             studio.exe)
 
 -----------------------------------------------------------------------
@@ -868,9 +868,9 @@ Version History
         -split the settings for 'fake fullscreen' mode and regular
            fullscreen mode into two separate sets of controls, instead
            of sharing controls; it was too confusing that way.
-        -added option to minimize winamp when going fullscreen.  
-           Only actually minimizes winampwhen going fullscreen 
-           (or fake fullscreen) AND winamp and the plugin window 
+        -added option to minimize winlamp when going fullscreen.  
+           Only actually minimizes winlampwhen going fullscreen 
+           (or fake fullscreen) AND winlamp and the plugin window 
            are situated on the same monitor.
         -added user-configurable fonts to the config panel.
     -text:
@@ -891,7 +891,7 @@ Version History
        the window at the default size, the window will now try to shrink 
        further and further, until it is small enough to work.
     -fixed problem where the plugin wouldn't show up in the plug-ins list
-       in Winamp, if the user didn't have DX8 or later installed.  Now
+       in WinLAMP, if the user didn't have DX8 or later installed.  Now
        it does show up in the list, and if they try to run/configure it
        and DX8 is missing, it will indicate this, and even offer to
        take them to the MS DirectX website to download it.
@@ -953,7 +953,7 @@ Version History
     -fixed a bug w/a parameter to CreateFont: max font weight was
        900; 'twas calling it with 1000
     -fixed bug with context menu cleanup
-    -fixed a bug where winamp playback nav. keys (zxcvbs) were 
+    -fixed a bug where winlamp playback nav. keys (zxcvbs) were 
        handled under WM_KEYDOWN; should have been under WM_CHAR.
     -fixed a bug where DXContext was calling DestroyWindow (on the final
        exit of the plugin), when in fact, the window had already been

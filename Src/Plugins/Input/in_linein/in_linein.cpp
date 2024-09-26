@@ -6,7 +6,7 @@
 #include "LineIn.h"
 #include <api/service/waServiceFactory.h>
 #include "../Agave/Language/api_language.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "resource.h"
 
 // wasabi based services for localisation support
@@ -185,7 +185,7 @@ BOOL APIENTRY DllMain(HANDLE hMod, DWORD r, void*)
 	return TRUE;
 }
 
-extern "C"	__declspec( dllexport ) In_Module * winampGetInModule2()
+extern "C"	__declspec( dllexport ) In_Module * winlampGetInModule2()
 {
 	return &line;
 }

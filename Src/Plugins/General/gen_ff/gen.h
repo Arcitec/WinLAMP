@@ -1,1 +1,1 @@
-#include "../Winamp/gen.h"
+#include "../WinLAMP/gen.h"

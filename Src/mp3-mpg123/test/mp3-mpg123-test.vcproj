@@ -62,7 +62,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="../../nsutil/nsutil.lib"
-				OutputFile="$(ProgramFiles)\Winamp\$(ProjectName).exe"
+				OutputFile="$(ProgramFiles)\WinLAMP\$(ProjectName).exe"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"

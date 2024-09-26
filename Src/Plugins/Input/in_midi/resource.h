@@ -79,7 +79,7 @@
 #define IDS_COMPRESSED_RMI_FILES        75
 #define IDS_WITH_OUTPUT                 76
 #define IDS_STRING105                   77
-#define IDS_USES_WINAMPS_OUTPUT_PLUGINS 77
+#define IDS_USES_WINLAMPS_OUTPUT_PLUGINS 77
 #define STRING_MS_FMT                   78
 #define STRING_BIT_FMT                  79
 #define IDS_FAMILY_STRING_MIDI          80

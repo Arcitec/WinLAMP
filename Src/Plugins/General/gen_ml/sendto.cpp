@@ -5,7 +5,7 @@
 #include "sendto.h"
 #include "api__gen_ml.h"
 #include "../nu/AutoWideFn.h"
-#include "../Winamp/strutil.h"
+#include "../WinLAMP/strutil.h"
 
 SendToMenu::SendToMenu()
 {
@@ -194,7 +194,7 @@ void SendToMenu::buildmenu(HMENU hMenu, int type, int simple, int true_type, int
 
 		if(simple == FALSE)
 		{
-			mii.dwTypeData = WASABI_API_LNGSTRINGW(IDS_ENQUEUE_IN_WINAMP);
+			mii.dwTypeData = WASABI_API_LNGSTRINGW(IDS_ENQUEUE_IN_WINLAMP);
 			mii.cch = (UINT)wcslen(mii.dwTypeData);
 			InsertMenuItemW(hMenu,_pos++,TRUE,&mii);
 

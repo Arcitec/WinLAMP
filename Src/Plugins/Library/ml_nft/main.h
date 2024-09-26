@@ -7,15 +7,15 @@
 #include "resource.h"
 #include <windowsx.h>
 #include "resource.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../Plugins/General/gen_ml/ml.h"
 #include "../Plugins/General/gen_ml/config.h"
 #include "api__ml_nft.h"
 
 
-#define NFT_BASE_URL    L"https://nftlib.winamp.com/"
+#define NFT_BASE_URL    L"https://nftlib.winlamp.com/"
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 INT_PTR nft_pluginMessageProc( int message_type, INT_PTR param1, INT_PTR param2, INT_PTR param3 );
 extern int nft_treeItem;
 

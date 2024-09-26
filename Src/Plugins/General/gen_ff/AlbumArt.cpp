@@ -165,7 +165,7 @@ AlbumArt::AlbumArt()
 	valign            = 0;
 	align             = 0;
 	stretched         = false;
-	missing_art_image = L"winamp.cover.notfound"; // default to this.
+	missing_art_image = L"winlamp.cover.notfound"; // default to this.
 	src_file          = L"";
 	forceRefresh      = false;
 	noAutoRefresh     = false;
@@ -422,7 +422,7 @@ void AlbumArt::layer_adjustDest( RECT *r )
 	r->top    += offsetY;
 	r->bottom  = r->top + newH;
 
-	// This prevents parts of the image being cut off (if the img has the same dimensions as the rect) on moving/clicking winamp
+	// This prevents parts of the image being cut off (if the img has the same dimensions as the rect) on moving/clicking winlamp
 	// (they will just flicker, but at least they won't stay now)
 	// benski> CUT!!! no no no no no this is very bad because this gets called inside layer::onPaint  
 	//invalidate();

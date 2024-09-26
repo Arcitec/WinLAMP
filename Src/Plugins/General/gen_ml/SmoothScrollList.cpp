@@ -1,6 +1,6 @@
 #include "main.h"
 
-#include "../Winamp/gen.h"
+#include "../WinLAMP/gen.h"
 #include "../gen_ml/ml.h"
 #include "../gen_ml/ml_ipc_0313.h"
 

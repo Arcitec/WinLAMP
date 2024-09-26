@@ -1,4 +1,4 @@
-#include "../Winamp/buildType.h"
+#include "../WinLAMP/buildType.h"
 #include "api__ml_pmp.h"
 #include "main.h"
 #include "../ml_wire/ifc_podcast.h"
@@ -17,7 +17,7 @@
 	#include "../Elevator/IFileTypeRegistrar_32.h"
 #endif
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 extern DeviceView * currentViewedDevice;
 extern C_ItemList m_plugins;
 extern C_Config * global_config;
@@ -68,8 +68,8 @@ static void config_tab_init(HWND tab,HWND m_hwndDlg)
 	TabCtrl_AdjustRect(m_hwndTab,FALSE,&r);
 	MapWindowPoints(NULL,m_hwndDlg,(LPPOINT)&r,2);
 	SetWindowPos(tab,HWND_TOP,r.left,r.top,r.right-r.left,r.bottom-r.top,SWP_NOACTIVATE);
-	if(!SendMessage(plugin.hwndWinampParent,WM_WA_IPC,IPC_ISWINTHEMEPRESENT,IPC_USE_UXTHEME_FUNC))
-		SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)tab,IPC_USE_UXTHEME_FUNC);
+	if(!SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,IPC_ISWINTHEMEPRESENT,IPC_USE_UXTHEME_FUNC))
+		SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)tab,IPC_USE_UXTHEME_FUNC);
 }
 
 HWND OnSelChanged(HWND hwndDlg, HWND external = NULL, DeviceView *dev = NULL)
@@ -854,7 +854,7 @@ static INT_PTR CALLBACK config_dlgproc_transcode(HWND hwndDlg, UINT uMsg, WPARAM
 					dev = ((prefsParam*)lParam)->dev;
 
 				}
-				lParam = (LPARAM)TranscoderImp::ConfigureTranscoder(L"ml_pmp",plugin.hwndWinampParent,config, dev);
+				lParam = (LPARAM)TranscoderImp::ConfigureTranscoder(L"ml_pmp",plugin.hwndWinLAMPParent,config, dev);
 			}
 			break;
 	}
@@ -1156,11 +1156,11 @@ HRESULT RemovePMPPlugin(LPCWSTR file, HINSTANCE hDllInstance) {
 	}
 	else {
 		wchar_t buf[1024],
-				*ini = (wchar_t*)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_GETINIFILEW);
+				*ini = (wchar_t*)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_GETINIFILEW);
 		GetModuleFileName(hDllInstance, buf, ARRAYSIZE(buf));
-		WritePrivateProfileString(L"winamp", L"remove_genplug", buf, ini);
-		WritePrivateProfileString(L"winamp", L"show_prefs", L"-1", ini);
-		PostMessage(plugin.hwndWinampParent, WM_USER, 0, IPC_RESTARTWINAMP);
+		WritePrivateProfileString(L"winlamp", L"remove_genplug", buf, ini);
+		WritePrivateProfileString(L"winlamp", L"show_prefs", L"-1", ini);
+		PostMessage(plugin.hwndWinLAMPParent, WM_USER, 0, IPC_RESTARTWINLAMP);
 		return S_OK;
 	}
 }
@@ -1218,7 +1218,7 @@ INT_PTR CALLBACK config_dlgproc_plugins(HWND hwndDlg, UINT uMsg, WPARAM wParam,L
 					}
 
 					WIN32_FIND_DATA d = {0};
-					wchar_t *pluginPath = (wchar_t*)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETPLUGINDIRECTORYW);
+					wchar_t *pluginPath = (wchar_t*)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETPLUGINDIRECTORYW);
 					wchar_t dirstr[MAX_PATH] = {0};
 					PathCombine(dirstr, pluginPath, L"PMP_*.DLL");
 					HANDLE h = FindFirstFile(dirstr, &d);
@@ -1378,7 +1378,7 @@ INT_PTR CALLBACK config_dlgproc_plugins(HWND hwndDlg, UINT uMsg, WPARAM wParam,L
 									GetModuleFileName(devplugin->hDllInstance,buf,sizeof(buf)/sizeof(wchar_t));
 									int ret = PMP_PLUGIN_UNINSTALL_NOW;
 									int (*pr)(HINSTANCE hDllInst, HWND hwndDlg, int param);
-									*(void**)&pr = (void*)GetProcAddress(devplugin->hDllInstance,"winampUninstallPlugin");
+									*(void**)&pr = (void*)GetProcAddress(devplugin->hDllInstance,"winlampUninstallPlugin");
 									if(pr) ret = pr(devplugin->hDllInstance,hwndDlg,0);
 									if(pr && ret == PMP_PLUGIN_UNINSTALL_NOW) { // dynamic unload
 										ListView_DeleteItem(listWindow, lvi.lParam);
@@ -1386,13 +1386,13 @@ INT_PTR CALLBACK config_dlgproc_plugins(HWND hwndDlg, UINT uMsg, WPARAM wParam,L
 
 										// removing the plugin (bit convoluted to hopefully not cause crashes with dynamic removal)
 										// try to use the elevator to do this
-										IFileTypeRegistrar *registrar = (IFileTypeRegistrar*)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_GET_FILEREGISTRAR_OBJECT);
+										IFileTypeRegistrar *registrar = (IFileTypeRegistrar*)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_GET_FILEREGISTRAR_OBJECT);
 										if(registrar && (registrar != (IFileTypeRegistrar*)1)) {
 											if(registrar->DeleteItem(buf) != S_OK) {
 												// we don't always free by default as it can cause some crashes
 												FreeLibrary(devplugin->hDllInstance);
 												if(registrar->DeleteItem(buf) != S_OK) {
-													// all gone wrong so non-dynamic unload (restart winamp)
+													// all gone wrong so non-dynamic unload (restart winlamp)
 													RemovePMPPlugin(buf, devplugin->hDllInstance);
 												}
 											}
@@ -1404,14 +1404,14 @@ INT_PTR CALLBACK config_dlgproc_plugins(HWND hwndDlg, UINT uMsg, WPARAM wParam,L
 												// we don't always free by default as it can cause some crashes
 												FreeLibrary(devplugin->hDllInstance);
 												if(RemovePMPPlugin(buf, 0) != S_OK) {
-													// all gone wrong so non-dynamic unload (restart winamp)
+													// all gone wrong so non-dynamic unload (restart winlamp)
 													RemovePMPPlugin(buf, devplugin->hDllInstance);
 												}
 											}
 										}
 									}
 									else if(!pr)
-									{ // non-dynamic unload (restart winamp)
+									{ // non-dynamic unload (restart winlamp)
 										RemovePMPPlugin(buf,devplugin->hDllInstance);
 									}
 								}
@@ -1436,7 +1436,7 @@ INT_PTR CALLBACK config_dlgproc_plugins(HWND hwndDlg, UINT uMsg, WPARAM wParam,L
 									}
 
 									// try to use the elevator to do this
-									IFileTypeRegistrar *registrar = (IFileTypeRegistrar*)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_GET_FILEREGISTRAR_OBJECT);
+									IFileTypeRegistrar *registrar = (IFileTypeRegistrar*)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_GET_FILEREGISTRAR_OBJECT);
 									if(registrar && (registrar != (IFileTypeRegistrar*)1)) {
 										if(registrar->DeleteItem(base) != S_OK){
 											RemovePMPPlugin(base, 0);
@@ -1459,7 +1459,7 @@ INT_PTR CALLBACK config_dlgproc_plugins(HWND hwndDlg, UINT uMsg, WPARAM wParam,L
 					break;
 
                 case IDC_PLUGINVERS:
-					myOpenURLWithFallback(hwndDlg, L"http://www.google.com/search?q=Winamp+Portable+Plugins",L"http://www.google.com/search?q=Winamp+Portable+Plugins");
+					myOpenURLWithFallback(hwndDlg, L"http://www.google.com/search?q=WinLAMP+Portable+Plugins",L"http://www.google.com/search?q=WinLAMP+Portable+Plugins");
 					break;
 			}
 			break;

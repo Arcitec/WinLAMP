@@ -5,7 +5,7 @@
 #include "./resource.h"
 #include "./settings.h"
 #include "./copyfiles.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 //#include <primosdk.h>
 #include <shlwapi.h>
 #include <imapi.h>
@@ -73,7 +73,7 @@ static DWORD riphash = 0;
 static std::vector<LPARAM> driveList;
 
 static LISTENER activeListener = { NULL, 0, };
-static WNDPROC oldWinampWndProc = NULL;
+static WNDPROC oldWinLAMPWndProc = NULL;
 
 api_application *WASABI_API_APP = 0;
 api_stats *AGAVE_API_STATS = 0;
@@ -239,14 +239,14 @@ static BOOL Plugin_QueryOkToQuit()
 	while(c-- > 0)
 	{
 		INT msgId;
-		if (cdrip_isextracting(szLetters[c])) msgId = IDS_YOU_ARE_CURRENTLY_RIPPING_AUDIO_CD_MUST_CANCEL_TO_CLOSE_WINAMP;
-		else if (MLDisc_IsDiscCopying(szLetters[c]))  msgId = IDS_YOU_ARE_CURRENTLY_COPYING_DATA_CD_MUST_CANCEL_TO_CLOSE_WINAMP;
+		if (cdrip_isextracting(szLetters[c])) msgId = IDS_YOU_ARE_CURRENTLY_RIPPING_AUDIO_CD_MUST_CANCEL_TO_CLOSE_WINLAMP;
+		else if (MLDisc_IsDiscCopying(szLetters[c]))  msgId = IDS_YOU_ARE_CURRENTLY_COPYING_DATA_CD_MUST_CANCEL_TO_CLOSE_WINLAMP;
 		else msgId = 0;
 		if (msgId)
 		{
 			wchar_t buffer[512] = {0};
 			StringCchPrintfW(buffer, 512, WASABI_API_LNGSTRINGW(msgId), szLetters[c]);
-			MessageBoxW(plugin.hwndWinampParent, buffer, WASABI_API_LNGSTRINGW(IDS_NOTIFICATION),
+			MessageBoxW(plugin.hwndWinLAMPParent, buffer, WASABI_API_LNGSTRINGW(IDS_NOTIFICATION),
 					MB_OK | MB_ICONINFORMATION | MB_SETFOREGROUND | MB_TOPMOST);
 			return FALSE;
 		}
@@ -254,7 +254,7 @@ static BOOL Plugin_QueryOkToQuit()
 	return TRUE;
 }
 
-LRESULT CALLBACK WinampWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WinLAMPWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	if(uMsgNavStyleUpdate == uMsg)
 	{
@@ -281,7 +281,7 @@ LRESULT CALLBACK WinampWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 	}
 	else if (uMsgRipperNotify == uMsg)
 	{
-		if (HIWORD(wParam)) // another instance of winamp quering
+		if (HIWORD(wParam)) // another instance of winlamp quering
 		{
 			if (LOWORD(wParam) && cdrip_isextracting((CHAR)LOWORD(wParam))) SendNotifyMessage((HWND)lParam, uMsgRipperNotify, LOWORD(wParam), (LPARAM)TRUE);
 			else
@@ -335,7 +335,7 @@ LRESULT CALLBACK WinampWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 		{
 			if(!wParam)
 			{
-				PostMessage(plugin.hwndWinampParent, WM_WA_IPC, 1, delay_ml_startup);
+				PostMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 1, delay_ml_startup);
 			}
 			else if(wParam == 1)
 			{
@@ -345,14 +345,14 @@ LRESULT CALLBACK WinampWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 					MLDisc_InitializeCopyData();
 
 					DriveManager_Resume(TRUE);
-					SendNotifyMessage(HWND_BROADCAST, uMsgBurnerNotify, MAKEWPARAM(0, 0xffff), (LPARAM)plugin.hwndWinampParent);
-					SendNotifyMessage(HWND_BROADCAST, uMsgRipperNotify, MAKEWPARAM(0, 0xffff), (LPARAM)plugin.hwndWinampParent);
-					SendNotifyMessage(HWND_BROADCAST, uMsgCopyNotify, MAKEWPARAM(0, 0xffff), (LPARAM)plugin.hwndWinampParent);
+					SendNotifyMessage(HWND_BROADCAST, uMsgBurnerNotify, MAKEWPARAM(0, 0xffff), (LPARAM)plugin.hwndWinLAMPParent);
+					SendNotifyMessage(HWND_BROADCAST, uMsgRipperNotify, MAKEWPARAM(0, 0xffff), (LPARAM)plugin.hwndWinLAMPParent);
+					SendNotifyMessage(HWND_BROADCAST, uMsgCopyNotify, MAKEWPARAM(0, 0xffff), (LPARAM)plugin.hwndWinLAMPParent);
 				}
 			}
 		}
 	}
-	return (oldWinampWndProc) ? CallWindowProcW(oldWinampWndProc, hwnd, uMsg, wParam, lParam) : DefWindowProc(hwnd, uMsg, wParam, lParam);
+	return (oldWinLAMPWndProc) ? CallWindowProcW(oldWinLAMPWndProc, hwnd, uMsg, wParam, lParam) : DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
 static DM_UNITINFO2_PARAM unitinfo;
@@ -648,7 +648,7 @@ int Init()
 	WASABI_API_START_LANG(plugin.hDllInstance,MlDiscLangGUID);
 
 	mediaLibrary.library = plugin.hwndLibraryParent;
-	mediaLibrary.winamp = plugin.hwndWinampParent;
+	mediaLibrary.winlamp = plugin.hwndWinLAMPParent;
 	mediaLibrary.instance = plugin.hDllInstance;
 
 	static wchar_t szDescription[256];
@@ -656,16 +656,16 @@ int Init()
 					WASABI_API_LNGSTRINGW(IDS_NULLSOFT_RIP_AND_BURN), VERSION_MAJOR, VERSION_MINOR);
 	plugin.description = (char*)szDescription;
 
-	// add to Winamp preferences
+	// add to WinLAMP preferences
 	myPrefsItemCD.dlgID = IDD_PREFSCDRIPFR;
 	myPrefsItemCD.name = WASABI_API_LNGSTRINGW_BUF(IDS_CD_RIPPING,cdrip,64);
 	myPrefsItemCD.proc = (void*)CDRipPrefsProc;
 	myPrefsItemCD.hInst = WASABI_API_LNG_HINST;
 	myPrefsItemCD.where = 6; // media library
-	SENDWAIPC(plugin.hwndWinampParent, IPC_ADD_PREFS_DLGW, (WPARAM)&myPrefsItemCD);
+	SENDWAIPC(plugin.hwndWinLAMPParent, IPC_ADD_PREFS_DLGW, (WPARAM)&myPrefsItemCD);
 
 	wchar_t szIniFile[MAX_PATH],
-			*INI_DIR = (wchar_t*)SENDWAIPC(plugin.hwndWinampParent, IPC_GETINIDIRECTORYW, 0);
+			*INI_DIR = (wchar_t*)SENDWAIPC(plugin.hwndWinLAMPParent, IPC_GETINIDIRECTORYW, 0);
 	
 	PathCombine(szIniFile, INI_DIR, TEXT("Plugins\\gen_ml.ini"));
 	g_config = new C_Config(szIniFile);
@@ -675,7 +675,7 @@ int Init()
 
 	g_context_menus = WASABI_API_LOADMENU(IDR_CONTEXTMENUS);
 
-	oldWinampWndProc = (WNDPROC)(LONG_PTR)SetWindowLongPtrW(plugin.hwndWinampParent, GWLP_WNDPROC, (LONG)(LONG_PTR)WinampWndProc);
+	oldWinLAMPWndProc = (WNDPROC)(LONG_PTR)SetWindowLongPtrW(plugin.hwndWinLAMPParent, GWLP_WNDPROC, (LONG)(LONG_PTR)WinLAMPWndProc);
 
 	if (!uMsgBurnerNotify) uMsgBurnerNotify = RegisterWindowMessageA("WABURNER_BROADCAST_MSG");
 	if (!uMsgRipperNotify) uMsgRipperNotify = RegisterWindowMessageA("WARIPPER_BROADCAST_MSG");
@@ -685,8 +685,8 @@ int Init()
 	UpdatedNavStyles();
 	ShowHideRipBurnParent();
 
-	delay_ml_startup = SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"ml_disc_delay", IPC_REGISTER_WINAMP_IPCMESSAGE);
-	PostMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, delay_ml_startup);
+	delay_ml_startup = SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"ml_disc_delay", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	PostMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, delay_ml_startup);
 	return ML_INIT_SUCCESS;
 }
 
@@ -716,7 +716,7 @@ int getFileInfo(const char *filename, const char *metadata, char *dest, int len)
 {
 	dest[0] = 0;
 	extendedFileInfoStruct efis = { filename, metadata, dest, len, };
-	return (int)(INT_PTR)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM) & efis, IPC_GET_EXTENDED_FILE_INFO); //will return 1 if wa2 supports this IPC call
+	return (int)(INT_PTR)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM) & efis, IPC_GET_EXTENDED_FILE_INFO); //will return 1 if wa2 supports this IPC call
 }
 
 int getFileInfoW(const wchar_t *filename, const wchar_t *metadata, wchar_t *dest, int len)
@@ -724,13 +724,13 @@ int getFileInfoW(const wchar_t *filename, const wchar_t *metadata, wchar_t *dest
 	if (dest && len)
 		dest[0] = 0;
 	extendedFileInfoStructW efis = { filename, metadata, dest, len, };
-	return (int)(INT_PTR)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&efis, IPC_GET_EXTENDED_FILE_INFOW); //will return 1 if wa2 supports this IPC call
+	return (int)(INT_PTR)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&efis, IPC_GET_EXTENDED_FILE_INFOW); //will return 1 if wa2 supports this IPC call
 }
 
 
 void Plugin_ShowRippingPreferences(void)
 {
-	SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&myPrefsItemCD, IPC_OPENPREFSTOPAGE);
+	SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&myPrefsItemCD, IPC_OPENPREFSTOPAGE);
 }
 BOOL Plugin_IsExtractScheduled(CHAR cLetter)
 {
@@ -774,7 +774,7 @@ static int Root_OnContextMenu(HNAVITEM hItem, HWND hHost, POINTS pts)
 	switch (r)
 	{
 		case ID_NAVIGATION_PREFERENCES: Plugin_ShowRippingPreferences(); return 1;
-		case ID_NAVIGATION_HELP: SENDWAIPC(plugin.hwndWinampParent, IPC_OPEN_URL, L"https://help.winamp.com/hc/articles/8111574760468-CD-Ripping-with-Winamp"); return 1;
+		case ID_NAVIGATION_HELP: SENDWAIPC(plugin.hwndWinLAMPParent, IPC_OPEN_URL, L"https://help.winlamp.com/hc/articles/8111574760468-CD-Ripping-with-WinLAMP"); return 1;
 		break;
 	}
 	return 0;
@@ -815,18 +815,18 @@ static int Plugin_OnContextMenu(HNAVITEM hItem, HWND hHost, POINTS pts, CHAR cLe
 	switch (r)
 	{
 		case ID_CDROMMENU_EXTRACT_CONFIGURE: Plugin_ShowRippingPreferences(); return 1;
-		case ID_CDROMMENU_EXTRACT_HELP:  SENDWAIPC(plugin.hwndWinampParent, IPC_OPEN_URL, L"https://help.winamp.com/hc/articles/8111574760468-CD-Ripping-with-Winamp"); return 1;
+		case ID_CDROMMENU_EXTRACT_HELP:  SENDWAIPC(plugin.hwndWinLAMPParent, IPC_OPEN_URL, L"https://help.winlamp.com/hc/articles/8111574760468-CD-Ripping-with-WinLAMP"); return 1;
 		case ID_CDROMMENU_PLAYALL:
 		case ID_CDROMMENU_ENQUEUEALL:
 		{
 			int enq = r == ID_CDROMMENU_ENQUEUEALL;
 			itemRecordList obj = {0, };
 			saveCDToItemRecordList(cLetter, &obj, NULL);
-			mlSendToWinampStruct p;
+			mlSendToWinLAMPStruct p;
 			p.type = ML_TYPE_CDTRACKS;
 			p.enqueue = enq | 2;
 			p.data = &obj;
-			SENDMLIPC(plugin.hwndLibraryParent, ML_IPC_SENDTOWINAMP, (WPARAM)&p);
+			SENDMLIPC(plugin.hwndLibraryParent, ML_IPC_SENDTOWINLAMP, (WPARAM)&p);
 			freeRecordList(&obj);
 		}
 		break;
@@ -876,9 +876,9 @@ static void Plugin_OnMLVisible(BOOL bVisible)
 	{		
 		DriveManager_Resume(TRUE);
 		resumeTick = GetTickCount();
-		SendNotifyMessage(HWND_BROADCAST, uMsgBurnerNotify, MAKEWPARAM(0, 0xffff), (LPARAM)plugin.hwndWinampParent);
-		SendNotifyMessage(HWND_BROADCAST, uMsgRipperNotify, MAKEWPARAM(0, 0xffff), (LPARAM)plugin.hwndWinampParent);
-		SendNotifyMessage(HWND_BROADCAST, uMsgCopyNotify, MAKEWPARAM(0, 0xffff), (LPARAM)plugin.hwndWinampParent);
+		SendNotifyMessage(HWND_BROADCAST, uMsgBurnerNotify, MAKEWPARAM(0, 0xffff), (LPARAM)plugin.hwndWinLAMPParent);
+		SendNotifyMessage(HWND_BROADCAST, uMsgRipperNotify, MAKEWPARAM(0, 0xffff), (LPARAM)plugin.hwndWinLAMPParent);
+		SendNotifyMessage(HWND_BROADCAST, uMsgCopyNotify, MAKEWPARAM(0, 0xffff), (LPARAM)plugin.hwndWinLAMPParent);
 		return;	
 	}
 	else DriveManager_Suspend();
@@ -1212,7 +1212,7 @@ static INT_PTR Plugin_OnNavSetCursor(HNAVITEM hItem, LPARAM lParam)
 
 static BOOL Plugin_OnConfig(void)
 {
-	SendMessageW(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&myPrefsItemCD, IPC_OPENPREFSTOPAGE);
+	SendMessageW(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&myPrefsItemCD, IPC_OPENPREFSTOPAGE);
 	return TRUE;
 }
 
@@ -1255,7 +1255,7 @@ static INT_PTR pluginMessageProc(int msg, INT_PTR param1, INT_PTR param2, INT_PT
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-extern "C" winampMediaLibraryPlugin plugin = 
+extern "C" winlampMediaLibraryPlugin plugin = 
 { 	
 	MLHDR_VER, 
 	"nullsoft(ml_disc.dll)", 
@@ -1267,7 +1267,7 @@ extern "C" winampMediaLibraryPlugin plugin =
 	0, 
 };
 
-extern "C" __declspec(dllexport) winampMediaLibraryPlugin *winampGetMediaLibraryPlugin()
+extern "C" __declspec(dllexport) winlampMediaLibraryPlugin *winlampGetMediaLibraryPlugin()
 {
 	return &plugin;
 }

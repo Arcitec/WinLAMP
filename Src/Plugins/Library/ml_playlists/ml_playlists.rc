@@ -56,7 +56,7 @@ IDD_BROWSE_PLFLD DIALOGEX 0, 0, 254, 29
 STYLE DS_SETFONT | DS_FIXEDSYS | DS_CONTROL | WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-CONTROL         "Use original playlist instead of a Winamp managed copy", IDC_EXTERNAL,
+CONTROL         "Use original playlist instead of a WinLAMP managed copy", IDC_EXTERNAL,
 "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 5, 4, 193, 10
 CONTROL         "Recursive scan", IDC_CHECK1, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 5, 17, 64, 10
 CONTROL         "Available in the Cloud", IDC_CLOUD, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 83, 17, 85, 10
@@ -166,7 +166,7 @@ STYLE DS_SETFONT | DS_FIXEDSYS | DS_CONTROL | WS_CHILD | WS_CLIPSIBLINGS | WS_CL
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
 CONTROL         "Available in the Cloud", IDC_CLOUD, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 67, 3, 85, 10
-CONTROL         "Use original playlist instead of a Winamp managed copy", IDC_EXTERNAL,
+CONTROL         "Use original playlist instead of a WinLAMP managed copy", IDC_EXTERNAL,
 "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 167, 3, 193, 10
 END
 
@@ -268,7 +268,7 @@ BEGIN
 MENUITEM "New Playlist...", IDC_NEWPLAYLIST
 MENUITEM SEPARATOR
 MENUITEM "Import playlist from file...", IDC_IMPORT_PLAYLIST_FROM_FILE
-MENUITEM "Import active (current) playlist", IDC_IMPORT_WINAMP_PLAYLIST
+MENUITEM "Import active (current) playlist", IDC_IMPORT_WINLAMP_PLAYLIST
 MENUITEM "Import playlist from folder...", 40010
 MENUITEM SEPARATOR
 POPUP "Sort playlists by:"
@@ -284,7 +284,7 @@ END
 POPUP "PlaylistsImport"
 BEGIN
 MENUITEM "Import playlists from folder...", ID_PLAYLISTSIMPORT_IMPORTPLAYLISTSFROMFOLDER
-MENUITEM "Import (active) current playlist", IDC_IMPORT_WINAMP_PLAYLIST
+MENUITEM "Import (active) current playlist", IDC_IMPORT_WINLAMP_PLAYLIST
 MENUITEM "Import playlist from file...", IDC_IMPORT_PLAYLIST_FROM_FILE
 END
 POPUP "PEditorMenus"
@@ -351,7 +351,7 @@ MENUITEM "", 40003
 END
 MENUITEM SEPARATOR
 MENUITEM "Import playlist from file...", IDC_IMPORT_PLAYLIST_FROM_FILE
-MENUITEM "Import active playlist", IDC_IMPORT_WINAMP_PLAYLIST
+MENUITEM "Import active playlist", IDC_IMPORT_WINLAMP_PLAYLIST
 END
 END
 END
@@ -469,10 +469,10 @@ IDS_PLAYLIST_ERROR      "Cannot save playlist: Error writing to file or file is 
 IDS_PLAYLIST_ERROR_TITLE "Error saving playlist"
 IDS_DAY                 "day"
 IDS_DAYS                "days"
-IDS_PL_FILE_MNGT        "Winamp Playlist Management"
-IDS_EXTERNAL_CHECKED    "Checking this will make Winamp use the original playlist file(s) instead of creating a Winamp managed copy which is not synchronized with the original playlist file(s).\n\nIf checked, you need to ensure the playlist file(s) exist and will be accessible always otherwise they will not be useable within Winamp. All actions will be done on the original playlist file e.g. delete will remove the original file instead of just removing the Winamp managed copy."
+IDS_PL_FILE_MNGT        "WinLAMP Playlist Management"
+IDS_EXTERNAL_CHECKED    "Checking this will make WinLAMP use the original playlist file(s) instead of creating a WinLAMP managed copy which is not synchronized with the original playlist file(s).\n\nIf checked, you need to ensure the playlist file(s) exist and will be accessible always otherwise they will not be useable within WinLAMP. All actions will be done on the original playlist file e.g. delete will remove the original file instead of just removing the WinLAMP managed copy."
 IDS_EXTERNAL_ALREADY_ADDED
-"The playlist you have selected has already been imported into Winamp and will not be re-added."
+"The playlist you have selected has already been imported into WinLAMP and will not be re-added."
 IDS_SOURCE_PL_MISSING   "\n\nThe source playlist file for this playlist view cannot be located.\nThis can happen if the playlist has been physically removed.\n\nThe missing source playlist file is:\n%s"
 END
 

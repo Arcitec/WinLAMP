@@ -1,5 +1,5 @@
 #include "./skinneddivider.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 #include "./skinning.h"
 
 SkinnedDivider::SkinnedDivider(void) : SkinnedWnd(FALSE)

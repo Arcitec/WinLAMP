@@ -1,6 +1,6 @@
 #ifndef NULLSOFT_VIDEOOUTPUTCHILDDDRAWH
 #define NULLSOFT_VIDEOOUTPUTCHILDDDRAWH
-#include "../Winamp/VideoOutputChild.h"
+#include "../WinLAMP/VideoOutputChild.h"
 
 class VideoOutputChildDDraw : public VideoRenderer
 {

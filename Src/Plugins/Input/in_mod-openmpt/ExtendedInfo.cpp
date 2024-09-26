@@ -13,7 +13,7 @@ static openmpt_module *info_mod = 0;
 openmpt_module *OpenMod(const wchar_t *filename);
 
 extern "C" __declspec(dllexport)
-	int winampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, size_t destlen)
+	int winlampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, size_t destlen)
 {
 	if (!_stricmp(data, "type"))
 	{

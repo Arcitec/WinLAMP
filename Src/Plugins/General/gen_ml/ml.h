@@ -1,5 +1,5 @@
 /*
-** Copyright (C) 2003-2014 Winamp SA
+** Copyright (C) 2003-2014 WinLAMP SA
 **
 ** This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held 
 ** liable for any damages arising from the use of this software. 
@@ -19,9 +19,9 @@
 #ifndef _ML_H_
 #define _ML_H_
 
-#define MLHDR_VER     0x17		// used from Winamp v5.66
-#define MLHDR_VER_U   0x16		// used from Winamp v5.64 to v5.65 (is loaded by v5.66+)
-#define MLHDR_VER_OLD 0x15	    // used up to Winamp v5.63 (is loaded by v5.64+)
+#define MLHDR_VER     0x17		// used from WinLAMP v5.66
+#define MLHDR_VER_U   0x16		// used from WinLAMP v5.64 to v5.65 (is loaded by v5.66+)
+#define MLHDR_VER_OLD 0x15	    // used up to WinLAMP v5.63 (is loaded by v5.64+)
 
 #include <windows.h>
 #include <commctrl.h>
@@ -45,28 +45,28 @@ typedef struct
 	//       if you don't like windows types or caps, you can #include <stddef.h> and use intptr_t
 
 	// all the following data is filled in by the library
-	HWND hwndWinampParent;
+	HWND hwndWinLAMPParent;
 	HWND hwndLibraryParent; // send this any of the WM_ML_IPC messages
 	HINSTANCE hDllInstance;
 
-	// filled in by Winamp (added 5.66+ to replace need to call IPC_GET_API_SERVICE on loading)
+	// filled in by WinLAMP (added 5.66+ to replace need to call IPC_GET_API_SERVICE on loading)
 	#ifdef __cplusplus
 	api_service *service;
 	#else
 	void * service;
 	#endif
-} winampMediaLibraryPlugin;
+} winlampMediaLibraryPlugin;
 
-// return values from the init(..) which determines if Winamp will continue loading
+// return values from the init(..) which determines if WinLAMP will continue loading
 // and handling the plugin or if it will disregard the load attempt. If ML_INIT_FAILURE
 // is returned then the plugin will be listed as [NOT LOADED] on the plug-in prefs page.
 #define ML_INIT_SUCCESS 0
 #define ML_INIT_FAILURE 1
 
 // These are the return values to be used with the uninstall plugin export function:
-// __declspec(dllexport) int __cdecl winampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param)
-// which determines if Winamp can uninstall the plugin immediately or on winamp restart.
-// If this is not exported then Winamp will assume an uninstall with reboot is the only way.
+// __declspec(dllexport) int __cdecl winlampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param)
+// which determines if WinLAMP can uninstall the plugin immediately or on winlamp restart.
+// If this is not exported then WinLAMP will assume an uninstall with reboot is the only way.
 
 #define ML_PLUGIN_UNINSTALL_NOW    0x1
 #define ML_PLUGIN_UNINSTALL_REBOOT 0x0
@@ -76,16 +76,16 @@ typedef struct
 // that it is down to you to ensure that if uninstall now is returned that it will not
 // cause a crash i.e. don't use if you've been subclassing the main or library windows.
 //
-// The HWND passed in the calling of winampUninstallPlugin(..) is the preference page HWND.
+// The HWND passed in the calling of winlampUninstallPlugin(..) is the preference page HWND.
 //
 
-// For a Media Library plugin to be correctly detected by Winamp you need to ensure that
-// the exported winampMediaLibraryPlugin(..) is exported as an undecorated function
+// For a Media Library plugin to be correctly detected by WinLAMP you need to ensure that
+// the exported winlampMediaLibraryPlugin(..) is exported as an undecorated function
 // e.g.
 // #ifdef __cplusplus
 //   extern "C" {
 // #endif
-// __declspec(dllexport) winampMediaLibraryPlugin * __cdecl winampGetMediaLibraryPlugin(){ return &plugin; }
+// __declspec(dllexport) winlampMediaLibraryPlugin * __cdecl winlampGetMediaLibraryPlugin(){ return &plugin; }
 // #ifdef __cplusplus
 //   }
 // #endif
@@ -133,10 +133,10 @@ typedef struct
 #define ML_MSG_WRITE_CONFIG      0x397
 
 // param1 = wchar_t* of the file filepath of the file when playback begins - added 5.7
-// this relates to IPC_PLAYING_FILEW (see wa_ipc.h) without the need to subclass Winamp
+// this relates to IPC_PLAYING_FILEW (see wa_ipc.h) without the need to subclass WinLAMP
 #define ML_MSG_PLAYING_FILE      0x398
 
-// return TRUE to block the closing of Winamp (relates to IPC_HOOK_OKTOQUIT) - added 5.64+
+// return TRUE to block the closing of WinLAMP (relates to IPC_HOOK_OKTOQUIT) - added 5.64+
 #define ML_MSG_NOTOKTOQUIT       0x399
 
 // return TRUE and do a config dialog using param1 as a HWND parent for this one
@@ -448,7 +448,7 @@ typedef struct
 #define ML_IPC_HANDLEDRAG    0x0300 // pass it a &mlDropItemStruct it will handle cursors etc (unless flags has the lowest bit set), and it will set result appropriately:
 #define ML_IPC_HANDLEDROP    0x0301 // pass it a &mlDropItemStruct with data on drop:
 
-#define ML_IPC_SENDTOWINAMP  0x0302 // send with a mlSendToWinampStruct:
+#define ML_IPC_SENDTOWINLAMP  0x0302 // send with a mlSendToWinLAMPStruct:
 typedef struct {
   int type; //ML_TYPE_ITEMRECORDLIST, etc
   void *data; // object to play
@@ -456,7 +456,7 @@ typedef struct {
   int enqueue; // low bit set specifies enqueuing, and second bit NOT set specifies that 
                // the media library should use its default behavior as the user configured it (if 
                // enqueue is the default, the low bit will be flipped by the library)
-} mlSendToWinampStruct;
+} mlSendToWinLAMPStruct;
 
 typedef struct {
 	char *desc;			// str (addition 5.64+ - set as L"-" to create a separator and begin with a # to show as grayed)
@@ -481,10 +481,10 @@ typedef struct {
 // follow same rules as ML_IPC_ADDTOSENDTOW, but adds to branch instead of main send-to menu
 #define ML_IPC_ADDTOBRANCH   0x0403  // pass mlAddToSendToStructW
 
-#define ML_IPC_HOOKTITLE     0x0440 // this is like winamp's IPC_HOOK_TITLES... :) param1 is waHookTitleStruct
+#define ML_IPC_HOOKTITLE     0x0440 // this is like winlamp's IPC_HOOK_TITLES... :) param1 is waHookTitleStruct
 #define ML_IPC_HOOKEXTINFO   0x0441 // called on IPC_GET_EXTENDED_FILE_INFO_HOOKABLE, param1 is extendedFileInfoStruct
 #define ML_IPC_HOOKEXTINFOW  0x0442 // called on IPC_GET_EXTENDED_FILE_INFO_HOOKABLEW, param1 is extendedFileInfoStructW
-#define ML_IPC_HOOKTITLEW    0x0443 // this is like winamp's IPC_HOOK_TITLESW... :) param1 is waHookTitleStructW
+#define ML_IPC_HOOKTITLEW    0x0443 // this is like winlamp's IPC_HOOK_TITLESW... :) param1 is waHookTitleStructW
 
 #define ML_HANDLEDRAG_FLAG_NOCURSOR 1
 #define ML_HANDLEDRAG_FLAG_NAME     2
@@ -729,13 +729,13 @@ typedef struct
 
 // these return 0 if unsupported, -1 if failed, 1 if succeeded
 
-// pass a winampMediaLibraryPlugin *. Will not call plugin's init() func. 
-// YOU MUST set winampMediaLibraryPlugin->hDllInstance to NULL, and version to MLHDR_VER
+// pass a winlampMediaLibraryPlugin *. Will not call plugin's init() func. 
+// YOU MUST set winlampMediaLibraryPlugin->hDllInstance to NULL, and version to MLHDR_VER
 // 5.25+:  You can set hDllInstance to valid value.  
 //         This IPC will return -1 on failure, so a good check against old verions
 //         is to try with hDllInstance set, if it returns -1, try again with hDllInstance=0
 #define ML_IPC_ADD_PLUGIN          0x0750 
-#define ML_IPC_REMOVE_PLUGIN       0x0751 // winampMediaLibraryPlugin * of plugin to remove. Will not call plugin's quit() func
+#define ML_IPC_REMOVE_PLUGIN       0x0751 // winlampMediaLibraryPlugin * of plugin to remove. Will not call plugin's quit() func
 
 #define ML_IPC_SEND_PLUGIN_MESSAGE 0x0752 // sends message to plugins (wParam = 0, lParam = pointer to the pluginMessage struct)
 // pluginMessage struct

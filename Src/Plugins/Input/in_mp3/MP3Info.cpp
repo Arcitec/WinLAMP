@@ -2,7 +2,7 @@
 #include "LAMEInfo.h"
 #include "AACFrame.h"
 #include "config.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include <Richedit.h>
 #include "api__in_mp3.h"
 #include "FactoryHelper.h"

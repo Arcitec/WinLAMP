@@ -13,11 +13,11 @@
 #include <sstream>
 #include <shlwapi.h>
 
-#include <winamp/wa_ipc.h>
-#include <winamp/dsp.h>
+#include <winlamp/wa_ipc.h>
+#include <winlamp/dsp.h>
 #include "resource/resource.h"
 
-extern winampDSPModule module;
+extern winlampDSPModule module;
 
 // Config file
 char IniName[MAX_PATH] = {0},
@@ -45,11 +45,11 @@ bool IsVistaUp() {
 }
 
 UINT ver = -1;
-UINT GetWinampVersion(HWND winamp)
+UINT GetWinLAMPVersion(HWND winlamp)
 {
 	if(ver == -1)
 	{
-		return (ver = SendMessage(winamp, WM_WA_IPC, 0, IPC_GETVERSION));
+		return (ver = SendMessage(winlamp, WM_WA_IPC, 0, IPC_GETVERSION));
 	}
 	return ver;
 }
@@ -114,56 +114,56 @@ INT_PTR LocalisedDialogBox(HINSTANCE hDllInstance, UINT dialog_id, HWND hWndPare
 	}
 }
 
-// about the most reliable way i can find to get the Winamp window as it could
+// about the most reliable way i can find to get the WinLAMP window as it could
 // have been started with the /CLASS= parameter which then means it won't be
-// 'Winamp v1.x' so instead go for a fixed child window which will always be
-// there (and deals with other apps who create a 'fake' Winamp window (like AIMP)
+// 'WinLAMP v1.x' so instead go for a fixed child window which will always be
+// there (and deals with other apps who create a 'fake' WinLAMP window (like AIMP)
 // and there are two versions to cope with classic or modern skins being used.
-HWND hwndWinamp = 0;
+HWND hwndWinLAMP = 0;
 BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam) {
 	char name[24];
 	GetClassName(hwnd,name,24);
 	// this check will only work for classic skins
-	if (!strnicmp(name, "Winamp PE", 24)) {
+	if (!strnicmp(name, "WinLAMP PE", 24)) {
 		HWND child = GetWindow(GetWindow(hwnd, GW_CHILD), GW_CHILD);
 		GetClassName(child, name, 24);
 		// this check improves reliability of this check against players
 		// like KMPlayer which also create a fake playlist editor window
-		if (!strnicmp(name, "WinampVis", 24) || strnicmp(name, "TSkinPanel", 24)) {
-			hwndWinamp = GetWindow(hwnd, GW_OWNER);
+		if (!strnicmp(name, "WinLAMPVis", 24) || strnicmp(name, "TSkinPanel", 24)) {
+			hwndWinLAMP = GetWindow(hwnd, GW_OWNER);
 			return FALSE;
 		}
 	} else if (!strnicmp(name, "BaseWindow_RootWnd", 24)) {
 		// this check will only work for modern skins
 		HWND child = GetWindow(GetWindow(hwnd, GW_CHILD), GW_CHILD);
 		GetClassName(child, name, 24);
-		if (!strnicmp(name, "Winamp PE", 24)) {
-			hwndWinamp = GetWindow(hwnd, GW_OWNER);
+		if (!strnicmp(name, "WinLAMP PE", 24)) {
+			hwndWinLAMP = GetWindow(hwnd, GW_OWNER);
 			return FALSE;
 		}
-	} else if (!strnicmp(name, "Winamp v1.x", 24)) {
-		// this check will fail if /CLASS= was used on Winamp
+	} else if (!strnicmp(name, "WinLAMP v1.x", 24)) {
+		// this check will fail if /CLASS= was used on WinLAMP
 		HWND child = GetWindow(hwnd, GW_CHILD);
 		GetClassName(child, name, 24);
-		if (!strnicmp(name, "WinampVis", 24)) {
-			hwndWinamp = hwnd;
+		if (!strnicmp(name, "WinLAMPVis", 24)) {
+			hwndWinLAMP = hwnd;
 			return FALSE;
 		}
 	}
 	return TRUE;
 }
 
-HWND GetWinampHWND(HWND winamp) {
+HWND GetWinLAMPHWND(HWND winlamp) {
 	// if no HWND is passed then attemp to find it
-	if (!IsWindow(winamp)) {
+	if (!IsWindow(winlamp)) {
 		// but only do the enumeration again if we have an invalid HWND cached
-		if (!IsWindow(hwndWinamp)) {
-			hwndWinamp = 0;
+		if (!IsWindow(hwndWinLAMP)) {
+			hwndWinLAMP = 0;
 			EnumThreadWindows(GetCurrentThreadId(), EnumWindowsProc, 0);
 		}
-		return hwndWinamp;
+		return hwndWinLAMP;
 	} else {
-		return (hwndWinamp = winamp);
+		return (hwndWinLAMP = winlamp);
 	}
 }
 
@@ -175,51 +175,51 @@ HINSTANCE GetMyInstance() {
 	return NULL;
 }
 
-char* GetIniDirectory(HWND winamp) {
+char* GetIniDirectory(HWND winlamp) {
 	if (!IniDir[0]) {
 		// this gets the string of the full ini file path
-		strncpy(IniDir, (char*)SendMessage(winamp, WM_WA_IPC, 0, IPC_GETINIDIRECTORY), MAX_PATH);
+		strncpy(IniDir, (char*)SendMessage(winlamp, WM_WA_IPC, 0, IPC_GETINIDIRECTORY), MAX_PATH);
 	}
 	return IniDir;
 }
 
-wchar_t* GetIniDirectoryW(HWND winamp) {
+wchar_t* GetIniDirectoryW(HWND winlamp) {
 	if (!IniDirW[0]) {
 		// this gets the string of the full ini file path
-		wcsncpy(IniDirW, (wchar_t*)SendMessage(winamp, WM_WA_IPC, 0, IPC_GETINIDIRECTORYW), MAX_PATH);
+		wcsncpy(IniDirW, (wchar_t*)SendMessage(winlamp, WM_WA_IPC, 0, IPC_GETINIDIRECTORYW), MAX_PATH);
 	}
 	return IniDirW;
 }
 
-char* GetPluginDirectory(HWND winamp) {
+char* GetPluginDirectory(HWND winlamp) {
 	// this gets the string of the full plug-in folder path
-	strncpy(PluginDir, (char*)SendMessage(winamp, WM_WA_IPC, 0, IPC_GETPLUGINDIRECTORY), MAX_PATH);
+	strncpy(PluginDir, (char*)SendMessage(winlamp, WM_WA_IPC, 0, IPC_GETPLUGINDIRECTORY), MAX_PATH);
 	return PluginDir;
 }
 
-wchar_t* GetPluginDirectoryW(HWND winamp) {
+wchar_t* GetPluginDirectoryW(HWND winlamp) {
 	// this gets the string of the full plug-in folder path
-	wcsncpy(PluginDirW, (wchar_t*)SendMessage(winamp, WM_WA_IPC, 0, IPC_GETPLUGINDIRECTORYW), MAX_PATH);
+	wcsncpy(PluginDirW, (wchar_t*)SendMessage(winlamp, WM_WA_IPC, 0, IPC_GETPLUGINDIRECTORYW), MAX_PATH);
 	return PluginDirW;
 }
 
-wchar_t* GetSharedDirectoryW(HWND winamp) {
+wchar_t* GetSharedDirectoryW(HWND winlamp) {
 	// this gets the string of the full shared dll folder path
-	wchar_t* str = (wchar_t*)SendMessage(winamp, WM_WA_IPC, 0, IPC_GETSHAREDDLLDIRECTORYW);
+	wchar_t* str = (wchar_t*)SendMessage(winlamp, WM_WA_IPC, 0, IPC_GETSHAREDDLLDIRECTORYW);
 	if (str > (wchar_t*)65536) {
 		wcsncpy(SharedDirW, str, MAX_PATH);
 	} else {
-		// and on older versions of Winamp we revert to the plug-ins folder path
-		wcsncpy(SharedDirW, GetPluginDirectoryW(winamp), MAX_PATH);
+		// and on older versions of WinLAMP we revert to the plug-ins folder path
+		wcsncpy(SharedDirW, GetPluginDirectoryW(winlamp), MAX_PATH);
 	}
 	return SharedDirW;
 }
 
-void GetDefaultNextTracksLogFile(HWND winamp, int bufferLen, wchar_t* buffer, int index) {
-	snwprintf(buffer, bufferLen, L"%s\\Plugins\\dsp_sc_nexttracks_%d.log", GetIniDirectoryW(winamp), index+1);
+void GetDefaultNextTracksLogFile(HWND winlamp, int bufferLen, wchar_t* buffer, int index) {
+	snwprintf(buffer, bufferLen, L"%s\\Plugins\\dsp_sc_nexttracks_%d.log", GetIniDirectoryW(winlamp), index+1);
 }
 
-char* GetSCIniFile(HWND winamp) {
+char* GetSCIniFile(HWND winlamp) {
 	if (!IniName[0]) {
 
 		// allows support for multiple instances of the dsp_sc.dll
@@ -229,13 +229,13 @@ char* GetSCIniFile(HWND winamp) {
 			PathStripPath(dll_name);
 			PathRemoveExtension(dll_name);
 		}
-		snprintf(IniName, MAX_PATH, "%s\\Plugins\\%s.ini", GetIniDirectory(winamp), dll_name);
+		snprintf(IniName, MAX_PATH, "%s\\Plugins\\%s.ini", GetIniDirectory(winlamp), dll_name);
 	}
 	return IniName;
 }
 
-wchar_t* GetSCLogFile(HWND winamp, int bufferLen, wchar_t* logFile, int index) {
-	snwprintf(logFile, bufferLen, L"%s\\Plugins\\dsp_sc_%d.log", GetIniDirectoryW(winamp), index + 1);
+wchar_t* GetSCLogFile(HWND winlamp, int bufferLen, wchar_t* logFile, int index) {
+	snwprintf(logFile, bufferLen, L"%s\\Plugins\\dsp_sc_%d.log", GetIniDirectoryW(winlamp), index + 1);
 	return logFile;
 }
 
@@ -273,7 +273,7 @@ void StartNextTracks(int index, wchar_t* file) {
 	}
 }
 
-void WriteNextTracks(int index, HWND winamp, std::vector<int> nextListIdx, std::vector<std::wstring> nextList, bool xml) {
+void WriteNextTracks(int index, HWND winlamp, std::vector<int> nextListIdx, std::vector<std::wstring> nextList, bool xml) {
 	if (NextTracks[index] != INVALID_HANDLE_VALUE) {
 		DWORD written;
 
@@ -374,15 +374,15 @@ void StopLogging(int index) {
 }
 
 BOOL IsDirectMouseWheelMessage(const UINT uMsg) {
-	static UINT WINAMP_WM_DIRECT_MOUSE_WHEEL = WM_NULL;
+	static UINT WINLAMP_WM_DIRECT_MOUSE_WHEEL = WM_NULL;
 
-	if (WM_NULL == WINAMP_WM_DIRECT_MOUSE_WHEEL) {
-		WINAMP_WM_DIRECT_MOUSE_WHEEL = RegisterWindowMessageW(L"WINAMP_WM_DIRECT_MOUSE_WHEEL");
-		if (WM_NULL == WINAMP_WM_DIRECT_MOUSE_WHEEL)
+	if (WM_NULL == WINLAMP_WM_DIRECT_MOUSE_WHEEL) {
+		WINLAMP_WM_DIRECT_MOUSE_WHEEL = RegisterWindowMessageW(L"WINLAMP_WM_DIRECT_MOUSE_WHEEL");
+		if (WM_NULL == WINLAMP_WM_DIRECT_MOUSE_WHEEL)
 			return FALSE;
 	}
 
-	return (WINAMP_WM_DIRECT_MOUSE_WHEEL == uMsg);
+	return (WINLAMP_WM_DIRECT_MOUSE_WHEEL == uMsg);
 }
 
 HWND ActiveChildWindowFromPoint(HWND hwnd, POINTS cursor_s, const int *controls, size_t controlsCount) {	

@@ -37,7 +37,7 @@ mkdir openmpt123
 mkdir openmpt123\x86
 mkdir openmpt123\amd64
 mkdir XMPlay
-mkdir Winamp
+mkdir WinLAMP
 rmdir /s /q Licenses
 mkdir Licenses
 copy /y ..\..\src\mpt\LICENSE.BSD-3-Clause.txt               .\Licenses\License.mpt.BSD-3-Clause.txt || goto error
@@ -73,15 +73,15 @@ rem copy /y ..\..\include\zlib\contrib\minizip\MiniZip64_info.txt .\Licenses\Lic
 copy /y ..\..\LICENSE .\LICENSE.txt || goto error
 copy /y ..\..\libopenmpt\dox\changelog.md .\ || goto error
 copy /y ..\..\libopenmpt\doc\xmp-openmpt.txt .\XMPlay\ || goto error
-copy /y ..\..\libopenmpt\doc\in_openmpt.txt .\Winamp\ || goto error
+copy /y ..\..\libopenmpt\doc\in_openmpt.txt .\WinLAMP\ || goto error
 copy /y ..\..\bin\release\vs2017-winxp-static\x86\openmpt123.exe .\openmpt123\x86\ || goto error
 copy /y ..\..\bin\release\vs2017-winxp-static\x86\openmpt-mpg123.dll .\openmpt123\x86\ || goto error
 copy /y ..\..\bin\release\vs2017-winxp-static\amd64\openmpt123.exe .\openmpt123\amd64\ || goto error
 copy /y ..\..\bin\release\vs2017-winxp-static\amd64\openmpt-mpg123.dll .\openmpt123\amd64\ || goto error
 copy /y ..\..\bin\release\vs2017-winxp-static\x86\xmp-openmpt.dll .\XMPlay\ || goto error
 copy /y ..\..\bin\release\vs2017-winxp-static\x86\openmpt-mpg123.dll .\XMPlay\ || goto error
-copy /y ..\..\bin\release\vs2017-winxp-static\x86\in_openmpt.dll .\Winamp\ || goto error
-copy /y ..\..\bin\release\vs2017-winxp-static\x86\openmpt-mpg123.dll .\Winamp\ || goto error
+copy /y ..\..\bin\release\vs2017-winxp-static\x86\in_openmpt.dll .\WinLAMP\ || goto error
+copy /y ..\..\bin\release\vs2017-winxp-static\x86\openmpt-mpg123.dll .\WinLAMP\ || goto error
 ..\..\build\tools\7zip\7z.exe a -t%MPT_PKG_FORMAT% -mx=9 ..\libopenmpt\bin.retro.winxp\%LIBOPENMPT_VERSION_STRING%\libopenmpt-%MPT_REVISION%.bin.retro.winxp.%MPT_PKG_FORMAT% ^
  LICENSE.txt ^
  Licenses ^
@@ -93,9 +93,9 @@ copy /y ..\..\bin\release\vs2017-winxp-static\x86\openmpt-mpg123.dll .\Winamp\ |
  XMPlay\xmp-openmpt.txt ^
  XMPlay\xmp-openmpt.dll ^
  XMPlay\openmpt-mpg123.dll ^
- Winamp\in_openmpt.txt ^
- Winamp\in_openmpt.dll ^
- Winamp\openmpt-mpg123.dll ^
+ WinLAMP\in_openmpt.txt ^
+ WinLAMP\in_openmpt.dll ^
+ WinLAMP\openmpt-mpg123.dll ^
  || goto error
 cd .. || goto error
 rmdir /s /q libopenmpt-retro-winxp

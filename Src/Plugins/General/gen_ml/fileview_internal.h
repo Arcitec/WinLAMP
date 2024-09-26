@@ -6,7 +6,7 @@
 #endif
 
 #include <windows.h>
-#include "../winamp/gen.h"
+#include "../winlamp/gen.h"
 #include "api__gen_ml.h"
 #include "./ml_ipc_0313.h"
 #include "../nu/trace.h"
@@ -130,7 +130,7 @@ typedef struct _FILEDATA
 extern "C" {
 #endif
 
-extern winampGeneralPurposePlugin plugin;
+extern winlampGeneralPurposePlugin plugin;
 
 #ifdef __cplusplus
 }

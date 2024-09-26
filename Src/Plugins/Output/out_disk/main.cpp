@@ -6,7 +6,7 @@
 #include <mmreg.h>
 #include <msacm.h>
 #include "out_disk.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include <shlwapi.h>
 #include <strsafe.h>
 
@@ -1187,7 +1187,7 @@ Out_Module mod=
 
 extern "C"
 {
-	__declspec( dllexport ) Out_Module * winampGetOutModule()
+	__declspec( dllexport ) Out_Module * winlampGetOutModule()
 	{
 		return &mod;
 	}

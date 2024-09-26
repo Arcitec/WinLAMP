@@ -84,7 +84,7 @@
     <ClInclude Include="..\..\..\Agave\api\config\api_config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Winamp\api_language.h">
+    <ClInclude Include="..\..\..\WinLAMP\api_language.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Wasabi\api\memmgr\api_memmgr.h">
@@ -93,13 +93,13 @@
     <ClInclude Include="..\..\..\Wasabi\api\service\api_service.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Winamp\IN2.H">
+    <ClInclude Include="..\..\..\WinLAMP\IN2.H">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Agave\AlbumArt\svc_albumArtProvider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Winamp\wa_ipc.h">
+    <ClInclude Include="..\..\..\WinLAMP\wa_ipc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,7 +3,7 @@
 #include "../nu/ns_wc.h"
 #include <commctrl.h>
 #include <shlobj.h>
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../nu/AutoChar.h"
 #include <strsafe.h>
 

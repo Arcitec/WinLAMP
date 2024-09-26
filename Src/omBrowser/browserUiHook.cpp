@@ -17,13 +17,13 @@
 #include "./toolbar.h"
 #include "./statusbar.h"
 
-#include "../winamp/IWasabiDispatchable.h"
-#include "../winamp/JSAPI_Info.h"
+#include "../winlamp/IWasabiDispatchable.h"
+#include "../winlamp/JSAPI_Info.h"
 
 #include <strsafe.h>
 
 BrowserUiHook::BrowserUiHook(HWND hTarget, BOOL fPopupMode) 
-	: ref(1), popupMode(fPopupMode), hwnd(hTarget), winampCookie(NULL), configCookie(NULL)
+	: ref(1), popupMode(fPopupMode), hwnd(hTarget), winlampCookie(NULL), configCookie(NULL)
 {
 }
 
@@ -66,8 +66,8 @@ int BrowserUiHook::QueryInterface(GUID interface_guid, void **object)
 {
 	if (NULL == object) return E_POINTER;
 
-	if (IsEqualIID(interface_guid, IFC_WinampHook))
-		*object = static_cast<ifc_winamphook*>(this);
+	if (IsEqualIID(interface_guid, IFC_WinLAMPHook))
+		*object = static_cast<ifc_winlamphook*>(this);
 	else if (IsEqualIID(interface_guid, IFC_OmServiceEvent))
 		*object = static_cast<ifc_omserviceevent*>(this);
 	else if (IsEqualIID(interface_guid, IFC_OmConfigCallback))
@@ -224,7 +224,7 @@ HRESULT BrowserUiHook::ValueChanged(const GUID *configUid, UINT valueId, ULONG_P
 HRESULT BrowserUiHook::Register(obj_ombrowser *browserManager, ifc_omservice *service)
 {
 	
-	Plugin_RegisterWinampHook(this, &winampCookie);
+	Plugin_RegisterWinLAMPHook(this, &winlampCookie);
 
 	ifc_omconfig *config;
 	if (NULL != browserManager && SUCCEEDED(browserManager->GetConfig(NULL, (void**)&config)))
@@ -264,10 +264,10 @@ HRESULT BrowserUiHook::Unregister(obj_ombrowser *browserManager, ifc_omservice *
 	}
 	
 	
-	if (0 != winampCookie)
+	if (0 != winlampCookie)
 	{
-		Plugin_UnregisterWinampHook(winampCookie);
-		winampCookie = 0;
+		Plugin_UnregisterWinLAMPHook(winlampCookie);
+		winlampCookie = 0;
 	}
 
 	return S_OK;
@@ -293,14 +293,14 @@ HRESULT BrowserUiHook::CheckBlockedState(ifc_omservice *service)
 
 #define CBCLASS BrowserUiHook
 START_MULTIPATCH;
- START_PATCH(MPIID_WINAMPHOOK)
-  M_CB(MPIID_WINAMPHOOK, ifc_winamphook, ADDREF, AddRef);
-  M_CB(MPIID_WINAMPHOOK, ifc_winamphook, RELEASE, Release);
-  M_CB(MPIID_WINAMPHOOK, ifc_winamphook, QUERYINTERFACE, QueryInterface);
-  M_CB(MPIID_WINAMPHOOK, ifc_winamphook, API_SKINCHANGING, SkinChanging);
-  M_CB(MPIID_WINAMPHOOK, ifc_winamphook, API_SKINCHANGED, SkinChanged);
-  M_CB(MPIID_WINAMPHOOK, ifc_winamphook, API_SKINCOLORCHANGE, SkinColorChange);
-  M_CB(MPIID_WINAMPHOOK, ifc_winamphook, API_RESETFONT, ResetFont);
+ START_PATCH(MPIID_WINLAMPHOOK)
+  M_CB(MPIID_WINLAMPHOOK, ifc_winlamphook, ADDREF, AddRef);
+  M_CB(MPIID_WINLAMPHOOK, ifc_winlamphook, RELEASE, Release);
+  M_CB(MPIID_WINLAMPHOOK, ifc_winlamphook, QUERYINTERFACE, QueryInterface);
+  M_CB(MPIID_WINLAMPHOOK, ifc_winlamphook, API_SKINCHANGING, SkinChanging);
+  M_CB(MPIID_WINLAMPHOOK, ifc_winlamphook, API_SKINCHANGED, SkinChanged);
+  M_CB(MPIID_WINLAMPHOOK, ifc_winlamphook, API_SKINCOLORCHANGE, SkinColorChange);
+  M_CB(MPIID_WINLAMPHOOK, ifc_winlamphook, API_RESETFONT, ResetFont);
  NEXT_PATCH(MPIID_SERVICEEVENT)
   M_CB(MPIID_SERVICEEVENT, ifc_omserviceevent, ADDREF, AddRef);
   M_CB(MPIID_SERVICEEVENT, ifc_omserviceevent, RELEASE, Release);

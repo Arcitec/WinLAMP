@@ -1,6 +1,6 @@
 #include "main.h"
 #include "./skinnedbutton.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 #include "./skinning.h"
 #include "./stockobjects.h"
 #include "./colors.h"

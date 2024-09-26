@@ -1176,9 +1176,9 @@ int Text::onLeftButtonDown(int x, int y)
 		elapsed = !elapsed;
 #ifdef WIN32
 		// HACK! lone needs to make that a cfg attrib, but no time, a build needs to go out :D
-#define WINAMP_OPTIONS_ELAPSED          40037
-#define WINAMP_OPTIONS_REMAINING        40038
-		if (!fixedTimerStyle) SendMessageW(WASABI_API_WND->main_getRootWnd()->gethWnd(), WM_COMMAND, elapsed ? WINAMP_OPTIONS_ELAPSED : WINAMP_OPTIONS_REMAINING, 0);
+#define WINLAMP_OPTIONS_ELAPSED          40037
+#define WINLAMP_OPTIONS_REMAINING        40038
+		if (!fixedTimerStyle) SendMessageW(WASABI_API_WND->main_getRootWnd()->gethWnd(), WM_COMMAND, elapsed ? WINLAMP_OPTIONS_ELAPSED : WINLAMP_OPTIONS_REMAINING, 0);
 #endif
 #ifdef WASABI_COMPILE_WNDMGR
 #ifdef WASABI_COMPILE_CONFIG

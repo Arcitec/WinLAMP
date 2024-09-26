@@ -329,9 +329,9 @@ void ComponentManager::loadAll(const wchar_t *path) {
     "wasabi.system/pngload.wac",
     "wasabi.player/core.wac",
     "metrics.wac", // so metrics dialog appears before the splash screen
-    "winamp/winamp.wac", // so splash screen displays right after startup
-    "winamp/pledit.wac",
-    "winamp/library.wac",
+    "winlamp/winlamp.wac", // so splash screen displays right after startup
+    "winlamp/pledit.wac",
+    "winlamp/library.wac",
     "preferences.wac", // so prefs has the system groups at the top
     "skinswitch.wac", // so skinswitch is the first non internal prefs screen, ignored if not present. fucko: need to modify prefs system so we don't need to load in any particular order
     NULL

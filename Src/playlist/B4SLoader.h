@@ -1,5 +1,5 @@
-#ifndef NULLSOFT_WINAMP_B4S_H
-#define NULLSOFT_WINAMP_B4S_H
+#ifndef NULLSOFT_WINLAMP_B4S_H
+#define NULLSOFT_WINLAMP_B4S_H
 
 #include "../xml/obj_xml.h"
 #include "../xml/ifc_xmlreadercallback.h"

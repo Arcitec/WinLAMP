@@ -1,7 +1,7 @@
 #pragma once
 #include <Mftransform.h>
 #include <bfc/platform/types.h>
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 
 struct nullsoft_h264_frame_data
 {

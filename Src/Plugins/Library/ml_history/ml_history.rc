@@ -73,7 +73,7 @@ EXSTYLE WS_EX_CONTROLPARENT
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "History",IDC_STATIC,0,0,272,246
-    LTEXT           "When 'History' is enabled, Winamp will keep track of when and how many times any items are played through Winamp.",IDC_STATIC2,6,12,259,16
+    LTEXT           "When 'History' is enabled, WinLAMP will keep track of when and how many times any items are played through WinLAMP.",IDC_STATIC2,6,12,259,16
     CONTROL         "Enable 'History' view in Media Library",IDC_CHECK1,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,34,132,10
     CONTROL         "Track when and how many times all files are played",IDC_CHECK2,
@@ -96,7 +96,7 @@ BEGIN
     LTEXT           "Note: When the first match against any of the above selected option(s) is met then the currently playing item will be tracked.",IDC_STATIC6,23,156,235,16
     GROUPBOX        "Playback Resume",IDC_STATIC,16,184,249,52
     COMBOBOX        IDC_COMBO1,22,196,236,39,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Note: This will make Winamp resume playback of tracked files from the last played position (once the first Tracking Control target has been reached).",IDC_STATIC7,22,212,249,16
+    LTEXT           "Note: This will make WinLAMP resume playback of tracked files from the last played position (once the first Tracking Control target has been reached).",IDC_STATIC7,22,212,249,16
 END
 
 IDD_VIEW_DB_ERROR DIALOGEX 0, 0, 194, 166

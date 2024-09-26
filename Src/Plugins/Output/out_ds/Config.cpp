@@ -1,6 +1,6 @@
 #include "res_wa2/resource.h"
 #include "Config.h"
-#include "../Winamp/out.h"
+#include "../WinLAMP/out.h"
 #include <api.h>
 
 DS2config::DS2config()

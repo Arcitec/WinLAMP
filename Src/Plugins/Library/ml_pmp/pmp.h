@@ -174,10 +174,10 @@ class Device {
 
 #define PMPHDR_VER 0x10
 /* 
-0x10 is for Winamp 5.66+
+0x10 is for WinLAMP 5.66+
 - it adds passing a api_service *service
 
-0x9 is for Winamp 5.63+
+0x9 is for WinLAMP 5.63+
 - it now requires that plugins handle addTrackToPlaylist(0, ...)
   so plugins that don't want to directly add to their database via transferTrackToDevice() [which happens off-thread]
   can do it during addTrackToPlaylist(0, ...) [which happens on the main thread]
@@ -288,18 +288,18 @@ typedef struct {
 typedef struct {
 	int version; // should be PMPHDR_VER
 	wchar_t *description; // a textual desciption (including version info)
-	int ( __cdecl *init)(); // called when winamp is loaded, for any one-time init
-	void ( __cdecl *quit)(); // called when winamp is unloaded, for any one-time deinit
+	int ( __cdecl *init)(); // called when winlamp is loaded, for any one-time init
+	void ( __cdecl *quit)(); // called when winlamp is unloaded, for any one-time deinit
 
 	INT_PTR ( __cdecl *MessageProc)(int msg, INT_PTR param1, INT_PTR param2, INT_PTR param3);
 
 	// All the following data is filled in by ml_pmp
-	HWND hwndWinampParent;  // send this any of the WM_WA_IPC messages
+	HWND hwndWinLAMPParent;  // send this any of the WM_WA_IPC messages
 	HWND hwndLibraryParent; // send this any of the WM_ML_IPC messages
 	HWND hwndPortablesParent; // send this any of the WM_PMP_IPC messages
 	HINSTANCE hDllInstance; // this plugins instance
 
-	// filled in by Winamp (added 5.66+ to replace need to call IPC_GET_API_SERVICE on loading)
+	// filled in by WinLAMP (added 5.66+ to replace need to call IPC_GET_API_SERVICE on loading)
 	#ifdef __cplusplus
 	api_service *service;
 	#else
@@ -307,14 +307,14 @@ typedef struct {
 	#endif
 } PMPDevicePlugin;
 
-// return values from the init(..) which determines if Winamp will continue loading
+// return values from the init(..) which determines if WinLAMP will continue loading
 // and handling the plugin or if it will disregard the load attempt. If PMP_INIT_FAILURE
 // is returned then the plugin will be listed as [NOT LOADED] on the plug-in prefs page.
 #define PMP_INIT_SUCCESS 0
 #define PMP_INIT_FAILURE 1
 
-// return values from the winampUninstallPlugin(HINSTANCE hdll, HWND parent, int param)
-// which determine if we can uninstall the plugin immediately or on winamp restart
+// return values from the winlampUninstallPlugin(HINSTANCE hdll, HWND parent, int param)
+// which determine if we can uninstall the plugin immediately or on winlamp restart
 #define PMP_PLUGIN_UNINSTALL_NOW	0x0
 #define PMP_PLUGIN_UNINSTALL_REBOOT 0x1
 

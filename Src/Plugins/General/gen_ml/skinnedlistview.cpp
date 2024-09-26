@@ -1,6 +1,6 @@
 #include "./skinnedlistview.h"
-#include "../winamp/gen.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/gen.h"
+#include "../winlamp/wa_dlg.h"
 #include "./skinning.h"
 #include "../nu/trace.h"
 #include "config.h"
@@ -15,7 +15,7 @@
 #define LVIF_HEADERATTACHED		0x0100
 #define LVIF_REMOVEREFLECTOR	0x0200
 
-extern "C" winampGeneralPurposePlugin plugin;
+extern "C" winlampGeneralPurposePlugin plugin;
 
 SkinnedListView::SkinnedListView(void) : SkinnedScrollWnd(FALSE), listFlags(0), currentItem(-1)
 {

@@ -1,5 +1,5 @@
-#ifndef NULLSOFT_WINAMP_OMUTILITY_INTERFACE_HEADER
-#define NULLSOFT_WINAMP_OMUTILITY_INTERFACE_HEADER
+#ifndef NULLSOFT_WINLAMP_OMUTILITY_INTERFACE_HEADER
+#define NULLSOFT_WINLAMP_OMUTILITY_INTERFACE_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -12,7 +12,7 @@ static const GUID IFC_OmUtility =
 { 0x14e8c9b6, 0x1ba4, 0x4e8d, { 0xad, 0x26, 0xfa, 0x84, 0x88, 0x13, 0xcc, 0x5b } };
 
 #define RESPATH_TARGETIE		0x0001		// IE safe path
-#define RESPATH_COMPACT			0x0002		// compact path relative to winamp location if possible
+#define RESPATH_COMPACT			0x0002		// compact path relative to winlamp location if possible
 
 class ifc_omcachemanager;
 class ifc_mlnavigationhelper;
@@ -102,4 +102,4 @@ inline HRESULT ifc_omutility::GetStorageHelper(ifc_omstoragehelper **helper)
 	return _call(API_GETSTORAGEHELPER, (HRESULT)E_NOTIMPL, helper);
 }
 
-#endif //NULLSOFT_WINAMP_OMUTILITY_INTERFACE_HEADER
+#endif //NULLSOFT_WINLAMP_OMUTILITY_INTERFACE_HEADER

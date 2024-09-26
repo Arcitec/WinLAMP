@@ -23,7 +23,7 @@
 #define IDS_TAB_INPUT                   18
 #define IDS_COL_OUTPUT_NAME             20
 #define IDS_COL_STATUS                  21
-#define IDS_INPUT_WINAMP                22
+#define IDS_INPUT_WINLAMP                22
 #define IDS_INPUT_SOUNDCARD             23
 #define IDS_X_DB                        24
 #define IDS_INF_DB                      25
@@ -151,7 +151,7 @@
 #define IDS_MP3_ENCODING_NOT_AVAILABLE  129
 #define IDS_SWITCHING_PROTOCOL          130
 #define IDS_AUTOMATIC                   131
-#define IDD_PANEL_WINAMP                132
+#define IDD_PANEL_WINLAMP                132
 #define IDS_V2_MODE                     132
 #define IDD_PANEL_LOGIN                 133
 #define IDS_V1_MODE                     133
@@ -302,7 +302,7 @@
 #define IDC_PASSWORD_HEADER             1127
 #define IDC_NAME_HEADER                 1128
 #define IDC_ENCODER_HEADER              1129
-#define IDC_INPUT_WINAMP                1130
+#define IDC_INPUT_WINLAMP                1130
 #define IDC_INPUT_SOUNDCARD             1131
 #define IDC_ARTWORK_V1_FRAME            1132
 #define IDC_ARTWORK_V1_FRAME2           1133

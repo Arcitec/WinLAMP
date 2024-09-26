@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<WinLAMPAbstractionLayer version="0.7">
+<elements>
+  <bitmap id="winlamp.thinger.library.hilited" file="library-hilited.png" gammagroup="Thinger icons"/> 
+  <bitmap id="winlamp.thinger.library.selected" file="library-selected.png" gammagroup="Thinger icons"/> 
+  <bitmap id="winlamp.thinger.library" file="library-unselected.png" gammagroup="Thinger icons"/> 
+  
+  <bitmap id="winlamp.thinger.video.hilited" file="video-hilited.png" gammagroup="Thinger icons"/> 
+  <bitmap id="winlamp.thinger.video.selected" file="video-selected.png" gammagroup="Thinger icons"/> 
+  <bitmap id="winlamp.thinger.video" file="video-unselected.png" gammagroup="Thinger icons"/> 
+  
+  <bitmap id="winlamp.thinger.pledit.hilited" file="pledit-hover.png" gammagroup="Thinger icons"/> 
+  <bitmap id="winlamp.thinger.pledit.selected" file="pledit-selected.png" gammagroup="Thinger icons"/> 
+  <bitmap id="winlamp.thinger.pledit" file="pledit-unselected.png" gammagroup="Thinger icons"/> 
+
+  <bitmap id="winlamp.thinger.vis.hilited" file="vis-hilited.png" gammagroup="Thinger icons"/> 
+  <bitmap id="winlamp.thinger.vis.selected" file="vis-selected.png" gammagroup="Thinger icons"/> 
+  <bitmap id="winlamp.thinger.vis" file="vis-unselected.png" gammagroup="Thinger icons"/> 
+ 
+</elements>
+</WinLAMPAbstractionLayer>

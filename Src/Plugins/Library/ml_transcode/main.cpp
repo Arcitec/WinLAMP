@@ -6,7 +6,7 @@
 #include <shlwapi.h>
 #include <shlobj.h>
 #include "..\..\General\gen_ml/ml.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../nu/AutoWide.h"
 #include "../nu/ns_wc.h"
 #include "../nu/AutoChar.h"
@@ -30,7 +30,7 @@ static void quit();
 static HWND GetDialogBoxParent();
 static INT_PTR PluginMessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR param3);
 
-extern "C" winampMediaLibraryPlugin plugin = 
+extern "C" winlampMediaLibraryPlugin plugin = 
 {
 	MLHDR_VER,
 	"nullsoft(ml_transcode.dll)",
@@ -455,7 +455,7 @@ static BOOL CALLBACK transcode_dlgproc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LP
 				StringCchPrintf(buf, 1024, L"%s - %s", t->ice.artist?t->ice.artist:L"", t->ice.title?t->ice.title:L"");
 				SetDlgItemText(hwndDlg,IDC_CURRENTTRACK,buf);
 
-				if(SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)cfs,IPC_CONVERTFILEW)) break;
+				if(SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)cfs,IPC_CONVERTFILEW)) break;
 				else
 				{
 					if (cfs->error && *cfs->error)
@@ -500,7 +500,7 @@ static BOOL CALLBACK transcode_dlgproc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LP
 					TranscodeItem * t = (TranscodeItem*)transcodeQueue.Poll();
 					itemsDone++;
 					cfs->callbackhwnd=NULL;
-					SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)cfs,IPC_CONVERTFILEW_END);
+					SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)cfs,IPC_CONVERTFILEW_END);
 					copyTags(&t->ice,t->outfile);
 					if (AGAVE_API_STATS)
 					{
@@ -526,7 +526,7 @@ static BOOL CALLBACK transcode_dlgproc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LP
 		{
 			transcoding = false;
 			cfs->callbackhwnd = NULL;
-			if(!transcoderIdle) SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)cfs,IPC_CONVERTFILEW_END);
+			if(!transcoderIdle) SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)cfs,IPC_CONVERTFILEW_END);
 			TranscodeItem * t;
 			while((t = (TranscodeItem*)transcodeQueue.Poll()) != NULL)
 			{
@@ -647,9 +647,9 @@ static void enumProc(intptr_t user_data, const char *desc, int fourcc) {
 	((C_ItemList*)user_data)->Add(new EncodableFormat((unsigned int)fourcc,AutoWide(desc)));
 }
 
-static void BuildEncodableFormatsList(C_ItemList * list, HWND winampWindow,wchar_t * inifile) {
+static void BuildEncodableFormatsList(C_ItemList * list, HWND winlampWindow,wchar_t * inifile) {
 	converterEnumFmtStruct e = {enumProc,(intptr_t)list};
-	SendMessage(winampWindow,WM_WA_IPC,(WPARAM)&e,IPC_CONVERT_CONFIG_ENUMFMTS);
+	SendMessage(winlampWindow,WM_WA_IPC,(WPARAM)&e,IPC_CONVERT_CONFIG_ENUMFMTS);
 }
 
 unsigned int transcodeGatherSettings(wchar_t *format, wchar_t *folder, int format_len, HWND parent)
@@ -666,11 +666,11 @@ unsigned int transcodeGatherSettings(wchar_t *format, wchar_t *folder, int forma
 
 	char extA[8]=".";
 	convertConfigItem c = {fourcc,"extension",&extA[1],7,inifileA};
-	if(!SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&c,IPC_CONVERT_CONFIG_GET_ITEM))
+	if(!SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&c,IPC_CONVERT_CONFIG_GET_ITEM))
 	{
 		// if there was an error, see if it's from an invalid fourcc and try to fallback
 		C_ItemList * formats = new C_ItemList;
-		BuildEncodableFormatsList(formats,plugin.hwndWinampParent,inifile);
+		BuildEncodableFormatsList(formats,plugin.hwndWinLAMPParent,inifile);
 		bool doFail = false;
 
 		for(int i=0; i < formats->GetSize(); i++) {
@@ -686,7 +686,7 @@ unsigned int transcodeGatherSettings(wchar_t *format, wchar_t *folder, int forma
 		{
 			fourcc = mmioFOURCC('A','A','C','f');
 			c.format = fourcc;
-			SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&c,IPC_CONVERT_CONFIG_GET_ITEM);
+			SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&c,IPC_CONVERT_CONFIG_GET_ITEM);
 		}
 	}
 	if(extA[1]) StringCchCat(format, format_len, AutoWide(extA));
@@ -791,7 +791,7 @@ static BOOL CALLBACK config_dlgproc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARA
 			GetPrivateProfileStringUTF8("transcoder", "fileroot", AutoChar(GetDefaultSaveToFolder(tmp), CP_UTF8), buf, 4096, inifileA);
 			SetDlgItemText(hwndDlg,IDC_ROOTDIR,buf);
 			formats = new C_ItemList;
-			BuildEncodableFormatsList(formats,plugin.hwndWinampParent,inifile);
+			BuildEncodableFormatsList(formats,plugin.hwndWinLAMPParent,inifile);
 			    
 			ccs = (convertConfigStruct *)calloc(sizeof(convertConfigStruct),1);
 			ccs->extra_data[6] = mmioFOURCC('I','N','I',' ');
@@ -820,7 +820,7 @@ static BOOL CALLBACK config_dlgproc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARA
 				}
 			}
 
-			HWND h = (HWND)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)ccs, IPC_CONVERT_CONFIG);
+			HWND h = (HWND)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)ccs, IPC_CONVERT_CONFIG);
 			doConfigResizeChild(hwndDlg, h);
 
 			// show config window and restore last position as applicable
@@ -833,7 +833,7 @@ static BOOL CALLBACK config_dlgproc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARA
 
 		case WM_DESTROY:
 		{
-			SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)ccs, IPC_CONVERT_CONFIG_END);
+			SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)ccs, IPC_CONVERT_CONFIG_END);
 			free(ccs); ccs=0;
 			FreeEncodableFormatsList(formats);
 			delete formats; formats=0;
@@ -859,10 +859,10 @@ static BOOL CALLBACK config_dlgproc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARA
 						int sel = SendDlgItemMessage(hwndDlg, IDC_ENCFORMAT, CB_GETCURSEL, 0, 0);
 						if (sel != CB_ERR)
 						{
-							SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)ccs, IPC_CONVERT_CONFIG_END);
+							SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)ccs, IPC_CONVERT_CONFIG_END);
 							EncodableFormat * f = (EncodableFormat *)SendDlgItemMessage(hwndDlg, IDC_ENCFORMAT, CB_GETITEMDATA, sel, 0);
 							ccs->format = f->fourcc;
-							HWND h = (HWND)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)ccs, IPC_CONVERT_CONFIG);
+							HWND h = (HWND)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)ccs, IPC_CONVERT_CONFIG);
 							doConfigResizeChild(hwndDlg, h);
 						}
 					}
@@ -1001,7 +1001,7 @@ void filenameToItemRecord(const wchar_t *file, itemRecordW * ice)
 	basicFileInfoStructW b={0};
 	b.filename=const_cast<wchar_t *>(file); //benski> changed extendedFileInfoStruct but not basicFileInfoStruct, i'll have to do that later so we can get rid of this cast
 	b.quickCheck=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&b,IPC_GET_BASIC_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&b,IPC_GET_BASIC_FILE_INFOW);
 	ice->length=b.length;
 	  
 	ice->filename = _wcsdup(file);
@@ -1010,13 +1010,13 @@ void filenameToItemRecord(const wchar_t *file, itemRecordW * ice)
 
 void copyTags(const itemRecordW *in, const wchar_t *out) 
 {
-	// check if the old file still exists - if it does, we will let Winamp copy metadata for us
+	// check if the old file still exists - if it does, we will let WinLAMP copy metadata for us
 	if (wcscmp(in->filename, out) && PathFileExists(in->filename))
 	{
 		copyFileInfoStructW copy;
 		copy.dest = out;
 		copy.source = in->filename;
-		if (SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&copy, IPC_COPY_EXTENDED_FILE_INFOW) == 0) // 0 indicates success here
+		if (SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&copy, IPC_COPY_EXTENDED_FILE_INFOW) == 0) // 0 indicates success here
 		{
 			AGAVE_API_ALBUMART->CopyAlbumArt(in->filename, out);
 			return;
@@ -1030,50 +1030,50 @@ void copyTags(const itemRecordW *in, const wchar_t *out)
 
 	e.metadata=L"album";
 	e.ret=in->album;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&e,IPC_SET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&e,IPC_SET_EXTENDED_FILE_INFOW);
 
 	e.metadata=L"artist";
 	e.ret=in->artist;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&e,IPC_SET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&e,IPC_SET_EXTENDED_FILE_INFOW);
 
 	e.metadata=L"albumartist";
 	e.ret=in->albumartist;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&e,IPC_SET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&e,IPC_SET_EXTENDED_FILE_INFOW);
 
 	e.metadata=L"title";
 	e.ret=in->title;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&e,IPC_SET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&e,IPC_SET_EXTENDED_FILE_INFOW);
 
 	e.metadata=L"track";
 	StringCchPrintf(buf, 32, L"%d", in->track);
 	e.ret=buf;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&e,IPC_SET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&e,IPC_SET_EXTENDED_FILE_INFOW);
 
 	e.metadata=L"genre";
 	e.ret=in->genre;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&e,IPC_SET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&e,IPC_SET_EXTENDED_FILE_INFOW);
 
 	e.metadata=L"comment";
 	e.ret=in->comment;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&e,IPC_SET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&e,IPC_SET_EXTENDED_FILE_INFOW);
 
 	if(in->year > 0)
 	{
 		e.metadata=L"year";
 		StringCchPrintf(buf, 32, L"%d", in->year);
 		e.ret=buf;
-		SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&e,IPC_SET_EXTENDED_FILE_INFOW);
+		SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&e,IPC_SET_EXTENDED_FILE_INFOW);
 	}
 
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&e,IPC_WRITE_EXTENDED_FILE_INFO);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&e,IPC_WRITE_EXTENDED_FILE_INFO);
 }
 
 extern "C" {
-	__declspec( dllexport ) winampMediaLibraryPlugin * winampGetMediaLibraryPlugin() {
+	__declspec( dllexport ) winlampMediaLibraryPlugin * winlampGetMediaLibraryPlugin() {
 		return &plugin;
 	}
 
-	__declspec( dllexport ) int winampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
+	__declspec( dllexport ) int winlampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
 		// prompt to remove our settings with default as no (just incase)
 		wchar_t title[256] = {0};
 		StringCchPrintf(title, 256, WASABI_API_LNGSTRINGW(IDS_NULLSOFT_FORMAT_CONVERTER), PLUGIN_VERSION);
@@ -1093,8 +1093,8 @@ extern "C" {
 
 static HWND GetDialogBoxParent()
 {
-	HWND parent = (HWND)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETDIALOGBOXPARENT);
+	HWND parent = (HWND)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETDIALOGBOXPARENT);
 	if (!parent || parent == (HWND)1)
-		return plugin.hwndWinampParent;
+		return plugin.hwndWinLAMPParent;
 	return parent;
 }

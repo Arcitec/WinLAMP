@@ -165,9 +165,9 @@
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System\ 
-xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System\ </Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System\'</Message>
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System\ 
+xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System\ </Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -201,9 +201,9 @@ xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\Build\Winamp_$(PlatformShortName)_$
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System\ 
-xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System\ </Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System\'</Message>
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System\ 
+xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System\ </Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -239,8 +239,8 @@ xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\Build\Winamp_$(PlatformShortName)_$
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System\ </Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System\'</Message>
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System\ </Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -276,8 +276,8 @@ xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\Build\Winamp_$(PlatformShortName)_$
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System\ </Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System\'</Message>
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System\ </Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

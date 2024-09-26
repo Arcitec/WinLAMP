@@ -1,6 +1,6 @@
 #include "IDScanner.h"
 #include "main.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "api__ml_plg.h"
 #include "playlist.h"
 #include <assert.h>

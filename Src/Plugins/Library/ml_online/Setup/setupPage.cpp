@@ -11,7 +11,7 @@
 #include "./setupDetails.h"
 #include "./setupLog.h"
 
-#include "../../winamp/setup/svc_setup.h"
+#include "../../winlamp/setup/svc_setup.h"
 
 #include <ifc_omservice.h>
 #include <ifc_omfilestorage.h>
@@ -21,7 +21,7 @@
 #include <strsafe.h>
 #include <vector>
 
-#define FEATURED_SERVICES_URL		L"http://services.winamp.com/svc/default"
+#define FEATURED_SERVICES_URL		L"http://services.winlamp.com/svc/default"
 
 #define IDC_DETAILS			10000
 
@@ -238,10 +238,10 @@ HRESULT SetupPage::InitializeServices()
 	if (FALSE != servicesInitialized)
 		return S_FALSE;
 
-	HWND hWinamp = NULL;
+	HWND hWinLAMP = NULL;
 	svc_setup *setupSvc = QueryWasabiInterface(svc_setup, UID_SVC_SETUP);
 	if (NULL == setupSvc) return E_UNEXPECTED;
-	HRESULT hr = setupSvc->GetWinampWnd(&hWinamp);
+	HRESULT hr = setupSvc->GetWinLAMPWnd(&hWinLAMP);
 	ReleaseWasabiInterface(UID_SVC_SETUP, setupSvc);
 
 	if (SUCCEEDED(hr))
@@ -253,7 +253,7 @@ HRESULT SetupPage::InitializeServices()
 				NULL != OMSERVICEMNGR &&
 				NULL != OMUTILITY) 
 			{
-				hr = OMBROWSERMNGR->Initialize(NULL, hWinamp);
+				hr = OMBROWSERMNGR->Initialize(NULL, hWinLAMP);
 			}
 			else
 				hr = E_UNEXPECTED;

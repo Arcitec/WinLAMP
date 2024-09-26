@@ -11,7 +11,7 @@
 #include "../bfc/paramparser.h"
 
 // {DB26AA7F-0CF4-4e48-8AC8-49F9B9855A98}
-static const GUID winampa_guid = 
+static const GUID winlampa_guid = 
 { 0xdb26aa7f, 0xcf4, 0x4e48, { 0x8a, 0xc8, 0x49, 0xf9, 0xb9, 0x85, 0x5a, 0x98 } };
 
 class Filetypes;
@@ -21,7 +21,7 @@ public:
   ExtensionAttrCallback(const char *extname, Filetypes *ft) : ext(extname), filetypes(ft) {}
   virtual void onValueChange(Attribute *attr) {
     Filetypes::registerExtension(ext, attr->getValueAsInt());
-    api->cmd_sendCommand(winampa_guid,"extchange",0,0,attr,sizeof(attr)); // CT> notifies winampa.wac of the change
+    api->cmd_sendCommand(winlampa_guid,"extchange",0,0,attr,sizeof(attr)); // CT> notifies winlampa.wac of the change
                                                                           // (dunno if there is a better method)
     filetypes->updateKeepers();
   }
@@ -64,12 +64,12 @@ static void DCM_cb(int v) {
     HKEY mp3Key;
     char programname[MAX_PATH];
     GetModuleFileName(Main::gethInstance(),programname,sizeof(programname));
-    if (RegCreateKey(HKEY_LOCAL_MACHINE, "SOFTWARE\\Classes\\Directory\\shell\\Winamp3.Play",&mp3Key) == ERROR_SUCCESS) {
-      const char *str=_("&Play in Winamp");
+    if (RegCreateKey(HKEY_LOCAL_MACHINE, "SOFTWARE\\Classes\\Directory\\shell\\WinLAMP3.Play",&mp3Key) == ERROR_SUCCESS) {
+      const char *str=_("&Play in WinLAMP");
       RegSetValueEx(mp3Key, NULL,0,REG_SZ,(unsigned char*)str,strlen(str) + 1);
       RegCloseKey(mp3Key);
     }
-    if (RegCreateKey(HKEY_LOCAL_MACHINE, "SOFTWARE\\Classes\\Directory\\shell\\Winamp3.Play\\command",&mp3Key) == ERROR_SUCCESS) {
+    if (RegCreateKey(HKEY_LOCAL_MACHINE, "SOFTWARE\\Classes\\Directory\\shell\\WinLAMP3.Play\\command",&mp3Key) == ERROR_SUCCESS) {
       StringPrintf mstr("\"%s\" \"%%1\"", programname);
       const char *blah = mstr;
       const unsigned char *microsoft_sucks_ass = (const unsigned char*)blah;
@@ -77,12 +77,12 @@ static void DCM_cb(int v) {
       RegCloseKey(mp3Key);
     }
 
-    if (RegCreateKey(HKEY_LOCAL_MACHINE, "SOFTWARE\\Classes\\Directory\\shell\\Winamp3.Enqueue",&mp3Key) == ERROR_SUCCESS) {
-      const char *str=_("&Enqueue in Winamp");
+    if (RegCreateKey(HKEY_LOCAL_MACHINE, "SOFTWARE\\Classes\\Directory\\shell\\WinLAMP3.Enqueue",&mp3Key) == ERROR_SUCCESS) {
+      const char *str=_("&Enqueue in WinLAMP");
       RegSetValueEx(mp3Key, NULL,0,REG_SZ,(unsigned char*)str,strlen(str) + 1);
       RegCloseKey(mp3Key);
     }
-    if (RegCreateKey(HKEY_LOCAL_MACHINE, "SOFTWARE\\Classes\\Directory\\shell\\Winamp3.Enqueue\\command",&mp3Key) == ERROR_SUCCESS) {
+    if (RegCreateKey(HKEY_LOCAL_MACHINE, "SOFTWARE\\Classes\\Directory\\shell\\WinLAMP3.Enqueue\\command",&mp3Key) == ERROR_SUCCESS) {
       StringPrintf mstr("\"%s\" /ADD \"%%1\"", programname);
       const char *blah = mstr;
       const unsigned char *microsoft_sucks_ass = (const unsigned char*)blah;
@@ -90,8 +90,8 @@ static void DCM_cb(int v) {
       RegCloseKey(mp3Key);
     }
   } else {
-    Filetypes::myRegDeleteKeyEx(HKEY_LOCAL_MACHINE, "SOFTWARE\\Classes\\Directory\\shell\\Winamp3.Play");
-    Filetypes::myRegDeleteKeyEx(HKEY_LOCAL_MACHINE, "SOFTWARE\\Classes\\Directory\\shell\\Winamp3.Enqueue");
+    Filetypes::myRegDeleteKeyEx(HKEY_LOCAL_MACHINE, "SOFTWARE\\Classes\\Directory\\shell\\WinLAMP3.Play");
+    Filetypes::myRegDeleteKeyEx(HKEY_LOCAL_MACHINE, "SOFTWARE\\Classes\\Directory\\shell\\WinLAMP3.Enqueue");
   }
 }
 #endif
@@ -107,7 +107,7 @@ void Filetypes::registerAttributes() {
   if (ext == NULL) return; //BU
 
   _bool *wantExtensions;
-  registerAttribute(wantExtensions = new _bool("Register associations on Winamp startup", TRUE));
+  registerAttribute(wantExtensions = new _bool("Register associations on WinLAMP startup", TRUE));
 
   const char *p=ext;
   while(*p!=0 && *(p+1)!=0) {
@@ -187,7 +187,7 @@ int Filetypes::isRegistered(const char *ext) {
 #ifdef WIN32
   if (RegOpenKey(HKEY_CLASSES_ROOT,b,&key) != ERROR_SUCCESS) return 0;
   if (RegQueryValueEx(key,NULL,0,&vt,b,&s) == ERROR_SUCCESS)	{
-    if (vt != REG_SZ || (strcmp(b,"Winamp3.File") && strcmp(b,"Winamp3.PlayList") && strcmp(b,"Winamp3.SkinZip"))) rval=0;
+    if (vt != REG_SZ || (strcmp(b,"WinLAMP3.File") && strcmp(b,"WinLAMP3.PlayList") && strcmp(b,"WinLAMP3.SkinZip"))) rval=0;
     else rval=1;
   } else rval=0;
   RegCloseKey(key);
@@ -239,15 +239,15 @@ DebugString( "portme -- Filetypes::regmimetype\n" );
 
 void Filetypes::registerExtension(const char *ext, int reg) {
 #ifdef WIN32
-  createWinampTypes();
+  createWinLAMPTypes();
 
   char b[128];
   HKEY mp3Key;
-  char *which_str="Winamp3.File";
+  char *which_str="WinLAMP3.File";
 	
-  if (!_stricmp(ext,"m3u") || !_stricmp(ext,"pls")) which_str="Winamp3.PlayList";
+  if (!_stricmp(ext,"m3u") || !_stricmp(ext,"pls")) which_str="WinLAMP3.PlayList";
   if (!_stricmp(ext,"wsz") || !_stricmp(ext,"wpz") || !_stricmp(ext,"wal"))
-    which_str="Winamp3.SkinZip";
+    which_str="WinLAMP3.SkinZip";
 	wsprintf(b,".%s",ext);
   if (reg && !_stricmp(ext,"pls")) {
     char programname[MAX_PATH];
@@ -282,7 +282,7 @@ void Filetypes::registerExtension(const char *ext, int reg) {
       unsigned long s=sizeof(b);
       if (RegQueryValueEx(mp3Key,NULL,0,NULL,b,&s) == ERROR_SUCCESS) {
         if (strcmp(b,which_str)) {
-          RegSetValueEx(mp3Key,"Winamp_Back",0,REG_SZ,b,strlen(b)+1);
+          RegSetValueEx(mp3Key,"WinLAMP_Back",0,REG_SZ,b,strlen(b)+1);
           RegSetValueEx(mp3Key,NULL,0,REG_SZ,which_str,strlen(which_str)+1);
         }
       } else RegSetValueEx(mp3Key,NULL,0,REG_SZ,which_str,strlen(which_str)+1);
@@ -291,9 +291,9 @@ void Filetypes::registerExtension(const char *ext, int reg) {
       if (RegQueryValueEx(mp3Key,NULL,0,NULL,b,&s) == ERROR_SUCCESS) {
         if (!strcmp(b,which_str)) {
           s=sizeof(b);
-          if (RegQueryValueEx(mp3Key,"Winamp_Back",0,NULL,b,&s) == ERROR_SUCCESS) {
+          if (RegQueryValueEx(mp3Key,"WinLAMP_Back",0,NULL,b,&s) == ERROR_SUCCESS) {
             if (RegSetValueEx(mp3Key, NULL,0,REG_SZ,b,strlen(b)+1) == ERROR_SUCCESS)
-              RegDeleteValue(mp3Key,"Winamp_Back");
+              RegDeleteValue(mp3Key,"WinLAMP_Back");
           } else {
             RegDeleteValue(mp3Key,NULL);
             RegCloseKey(mp3Key);
@@ -311,28 +311,28 @@ DebugString( "portme -- Filetypes::registerExtensions\n" );
 #endif
 }
 
-void Filetypes::createWinampTypes() {
+void Filetypes::createWinLAMPTypes() {
 #ifdef WIN32
   HKEY mp3Key;
   char programname[MAX_PATH];
   char str[MAX_PATH+32];
-  char buf[128]="Winamp3.File";
-  char buf2[128]="Winamp3.PlayList";
-  char buf3[128]="Winamp3.SkinZip";
+  char buf[128]="WinLAMP3.File";
+  char buf2[128]="WinLAMP3.PlayList";
+  char buf3[128]="WinLAMP3.SkinZip";
   if (!GetModuleFileName(Main::gethInstance(),programname,sizeof(programname))) return;
 
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.File",&mp3Key) == ERROR_SUCCESS) {
-	  strcpy(str,"Winamp media file");
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.File",&mp3Key) == ERROR_SUCCESS) {
+	  strcpy(str,"WinLAMP media file");
 	  RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str)+1);
     RegCloseKey(mp3Key);
   }
 
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.File\\DefaultIcon",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.File\\DefaultIcon",&mp3Key) == ERROR_SUCCESS) {
 	  wsprintf(str,"%s,%d",programname,whichicon);
 	  RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str)+1);
 	  RegCloseKey(mp3Key);
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.File\\shell",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.File\\shell",&mp3Key) == ERROR_SUCCESS) {
     if (addtolist) 
 		  RegSetValueEx(mp3Key, NULL,0,REG_SZ,"Enqueue",8);
 	  else
@@ -340,50 +340,50 @@ void Filetypes::createWinampTypes() {
     RegCloseKey(mp3Key);
   }
 
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.File\\shell\\Play",&mp3Key) == ERROR_SUCCESS) {
-    const char *str=_("&Play in Winamp");
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.File\\shell\\Play",&mp3Key) == ERROR_SUCCESS) {
+    const char *str=_("&Play in WinLAMP");
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str)+1);
     RegCloseKey(mp3Key);
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.File\\shell\\Play\\command",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.File\\shell\\Play\\command",&mp3Key) == ERROR_SUCCESS) {
     wsprintf(str,"\"%s\" \"%%1\"",programname);
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str) + 1);
     RegCloseKey(mp3Key);  
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.File\\shell\\open",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.File\\shell\\open",&mp3Key) == ERROR_SUCCESS) {
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,"",1);
     RegCloseKey(mp3Key);
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.File\\shell\\open\\command",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.File\\shell\\open\\command",&mp3Key) == ERROR_SUCCESS) {
     wsprintf(str,"\"%s\" \"%%1\"",programname);
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str) + 1);
     RegCloseKey(mp3Key);  
   }
 
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.File\\shell\\Enqueue",&mp3Key) == ERROR_SUCCESS) {
-    const char *str=_("&Enqueue in Winamp");
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.File\\shell\\Enqueue",&mp3Key) == ERROR_SUCCESS) {
+    const char *str=_("&Enqueue in WinLAMP");
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str) + 1);
     RegCloseKey(mp3Key);
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.File\\shell\\Enqueue\\command",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.File\\shell\\Enqueue\\command",&mp3Key) == ERROR_SUCCESS) {
     wsprintf(str,"\"%s\" /ADD \"%%1\"",programname);
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str) + 1);
     RegCloseKey(mp3Key);  
   }
 
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.File\\shell\\ListBookmark",&mp3Key) == ERROR_SUCCESS) {
-    const char *str=_("Add to Winamp's &Bookmark list");
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.File\\shell\\ListBookmark",&mp3Key) == ERROR_SUCCESS) {
+    const char *str=_("Add to WinLAMP's &Bookmark list");
 	  RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str) + 1);
     RegCloseKey(mp3Key);
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.File\\shell\\ListBookmark\\command",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.File\\shell\\ListBookmark\\command",&mp3Key) == ERROR_SUCCESS) {
     wsprintf(str,"\"%s\" /BOOKMARK \"%%1\"",programname);
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str) + 1);
     RegCloseKey(mp3Key);  
   }
 
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.Playlist",&mp3Key) == ERROR_SUCCESS) {
-    strcpy(str,"Winamp playlist file");
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.Playlist",&mp3Key) == ERROR_SUCCESS) {
+    strcpy(str,"WinLAMP playlist file");
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str)+1);
     str[0]=0;
     str[1]=0;
@@ -392,60 +392,60 @@ void Filetypes::createWinampTypes() {
     RegSetValueEx(mp3Key, "EditFlags",0,REG_BINARY,str,4);
     RegCloseKey(mp3Key);
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.PlayList\\DefaultIcon",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.PlayList\\DefaultIcon",&mp3Key) == ERROR_SUCCESS) {
     wsprintf(str,"%s,%d",programname,whichicon2);
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str)+1);
     RegCloseKey(mp3Key);
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.PlayList\\shell",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.PlayList\\shell",&mp3Key) == ERROR_SUCCESS) {
     if (addtolist) 
       RegSetValueEx(mp3Key, NULL,0,REG_SZ,"Enqueue",8);
     else
       RegSetValueEx(mp3Key, NULL,0,REG_SZ,"Play",5);
     RegCloseKey(mp3Key);
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.PlayList\\shell\\Play",&mp3Key) == ERROR_SUCCESS) {
-    const char *str=_("&Play in Winamp");
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.PlayList\\shell\\Play",&mp3Key) == ERROR_SUCCESS) {
+    const char *str=_("&Play in WinLAMP");
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str)+1);
     RegCloseKey(mp3Key);
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.PlayList\\shell\\Play\\command",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.PlayList\\shell\\Play\\command",&mp3Key) == ERROR_SUCCESS) {
     wsprintf(str,"\"%s\" \"%%1\"",programname);
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str) + 1);
     RegCloseKey(mp3Key);  
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.PlayList\\shell\\open",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.PlayList\\shell\\open",&mp3Key) == ERROR_SUCCESS) {
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,"",1);
     RegCloseKey(mp3Key);
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.PlayList\\shell\\open\\command",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.PlayList\\shell\\open\\command",&mp3Key) == ERROR_SUCCESS) {
     wsprintf(str,"\"%s\" \"%%1\"",programname);
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str) + 1);
     RegCloseKey(mp3Key);  
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.PlayList\\shell\\Enqueue",&mp3Key) == ERROR_SUCCESS) {
-    const char *str=_("&Enqueue in Winamp");
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.PlayList\\shell\\Enqueue",&mp3Key) == ERROR_SUCCESS) {
+    const char *str=_("&Enqueue in WinLAMP");
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str)+1);
     RegCloseKey(mp3Key);
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.PlayList\\shell\\Enqueue\\command",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.PlayList\\shell\\Enqueue\\command",&mp3Key) == ERROR_SUCCESS) {
     wsprintf(str,"\"%s\" /ADD \"%%1\"",programname);
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str) + 1);
     RegCloseKey(mp3Key);  
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.PlayList\\shell\\ListBookmark",&mp3Key) == ERROR_SUCCESS) {
-    const char *str=_("Add to Winamp's &Bookmark list");
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.PlayList\\shell\\ListBookmark",&mp3Key) == ERROR_SUCCESS) {
+    const char *str=_("Add to WinLAMP's &Bookmark list");
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str)+1);
     RegCloseKey(mp3Key);
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.PlayList\\shell\\ListBookmark\\command",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.PlayList\\shell\\ListBookmark\\command",&mp3Key) == ERROR_SUCCESS) {
 	  wsprintf(str,"\"%s\" /BOOKMARK \"%%1\"",programname);
 	  RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str) + 1);
 	  RegCloseKey(mp3Key);  
   }
 
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.SkinZip",&mp3Key) == ERROR_SUCCESS) {
-    strcpy(str,"Winamp3 skin file");
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.SkinZip",&mp3Key) == ERROR_SUCCESS) {
+    strcpy(str,"WinLAMP3 skin file");
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str)+1);
     str[0]=0;
     str[1]=0;
@@ -454,29 +454,29 @@ void Filetypes::createWinampTypes() {
     RegSetValueEx(mp3Key, "EditFlags",0,REG_BINARY,str,4);
     RegCloseKey(mp3Key);
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.SkinZip\\DefaultIcon",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.SkinZip\\DefaultIcon",&mp3Key) == ERROR_SUCCESS) {
     wsprintf(str,"%s,%d",programname,whichicon);
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str)+1);
     RegCloseKey(mp3Key);
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.SkinZip\\shell",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.SkinZip\\shell",&mp3Key) == ERROR_SUCCESS) {
 		RegSetValueEx(mp3Key, NULL,0,REG_SZ,"Install and switch to",8);
     RegCloseKey(mp3Key);
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.SkinZip\\shell\\install",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.SkinZip\\shell\\install",&mp3Key) == ERROR_SUCCESS) {
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,"",1);
     RegCloseKey(mp3Key);
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.SkinZip\\shell\\install\\command",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.SkinZip\\shell\\install\\command",&mp3Key) == ERROR_SUCCESS) {
     wsprintf(str,"\"%s\" \"/installskin=%%1\"",programname);
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str) + 1);
     RegCloseKey(mp3Key);  
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.SkinZip\\shell\\open",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.SkinZip\\shell\\open",&mp3Key) == ERROR_SUCCESS) {
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,"",1);
     RegCloseKey(mp3Key);
   }
-  if (RegCreateKey(HKEY_CLASSES_ROOT,"Winamp3.SkinZip\\shell\\open\\command",&mp3Key) == ERROR_SUCCESS) {
+  if (RegCreateKey(HKEY_CLASSES_ROOT,"WinLAMP3.SkinZip\\shell\\open\\command",&mp3Key) == ERROR_SUCCESS) {
     wsprintf(str,"\"%s\" \"/installskin=%%1\"",programname);
     RegSetValueEx(mp3Key, NULL,0,REG_SZ,str,strlen(str) + 1);
     RegCloseKey(mp3Key);  
@@ -484,13 +484,13 @@ void Filetypes::createWinampTypes() {
 
   // Register the mimetypes to act like .wal files?
 
-//  regmimetype("interface/x-winamp-skin", programname,".wsz",0);
-  regmimetype("interface/x-winamp-skin", programname,".wal",0);
-//  regmimetype("interface/x-winamp3-skin", programname,".wsz",0);
-  regmimetype("interface/x-winamp3-skin", programname,".wal",0);
-//  regmimetype("application/x-winamp-plugin", programname,"wpz",0);
+//  regmimetype("interface/x-winlamp-skin", programname,".wsz",0);
+  regmimetype("interface/x-winlamp-skin", programname,".wal",0);
+//  regmimetype("interface/x-winlamp3-skin", programname,".wsz",0);
+  regmimetype("interface/x-winlamp3-skin", programname,".wal",0);
+//  regmimetype("application/x-winlamp-plugin", programname,"wpz",0);
 #else
-DebugString( "portme -- Filetypes::createWinampTypes\n" );
+DebugString( "portme -- Filetypes::createWinLAMPTypes\n" );
 #endif
 }
 
@@ -533,10 +533,10 @@ void Filetypes::registerCdPlayer(int reg) {
 				{
           char buf3[MAX_PATH];
           unsigned long st=sizeof(buf3);
-					if (RegQueryValueEx(mp3Key,"Winamp_Back",0,NULL,buf3,&st) != ERROR_SUCCESS ||
+					if (RegQueryValueEx(mp3Key,"WinLAMP_Back",0,NULL,buf3,&st) != ERROR_SUCCESS ||
               _stricmp(buf3,b))
 					{
-  					RegSetValueEx(mp3Key,"Winamp_Back",0,REG_SZ,b,strlen(b)+1);
+  					RegSetValueEx(mp3Key,"WinLAMP_Back",0,REG_SZ,b,strlen(b)+1);
 					} 
 					RegSetValueEx(mp3Key,NULL,0,REG_SZ,buf2,strlen(buf2)+1);
 				}
@@ -550,11 +550,11 @@ void Filetypes::registerCdPlayer(int reg) {
 				if (!strcmp(b,buf2))
 				{
 					s=sizeof(b);
-					if (RegQueryValueEx(mp3Key,"Winamp_Back",0,NULL,b,&s) == ERROR_SUCCESS)
+					if (RegQueryValueEx(mp3Key,"WinLAMP_Back",0,NULL,b,&s) == ERROR_SUCCESS)
 					{
             if (!_stricmp(b,buf2)) b[0]=0;
 						if (RegSetValueEx(mp3Key, NULL,0,REG_SZ,b,strlen(b)+1) == ERROR_SUCCESS)
-							RegDeleteValue(mp3Key,"Winamp_Back");
+							RegDeleteValue(mp3Key,"WinLAMP_Back");
 					} 
           else 
           {

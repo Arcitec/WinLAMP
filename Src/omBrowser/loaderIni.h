@@ -1,5 +1,5 @@
-#ifndef NULLSOFT_WINAMP_LOADER_INI_HEADER
-#define NULLSOFT_WINAMP_LOADER_INI_HEADER
+#ifndef NULLSOFT_WINLAMP_LOADER_INI_HEADER
+#define NULLSOFT_WINLAMP_LOADER_INI_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -60,4 +60,4 @@ protected:
 	ifc_omstoragehandlerenum *handlerEnum;
 };
 
-#endif //NULLSOFT_WINAMP_LOADER_INI_HEADER
+#endif //NULLSOFT_WINLAMP_LOADER_INI_HEADER

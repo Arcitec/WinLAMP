@@ -1,8 +1,8 @@
 #include <windows.h>
 #include "api.h"
 #include "resource.h"
-#include "../Winamp/wa_ipc.h"
-#include "../Winamp/in2.h"
+#include "../WinLAMP/wa_ipc.h"
+#include "../WinLAMP/in2.h"
 
 extern In_Module mod;			// the output module (filled in near the bottom of this file)
 

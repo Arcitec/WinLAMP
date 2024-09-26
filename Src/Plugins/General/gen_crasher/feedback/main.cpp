@@ -13,7 +13,7 @@ int WINAPI wWinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpszCm
 	if (argc != 1)
 	{
 		MSGBOXPARAMSW msgbx = {sizeof(MSGBOXPARAMS),0};
-		msgbx.lpszText = L"Winamp Error Reporter\nCopyright © 2005-2014 Winamp SA";
+		msgbx.lpszText = L"WinLAMP Error Reporter\nCopyright © 2005-2014 WinLAMP SA";
 		msgbx.lpszCaption = L"About...";
 		msgbx.lpszIcon = MAKEINTRESOURCEW(ICON_XP);
 		msgbx.hInstance = GetModuleHandle(0);

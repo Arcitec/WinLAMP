@@ -22,14 +22,14 @@ int PlaylistGeneratorAPI::GeneratePlaylist(HWND	parent, const itemRecordListW *s
 
 int PlaylistGeneratorAPI::AddSeedTracks(const itemRecordListW *recordList)
 {
-	wchar_t winamp_title[MAX_TITLE_SIZE] = {0};
+	wchar_t winlamp_title[MAX_TITLE_SIZE] = {0};
 
 	for (int i = 0; i < recordList->Size; i++)
 	{
 		itemRecordW *item = &recordList->Items[i];
-		GetTitleFormattingML(item->filename, item, winamp_title, MAX_TITLE_SIZE);
+		GetTitleFormattingML(item->filename, item, winlamp_title, MAX_TITLE_SIZE);
 
-		seedPlaylist.AppendWithInfo(item->filename, winamp_title, item->length * 1000, item->filesize * 1024);
+		seedPlaylist.AppendWithInfo(item->filename, winlamp_title, item->length * 1000, item->filesize * 1024);
 	}
 
 	return true;

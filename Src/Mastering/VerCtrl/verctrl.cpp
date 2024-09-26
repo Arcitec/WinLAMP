@@ -8,7 +8,7 @@ static char *branding = 0;
 int _tmain(int argc, _TCHAR* argv[])
 {
 	_tprintf(_T("Version Control Utility ver 1.0\n"));
-	_tprintf(_T("Patching version information in the winamp project source files\n\n"));
+	_tprintf(_T("Patching version information in the winlamp project source files\n\n"));
 	
 	bool setted = false;
 	if (argc > 1)
@@ -699,7 +699,7 @@ bool PatchFileNamesCmd(void)
 		if (NULL != _tcsstr(line, lookStr)) 
 		{
 			data = line + (int)_tcslen(lookStr);
-			_stprintf(newStr, _T("=winamp%d%d%s"), ver_major, ver_minor, ver_minor2_full);
+			_stprintf(newStr, _T("=winlamp%d%d%s"), ver_major, ver_minor, ver_minor2_full);
 			TCHAR tmp[64];
 			switch(type)
 			{
@@ -742,9 +742,9 @@ bool PatchMakeNsisCmd(void)
 
 	const TCHAR *szLookTable[] = 
 	{
-		_T("SET WINAMP_VERSION_MAJOR"),
-		_T("SET WINAMP_VERSION_MINOR_SECOND"),
-		_T("SET WINAMP_VERSION_MINOR"),
+		_T("SET WINLAMP_VERSION_MAJOR"),
+		_T("SET WINLAMP_VERSION_MINOR_SECOND"),
+		_T("SET WINLAMP_VERSION_MINOR"),
 		
 	};
 				

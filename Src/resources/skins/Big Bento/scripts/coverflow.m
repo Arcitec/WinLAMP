@@ -3,7 +3,7 @@
 **  Version:	1.0					**
 **  Date:	20. Nov. 2007 - 15:25			**
 **********************************************************
-**  Type:	winamp.wasabi/maki			**
+**  Type:	winlamp.wasabi/maki			**
 **  Project:	Cover Flow				**
 **********************************************************
 **  Author:	Martin Poehlmann aka Deimos		**

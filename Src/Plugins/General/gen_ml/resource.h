@@ -2,7 +2,7 @@
 // Microsoft Visual C++ generated include file.
 // Used by gen_ml.rc
 //
-#define IDS_ENQUEUE_IN_WINAMP           0
+#define IDS_ENQUEUE_IN_WINLAMP           0
 #define IDS_LIBRARY_OPTIONS             1
 #define IDS_ONLINE_MEDIA                2
 #define IDC_ITV_CHANGEPASS              3
@@ -20,7 +20,7 @@
 #define IDS_ML_GHK_STR                  15
 #define IDS_MEDIA_LIBRARY               16
 #define IDS_ML_ALT_L_SHORTCUT           17
-#define IDS_WINAMP_LIBRARY              18
+#define IDS_WINLAMP_LIBRARY              18
 #define IDS_ONLINE_SERVICES_NOT_PRESENT 19
 #define IDS_ERROR_SWITCHING_TO_VIEW     20
 #define IDS_CDDB_CONNECTING             22

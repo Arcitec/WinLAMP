@@ -3,7 +3,7 @@
 #include "./wasabi.h"
 #include "./resource.h"
 #include "../replicant/nu/Autowide.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include <strsafe.h>
 
 #define IS_INVALIDISPATCH(__disp) (((IDispatch *)1) == (__disp) || NULL == (__disp))
@@ -111,19 +111,19 @@ HRESULT OmService::GetExternal(IDispatch **ppDispatch)
 	
 	*ppDispatch = NULL;
 
-	HWND hWinamp = Plugin_GetWinamp();
-	if (NULL == hWinamp)
+	HWND hWinLAMP = Plugin_GetWinLAMP();
+	if (NULL == hWinLAMP)
 		return E_UNEXPECTED;
 	
 	// So far we do not use JSAPI2 in nowplaying
 	// // try JSAPI2 first
 	// WCHAR szBuffer[64] = {0};
 	// if (SUCCEEDED(StringCchPrintfW(szBuffer, ARRAYSIZE(szBuffer), L"%u", id)))
-	// *ppDispatch = (IDispatch*)SENDWAIPC(hWinamp, IPC_JSAPI2_GET_DISPATCH_OBJECT, (WPARAM)szBuffer);
+	// *ppDispatch = (IDispatch*)SENDWAIPC(hWinLAMP, IPC_JSAPI2_GET_DISPATCH_OBJECT, (WPARAM)szBuffer);
 		
 	if (IS_INVALIDISPATCH(*ppDispatch))
 	{ 	// try JSAPI1
-		*ppDispatch = (IDispatch*)SENDWAIPC(hWinamp, IPC_GET_DISPATCH_OBJECT, 0);
+		*ppDispatch = (IDispatch*)SENDWAIPC(hWinLAMP, IPC_GET_DISPATCH_OBJECT, 0);
 		if (IS_INVALIDISPATCH(*ppDispatch))
 		{ // Fail
 			*ppDispatch = NULL;

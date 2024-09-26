@@ -3,13 +3,13 @@
 
 HINSTANCE C_ENCODER_OGG::hEncoderInstance = NULL;
 
-C_ENCODER_OGG::C_ENCODER_OGG(HWND winamp) : C_ENCODER_NSV(sizeof(T_ENCODER_OGG_INFO)) {
+C_ENCODER_OGG::C_ENCODER_OGG(HWND winlamp) : C_ENCODER_NSV(sizeof(T_ENCODER_OGG_INFO)) {
 	SetName("OGG Vorbis Encoder");
-	winampWnd = winamp;
+	winlampWnd = winlamp;
 	ConfigAudio3 = NULL;
 	if(hEncoderInstance == NULL) {
 		wchar_t dir[MAX_PATH] = {0};
-		snwprintf(dir, MAX_PATH, L"%s\\enc_vorbis.dll", GetPluginDirectoryW(winamp));
+		snwprintf(dir, MAX_PATH, L"%s\\enc_vorbis.dll", GetPluginDirectoryW(winlamp));
 		hEncoderInstance = LoadLibraryW(dir);
 	}
 
@@ -17,8 +17,8 @@ C_ENCODER_OGG::C_ENCODER_OGG(HWND winamp) : C_ENCODER_NSV(sizeof(T_ENCODER_OGG_I
 		void * CreateAudio3=(void *)GetProcAddress(hEncoderInstance, "CreateAudio3");
 		void * GetAudioTypes3=(void *)GetProcAddress(hEncoderInstance, "GetAudioTypes3");
 		void * ConfigAudio3=(void *)GetProcAddress(hEncoderInstance, "ConfigAudio3");
-		void * SetWinampHWND=(void *)GetProcAddress(hEncoderInstance, "SetWinampHWND");
-		SetEncoder(CreateAudio3,GetAudioTypes3,ConfigAudio3,SetWinampHWND);
+		void * SetWinLAMPHWND=(void *)GetProcAddress(hEncoderInstance, "SetWinLAMPHWND");
+		SetEncoder(CreateAudio3,GetAudioTypes3,ConfigAudio3,SetWinLAMPHWND);
 	}
 
 	T_ENCODER_OGG_INFO * EncInfo = (T_ENCODER_OGG_INFO *)ExtendedInfoPtr;
@@ -32,11 +32,11 @@ C_ENCODER_OGG::~C_ENCODER_OGG() {
 }
 
 static int cacheVal=0;
-bool C_ENCODER_OGG::isPresent(HWND winamp) {
+bool C_ENCODER_OGG::isPresent(HWND winlamp) {
 	if(cacheVal!=0 && hEncoderInstance!=0) return cacheVal==2;
 	bool ret=false;
 	wchar_t dir[MAX_PATH] = {0};
-	snwprintf(dir, MAX_PATH, L"%s\\enc_vorbis.dll", GetPluginDirectoryW(winamp));
+	snwprintf(dir, MAX_PATH, L"%s\\enc_vorbis.dll", GetPluginDirectoryW(winlamp));
 	FILE * f = _wfopen(dir, L"rb");
 	if (f) {
 		fseek(f,0,2);

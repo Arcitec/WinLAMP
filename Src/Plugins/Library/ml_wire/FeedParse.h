@@ -6,8 +6,8 @@
 class FeedParse : public DownloadThread
 {
 public:
-	FeedParse(ChannelSync *_sync, bool doWinampSpecificTags = false)
-			: sync(_sync), loadingOwnFeed(doWinampSpecificTags)
+	FeedParse(ChannelSync *_sync, bool doWinLAMPSpecificTags = false)
+			: sync(_sync), loadingOwnFeed(doWinLAMPSpecificTags)
 	{}
 
 	~FeedParse()

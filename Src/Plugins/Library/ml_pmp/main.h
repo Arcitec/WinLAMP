@@ -52,7 +52,7 @@
 
 #define DEFAULT_PMP_SEND_TO 1
 extern DeviceView *configDevice;
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 extern C_ItemList devices;
 extern HWND mainMessageWindow;
 extern std::map<DeviceView *, bool> device_update_map;
@@ -77,7 +77,7 @@ BOOL FormatResProtocol(const wchar_t *resourceName,
 					   wchar_t *buffer, 
 					   size_t bufferMax);
 
-#define CENTER_OVER_WINAMP		((HWND)0)
+#define CENTER_OVER_WINLAMP		((HWND)0)
 #define CENTER_OVER_ML			((HWND)1)
 #define CENTER_OVER_ML_VIEW		((HWND)2)
 

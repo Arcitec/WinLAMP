@@ -70,7 +70,7 @@ void CoverDirectoryComponent::DeregisterServices(api_service *service)
 
 static CoverDirectoryComponent coverDirectoryComponent;
 
-extern "C" __declspec(dllexport) ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" __declspec(dllexport) ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &coverDirectoryComponent;
 }

@@ -70,7 +70,7 @@ void AlbumArtComponent::DeregisterServices(api_service *service)
 }
 
 static AlbumArtComponent component;
-extern "C" DLLEXPORT ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" DLLEXPORT ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &component;
 }

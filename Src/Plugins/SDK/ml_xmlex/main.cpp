@@ -1,5 +1,5 @@
 #include "main.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "resource.h"
 #include "api.h"
 #include "../nu/AutoWide.h"
@@ -15,7 +15,7 @@ void Quit();
 UINT_PTR xmlex_treeItem = 0;
 api_service *serviceManager = 0;
 
-EXTERN_C winampMediaLibraryPlugin plugin =
+EXTERN_C winlampMediaLibraryPlugin plugin =
 {
 	MLHDR_VER,
 		"Nullsoft XML Reader",
@@ -30,7 +30,7 @@ EXTERN_C winampMediaLibraryPlugin plugin =
 int Init() 
 {
 	//starting point for wasabi, where services are shared
-	WASABI_API_SVC = (api_service *)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_API_SERVICE);
+	WASABI_API_SVC = (api_service *)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_API_SERVICE);
 	
 	// waServiceFactory *sf = plugin.service->service_getServiceByGuid(languageApiGUID);
 	// if (sf) WASABI_API_LNG = reinterpret_cast<api_language*>(sf->getInterface());
@@ -63,7 +63,7 @@ void Quit()
 {
 }
 
-extern "C" __declspec(dllexport) winampMediaLibraryPlugin *winampGetMediaLibraryPlugin()
+extern "C" __declspec(dllexport) winlampMediaLibraryPlugin *winlampGetMediaLibraryPlugin()
 {
 	return &plugin;
 }

@@ -1,5 +1,5 @@
-#ifndef _NULLSOFT_WINAMP_ML_DEVICES_WASABI_HEADER
-#define _NULLSOFT_WINAMP_ML_DEVICES_WASABI_HEADER
+#ifndef _NULLSOFT_WINLAMP_ML_DEVICES_WASABI_HEADER
+#define _NULLSOFT_WINLAMP_ML_DEVICES_WASABI_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -14,12 +14,12 @@
 extern api_devicemanager *deviceManagerApi;
 #define WASABI_API_DEVICES deviceManagerApi
 
-#include "../winamp/api_winamp.h"
-extern api_winamp *winampApi;
-#define WASABI_API_WINAMP winampApi
+#include "../winlamp/api_winlamp.h"
+extern api_winlamp *winlampApi;
+#define WASABI_API_WINLAMP winlampApi
 
 BOOL Wasabi_Initialize(HINSTANCE instance);
-BOOL Wasabi_InitializeFromWinamp(HINSTANCE instance, HWND winampWindow);
+BOOL Wasabi_InitializeFromWinLAMP(HINSTANCE instance, HWND winlampWindow);
 BOOL Wasabi_LoadDefaultServices(void);
 
 unsigned long Wasabi_AddRef(void);
@@ -40,4 +40,4 @@ void Wasabi_ReleaseInterface0(const GUID &interfaceGuid, void *interfaceInstance
 #define Wasabi_ReleaseObject(_object)\
 		{if (NULL != (_object)) {((Dispatchable*)(_object))->Release();}} 
 
-#endif // _NULLSOFT_WINAMP_ML_DEVICES_WASABI_HEADER
+#endif // _NULLSOFT_WINLAMP_ML_DEVICES_WASABI_HEADER

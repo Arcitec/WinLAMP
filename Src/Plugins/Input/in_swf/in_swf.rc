@@ -63,7 +63,7 @@ BEGIN
     IDS_NULLSOFT_SWF_OLD    "Nullsoft Flash Control Playback"
     IDS_SWF_FILES           "Shockwave Flash Files"
     IDS_FAMILY_STRING       "Shockwave Flash"
-    IDS_ABOUT_TEXT          "%s\n© 2008-2023 Winamp SA\nWritten by: Ben Allison\nBuild date: %s"
+    IDS_ABOUT_TEXT          "%s\n© 2008-2023 WinLAMP SA\nWritten by: Ben Allison\nBuild date: %s"
 END
 
 #endif    // English (U.S.) resources

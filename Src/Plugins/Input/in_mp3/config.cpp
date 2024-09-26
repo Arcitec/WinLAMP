@@ -2,7 +2,7 @@
 #include <shlobj.h>
 #include <commctrl.h>
 #include <windows.h>
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "config.h"
 #include "api__in_mp3.h"
 #include "resource.h"
@@ -334,7 +334,7 @@ static INT_PTR CALLBACK id3Proc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM l
 		SendDlgItemMessage(hwndDlg,IDC_COMBO2,CB_ADDSTRING,0,(LPARAM)WASABI_API_LNGSTRINGW(IDS_SYSTEM_LANGUAGE));
 		SendDlgItemMessage(hwndDlg,IDC_COMBO2,CB_SETCURSEL,config_write_mode,0);
 
-		SetDlgItemTextA(hwndDlg,IDC_RATING_EMAIL,(config_rating_email[0] ? config_rating_email : "rating@winamp.com\0"));
+		SetDlgItemTextA(hwndDlg,IDC_RATING_EMAIL,(config_rating_email[0] ? config_rating_email : "rating@winlamp.com\0"));
 
 		return FALSE;
 	case WM_NOTIFY:
@@ -356,7 +356,7 @@ static INT_PTR CALLBACK id3Proc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM l
 				config_create_id3v2 = IsDlgButtonChecked(hwndDlg, IDC_CREATE_ID3V2);
 
 				GetDlgItemTextA(hwndDlg,IDC_RATING_EMAIL,config_rating_email,sizeof(config_rating_email));
-				if (!stricmp(config_rating_email, "rating@winamp.com\0")) config_rating_email[0] = 0;
+				if (!stricmp(config_rating_email, "rating@winlamp.com\0")) config_rating_email[0] = 0;
 
 				return TRUE;
 			}
@@ -386,7 +386,7 @@ static INT_PTR CALLBACK id3Proc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM l
 			if(HIWORD(wParam) == BN_CLICKED)
 			{
 				config_rating_email[0] = 0;
-				SetDlgItemTextA(hwndDlg,IDC_RATING_EMAIL,(config_rating_email[0] ? config_rating_email : "rating@winamp.com\0"));
+				SetDlgItemTextA(hwndDlg,IDC_RATING_EMAIL,(config_rating_email[0] ? config_rating_email : "rating@winlamp.com\0"));
 			}
 		}
 		return FALSE;

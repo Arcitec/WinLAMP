@@ -3,8 +3,8 @@
 
 #define WMDRM_VERSION L"3.95"
 
-#include "WinampInterface.h"
-#include "../Winamp/in2.h"
+#include "WinLAMPInterface.h"
+#include "../WinLAMP/in2.h"
 #include <windows.h>
 #include "WMDRMModule.h"
 #include <shlwapi.h>
@@ -23,9 +23,9 @@
 extern WMInformation *setFileInfo;
 
 struct IDispatch;
-extern IDispatch *winampExternal;
+extern IDispatch *winlampExternal;
 
-extern WinampInterface winamp;
+extern WinLAMPInterface winlamp;
 extern In_Module plugin;
 
 extern WMDRM mod;

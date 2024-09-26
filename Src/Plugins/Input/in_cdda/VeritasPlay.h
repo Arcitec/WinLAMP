@@ -49,8 +49,8 @@ public:
 	//void Delete() 	{if (primo)		delete primo;		primo = 0;	}
 	void CreateBuffers();
 	void DestroyBuffers();
-	int open(char drive, int track); //called by winampGetExtendedRead
-	int play(char drive, int track); //called by winamp2
+	int open(char drive, int track); //called by winlampGetExtendedRead
+	int play(char drive, int track); //called by winlamp2
 	int openVeritasTrack(DWORD start, DWORD length);
 
 	static DWORD WINAPI threadProc(LPVOID lpParameter)

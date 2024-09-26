@@ -273,7 +273,7 @@ HRESULT OmBrowserRegistry::CreatePath(LPWSTR pszBuffer, INT cchBufferMax)
 	}
 
 	if (L'\0' == szApp[0])
-		hr = StringCchCopy(szApp, ARRAYSIZE(szApp), L"Winamp");
+		hr = StringCchCopy(szApp, ARRAYSIZE(szApp), L"WinLAMP");
 
 	if (L'\0' == szSessionId[0])
 		hr = StringCchPrintf(szSessionId, ARRAYSIZE(szSessionId), L"%u", GetCurrentProcessId());

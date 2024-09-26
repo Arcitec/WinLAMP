@@ -3,10 +3,10 @@
 //
 // Version
 //
-#include "../Winamp/buildType.h"
+#include "../WinLAMP/buildType.h"
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION WINAMP_PRODUCTVER
- PRODUCTVERSION WINAMP_PRODUCTVER
+ FILEVERSION WINLAMP_PRODUCTVER
+ PRODUCTVERSION WINLAMP_PRODUCTVER
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -21,15 +21,15 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "CompanyName", "Winamp SA"
-            VALUE "FileDescription", "Winamp 5.x System Component"
-            VALUE "FileVersion", STR_WINAMP_PRODUCTVER
+            VALUE "CompanyName", "WinLAMP SA"
+            VALUE "FileDescription", "WinLAMP 5.x System Component"
+            VALUE "FileVersion", STR_WINLAMP_PRODUCTVER
             VALUE "InternalName", "filereader.w5s"
-            VALUE "LegalCopyright", "Copyright © 2005-2023 Winamp SA"
-            VALUE "LegalTrademarks", "Nullsoft and Winamp are trademarks of Winamp SA"
+            VALUE "LegalCopyright", "Copyright © 2005-2023 WinLAMP SA"
+            VALUE "LegalTrademarks", "Nullsoft and WinLAMP are trademarks of WinLAMP SA"
             VALUE "OriginalFilename", "filereader.w5s"
-            VALUE "ProductName", "Winamp File Reader Service"
-            VALUE "ProductVersion", STR_WINAMP_PRODUCTVER
+            VALUE "ProductName", "WinLAMP File Reader Service"
+            VALUE "ProductVersion", STR_WINLAMP_PRODUCTVER
         END
     END
     BLOCK "VarFileInfo"

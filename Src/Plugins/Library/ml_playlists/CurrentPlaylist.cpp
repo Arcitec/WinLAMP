@@ -5,7 +5,7 @@
 #include "main.h"
 #include "CurrentPlaylist.h"
 #include "Playlist.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../nu/AutoWide.h"
 #include "PlaylistDirectoryCallback.h"
 #include "api__ml_playlists.h"
@@ -58,7 +58,7 @@ bool currentPlaylist_ImportFromDisk( HWND hwnd )
 	return ret;
 }
 
-bool currentPlaylist_ImportFromWinamp( HWND hwnd )
+bool currentPlaylist_ImportFromWinLAMP( HWND hwnd )
 {
 	wchar_t titleStr[ 32 ] = { 0 };
 	int w = currentPlaylist.GetNumItems() == 0 ? IDNO :
@@ -71,10 +71,10 @@ bool currentPlaylist_ImportFromWinamp( HWND hwnd )
 		if ( w == IDNO )
 			currentPlaylist.Clear();
 
-		SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_WRITEPLAYLIST );
-		wchar_t *m3udir = (wchar_t *)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETM3UDIRECTORYW );
+		SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_WRITEPLAYLIST );
+		wchar_t *m3udir = (wchar_t *)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETM3UDIRECTORYW );
 		wchar_t s[ MAX_PATH ] = { 0 };
-		PathCombineW( s, m3udir, L"winamp.m3u8" );
+		PathCombineW( s, m3udir, L"winlamp.m3u8" );
 
 		AGAVE_API_PLAYLISTMANAGER->Load( s, &currentPlaylist );
 
@@ -114,7 +114,7 @@ void CurrentPlaylist_Export(HWND dlgparent)
 	l.hwndOwner    = dlgparent;
 	l.hInstance    = plugin.hDllInstance;
 	l.nFilterIndex = g_config->ReadInt(L"filter", 3);
-	l.lpstrFilter  = (LPCWSTR)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 3, IPC_GET_PLAYLIST_EXTLISTW);
+	l.lpstrFilter  = (LPCWSTR)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 3, IPC_GET_PLAYLIST_EXTLISTW);
 	l.lpstrFile    = temp;
 	l.nMaxFile     = MAX_PATH;
 	l.lpstrTitle   = WASABI_API_LNGSTRINGW(IDS_EXPORT_PLAYLIST);
@@ -138,7 +138,7 @@ void CurrentPlaylist_Export(HWND dlgparent)
 bool CurrentPlaylist_AddLocation( HWND hwndDlg )
 {
 	bool ret = false;
-	char *p = (char *)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)hwndDlg, IPC_OPENURLBOX );
+	char *p = (char *)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)hwndDlg, IPC_OPENURLBOX );
 	if ( p )
 	{
 		//size_t s = currentPlaylist.GetNumItems();
@@ -153,7 +153,7 @@ bool CurrentPlaylist_AddLocation( HWND hwndDlg )
 
 		ret = true;
 
-		// TODO: if (GetPrivateProfileInt("winamp", "rofiob", 1, WINAMP_INI)&1) PlayList_sort(2, s);
+		// TODO: if (GetPrivateProfileInt("winlamp", "rofiob", 1, WINLAMP_INI)&1) PlayList_sort(2, s);
 
 		GlobalFree( (HGLOBAL)p );
 	}
@@ -165,7 +165,7 @@ static INT_PTR CALLBACK browseCheckBoxProc( HWND hwndDlg, UINT uMsg, WPARAM wPar
 {
 	if ( uMsg == WM_INITDIALOG )
 	{
-		int rofiob = GetPrivateProfileIntA( "winamp", "rofiob", 1, mediaLibrary.GetWinampIni() );
+		int rofiob = GetPrivateProfileIntA( "winlamp", "rofiob", 1, mediaLibrary.GetWinLAMPIni() );
 		if ( !( rofiob & 2 ) )
 			CheckDlgButton( hwndDlg, IDC_CHECK1, BST_CHECKED );
 	}
@@ -174,7 +174,7 @@ static INT_PTR CALLBACK browseCheckBoxProc( HWND hwndDlg, UINT uMsg, WPARAM wPar
 	{
 		if ( LOWORD( wParam ) == IDC_CHECK1 )
 		{
-			int rofiob = GetPrivateProfileIntA( "winamp", "rofiob", 1, mediaLibrary.GetWinampIni() );
+			int rofiob = GetPrivateProfileIntA( "winlamp", "rofiob", 1, mediaLibrary.GetWinLAMPIni() );
 			if ( IsDlgButtonChecked( hwndDlg, IDC_CHECK1 ) )
 				rofiob &= ~2;
 			else
@@ -182,7 +182,7 @@ static INT_PTR CALLBACK browseCheckBoxProc( HWND hwndDlg, UINT uMsg, WPARAM wPar
 
 			char blah[ 32 ] = { 0 };
 			StringCchPrintfA( blah, 32, "%d", rofiob );
-			WritePrivateProfileStringA( "winamp", "rofiob", blah, mediaLibrary.GetWinampIni() );
+			WritePrivateProfileStringA( "winlamp", "rofiob", blah, mediaLibrary.GetWinLAMPIni() );
 		}
 	}
 
@@ -238,11 +238,11 @@ bool CurrentPlaylist_AddDirectory( HWND hwndDlg )
 		Shell_Free( idlist );
 		WASABI_API_APP->path_setWorkingPath( path );
 
-		PlaylistDirectoryCallback dirCallback( mediaLibrary.GetExtensionList(), mediaLibrary.GetWinampIni() );
+		PlaylistDirectoryCallback dirCallback( mediaLibrary.GetExtensionList(), mediaLibrary.GetWinLAMPIni() );
 
 		AGAVE_API_PLAYLISTMANAGER->LoadDirectory( path, &currentPlaylist, &dirCallback );
 
-		//int rofiob = GetPrivateProfileInt("winamp", "rofiob", 1, WINAMP_INI);
+		//int rofiob = GetPrivateProfileInt("winlamp", "rofiob", 1, WINLAMP_INI);
 		// TODO: if (rofiob&1) PlayList_sort(2, s);
 		return true;
 	}
@@ -266,7 +266,7 @@ bool CurrentPlaylist_AddFiles( HWND hwndDlg )
 	q = 1;
 	temp = (wchar_t *)GlobalAlloc( GPTR, sizeof( wchar_t ) * len );
 	l.hwndOwner = hwndDlg;
-	wchar_t *fsb = (wchar_t *)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 1, IPC_GET_EXTLISTW );
+	wchar_t *fsb = (wchar_t *)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 1, IPC_GET_EXTLISTW );
 
 	l.lpstrFilter     = fsb;
 	l.lpstrFile       = temp;
@@ -288,7 +288,7 @@ bool CurrentPlaylist_AddFiles( HWND hwndDlg )
 		{
 			AGAVE_API_PLAYLISTMANAGER->LoadFromDialog( temp, &currentPlaylist );
 			ret = true;
-			// TODO: if (GetPrivateProfileInt("winamp", "rofiob", 1, WINAMP_INI)&1) PlayList_sort(2, sp);
+			// TODO: if (GetPrivateProfileInt("winlamp", "rofiob", 1, WINLAMP_INI)&1) PlayList_sort(2, sp);
 		}
 		else
 		{

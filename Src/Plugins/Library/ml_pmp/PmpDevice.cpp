@@ -354,16 +354,16 @@ HRESULT DeviceView::SendCommand(const char *command, HWND hostWindow, ULONG_PTR 
 	}
 	else if (!strcmp(command, DEVICE_CMD_PREFERENCES))
 	{
-		SENDWAIPC(plugin.hwndWinampParent, IPC_OPENPREFSTOPAGE,(WPARAM)&devPrefsPage);
+		SENDWAIPC(plugin.hwndWinLAMPParent, IPC_OPENPREFSTOPAGE,(WPARAM)&devPrefsPage);
 		return S_OK;
 	}
 	else if (!strcmp(command, DEVICE_CMD_HIDE))
 	{
 		static int IPC_CLOUD_HIDE_LOCAL = -1;
 		if (IPC_CLOUD_HIDE_LOCAL == -1)
-			IPC_CLOUD_HIDE_LOCAL = SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"WinampCloudLocal", IPC_REGISTER_WINAMP_IPCMESSAGE);
+			IPC_CLOUD_HIDE_LOCAL = SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"WinLAMPCloudLocal", IPC_REGISTER_WINLAMP_IPCMESSAGE);
 
-		SENDWAIPC(plugin.hwndWinampParent, IPC_CLOUD_HIDE_LOCAL, 0);
+		SENDWAIPC(plugin.hwndWinLAMPParent, IPC_CLOUD_HIDE_LOCAL, 0);
 		return S_OK;
 	}
 
@@ -486,7 +486,7 @@ HRESULT DeviceView::SetDisplayName(const wchar_t *displayName, bool force = 0)
 	dev->setPlaylistName(0, displayName);	
 	free(devPrefsPage.name);
 	devPrefsPage.name = _wcsdup(displayName);
-	SENDWAIPC(plugin.hwndWinampParent, IPC_UPDATE_PREFS_DLGW, (WPARAM)&devPrefsPage);
+	SENDWAIPC(plugin.hwndWinLAMPParent, IPC_UPDATE_PREFS_DLGW, (WPARAM)&devPrefsPage);
 
 	DevicePropertiesChanges();
 	UpdateDevicesListView(false);

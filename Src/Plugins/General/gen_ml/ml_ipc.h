@@ -8,7 +8,7 @@
 /*
   Basically for the sendto menu, do this:
     librarySendToMenuStruct s={0,};
-    int IPC_LIBRARY_SENDTOMENU=SendMessage(hMainWindow,WM_WA_IPC,(WPARAM)&"LibrarySendToMenu",IPC_REGISTER_WINAMP_IPCMESSAGE);
+    int IPC_LIBRARY_SENDTOMENU=SendMessage(hMainWindow,WM_WA_IPC,(WPARAM)&"LibrarySendToMenu",IPC_REGISTER_WINLAMP_IPCMESSAGE);
     if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage(hMainWindow,WM_WA_IPC,(WPARAM)0,IPC_LIBRARY_SENDTOMENU)==0xffffffff)
     {
       s.mode=1;
@@ -77,13 +77,13 @@ typedef struct { // always init this to all 0s
 
   HWND hwnd; // parent for sendto
 
-  // specify ctx[1]=1 to disable 'enqueue in winamp' on the menu
+  // specify ctx[1]=1 to disable 'enqueue in winlamp' on the menu
   // specify ctx[2]=(ML_TYPE_*)+1 as the originally intended data_type
-  intptr_t ctx[32]; // internal winamp use
+  intptr_t ctx[32]; // internal winlamp use
 } librarySendToMenuStruct;
 
 //IPC_GETMLWINDOW
-//int IPC_GETMLWINDOW=SendMessage(hMainWindow,WM_WA_IPC,(WPARAM)&"LibraryGetWnd",IPC_REGISTER_WINAMP_IPCMESSAGE);
+//int IPC_GETMLWINDOW=SendMessage(hMainWindow,WM_WA_IPC,(WPARAM)&"LibraryGetWnd",IPC_REGISTER_WINLAMP_IPCMESSAGE);
 //
 //then:
 // to ensure library's db is loaded: if (IPC_GETMLWINDOW>65536) SendMessage(hMainWindow,WM_WA_IPC,-1,IPC_GETMLWINDOW);

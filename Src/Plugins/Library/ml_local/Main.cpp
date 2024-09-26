@@ -53,7 +53,7 @@ prefsDlgRecW preferences;
 
 static wchar_t preferencesName[64] = {0};
 
-int winampVersion = 0;
+int winlampVersion = 0;
 int substantives = 0;
 int play_enq_rnd_alt = 0;
 
@@ -138,7 +138,7 @@ int Init()
 #endif
 	InitializeCriticalSection(&g_db_cs);
 
-	waMenuID = (WORD)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_REGISTER_LOWORD_COMMAND);
+	waMenuID = (WORD)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_REGISTER_LOWORD_COMMAND);
 
 	Tataki::Init(plugin.service);
 
@@ -184,14 +184,14 @@ int Init()
 					 WASABI_API_LNGSTRINGW(IDS_NULLSOFT_LOCAL_MEDIA), PLUGIN_VERSION);
 	plugin.description = (char*)szDescription;
 
-	ML_IPC_MENUFUCKER_BUILD = (int)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"menufucker_build", IPC_REGISTER_WINAMP_IPCMESSAGE);
-	ML_IPC_MENUFUCKER_RESULT = (int)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"menufucker_result", IPC_REGISTER_WINAMP_IPCMESSAGE);
-	IPC_CLOUD_ENABLED = SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"WinampCloudEnabled", IPC_REGISTER_WINAMP_IPCMESSAGE);
+	ML_IPC_MENUFUCKER_BUILD = (int)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"menufucker_build", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	ML_IPC_MENUFUCKER_RESULT = (int)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"menufucker_result", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	IPC_CLOUD_ENABLED = SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"WinLAMPCloudEnabled", IPC_REGISTER_WINLAMP_IPCMESSAGE);
 
 	mediaLibrary.library = plugin.hwndLibraryParent;
-	mediaLibrary.winamp = plugin.hwndWinampParent;
+	mediaLibrary.winlamp = plugin.hwndWinLAMPParent;
 	mediaLibrary.instance = plugin.hDllInstance;
-	winampVersion = mediaLibrary.GetWinampVersion();
+	winlampVersion = mediaLibrary.GetWinLAMPVersion();
 
 	mediaLibrary.AddDispatch(L"LocalMedia", &localMediaCOM);
 
@@ -568,7 +568,7 @@ INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR pa
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-extern "C" winampMediaLibraryPlugin plugin = 
+extern "C" winlampMediaLibraryPlugin plugin = 
 { 
 	MLHDR_VER, 
 	"nullsoft(ml_local.dll)", 
@@ -580,7 +580,7 @@ extern "C" winampMediaLibraryPlugin plugin =
 	0,
 };
 
-extern "C" __declspec(dllexport) winampMediaLibraryPlugin *winampGetMediaLibraryPlugin()
+extern "C" __declspec(dllexport) winlampMediaLibraryPlugin *winlampGetMediaLibraryPlugin()
 {
 	return &plugin;
 }

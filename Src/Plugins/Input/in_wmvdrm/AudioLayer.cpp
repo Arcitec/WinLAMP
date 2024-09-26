@@ -47,7 +47,7 @@ void AudioLayer::Opened()
 		new_offset = config_audio_early ? (latency + config_audio_early_pad) : 0;
 		reader2->SetOutputSetting(audioOutputNum, g_wszEarlyDataDelivery, WMT_TYPE_DWORD, (BYTE *) & new_offset , sizeof(new_offset));
 
-		winamp.OpenViz(latency, SampleRate());
+		winlamp.OpenViz(latency, SampleRate());
 	}
 
 	WMHandler::Opened();
@@ -217,7 +217,7 @@ void AudioLayer::Closed()
 	if (opened)
 	{
 		out->Close();
-		winamp.CloseViz();
+		winlamp.CloseViz();
 	}
 	opened = false;
 

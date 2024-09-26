@@ -284,7 +284,7 @@ class HTMLContainer2 : public IOleClientSite,
 	VOID *hCursors;
 	INT			nCursors;
 	BOOL		ensureChakraLoaded;
-	HWND		winampWindow;
+	HWND		winlampWindow;
 
 	friend static LRESULT SubclassControl_WindowProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 };

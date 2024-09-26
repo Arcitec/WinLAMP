@@ -8,7 +8,7 @@ File ${GenPlugins}\gen_tray\GEN_TRAY.vcxproj.filters
 
 ; source
 File ${GenPlugins}\gen_tray\TRAYCTL.C
-File ${GenPlugins}\gen_tray\WINAMPCMD.H
+File ${GenPlugins}\gen_tray\WINLAMPCMD.H
 File ${GenPlugins}\gen_tray\api.h
 
 ; icons

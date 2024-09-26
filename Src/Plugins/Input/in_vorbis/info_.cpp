@@ -102,7 +102,7 @@ BOOL modify_file(const wchar_t* url, const vorbis_comment * comments, int links)
 	int scream = 0;
 	StringW tmp;
 
-	winampGetExtendedFileInfoW_Cleanup();
+	winlampGetExtendedFileInfoW_Cleanup();
 
 	tmp = url;
 	tmp += L".tmp";
@@ -424,7 +424,7 @@ void UpdateFileTimeChanged(const wchar_t *fn)
 
 // need to call this when we shut down just to make sure things are correctly cleaned up
 //(the joys of caching for speed)
-void winampGetExtendedFileInfoW_Cleanup(void)
+void winlampGetExtendedFileInfoW_Cleanup(void)
 {
 	if (last_vf)
 	{
@@ -434,13 +434,13 @@ void winampGetExtendedFileInfoW_Cleanup(void)
 	last_file[0] = 0;
 }
 
-static void CALLBACK winampGetExtendedFileInfoW_Timer(HWND hwnd, UINT uMsg, UINT_PTR eventId, DWORD elapsed)
+static void CALLBACK winlampGetExtendedFileInfoW_Timer(HWND hwnd, UINT uMsg, UINT_PTR eventId, DWORD elapsed)
 {
 	// TODO need to do a better way of getting and caching the metadata
 	//		this is _just_ a temp fix for the file being locked when it
 	//		it really needs 'class Info' to be able to cache and read.
 	KillTimer(hwnd, eventId);
-	winampGetExtendedFileInfoW_Cleanup();
+	winlampGetExtendedFileInfoW_Cleanup();
 }
 
 bool KeywordMatch(const char *mainString, const char *keyword)
@@ -450,7 +450,7 @@ bool KeywordMatch(const char *mainString, const char *keyword)
 
 #define START_TAG_ALIAS(name, alias) if (KeywordMatch(data, name)) lookup=alias
 #define TAG_ALIAS(name, alias) else if (KeywordMatch(data, name)) lookup=alias
-extern "C" __declspec( dllexport ) int winampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, int destlen)
+extern "C" __declspec( dllexport ) int winlampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, int destlen)
 {
 	if (!_stricmp(data, "type"))
 	{
@@ -518,7 +518,7 @@ extern "C" __declspec( dllexport ) int winampGetExtendedFileInfoW(const wchar_t 
 	// TODO need to do a better way of getting and caching the metadata
 	//		this is _just_ a temp fix for the file being locked when it
 	//		it really needs 'class Info' to be able to cache and read.
-	SetTimer(mod.hMainWindow, 256, 2000, winampGetExtendedFileInfoW_Timer);
+	SetTimer(mod.hMainWindow, 256, 2000, winlampGetExtendedFileInfoW_Timer);
 
 	const char *lookup = 0;
 	if (!_stricmp(data, "length"))

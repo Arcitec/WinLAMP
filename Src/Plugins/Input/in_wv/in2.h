@@ -1,11 +1,11 @@
-#ifndef NULLSOFT_WINAMP_IN2H
-#define NULLSOFT_WINAMP_IN2H
+#ifndef NULLSOFT_WINLAMP_IN2H
+#define NULLSOFT_WINLAMP_IN2H
 // Input plugin interface
 
 #include "out.h"
 
 // If you want your input plugin to support unicode then define the following which will then
-// adjust required functions to their unicode variants. This is supported from Winamp 5.3+.
+// adjust required functions to their unicode variants. This is supported from WinLAMP 5.3+.
 #define IN_UNICODE 0x0F000000
 
 #ifdef UNICODE_INPUT_PLUGIN
@@ -18,10 +18,10 @@
 
 #define IN_MODULE_FLAG_USES_OUTPUT_PLUGIN 1
 
-// By default Winamp assumes your input plugin wants to use Winamp's EQ, and doesn't do replay gain
+// By default WinLAMP assumes your input plugin wants to use WinLAMP's EQ, and doesn't do replay gain
 // if you handle any of these yourself (EQ, Replay Gain adjustments), then set these flags accordingly
 
-// Set this if you want to implement your own EQ inplace of using Winamp's native implementation.
+// Set this if you want to implement your own EQ inplace of using WinLAMP's native implementation.
 #define IN_MODULE_FLAG_EQ 2
 
 // Set this if you adjusted volume for replay gain. For tracks with no replay gain metadata then you
@@ -35,8 +35,8 @@ typedef struct
   int version;              // module type (IN_VER)
   char *description;        // description of module, with version string
 
-  HWND hMainWindow;         // Winamp's main window (filled in by winamp - is a valid HWND on 5.1+ clients)
-  HINSTANCE hDllInstance;   // DLL instance handle (Also filled in by winamp)
+  HWND hMainWindow;         // WinLAMP's main window (filled in by winlamp - is a valid HWND on 5.1+ clients)
+  HINSTANCE hDllInstance;   // DLL instance handle (Also filled in by winlamp)
 
   char *FileExtensions;     // "mp3\0Layer 3 MPEG\0mp2\0Layer 2 MPEG\0mpg\0Layer 1 MPEG\0"
                             // May be altered from Config, so the user can select what they want
@@ -62,7 +62,7 @@ typedef struct
   int (*IsOurFile)(const in_char *fn);    // called before extension checks, to allow detection of mms://, etc
 
   // playback stuff
-  int (*Play)(const in_char *fn);  // return zero on success, -1 on file-not-found, some other value on other (stopping winamp) error
+  int (*Play)(const in_char *fn);  // return zero on success, -1 on file-not-found, some other value on other (stopping winlamp) error
   void (*Pause)();                 // pause stream
   void (*UnPause)();               // unpause stream
   int (*IsPaused)();               // ispaused? return 1 if paused, 0 if not
@@ -88,7 +88,7 @@ typedef struct
 
   // advanced vis supplying mode, only use if you're cool. Use SAAddPCMData for most stuff.
   int (*SAGetMode)();       // gets csa (the current type (4=ws,2=osc,1=spec))  use when calling SAAdd()
-  int (*SAAdd)(void *data, int timestamp, int csa);    // sets the spec data, filled in by winamp
+  int (*SAAdd)(void *data, int timestamp, int csa);    // sets the spec data, filled in by winlamp
 
   // vis stuff (plug-in)
   // simple vis supplying mode
@@ -97,13 +97,13 @@ typedef struct
 
   // advanced vis supplying mode, only use if you're cool. Use VSAAddPCMData for most stuff.
   int (*VSAGetMode)(int *specNch, int *waveNch);       // use to figure out what to give to VSAAdd
-  int (*VSAAdd)(void *data, int timestamp);            // filled in by winamp, called by plug-in
+  int (*VSAAdd)(void *data, int timestamp);            // filled in by winlamp, called by plug-in
 
   // call this in Play() to tell the vis plug-ins the current output params. 
   void (*VSASetInfo)(int srate, int nch); // <-- Correct (benski, dec 2005).. old declaration had the params backwards
 
   // dsp plug-in processing: 
-  // (filled in by winamp, calld by input plug)
+  // (filled in by winlamp, calld by input plug)
 
   // returns 1 if active (which means that the number of samples returned by dsp_dosamples could be
   // greater than went in.. Use it to estimate if you'll have enough room in the output buffer
@@ -116,16 +116,16 @@ typedef struct
   // eq stuff
   void (*EQSet)(int on, char data[10], int preamp); // 0-64 each, 31 is +0, 0 is +12, 63 is -12. Do nothing to ignore.
 
-  // info setting (filled in by winamp)
+  // info setting (filled in by winlamp)
   void (*SetInfo)(int bitrate, int srate, int stereo, int synched); // if -1, changes ignored? :)
 
-  Out_Module *outMod; // filled in by winamp, optionally used :)
+  Out_Module *outMod; // filled in by winlamp, optionally used :)
 } In_Module;
 
 // These are the return values to be used with the uninstall plugin export function:
-// __declspec(dllexport) int winampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param)
-// which determines if Winamp can uninstall the plugin immediately or on winamp restart.
-// If this is not exported then Winamp will assume an uninstall with reboot is the only way.
+// __declspec(dllexport) int winlampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param)
+// which determines if WinLAMP can uninstall the plugin immediately or on winlamp restart.
+// If this is not exported then WinLAMP will assume an uninstall with reboot is the only way.
 //
 #define IN_PLUGIN_UNINSTALL_NOW    0x1
 #define IN_PLUGIN_UNINSTALL_REBOOT 0x0
@@ -134,16 +134,16 @@ typedef struct
 // that it is down to you to ensure that if uninstall now is returned that it will not
 // cause a crash i.e. don't use if you've been subclassing the main window.
 //
-// The HWND passed in the calling of winampUninstallPlugin(..) is the preference page HWND.
+// The HWND passed in the calling of winlampUninstallPlugin(..) is the preference page HWND.
 //
 
-// For a input plugin to be correctly detected by Winamp you need to ensure that
-// the exported winampGetInModule2(..) is exported as an undecorated function
+// For a input plugin to be correctly detected by WinLAMP you need to ensure that
+// the exported winlampGetInModule2(..) is exported as an undecorated function
 // e.g.
 // #ifdef __cplusplus
 //   extern "C" {
 // #endif
-// __declspec(dllexport) In_Module *winampGetInModule2(){ return &plugin; }
+// __declspec(dllexport) In_Module *winlampGetInModule2(){ return &plugin; }
 // #ifdef __cplusplus
 //   }
 // #endif

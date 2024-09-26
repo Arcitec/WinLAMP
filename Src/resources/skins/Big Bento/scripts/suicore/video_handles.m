@@ -29,7 +29,7 @@ Function enablePSOVC();
 Global Timer PSOVCTimer;
 Global string psovc_save;
 
-Global WinampConfigGroup cfg_Video;
+Global WinLAMPConfigGroup cfg_Video;
 
 Global Boolean lastWasVideo;
 
@@ -40,7 +40,7 @@ initVideo ()
 	PSOVCTimer = new Timer;
 	PSOVCTimer.setDelay(1000);
 
-	cfg_Video = WinampConfig.getGroup(VIDEO_CONFIG_GROUP);
+	cfg_Video = WinLAMPConfig.getGroup(VIDEO_CONFIG_GROUP);
 }
 
 /** Prevent video playback to stop after the wnd is hidden */

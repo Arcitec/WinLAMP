@@ -13,7 +13,7 @@ api_mldb       *AGAVE_API_MLDB = 0;
 static int Init();
 static void Quit();
 
-extern "C" winampMediaLibraryPlugin plugin =
+extern "C" winlampMediaLibraryPlugin plugin =
 {
 	MLHDR_VER,
 	"nullsoft(ml_autotag.dll)",
@@ -41,10 +41,10 @@ const char *INI_FILE=0;
 int Init()
 {
 	mediaLibrary.library  = plugin.hwndLibraryParent;
-	mediaLibrary.winamp   = plugin.hwndWinampParent;
+	mediaLibrary.winlamp   = plugin.hwndWinLAMPParent;
 	mediaLibrary.instance = plugin.hDllInstance;
 
-	INI_FILE = mediaLibrary.GetWinampIni();
+	INI_FILE = mediaLibrary.GetWinLAMPIni();
 
 	ServiceBuild( AGAVE_API_GRACENOTE, gracenoteApiGUID );
 	ServiceBuild( AGAVE_API_DECODE,    decodeFileGUID );
@@ -90,13 +90,13 @@ void LookupTracks(std::vector<TagItem*> &list, HWND parent=0)
 	// as we're not parenting directly, then we have a look at the aot state and fiddle it
 	// -> not ideal but at least the dialog will show on top so it can be seen initially
 	HWND dialog = WASABI_API_CREATEDIALOGPARAMW(IDD_AUTOTAGGER,parent,autotagger_dlgproc,(LPARAM)new Tagger(list, musicid));
-	if(GetWindowLongPtr(plugin.hwndWinampParent,GWL_EXSTYLE) & WS_EX_TOPMOST)
+	if(GetWindowLongPtr(plugin.hwndWinLAMPParent,GWL_EXSTYLE) & WS_EX_TOPMOST)
 		SetWindowPos(dialog, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOSIZE|SWP_NOMOVE|SWP_NOACTIVATE);
 }
 
 static bool IsInternetAvailable()
 {
-	return !!SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_INETAVAILABLE);
+	return !!SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_INETAVAILABLE);
 }
 
 INT_PTR PluginMessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR param3)
@@ -208,12 +208,12 @@ INT_PTR PluginMessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_
 
 extern "C"
 {
-	__declspec(dllexport) winampMediaLibraryPlugin *winampGetMediaLibraryPlugin()
+	__declspec(dllexport) winlampMediaLibraryPlugin *winlampGetMediaLibraryPlugin()
 	{
 		return &plugin;
 	}
 
-	__declspec(dllexport) int winampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
+	__declspec(dllexport) int winlampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
 		// allow an on-the-fly removal (since we've got to be with a compatible client build)
 		return ML_PLUGIN_UNINSTALL_NOW;
 	}

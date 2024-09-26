@@ -299,7 +299,7 @@ ScriptablePluginObject::Invoke(NPIdentifier name, const NPVariant *args,
     DWORD cbData;
 	bool keyFound = false;
 
-	wchar_t exeName[] = L"\\winamp.exe";
+	wchar_t exeName[] = L"\\winlamp.exe";
     wchar_t fileName[BUFFER_LEN]; 
 	memset(&fileName[0],'\0',BUFFER_LEN);
     wchar_t fileNameTemp[BUFFER_LEN]; 
@@ -308,9 +308,9 @@ ScriptablePluginObject::Invoke(NPIdentifier name, const NPVariant *args,
 	cbData = BUFFER_LEN;
 
 	// first check the protocol handler registry key, we're looking for
-	// the winamp:// protocol handler. If we find this, then this is the
-	// "right" exe for winamp we need to get the version number on
-    if (RegOpenKeyEx(HKEY_CLASSES_ROOT, TEXT("winamp\\shell\\open\\command"), 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
+	// the winlamp:// protocol handler. If we find this, then this is the
+	// "right" exe for winlamp we need to get the version number on
+    if (RegOpenKeyEx(HKEY_CLASSES_ROOT, TEXT("winlamp\\shell\\open\\command"), 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
 		if ( RegQueryValueEx( hKey,
 								 TEXT(""),
 								 NULL,
@@ -321,7 +321,7 @@ ScriptablePluginObject::Invoke(NPIdentifier name, const NPVariant *args,
 		}
 
 		RegCloseKey (hKey);
-		if (wcsstr(fileNameTemp,L"winamp.exe")) {
+		if (wcsstr(fileNameTemp,L"winlamp.exe")) {
 			int indexOfFirstQuote = wcscspn(fileNameTemp, L"\"");
 			int indexOfSecondQuote = wcscspn(&fileNameTemp[indexOfFirstQuote+1], L"\"");
 			if (indexOfFirstQuote >= 0) {
@@ -329,7 +329,7 @@ ScriptablePluginObject::Invoke(NPIdentifier name, const NPVariant *args,
 				wcsncpy(fileName,&fileNameTemp[indexOfFirstQuote+1], indexOfSecondQuote);
 			} 
 		} else {
-			// some other app (itunes ??) controlling the winamp:// protocol
+			// some other app (itunes ??) controlling the winlamp:// protocol
 			// return error
 			return PR_FALSE;
 		}
@@ -337,7 +337,7 @@ ScriptablePluginObject::Invoke(NPIdentifier name, const NPVariant *args,
 
 	if (!keyFound) {
 		// See if the reg key exists
-		if (RegOpenKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Winamp"), 0, KEY_READ, &hKey) != ERROR_SUCCESS) {
+		if (RegOpenKeyEx(HKEY_CURRENT_USER, TEXT("Software\\WinLAMP"), 0, KEY_READ, &hKey) != ERROR_SUCCESS) {
 			return PR_FALSE;
 		}
 

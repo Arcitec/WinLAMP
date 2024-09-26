@@ -2,7 +2,7 @@
 #include "main.h"
 #include "resource.h"
 #include <commctrl.h>
-#include "../../winamp/wa_ipc.h"
+#include "../../winlamp/wa_ipc.h"
 #include <strsafe.h>
 
 static BOOL CALLBACK infoProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM lParam);

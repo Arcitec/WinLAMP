@@ -2,7 +2,7 @@ Nullsoft TinyVis 2001 v2.02 - May 21, 2001
 Copyright (C) 1997-2001, Nullsoft Inc.
 ======================================================================
 
-TinyVis is a Winamp visualization plug-in.
+TinyVis is a WinLAMP visualization plug-in.
 Currently four different modes are available:
   - Random Intelligent Visualization
      Creates smooth, morphing randomized graphics. 

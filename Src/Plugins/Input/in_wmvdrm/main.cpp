@@ -8,7 +8,7 @@
 #include "resource.h"
 
 wchar_t INI_FILE[MAX_PATH] = L"";
-IDispatch *winampExternal = 0;
+IDispatch *winlampExternal = 0;
 Nullsoft::Utility::Config wmConfig;
 WMDRM mod;
 HINSTANCE WASABI_API_LNG_HINST_WAV = 0;
@@ -35,11 +35,11 @@ int Init()
 	wmConfig.SetFile(INI_FILE, L"in_wm");
 	ReadConfig();
 	fileTypes.ReadConfig();
-	if (NULL == winampExternal)
+	if (NULL == winlampExternal)
 	{
-		winampExternal = (IDispatch *)SendMessage(plugin.hMainWindow, WM_WA_IPC, 0, IPC_GET_DISPATCH_OBJECT); // ask for winamp's
-		if (winampExternal == (IDispatch *)1)
-			winampExternal = 0;
+		winlampExternal = (IDispatch *)SendMessage(plugin.hMainWindow, WM_WA_IPC, 0, IPC_GET_DISPATCH_OBJECT); // ask for winlamp's
+		if (winlampExternal == (IDispatch *)1)
+			winlampExternal = 0;
 	}
 
 	mod.Init(); 
@@ -52,10 +52,10 @@ void Quit()
 	UnloadWasabi();
 	fileTypes.types.clear();
 
-	if (NULL != winampExternal)
+	if (NULL != winlampExternal)
 	{
-		winampExternal->Release();
-		winampExternal = NULL;
+		winlampExternal->Release();
+		winlampExternal = NULL;
 	}
 }
 
@@ -94,8 +94,8 @@ In_Module plugin =
 {
 	IN_VER_RET,	// defined in IN2.H
 	"nullsoft(in_wm.dll)",
-	0,	// hMainWindow (filled in by winamp)
-	0,  // hDllInstance (filled in by winamp)
+	0,	// hMainWindow (filled in by winlamp)
+	0,  // hDllInstance (filled in by winlamp)
 	0,	// this is a double-null limited list. "EXT\0Description\0EXT\0Description\0" etc.
 	0,	// is_seekable
 	1,	// uses output plug-in system
@@ -119,18 +119,18 @@ In_Module plugin =
 	SetVolume,
 	SetPan,
 
-	0,0,0,0,0,0,0,0,0, // visualization calls filled in by winamp
+	0,0,0,0,0,0,0,0,0, // visualization calls filled in by winlamp
 
-	0,0, // dsp calls filled in by winamp
+	0,0, // dsp calls filled in by winlamp
 
 	EQSet,
 
-	NULL,		// setinfo call filled in by winamp
+	NULL,		// setinfo call filled in by winlamp
 
-	0, // out_mod filled in by winamp
+	0, // out_mod filled in by winlamp
 };
 
-extern "C" __declspec( dllexport ) In_Module * winampGetInModule2()
+extern "C" __declspec( dllexport ) In_Module * winlampGetInModule2()
 {
 	return &plugin;
 }

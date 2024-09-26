@@ -45,7 +45,7 @@
 char*
 NPP_GetMIMEDescription(void)
 {
-  return "application/x-winampx-1.0.0.1::Winamp Application Detector";
+  return "application/x-winlampx-1.0.0.1::WinLAMP Application Detector";
 }
 
 
@@ -166,10 +166,10 @@ NPError	NPP_GetValue(NPP instance, NPPVariable variable, void *value)
 
   switch (variable) {
   case NPPVpluginNameString:
-    *((char **)value) = "Winamp Application Detector";
+    *((char **)value) = "WinLAMP Application Detector";
     break;
   case NPPVpluginDescriptionString:
-    *((char **)value) = "Winamp Application Detector";
+    *((char **)value) = "WinLAMP Application Detector";
     break;
   case NPPVpluginScriptableNPObject:
     *(NPObject **)value = plugin->GetScriptableObject();

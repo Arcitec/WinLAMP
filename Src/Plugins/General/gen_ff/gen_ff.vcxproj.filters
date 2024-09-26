@@ -82,7 +82,7 @@
     <ClCompile Include="wa2wndembed.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WinampConfigScriptObject.cpp">
+    <ClCompile Include="WinLAMPConfigScriptObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Wasabi\api\wnd\wndclass\abstractwndhold.cpp">
@@ -1182,7 +1182,7 @@
     <ClInclude Include="wasabicfg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WinampConfigScriptObject.h">
+    <ClInclude Include="WinLAMPConfigScriptObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Wasabi\api\wnd\wndclass\abstractwndhold.h">
@@ -1808,11 +1808,11 @@
     <CustomBuild Include="..\gen_ml\ml.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\..\Winamp\wa_ipc.h">
+    <CustomBuild Include="..\..\..\WinLAMP\wa_ipc.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\..\Winamp\FRONTEND.H">
-      <Filter>Header Files\Winamp</Filter>
+    <CustomBuild Include="..\..\..\WinLAMP\FRONTEND.H">
+      <Filter>Header Files\WinLAMP</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -2056,7 +2056,7 @@
     <Filter Include="Header Files\Wasabi\bfc\util">
       <UniqueIdentifier>{19b8ce8d-6a1f-4eca-8e27-4e84a9be5014}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Winamp">
+    <Filter Include="Header Files\WinLAMP">
       <UniqueIdentifier>{fb9b1379-7d7c-4066-a819-80a2e55dd0d6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Wasabi\api\imgldr\imggen">

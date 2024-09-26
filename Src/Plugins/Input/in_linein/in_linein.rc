@@ -62,7 +62,7 @@ STRINGTABLE
 BEGIN
     IDS_NULLSOFT_LINEIN_PLUGIN_OLD "Nullsoft LineIn Plug-in"
     IDS_LINE_INPUT          "Line Input"
-    IDS_ABOUT_TEXT          "%s\nCopyright © 1997-2023 Winamp SA\n\nBuild date: %hs\n\nHow to use:\n   For line input, open 'linein://'\n   in the open location box."
+    IDS_ABOUT_TEXT          "%s\nCopyright © 1997-2023 WinLAMP SA\n\nBuild date: %hs\n\nHow to use:\n   For line input, open 'linein://'\n   in the open location box."
 END
 
 #endif    // English (U.S.) resources

@@ -1,18 +1,18 @@
 #include <windows.h>
-#include "Winamp.h"
+#include "WinLAMP.h"
 #include "resource.h"
-#include "WinampFactory.h"
+#include "WinLAMPFactory.h"
 #define INITGUID
 #include <guiddef.h>
 #include <strsafe.h>
 
 //D9C17076-9F55-49b5-8BEB-6A857931E62C
-DEFINE_GUID(CLSID_Winamp,0xD9C17076,0x9F55,0x49b5,0x8B,0xEB,0x6A,0x85,0x79,0x31,0xE6,0x2C);
+DEFINE_GUID(CLSID_WinLAMP,0xD9C17076,0x9F55,0x49b5,0x8B,0xEB,0x6A,0x85,0x79,0x31,0xE6,0x2C);
 
 static HRESULT UnregisterComponent(const CLSID &clsid);
 static HRESULT RegisterComponent(HMODULE hModule, const CLSID &clsid, LPCWSTR pszFriendlyName);
 
-static const WCHAR szComponentFriendlyName[]		= L"Winamp Application Detector";
+static const WCHAR szComponentFriendlyName[]		= L"WinLAMP Application Detector";
 
 static HINSTANCE hMainInstance=0;
 static DWORD regID = 0;
@@ -25,7 +25,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID /*lpReserved*/)
       hMainInstance=hInstance;
 			
 			
-		//	CoRegisterClassObject(CLSID_Winamp,(IClassFactory*)&cf, CLSCTX_INPROC_SERVER, REGCLS_MULTIPLEUSE, &regID);
+		//	CoRegisterClassObject(CLSID_WinLAMP,(IClassFactory*)&cf, CLSCTX_INPROC_SERVER, REGCLS_MULTIPLEUSE, &regID);
 	 }
    return TRUE;    // ok
 }
@@ -33,7 +33,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID /*lpReserved*/)
 STDAPI DllRegisterServer()
 {
 	HRESULT hr(S_OK);
-	hr = RegisterComponent(hMainInstance, CLSID_Winamp, szComponentFriendlyName);
+	hr = RegisterComponent(hMainInstance, CLSID_WinLAMP, szComponentFriendlyName);
 	return hr;
 }
 
@@ -47,10 +47,10 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID * ppv)
 	    HRESULT hr = E_OUTOFMEMORY; 
     *ppv = NULL; 
  
-    WinampFactory *winampFactory = new WinampFactory(); 
-    if (winampFactory != NULL)   { 
-        hr = winampFactory->QueryInterface(riid, ppv); 
-        winampFactory->Release(); 
+    WinLAMPFactory *winlampFactory = new WinLAMPFactory(); 
+    if (winlampFactory != NULL)   { 
+        hr = winlampFactory->QueryInterface(riid, ppv); 
+        winlampFactory->Release(); 
     } 
     return hr;
 
@@ -59,7 +59,7 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID * ppv)
 STDAPI DllUnregisterServer()
 {
 	HRESULT hr(S_OK);
-	hr = UnregisterComponent(CLSID_Winamp);
+	hr = UnregisterComponent(CLSID_WinLAMP);
 	return hr;
 }
 
@@ -143,7 +143,7 @@ static HRESULT RegisterComponent(HMODULE hModule, const CLSID &clsid, LPCWSTR ps
 			
 	if (!GetModuleFileNameW(hModule, szBuffer, sizeof(szBuffer)/sizeof(WCHAR))) return S_FALSE;
 	//wchar_t localizedString[MAX_PATH+15];
-	//StringCbPrintf(localizedString, sizeof(localizedString), L"@%s,-%u", szBuffer, IDS_WINAMP);
+	//StringCbPrintf(localizedString, sizeof(localizedString), L"@%s,-%u", szBuffer, IDS_WINLAMP);
 
 	br = (WriteRegKey(hKey, L"InProcServer32" , szBuffer, &hKey2) &&
 		WriteRegValue(hKey2, NULL, L"ThreadingModel", L"Both"));

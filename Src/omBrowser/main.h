@@ -1,5 +1,5 @@
-#ifndef NULLSOFT_WINAMP_OMBROWSER_WA5SERVICE_MAIN_HEADER
-#define NULLSOFT_WINAMP_OMBROWSER_WA5SERVICE_MAIN_HEADER
+#ifndef NULLSOFT_WINLAMP_OMBROWSER_WA5SERVICE_MAIN_HEADER
+#define NULLSOFT_WINLAMP_OMBROWSER_WA5SERVICE_MAIN_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -33,7 +33,7 @@ HRESULT Plugin_FormatUuidString(UUID &uid, LPWSTR pszBuffer, size_t cchBufferMax
 HINSTANCE Plugin_GetInstance(void);
 HINSTANCE Plugin_GetLangInstance(void);
 
-HRESULT Plugin_Initialize(HWND hwndWinamp);
+HRESULT Plugin_Initialize(HWND hwndWinLAMP);
 
 class ifc_wasabihelper;
 HRESULT Plugin_GetWasabiHelper(ifc_wasabihelper **wasabiHelper);
@@ -44,11 +44,11 @@ HRESULT Plugin_GetSkinHelper(ifc_skinhelper **skinHelper);
 class ifc_skinnedbrowser;
 HRESULT Plugin_GetBrowserSkin(ifc_skinnedbrowser **skinnedBrowser);
 
-HRESULT Plugin_GetWinampWnd(HWND *hwndWinamp);
+HRESULT Plugin_GetWinLAMPWnd(HWND *hwndWinLAMP);
 
-class ifc_winamphook;
-HRESULT Plugin_RegisterWinampHook(ifc_winamphook *hook, UINT *cookieOut);
-HRESULT Plugin_UnregisterWinampHook(UINT cookie);
+class ifc_winlamphook;
+HRESULT Plugin_RegisterWinLAMPHook(ifc_winlamphook *hook, UINT *cookieOut);
+HRESULT Plugin_UnregisterWinLAMPHook(UINT cookie);
 
 const wchar_t* Plugin_LoadString(UINT id, wchar_t *buffer, int bufferMax);
 const char* Plugin_LoadStringAnsi(UINT id, char *buffer, int bufferMax);
@@ -76,7 +76,7 @@ HRESULT Plugin_UnregisterBrowserClass(LPCWSTR pszName); // internal call
 HRESULT Plugin_EnsurePathExist(LPCWSTR pszDirectory);
 
 #define RESPATH_TARGETIE	0x0001		// IE safe path
-#define RESPATH_COMPACT		0x0002		// compact path relative to winamp location if possible
+#define RESPATH_COMPACT		0x0002		// compact path relative to winlamp location if possible
 HRESULT Plugin_MakeResourcePath(LPWSTR pszBuffer, UINT cchBufferMax, HINSTANCE hInstance, LPCWSTR pszType, LPCWSTR pszName, UINT uFlags);
 
 class ifc_omservicehost;
@@ -84,4 +84,4 @@ HRESULT Plugin_ResolveRelativePath(LPCWSTR pszPath, ifc_omservicehost *host, LPW
 
 BOOL Plugin_IsDirectMouseWheelMessage(const UINT uMsg);
 
-#endif //NULLSOFT_WINAMP_OMBROWSER_WA5SERVICE_MAIN_HEADER
+#endif //NULLSOFT_WINLAMP_OMBROWSER_WA5SERVICE_MAIN_HEADER

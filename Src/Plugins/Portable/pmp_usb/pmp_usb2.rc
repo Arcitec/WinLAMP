@@ -80,7 +80,7 @@ BEGIN
     PUSHBUTTON      "Refresh Cache",IDC_REFRESHCACHE,79,71,66,14
     GROUPBOX        "Playlist Writing Options",IDC_STATIC,7,95,250,49
     COMBOBOX        IDC_PL_WRITE_COMBO,12,108,120,35,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Changing how Winamp saves its playlists may improve compatability with other portable devices.",IDC_STATIC,137,104,113,34
+    LTEXT           "Changing how WinLAMP saves its playlists may improve compatability with other portable devices.",IDC_STATIC,137,104,113,34
     LTEXT           "",IDC_PL_WRITE_EG,12,126,120,10
 END
 
@@ -145,8 +145,8 @@ BEGIN
     IDS_DONE                "Done"
     IDS_TRANSFER_FAILED     "Transfer failed"
     IDS_REMOVEABLE_DRIVE_DETECTED 
-                            "Winamp has detected a removable drive, ""%s (%c:)"".\nIs this a portable music player that you want to manage with Winamp?"
-    IDS_WINAMP_PMP_SUPPORT  "Winamp Portable Music Player Support"
+                            "WinLAMP has detected a removable drive, ""%s (%c:)"".\nIs this a portable music player that you want to manage with WinLAMP?"
+    IDS_WINLAMP_PMP_SUPPORT  "WinLAMP Portable Music Player Support"
     IDS_MANUAL_CONNECT_PROMPT 
                             "Manually connecting the wrong device could cause problems.\nPlease be sure that you have entered a valid USB device letter.\n\nAre you sure you wish to continue?"
     IDS_WARNING             "Warning"
@@ -178,7 +178,7 @@ BEGIN
     IDS_UNBLACKLIST_DRIVE   "Un-blacklist Drive"
     IDS_BLACKLIST_DRIVE     "Blacklist Drive"
     IDS_DRIVE_CONNECTED_DISCONNECT_Q 
-                            "The Drive you have selected to blacklist is currently connected and being managed.\n\nWould you like to disconnect the Drive now or you can wait until you restart Winamp."
+                            "The Drive you have selected to blacklist is currently connected and being managed.\n\nWould you like to disconnect the Drive now or you can wait until you restart WinLAMP."
     IDS_SLASH_AT_START      "Slash at start of paths (default)"
     IDS_DOT_AT_START        "Dot at start of paths"
 END

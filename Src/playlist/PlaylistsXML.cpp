@@ -120,7 +120,7 @@ PlaylistsXML::PlaylistsXML( Playlists *_playlists ) : playlists( _playlists )
 	if ( parser )
 	{
 		parser->xmlreader_setCaseSensitive();
-		parser->xmlreader_registerCallback( L"Winamp:Playlists\fplaylist", this );
+		parser->xmlreader_registerCallback( L"WinLAMP:Playlists\fplaylist", this );
 		parser->xmlreader_registerCallback( L"playlists\fplaylist", this );
 		parser->xmlreader_open();
 	}

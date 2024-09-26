@@ -1,6 +1,6 @@
 #include "ConfigCOM.h"
 #include "AutoChar.h"
-#include "../Winamp/JSAPI.h"
+#include "../WinLAMP/JSAPI.h"
 
 #include <shlwapi.h>
 #include <strsafe.h>

@@ -77,7 +77,7 @@ void DestroyGlobalDNS()
 static HCRYPTPROV GetKeySet()
 {
 	HCRYPTPROV   hCryptProv;
-	LPCWSTR UserName = L"WinampKeyContainer";  // name of the key container
+	LPCWSTR UserName = L"WinLAMPKeyContainer";  // name of the key container
 
 	if ( CryptAcquireContext(
 		&hCryptProv,               // handle to the CSP
@@ -191,7 +191,7 @@ void wa::Components::WAC_Network::DeregisterServices( api_service *p_service )
 }
 
 
-extern "C" WAC_NETWORK_EXPORT ifc_wa5component * GetWinamp5SystemComponent()
+extern "C" WAC_NETWORK_EXPORT ifc_wa5component * GetWinLAMP5SystemComponent()
 {
 	return &_wac_network;
 }

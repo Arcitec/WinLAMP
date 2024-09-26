@@ -16,7 +16,7 @@ Changes:
   * fixed crash/hang/freeze when reading some mp3 files with a weird id3v2 tag (as found in some
     real jukebox generated mp3s, etc...)
   * this one will break a few things (i.e. windowshade vis), because justin is updating it to go 
-    with winamp 2.7
+    with winlamp 2.7
   * all code is now win32 file io
   * %a will now display id3v1.1/v2 track #
   * fixed id3v1 reading bug that added year field in album field
@@ -36,7 +36,7 @@ Changes:
   * [2.666b] fixed some more stuff in id3 edit box... should be more reliable
   * [2.666b] contains devil easter egg
 
-  * winamp 2.666 release
+  * winlamp 2.666 release
 
   * [a18] dll is smaller
   * [a18] fixed vbr header reading on some musicmatch/crap generated files

@@ -174,7 +174,7 @@ BEGIN
     LTEXT           "0%",IDC_STATIC,71,161,13,8
     LTEXT           "50%",IDC_STATIC,122,161,18,8
     LTEXT           "100%",IDC_STATIC,185,161,20,8
-    LTEXT           "Use Winamp's proxy server settings:",IDC_STATIC,10,179,120,8
+    LTEXT           "Use WinLAMP's proxy server settings:",IDC_STATIC,10,179,120,8
     COMBOBOX        IDC_PROXY,134,177,77,58,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "",IDC_STATIC,10,191,201,43
     CONTROL         "Save streamed files to:",IDC_FSAVE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,201,89,10
@@ -375,7 +375,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_ABOUT_TEXT          "%s\n© 2001-2023 Winamp SA\nWritten by: Peter Pawlowski\nBuild date: %hs\n\nThanks to:\n  Craig Freer\n  Tomi 'Nebularia' Jylhä-Ollila\n  Jack Moffitt\n  Szabolcs Péter"
+    IDS_ABOUT_TEXT          "%s\n© 2001-2023 WinLAMP SA\nWritten by: Peter Pawlowski\nBuild date: %hs\n\nThanks to:\n  Craig Freer\n  Tomi 'Nebularia' Jylhä-Ollila\n  Jack Moffitt\n  Szabolcs Péter"
     IDS_TITLE_PREFERENCES   "%s Preferences"
     IDS_NEVER               "never"
     IDS_PORT_80_ONLY        "port 80 only"

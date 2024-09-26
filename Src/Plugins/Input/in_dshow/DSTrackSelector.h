@@ -1,7 +1,7 @@
 #ifndef NULLSOFT_IN_DSHOW_DSTRACKSELECTOR_H
 #define NULLSOFT_IN_DSHOW_DSTRACKSELECTOR_H
 
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 
 class DSTrackSelector : public ITrackSelector {
 public:

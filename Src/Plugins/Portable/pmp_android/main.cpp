@@ -1,5 +1,5 @@
 #include "../../Library/ml_pmp/pmp.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <vector>
 #include "../nu/AutoWide.h"
 #include "../nu/AutoChar.h"
@@ -26,7 +26,7 @@ static intptr_t MessageProc(int msg, intptr_t param1, intptr_t param2, intptr_t 
 extern PMPDevicePlugin plugin = {PMPHDR_VER,0,Init,Quit,MessageProc};
 
 // start-android
-static const wchar_t *winampini;
+static const wchar_t *winlampini;
 static std::vector<wchar_t*> blacklist;
 bool loading_devices[26] = {0,};
 
@@ -40,11 +40,11 @@ static UINT_PTR rescanTimer = 0;
 
 static void blacklistLoad() {
 	wchar_t keyname[64] = {0};
-	int l = GetPrivateProfileIntW(L"pmp_android", L"blacklistnum", 0, winampini);
+	int l = GetPrivateProfileIntW(L"pmp_android", L"blacklistnum", 0, winlampini);
 	for(int i=l>100?l-100:0; i<l; i++) {
 		wchar_t buf[100] = {0};
 		StringCchPrintfW(keyname, 64, L"blacklist-%d", i);
-		GetPrivateProfileStringW(L"pmp_android", keyname, L"", buf, 100, winampini);
+		GetPrivateProfileStringW(L"pmp_android", keyname, L"", buf, 100, winlampini);
 		if(buf[0]) 
 		{
 			blacklist.push_back(_wcsdup(buf));
@@ -55,11 +55,11 @@ static void blacklistLoad() {
 static void blacklistSave() {
 	wchar_t buf[64] = {0};
 	StringCchPrintfW(buf, 64, L"%d", blacklist.size());
-	WritePrivateProfileStringW(L"pmp_android", L"blacklistnum", buf, winampini);
+	WritePrivateProfileStringW(L"pmp_android", L"blacklistnum", buf, winlampini);
 	for(size_t i=0; i<blacklist.size(); i++) 
 	{
 		StringCchPrintfW(buf, 64, L"blacklist-%d", i);
-		WritePrivateProfileStringW(L"pmp_android", buf, (const wchar_t*)blacklist.at(i), winampini);
+		WritePrivateProfileStringW(L"pmp_android", buf, (const wchar_t*)blacklist.at(i), winlampini);
 	}
 }
 
@@ -172,7 +172,7 @@ Device_IsSizeOk(const wchar_t drive)
 static BOOL
 Device_IsOkToConnect(const wchar_t drive)
 {
-	const wchar_t test[] = {drive, TEXT(":\\Winamp\\")TAG_CACHE};
+	const wchar_t test[] = {drive, TEXT(":\\WinLAMP\\")TAG_CACHE};
 	wchar_t title[128] = {0};
 	wchar_t message[1024] = {0};
 	int result;
@@ -183,7 +183,7 @@ Device_IsOkToConnect(const wchar_t drive)
 	StringCbPrintfW(message, sizeof(message), WASABI_API_LNGSTRINGW(IDS_REMOVEABLE_DRIVE_DETECTED),
 			towupper(drive));
 
-	WASABI_API_LNGSTRINGW_BUF(IDS_WINAMP_PMP_SUPPORT,title,ARRAYSIZE(title));
+	WASABI_API_LNGSTRINGW_BUF(IDS_WINLAMP_PMP_SUPPORT,title,ARRAYSIZE(title));
 
 	result = MessageBoxW(NULL, message, title, 
 							MB_YESNO | MB_SETFOREGROUND | MB_TOPMOST |  
@@ -285,7 +285,7 @@ static int Init()
 	WasabiInit();
 
 	// start-android
-	winampini = (const wchar_t*)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_GETINIFILEW);
+	winlampini = (const wchar_t*)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_GETINIFILEW);
 	// need to have this initialised before we try to do anything with localisation features
 	WASABI_API_START_LANG(plugin.hDllInstance,PmpAndroidLangGUID);
 	// end-android
@@ -594,7 +594,7 @@ static intptr_t MessageProc(int msg, intptr_t param1, intptr_t param2, intptr_t 
 	return 0;
 }
 
-extern "C" 	__declspec(dllexport) PMPDevicePlugin *winampGetPMPDevicePlugin()
+extern "C" 	__declspec(dllexport) PMPDevicePlugin *winlampGetPMPDevicePlugin()
 {
 	return &plugin;
 }

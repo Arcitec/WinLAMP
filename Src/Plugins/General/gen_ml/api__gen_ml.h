@@ -5,7 +5,7 @@
 #include <api/wnd/api_wnd.h>
 #include <api/skin/api_skin.h>
 #include <api/skin/api_palette.h>
-#include "../Winamp/api_decodefile.h"
+#include "../WinLAMP/api_decodefile.h"
 #ifndef IGNORE_API_GRACENOTE
 #include "../gracenote/api_gracenote.h"
 #endif
@@ -38,7 +38,7 @@ extern api_threadpool *threadPoolApi;
 extern obj_ombrowser *browserManager;
 #define OMBROWSERMNGR browserManager
 
-#include "../Winamp/api_decodefile.h"
+#include "../WinLAMP/api_decodefile.h"
 extern api_decodefile *decodeApi;
 #define AGAVE_API_DECODE decodeApi
 
@@ -61,7 +61,7 @@ extern api_palette *paletteManagerApi;
 DECLARE_EXTERNAL_SERVICE(api_gracenote,        AGAVE_API_GRACENOTE);
 #endif
 
-#include "../Winamp/JSAPI2_api_security.h"
+#include "../WinLAMP/JSAPI2_api_security.h"
 extern JSAPI2::api_security *jsapi2_security;
 #define AGAVE_API_JSAPI2_SECURITY jsapi2_security
 

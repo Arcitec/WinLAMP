@@ -35,7 +35,7 @@
 ; 
 ; This installer will produce a single EXE file that, when run, 
 ; will decompress and install your plugin and all of its data files 
-; to Winamp 2 or Winamp 3.
+; to WinLAMP 2 or WinLAMP 3.
 ; ----------------------------------------------------------------
 ; MODIFYING THIS SCRIPT TO CREATE AN INSTALLER FOR YOUR OWN PLUGIN:
 ; ----------------------------------------------------------------
@@ -50,30 +50,30 @@
 ;   3) run the command 'makensis.exe installer.nsi' to build
 ;        the executable.  (note: ignore the warning message about
 ;        'InstallRegKey' being used multiple times; this is necessary
-;        to determine whether Winamp 2 or 3 is a better candidate
+;        to determine whether WinLAMP 2 or 3 is a better candidate
 ;        for the install.)
 ; ----------------------------------------------------------------
 ; WHAT THIS INSTALLER SCRIPT DOES:
 ; ----------------------------------------------------------------
-;   If Winamp 2 is installed, it will install your plugin to Winamp 2, 
-;   in the directory Winamp\Plugins (or whatever is specified as the 
-;   vis plugins path, in Winamp\winamp.ini).  It will also select
-;   the plugin as the current plugin.  (Note that Winamp must be
+;   If WinLAMP 2 is installed, it will install your plugin to WinLAMP 2, 
+;   in the directory WinLAMP\Plugins (or whatever is specified as the 
+;   vis plugins path, in WinLAMP\winlamp.ini).  It will also select
+;   the plugin as the current plugin.  (Note that WinLAMP must be
 ;   closed to do this, so if it's open, the installer will ask the 
 ;   user to close it before proceeding.)  At the end of a successful
-;   install, it asks if they'd like to run Winamp.
+;   install, it asks if they'd like to run WinLAMP.
 ; 
-;   If Winamp 2 is not present but Winamp 3 is, or if the user manually
-;   selects the Winamp 3 directory to install to, the plugin will be 
-;   installed to Winamp 3 as a classic visualization plugin, to the 
-;   directory Winamp3\Plugins.  At install time, if ClassicVis is not
+;   If WinLAMP 2 is not present but WinLAMP 3 is, or if the user manually
+;   selects the WinLAMP 3 directory to install to, the plugin will be 
+;   installed to WinLAMP 3 as a classic visualization plugin, to the 
+;   directory WinLAMP3\Plugins.  At install time, if ClassicVis is not
 ;   installed, it will prompt the user to go download it.  If they
 ;   don't download it, it will tell them the installation failed.
 ;   If they already had it, or after they presumably download it,
 ;   the installer will briefly tell them how to select their new 
-;   plugin and run it in Winamp 3, using ClassicVis.  Finally, at 
+;   plugin and run it in WinLAMP 3, using ClassicVis.  Finally, at 
 ;   the end of a successful install, it asks if they'd like to run 
-;   Winamp 3.
+;   WinLAMP 3.
 ; ----------------------------------------------------------------
 
 
@@ -97,36 +97,36 @@ Caption "${INSTALL_CAPTION}"
 OutFile ${PLUGIN_OUTFILE}
 ; ----------------------------------------------------------------
 
-; to determine the install directory, we start with Program Files\Winamp.
-; then, if winamp 3 is found, override this and use that directory.
-; finally, if winamp 2 is found, override again and use that directory.
-InstallDir $PROGRAMFILES\Winamp
-InstallDirRegKey HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\Winamp3" "UninstallString"
-InstallDirRegKey HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\Winamp" "UninstallString"
+; to determine the install directory, we start with Program Files\WinLAMP.
+; then, if winlamp 3 is found, override this and use that directory.
+; finally, if winlamp 2 is found, override again and use that directory.
+InstallDir $PROGRAMFILES\WinLAMP
+InstallDirRegKey HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinLAMP3" "UninstallString"
+InstallDirRegKey HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinLAMP" "UninstallString"
 DirText \
-    "The installer has determined that this is the path to Winamp.$\rIf it is not correct, please change it.  You will not be able to proceed$\runtil a valid path is found." \
-    "Select the directory in which Winamp 2 or 3 is installed:"
+    "The installer has determined that this is the path to WinLAMP.$\rIf it is not correct, please change it.  You will not be able to proceed$\runtil a valid path is found." \
+    "Select the directory in which WinLAMP 2 or 3 is installed:"
 
 Function .onInit
-  IfFileExists $INSTDIR\winamp.exe End      ; else if winamp.exe found (winamp2), we're good
-  IfFileExists $INSTDIR\winamp3.exe End     ; if winamp3.exe found (winamp3), we're good
-  IfFileExists $INSTDIR\studio.exe End      ; or if studio.exe found (older version of winamp3), we're good
-  ; the above will work fine if winamp 2 or 3 is installed,
-  ; but will break if winamp 2 or 3 was uninstalled *but the directory remains.*
-  IfFileExists $PROGRAMFILES\Winamp\winamp.exe SelectNaturalWinamp2         ; last but not least, try the default winamp 2 directory
-  IfFileExists $PROGRAMFILES\Winamp3\winamp3.exe SelectNaturalWinamp3       ; otherwise, try the default winamp 3 directory
-  IfFileExists $PROGRAMFILES\Winamp3\studio.exe SelectNaturalWinamp3        ; otherwise, try the default winamp 3 directory
-  ; if all of these failed, no good path to Winamp (2 or 3) could be found,
+  IfFileExists $INSTDIR\winlamp.exe End      ; else if winlamp.exe found (winlamp2), we're good
+  IfFileExists $INSTDIR\winlamp3.exe End     ; if winlamp3.exe found (winlamp3), we're good
+  IfFileExists $INSTDIR\studio.exe End      ; or if studio.exe found (older version of winlamp3), we're good
+  ; the above will work fine if winlamp 2 or 3 is installed,
+  ; but will break if winlamp 2 or 3 was uninstalled *but the directory remains.*
+  IfFileExists $PROGRAMFILES\WinLAMP\winlamp.exe SelectNaturalWinLAMP2         ; last but not least, try the default winlamp 2 directory
+  IfFileExists $PROGRAMFILES\WinLAMP3\winlamp3.exe SelectNaturalWinLAMP3       ; otherwise, try the default winlamp 3 directory
+  IfFileExists $PROGRAMFILES\WinLAMP3\studio.exe SelectNaturalWinLAMP3        ; otherwise, try the default winlamp 3 directory
+  ; if all of these failed, no good path to WinLAMP (2 or 3) could be found,
   ; and the 'Next' button will be disabled until the user can specify
   ; the correct folder.
   Goto End
   
-  SelectNaturalWinamp3:
-    strcpy $INSTDIR $PROGRAMFILES\Winamp3
+  SelectNaturalWinLAMP3:
+    strcpy $INSTDIR $PROGRAMFILES\WinLAMP3
     goto End
     
-  SelectNaturalWinamp2:
-    strcpy $INSTDIR $PROGRAMFILES\Winamp
+  SelectNaturalWinLAMP2:
+    strcpy $INSTDIR $PROGRAMFILES\WinLAMP
     goto End  
   
   End:
@@ -134,8 +134,8 @@ FunctionEnd
 
 
 Function .onVerifyInstDir
-  IfFileExists $INSTDIR\Winamp.exe DirOk
-  IfFileExists $INSTDIR\Winamp3.exe DirOk
+  IfFileExists $INSTDIR\WinLAMP.exe DirOk
+  IfFileExists $INSTDIR\WinLAMP3.exe DirOk
   IfFileExists $INSTDIR\Studio.exe DirOk
   Abort   ; leaves the directory as the selected one, but disables the 'Next' button...
   
@@ -146,26 +146,26 @@ FunctionEnd
   
   
 
-Function QueryWinampVisPath 
-  ; input: $INSTDIR, the currently-selected install dir (path to winamp)
-  ; output: $1, the path to the winamp vis plugins subdirectory
-  ;           -for winamp 3x, this is just $INSTDIR\plugins
-  ;           -for winamp 2x, it comes from the winamp.ini file
+Function QueryWinLAMPVisPath 
+  ; input: $INSTDIR, the currently-selected install dir (path to winlamp)
+  ; output: $1, the path to the winlamp vis plugins subdirectory
+  ;           -for winlamp 3x, this is just $INSTDIR\plugins
+  ;           -for winlamp 2x, it comes from the winlamp.ini file
   ;             (or just $INSTDIR\plugins if there is an error reading it.)
-  IfFileExists $INSTDIR\Winamp.exe CaseWinamp2
-  IfFileExists $INSTDIR\Winamp3.exe CaseWinamp3
-  IfFileExists $INSTDIR\Studio.exe CaseWinamp3  ; legacy check
+  IfFileExists $INSTDIR\WinLAMP.exe CaseWinLAMP2
+  IfFileExists $INSTDIR\WinLAMP3.exe CaseWinLAMP3
+  IfFileExists $INSTDIR\Studio.exe CaseWinLAMP3  ; legacy check
   goto CaseImpossible
           
-  CaseWinamp2:
+  CaseWinLAMP2:
     StrCpy $1 $INSTDIR\Plugins\MilkDrop2
-    ReadINIStr $8 $INSTDIR\winamp.ini Winamp VisDir
+    ReadINIStr $8 $INSTDIR\winlamp.ini WinLAMP VisDir
     StrCmp $8 "" End
     IfFileExists $8 0 End
       StrCpy $1 $8 ; update dir
     goto end
   
-  CaseWinamp3: 
+  CaseWinLAMP3: 
   CaseImpossible:
     StrCpy $1 $INSTDIR\Plugins\MilkDrop2
     goto end
@@ -177,33 +177,33 @@ FunctionEnd
 ; The stuff to install
 Section ""
 
-  CloseWinamp2:
-    ; make sure winamp is closed before we 1) try to install files
-    ; and 2) (later) edit winamp.ini.  for 1), if they're running
+  CloseWinLAMP2:
+    ; make sure winlamp is closed before we 1) try to install files
+    ; and 2) (later) edit winlamp.ini.  for 1), if they're running
     ; (or were running) some other vms-based plugin using 
-    ; vms_desktop.dll, then if winamp is still open, the installer
+    ; vms_desktop.dll, then if winlamp is still open, the installer
     ; could have trouble overwriting vms_desktop.dll, or other files;
     ; the user would get an abort/retry/ignore box, but it's easier 
     ; to just play it safe.
-    FindWindow $R0 "winamp v1.x"
-    StrCmp $R0 0 "" RequestCloseWinamp2
-    goto Winamp2Closed
-  RequestCloseWinamp2:
-    MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION "Winamp is currently running; please close it,$\rand then hit OK to continue..." \
-        IDCANCEL WarnWinampStillOpen
-    goto CloseWinamp2
-  WarnWinampStillOpen:
-    FindWindow $R0 "winamp v1.x"
-    StrCmp $R0 0 "" WarnWinampStillOpen2
-    goto Winamp2Closed
-  WarnWinampStillOpen2:
-    MessageBox MB_OK|MB_ICONEXCLAMATION "Warning: Winamp is still open; as a result, the installer$\rwill not be able to set ${PLUGIN_NAME} as the default plugin; you will$\rhave to do this yourself.$\r$\rTo do so, wait until the installation is finished.  Then bring up $\rWinamp and hit CTRL+K.  From there, you will be able to select$\r${PLUGIN_NAME} from the list of visualization plug-ins, and it will$\rbecome the new default."
-    goto Winamp2Closed
-  Winamp2Closed:    
+    FindWindow $R0 "winlamp v1.x"
+    StrCmp $R0 0 "" RequestCloseWinLAMP2
+    goto WinLAMP2Closed
+  RequestCloseWinLAMP2:
+    MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION "WinLAMP is currently running; please close it,$\rand then hit OK to continue..." \
+        IDCANCEL WarnWinLAMPStillOpen
+    goto CloseWinLAMP2
+  WarnWinLAMPStillOpen:
+    FindWindow $R0 "winlamp v1.x"
+    StrCmp $R0 0 "" WarnWinLAMPStillOpen2
+    goto WinLAMP2Closed
+  WarnWinLAMPStillOpen2:
+    MessageBox MB_OK|MB_ICONEXCLAMATION "Warning: WinLAMP is still open; as a result, the installer$\rwill not be able to set ${PLUGIN_NAME} as the default plugin; you will$\rhave to do this yourself.$\r$\rTo do so, wait until the installation is finished.  Then bring up $\rWinLAMP and hit CTRL+K.  From there, you will be able to select$\r${PLUGIN_NAME} from the list of visualization plug-ins, and it will$\rbecome the new default."
+    goto WinLAMP2Closed
+  WinLAMP2Closed:    
 
-  ; this function sets $1 to point to the 'winamp\plugins\milkdrop2' folder:
+  ; this function sets $1 to point to the 'winlamp\plugins\milkdrop2' folder:
   ; (see function definition above)
-  Call QueryWinampVisPath
+  Call QueryWinLAMPVisPath
 
   ; -------------------- EDIT THIS SECTION [2/3] --------------------
   ; -------------------- EDIT THIS SECTION [2/3] --------------------
@@ -220,42 +220,42 @@ Section ""
   
   ; So, first, we set the current output path (the folder to which 
   ; files will be decompressed on the user's system) to '$1', 
-  ; which is the path to their winamp plugins folder.
+  ; which is the path to their winlamp plugins folder.
   
   SetOutPath $1
-  File "C:\program files\winamp\plugins\${PLUGIN_DLL}"
+  File "C:\program files\winlamp\plugins\${PLUGIN_DLL}"
   
   SetOutPath $1\Milkdrop2\config
-  File "C:\program files\winamp\plugins\milkdrop2\config\milk_msg.ini"
-  File "C:\program files\winamp\plugins\milkdrop2\config\milk_img.ini"
-  ;File "C:\program files\winamp\plugins\milkdrop2\config\milkdrop.ini"  ;this one will be generated - do not install
+  File "C:\program files\winlamp\plugins\milkdrop2\config\milk_msg.ini"
+  File "C:\program files\winlamp\plugins\milkdrop2\config\milk_img.ini"
+  ;File "C:\program files\winlamp\plugins\milkdrop2\config\milkdrop.ini"  ;this one will be generated - do not install
 
   SetOutPath $1\Milkdrop2\data
-  File "C:\program files\winamp\plugins\milkdrop2\data\vms_desktop.dll"
-  File "C:\program files\winamp\plugins\milkdrop2\data\comp_ps.fx"
-  File "C:\program files\winamp\plugins\milkdrop2\data\comp_vs.fx"
-  File "C:\program files\winamp\plugins\milkdrop2\data\warp_ps.fx"
-  File "C:\program files\winamp\plugins\milkdrop2\data\warp_vs.fx"
-  File "C:\program files\winamp\plugins\milkdrop2\data\include.fx"
+  File "C:\program files\winlamp\plugins\milkdrop2\data\vms_desktop.dll"
+  File "C:\program files\winlamp\plugins\milkdrop2\data\comp_ps.fx"
+  File "C:\program files\winlamp\plugins\milkdrop2\data\comp_vs.fx"
+  File "C:\program files\winlamp\plugins\milkdrop2\data\warp_ps.fx"
+  File "C:\program files\winlamp\plugins\milkdrop2\data\warp_vs.fx"
+  File "C:\program files\winlamp\plugins\milkdrop2\data\include.fx"
 
   SetOutPath $1\Milkdrop2\docs
-  File "C:\program files\winamp\plugins\milkdrop2\docs\milkdrop.html"
-  File "C:\program files\winamp\plugins\milkdrop2\docs\milkdrop_preset_authoring.html"
-  File "C:\program files\winamp\plugins\milkdrop2\docs\q_and_t_vars.gif"
+  File "C:\program files\winlamp\plugins\milkdrop2\docs\milkdrop.html"
+  File "C:\program files\winlamp\plugins\milkdrop2\docs\milkdrop_preset_authoring.html"
+  File "C:\program files\winlamp\plugins\milkdrop2\docs\q_and_t_vars.gif"
 
   SetOutPath $1\Milkdrop2\textures
-  File "C:\program files\winamp\plugins\milkdrop2\textures\*.*"
+  File "C:\program files\winlamp\plugins\milkdrop2\textures\*.*"
   
   SetOutPath $1\Milkdrop2\presets
-  File "C:\program files\winamp\plugins\milkdrop2\presets\*.milk"
+  File "C:\program files\winlamp\plugins\milkdrop2\presets\*.milk"
   
   hmmm
   SetOutPath $1\MilkDrop2\presets\3d
-  File "C:\program files\winamp\plugins\milkdrop2\presets\3d\*.milk"
+  File "C:\program files\winlamp\plugins\milkdrop2\presets\3d\*.milk"
   
   hmmm
   SetOutPath $1\MilkDrop2\presets\inverted
-  File "C:\program files\winamp\plugins\milkdrop2\presets\inverted\*.milk"
+  File "C:\program files\winlamp\plugins\milkdrop2\presets\inverted\*.milk"
   
   ; ----------------------- END SECTION [2/3] -----------------------
   ; ----------------------- END SECTION [2/3] -----------------------
@@ -264,29 +264,29 @@ Section ""
 
   ; now time to create the Uninstaller:
 
-  IfFileExists $INSTDIR\Winamp.exe UninstWinamp2
-  IfFileExists $INSTDIR\Winamp3.exe UninstWinamp3
-  IfFileExists $INSTDIR\Studio.exe UninstWinamp3  ; legacy check
+  IfFileExists $INSTDIR\WinLAMP.exe UninstWinLAMP2
+  IfFileExists $INSTDIR\WinLAMP3.exe UninstWinLAMP3
+  IfFileExists $INSTDIR\Studio.exe UninstWinLAMP3  ; legacy check
   goto UninstDone
 
-  UninstWinamp3:
-    WriteRegStr HKLM SOFTWARE\${PLUGIN_DLL}Winamp3 "Install_Dir" "$INSTDIR"
-    WriteRegStr HKLM SOFTWARE\${PLUGIN_DLL}Winamp3 "Install_Plugins_Dir" $1
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PLUGIN_DLL}Winamp3" "DisplayName" "${PLUGIN_NAME} for Winamp 3 (remove only)"
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PLUGIN_DLL}Winamp3" "UninstallString" '"$INSTDIR\uninst-${PLUGIN_DLL}.exe"'
+  UninstWinLAMP3:
+    WriteRegStr HKLM SOFTWARE\${PLUGIN_DLL}WinLAMP3 "Install_Dir" "$INSTDIR"
+    WriteRegStr HKLM SOFTWARE\${PLUGIN_DLL}WinLAMP3 "Install_Plugins_Dir" $1
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PLUGIN_DLL}WinLAMP3" "DisplayName" "${PLUGIN_NAME} for WinLAMP 3 (remove only)"
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PLUGIN_DLL}WinLAMP3" "UninstallString" '"$INSTDIR\uninst-${PLUGIN_DLL}.exe"'
     WriteUninstaller "$INSTDIR\uninst-${PLUGIN_DLL}.exe"
-    CreateDirectory "$SMPROGRAMS\Winamp3\Vis Plugin Uninstallers"
-    CreateShortCut "$SMPROGRAMS\Winamp3\Vis Plugin Uninstallers\Uninstall ${PLUGIN_NAME}.lnk" "$INSTDIR\uninst-${PLUGIN_DLL}.exe" "" "$INSTDIR\uninst-${PLUGIN_DLL}.exe" 0
+    CreateDirectory "$SMPROGRAMS\WinLAMP3\Vis Plugin Uninstallers"
+    CreateShortCut "$SMPROGRAMS\WinLAMP3\Vis Plugin Uninstallers\Uninstall ${PLUGIN_NAME}.lnk" "$INSTDIR\uninst-${PLUGIN_DLL}.exe" "" "$INSTDIR\uninst-${PLUGIN_DLL}.exe" 0
     goto UninstDone
   
-  UninstWinamp2:
-    WriteRegStr HKLM SOFTWARE\${PLUGIN_DLL}Winamp "Install_Dir" "$INSTDIR"
-    WriteRegStr HKLM SOFTWARE\${PLUGIN_DLL}Winamp "Install_Plugins_Dir" $1
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PLUGIN_DLL}Winamp" "DisplayName" "${PLUGIN_NAME} for Winamp 2x (remove only)"
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PLUGIN_DLL}Winamp" "UninstallString" '"$INSTDIR\uninst-${PLUGIN_DLL}.exe"'
+  UninstWinLAMP2:
+    WriteRegStr HKLM SOFTWARE\${PLUGIN_DLL}WinLAMP "Install_Dir" "$INSTDIR"
+    WriteRegStr HKLM SOFTWARE\${PLUGIN_DLL}WinLAMP "Install_Plugins_Dir" $1
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PLUGIN_DLL}WinLAMP" "DisplayName" "${PLUGIN_NAME} for WinLAMP 2x (remove only)"
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PLUGIN_DLL}WinLAMP" "UninstallString" '"$INSTDIR\uninst-${PLUGIN_DLL}.exe"'
     WriteUninstaller "$INSTDIR\uninst-${PLUGIN_DLL}.exe"
-    CreateDirectory "$SMPROGRAMS\Winamp\Vis Plugin Uninstallers"
-    CreateShortCut "$SMPROGRAMS\Winamp\Vis Plugin Uninstallers\Uninstall ${PLUGIN_NAME}.lnk" "$INSTDIR\uninst-${PLUGIN_DLL}.exe" "" "$INSTDIR\uninst-${PLUGIN_DLL}.exe" 0
+    CreateDirectory "$SMPROGRAMS\WinLAMP\Vis Plugin Uninstallers"
+    CreateShortCut "$SMPROGRAMS\WinLAMP\Vis Plugin Uninstallers\Uninstall ${PLUGIN_NAME}.lnk" "$INSTDIR\uninst-${PLUGIN_DLL}.exe" "" "$INSTDIR\uninst-${PLUGIN_DLL}.exe" 0
     goto UninstDone
     
   UninstDone:
@@ -303,16 +303,16 @@ Section "Uninstall"
   ; This section is the code that will be run when the user goes
   ; to Uninstall the plugin.
 
-  IfFileExists $INSTDIR\Winamp.exe UninstStep1Winamp2
-  IfFileExists $INSTDIR\Winamp3.exe UninstStep1Winamp3
-  IfFileExists $INSTDIR\Studio.exe UninstStep1Winamp3  ; legacy check
+  IfFileExists $INSTDIR\WinLAMP.exe UninstStep1WinLAMP2
+  IfFileExists $INSTDIR\WinLAMP3.exe UninstStep1WinLAMP3
+  IfFileExists $INSTDIR\Studio.exe UninstStep1WinLAMP3  ; legacy check
   goto UninstScriptDone
 
-  UninstStep1Winamp3:
-    ReadRegStr $1 HKLM SOFTWARE\${PLUGIN_DLL}Winamp3 "Install_Plugins_Dir"
+  UninstStep1WinLAMP3:
+    ReadRegStr $1 HKLM SOFTWARE\${PLUGIN_DLL}WinLAMP3 "Install_Plugins_Dir"
     goto UninstStep2
-  UninstStep1Winamp2:
-    ReadRegStr $1 HKLM SOFTWARE\${PLUGIN_DLL}Winamp "Install_Plugins_Dir"
+  UninstStep1WinLAMP2:
+    ReadRegStr $1 HKLM SOFTWARE\${PLUGIN_DLL}WinLAMP "Install_Plugins_Dir"
     goto UninstStep2
 
   UninstStep2:
@@ -356,24 +356,24 @@ Section "Uninstall"
     ; ----------------------- END SECTION [3/3] -----------------------
     ; ----------------------- END SECTION [3/3] -----------------------
   
-  IfFileExists $INSTDIR\Winamp.exe UninstStep3Winamp2
-  IfFileExists $INSTDIR\Winamp3.exe UninstStep3Winamp3
-  IfFileExists $INSTDIR\Studio.exe UninstStep3Winamp3  ; legacy check
+  IfFileExists $INSTDIR\WinLAMP.exe UninstStep3WinLAMP2
+  IfFileExists $INSTDIR\WinLAMP3.exe UninstStep3WinLAMP3
+  IfFileExists $INSTDIR\Studio.exe UninstStep3WinLAMP3  ; legacy check
   goto UninstScriptDone
     
-  UninstStep3Winamp3:
-    DeleteRegKey HKLM SOFTWARE\${PLUGIN_DLL}Winamp3
-    DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PLUGIN_DLL}Winamp3"
+  UninstStep3WinLAMP3:
+    DeleteRegKey HKLM SOFTWARE\${PLUGIN_DLL}WinLAMP3
+    DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PLUGIN_DLL}WinLAMP3"
     Delete $INSTDIR\uninst-${PLUGIN_DLL}.exe
-    Delete "$SMPROGRAMS\Winamp3\Vis Plugin Uninstallers\Uninstall ${PLUGIN_NAME}.lnk"
-    RMDir "$SMPROGRAMS\Winamp3\Vis Plugin Uninstallers"
+    Delete "$SMPROGRAMS\WinLAMP3\Vis Plugin Uninstallers\Uninstall ${PLUGIN_NAME}.lnk"
+    RMDir "$SMPROGRAMS\WinLAMP3\Vis Plugin Uninstallers"
     goto UninstScriptDone
-  UninstStep3Winamp2:
-    DeleteRegKey HKLM SOFTWARE\${PLUGIN_DLL}Winamp
-    DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PLUGIN_DLL}Winamp"
+  UninstStep3WinLAMP2:
+    DeleteRegKey HKLM SOFTWARE\${PLUGIN_DLL}WinLAMP
+    DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PLUGIN_DLL}WinLAMP"
     Delete $INSTDIR\uninst-${PLUGIN_DLL}.exe
-    Delete "$SMPROGRAMS\Winamp\Vis Plugin Uninstallers\Uninstall ${PLUGIN_NAME}.lnk"
-    RMDir "$SMPROGRAMS\Winamp\Vis Plugin Uninstallers"
+    Delete "$SMPROGRAMS\WinLAMP\Vis Plugin Uninstallers\Uninstall ${PLUGIN_NAME}.lnk"
+    RMDir "$SMPROGRAMS\WinLAMP\Vis Plugin Uninstallers"
     goto UninstScriptDone
 
   UninstScriptDone:
@@ -382,54 +382,54 @@ SectionEnd
 ;----------------------------------------------------------------------
 
 Function .onInstSuccess
-  IfFileExists $INSTDIR\Winamp.exe CaseWinamp2
-  IfFileExists $INSTDIR\Winamp3.exe CaseWinamp3
-  IfFileExists $INSTDIR\Studio.exe CaseWinamp3  ; legacy check
+  IfFileExists $INSTDIR\WinLAMP.exe CaseWinLAMP2
+  IfFileExists $INSTDIR\WinLAMP3.exe CaseWinLAMP3
+  IfFileExists $INSTDIR\Studio.exe CaseWinLAMP3  ; legacy check
   goto CaseImpossible
 
-  CaseWinamp3:
+  CaseWinLAMP3:
     IfFileExists $INSTDIR\wacs\classicvis.wac ClassicVisOk
     ; no classicvis -> give them instructions
     MessageBox MB_YESNO|MB_ICONEXCLAMATION \
-            "IMPORTANT: You must download and install the Classic Visualization$\rComponent before ${PLUGIN_NAME} will work with Winamp 3.$\r$\rWould you like to download it now?" \
+            "IMPORTANT: You must download and install the Classic Visualization$\rComponent before ${PLUGIN_NAME} will work with WinLAMP 3.$\r$\rWould you like to download it now?" \
             IDNO FailNoClassicVis
-    ExecShell "open" "http://www.winamp.com/components3/detail.jhtml?componentId=122130"
+    ExecShell "open" "http://www.winlamp.com/components3/detail.jhtml?componentId=122130"
     MessageBox MB_OK|MB_ICONINFORMATION \
-            "Your web browser will now open and allow you to download$\rthe Classic Visualization Component.  Please download$\rand install it.$\r$\rOnce it is installed, open Winamp 3 and hit CTRL+P$\rto open the Preferences screen.  Then, on the left,$\rscroll to 'Classic Visualizations' and select it.  From there,$\ryou can easily select, configure and run any plugins$\rinstalled to Winamp 2 or 3."
+            "Your web browser will now open and allow you to download$\rthe Classic Visualization Component.  Please download$\rand install it.$\r$\rOnce it is installed, open WinLAMP 3 and hit CTRL+P$\rto open the Preferences screen.  Then, on the left,$\rscroll to 'Classic Visualizations' and select it.  From there,$\ryou can easily select, configure and run any plugins$\rinstalled to WinLAMP 2 or 3."
     goto end            
   FailNoClassicVis:
     MessageBox MB_OK|MB_ICONSTOP "Installation failed."
     goto end            
   ClassicVisOk:
     FindWindow $R0 "STUDIO"
-    StrCmp $R0 0 "" DoneWinamp3
+    StrCmp $R0 0 "" DoneWinLAMP3
     MessageBox MB_YESNO|MB_ICONQUESTION \
-            "${PLUGIN_NAME} was installed successfully.$\rWould you like to run Winamp 3 now?" \
-            IDNO DoneWinamp3
-    ; to do here: update 'oldvisname' string in the *xml* file winamp3\studio.xnf,
+            "${PLUGIN_NAME} was installed successfully.$\rWould you like to run WinLAMP 3 now?" \
+            IDNO DoneWinLAMP3
+    ; to do here: update 'oldvisname' string in the *xml* file winlamp3\studio.xnf,
     ; and set 'oldvisidx' to "0"
-    IfFileExists $INSTDIR\Winamp3.exe CaseWinamp3b
+    IfFileExists $INSTDIR\WinLAMP3.exe CaseWinLAMP3b
       Exec '"$INSTDIR\studio.exe"'
-      goto DoneWinamp3
-    CaseWinamp3b:
-      Exec '"$INSTDIR\winamp3.exe"'
-      goto DoneWinamp3
-  DoneWinamp3:
-    MessageBox MB_OK "While in Winamp 3, press CTRL+P to bring up the$\rPreferences screen, then scroll down and select$\rthe 'Classic Visualizations' option.  From there,$\ryou can select, configure, and run the ${PLUGIN_NAME} plugin."
+      goto DoneWinLAMP3
+    CaseWinLAMP3b:
+      Exec '"$INSTDIR\winlamp3.exe"'
+      goto DoneWinLAMP3
+  DoneWinLAMP3:
+    MessageBox MB_OK "While in WinLAMP 3, press CTRL+P to bring up the$\rPreferences screen, then scroll down and select$\rthe 'Classic Visualizations' option.  From there,$\ryou can select, configure, and run the ${PLUGIN_NAME} plugin."
     goto end
       
-  CaseWinamp2:
-    ; note: winamp 2 should already be closed at this point.
-    WriteINIStr "$INSTDIR\Winamp.ini" "Winamp" "visplugin_name" ${PLUGIN_DLL}
-    WriteINIStr "$INSTDIR\Winamp.ini" "Winamp" "visplugin_num" "0"
+  CaseWinLAMP2:
+    ; note: winlamp 2 should already be closed at this point.
+    WriteINIStr "$INSTDIR\WinLAMP.ini" "WinLAMP" "visplugin_name" ${PLUGIN_DLL}
+    WriteINIStr "$INSTDIR\WinLAMP.ini" "WinLAMP" "visplugin_num" "0"
     MessageBox MB_YESNO|MB_ICONQUESTION \
-            "${PLUGIN_NAME} was installed successfully.$\r$\rWhile in Winamp, press ALT+K to configure it (optional);$\rpress CTRL+SHIFT+K to execute it.$\r$\rWould you like to run Winamp now?" \
+            "${PLUGIN_NAME} was installed successfully.$\r$\rWhile in WinLAMP, press ALT+K to configure it (optional);$\rpress CTRL+SHIFT+K to execute it.$\r$\rWould you like to run WinLAMP now?" \
             IDNO end
-        Exec '"$INSTDIR\Winamp.exe"'
+        Exec '"$INSTDIR\WinLAMP.exe"'
     Goto end
   
   CaseImpossible:  
-    MessageBox MB_OK|MB_ICONEXCLAMATION "ERROR: unable to find winamp.exe (winamp2) or studio.exe/winamp3.exe (winamp3) in the install directory..."
+    MessageBox MB_OK|MB_ICONEXCLAMATION "ERROR: unable to find winlamp.exe (winlamp2) or studio.exe/winlamp3.exe (winlamp3) in the install directory..."
     Goto end
     
   End:

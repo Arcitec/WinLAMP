@@ -63,7 +63,7 @@ inline GUID waServiceFactory::getGuid() {
 inline void *waServiceFactory::getInterface(int global_lock) {
   void *__retval = _call(WASERVICEFACTORY_GETINTERFACE, (void *)NULL, global_lock);
   
-#if 0 // unused in Winamp 5
+#if 0 // unused in WinLAMP 5
   // -- generated code - edit in waservicefactoryi.h
   // support old code that always locks even when global_lock==FALSE
   if (!global_lock && __retval != NULL && !supportNonLockingGetInterface())

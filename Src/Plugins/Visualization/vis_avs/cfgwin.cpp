@@ -54,7 +54,7 @@ static int treeview_hack;
 static HTREEITEM g_hroot;
 
 extern int g_config_smp_mt,g_config_smp;
-extern struct winampVisModule *g_mod;
+extern struct winlampVisModule *g_mod;
 extern int cfg_cancelfs_on_deactivate;
 
 HWND g_debugwnd;
@@ -152,7 +152,7 @@ static int ExtractWindowsVersion(void)
 	return dwWindowsMajorVersion;
 }
 
-void CfgWnd_Create(struct winampVisModule *this_mod)
+void CfgWnd_Create(struct winlampVisModule *this_mod)
 {
 	WASABI_API_CREATEDIALOG(IDD_DIALOG1,this_mod->hwndParent,dlgProc);
 	//CreateDialogA(this_mod->hDllInstance,MAKEINTRESOURCE(IDD_DIALOG1),this_mod->hwndParent,dlgProc);
@@ -404,7 +404,7 @@ static BOOL CALLBACK DlgProc_Disp(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM 
         SendDlgItemMessage(hwndDlg,IDC_SLIDER1,TBM_SETRANGEMIN,0,0);
         SendDlgItemMessage(hwndDlg,IDC_SLIDER1,TBM_SETRANGEMAX,0,80);
         SendDlgItemMessage(hwndDlg,IDC_SLIDER1,TBM_SETPOS,1,cfg_speed&0xff);
-        SendDlgItemMessage(hwndDlg, IDC_THREAD_PRIORITY, CB_ADDSTRING, 0, (LPARAM)WASABI_API_LNGSTRING(IDS_SAME_AS_WINAMP));
+        SendDlgItemMessage(hwndDlg, IDC_THREAD_PRIORITY, CB_ADDSTRING, 0, (LPARAM)WASABI_API_LNGSTRING(IDS_SAME_AS_WINLAMP));
         SendDlgItemMessage(hwndDlg, IDC_THREAD_PRIORITY, CB_ADDSTRING, 0, (LPARAM)WASABI_API_LNGSTRING(IDS_IDLE));
         SendDlgItemMessage(hwndDlg, IDC_THREAD_PRIORITY, CB_ADDSTRING, 0, (LPARAM)WASABI_API_LNGSTRING(IDS_LOWEST));
         SendDlgItemMessage(hwndDlg, IDC_THREAD_PRIORITY, CB_ADDSTRING, 0, (LPARAM)WASABI_API_LNGSTRING(IDS_NORMAL));

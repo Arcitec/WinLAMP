@@ -23,7 +23,7 @@ extern api_playlistmanager *playlistManagerApi;
 
 #include "../Components/wac_downloadManager/wac_downloadManager_api.h"
 
-#include "../Winamp/gen.h"
-extern "C" winampGeneralPurposePlugin plugin;
+#include "../WinLAMP/gen.h"
+extern "C" winlampGeneralPurposePlugin plugin;
 
 #endif

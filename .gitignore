@@ -30,8 +30,8 @@ libvorbis/win32/Win32/
 nde/Lib/
 out_ds/wa2_release/
 out_wave/out_wave_release
-winampAll/lib/
-winampAll/Win32/
+winlampAll/lib/
+winlampAll/Win32/
 .DS_Store
 nsutil/nsutil.lib
 nsutil/nsutil.exp
@@ -47,7 +47,7 @@ mp3/mathlib/lib/
 /Elevator/IFileTypeRegistrar_p.c
 /f263/Release.w5s
 /f263/Debug.w5s
-/libmp4v2/libmp4v2___Win32_Debug_Winamp
+/libmp4v2/libmp4v2___Win32_Debug_WinLAMP
 /libogg/win32/Static_Debug
 Release_x86_Dll/
 **/*/x86*Debug*/
@@ -65,8 +65,8 @@ external_dependencies/vcpkg/
 /vcpkg_installed
 /external_dependencies/x86-windows-static
 *.stamp
-/Build/Winamp_x86_Debug
-/Build/Winamp_x86_Release
+/Build/WinLAMP_x86_Debug
+/Build/WinLAMP_x86_Release
 /Src/external_dependencies/vcpkg
 /Src/Elevator/IFileTypeRegistrar_32.h
 /Src/Elevator/IFileTypeRegistrar_64.h

@@ -134,8 +134,8 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)*.w5s ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\System\ </Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)*.w5s ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\System\'</Message>
+      <Command>xcopy /Y /D $(OutDir)*.w5s ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\System\ </Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)*.w5s ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\System\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -164,8 +164,8 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)*.w5s ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\System\ </Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)*.w5s ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\System\'</Message>
+      <Command>xcopy /Y /D $(OutDir)*.w5s ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\System\ </Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)*.w5s ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\System\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -199,8 +199,8 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)*.w5s ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\System\ </Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)*.w5s ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\System\'</Message>
+      <Command>xcopy /Y /D $(OutDir)*.w5s ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\System\ </Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)*.w5s ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\System\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -233,14 +233,14 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)*.w5s ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\System\ </Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)*.w5s ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\System\'</Message>
+      <Command>xcopy /Y /D $(OutDir)*.w5s ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\System\ </Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)*.w5s ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\System\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\nu\PtrList.cpp" />
     <ClCompile Include="..\nu\windowsTheme.cpp" />
-    <ClCompile Include="..\Winamp\JSAPI_CallbackParameters.cpp" />
+    <ClCompile Include="..\WinLAMP\JSAPI_CallbackParameters.cpp" />
     <ClCompile Include="auth.cpp" />
     <ClCompile Include="b64.c" />
     <ClCompile Include="decode.cpp" />
@@ -253,7 +253,7 @@
     <ClCompile Include="Loginbox\commandNodeParser.cpp" />
     <ClCompile Include="Loginbox\commandParser.cpp" />
     <ClCompile Include="Loginbox\commandWebAuth.cpp" />
-    <ClCompile Include="Loginbox\commandWinampAuth.cpp" />
+    <ClCompile Include="Loginbox\commandWinLAMPAuth.cpp" />
     <ClCompile Include="Loginbox\common.cpp" />
     <ClCompile Include="Loginbox\dataAddress.cpp" />
     <ClCompile Include="Loginbox\dataCredentials.cpp" />
@@ -289,7 +289,7 @@
     <ClCompile Include="Loginbox\providerOperation.cpp" />
     <ClCompile Include="Loginbox\providerParser.cpp" />
     <ClCompile Include="Loginbox\resultWebAuth.cpp" />
-    <ClCompile Include="Loginbox\resultWinampAuth.cpp" />
+    <ClCompile Include="Loginbox\resultWinLAMPAuth.cpp" />
     <ClCompile Include="Loginbox\stringBuilder.cpp" />
     <ClCompile Include="Loginbox\templateAddress.cpp" />
     <ClCompile Include="Loginbox\templateCredentials.cpp" />
@@ -322,7 +322,7 @@
     <ClInclude Include="Loginbox\commandNodeParser.h" />
     <ClInclude Include="Loginbox\commandParser.h" />
     <ClInclude Include="Loginbox\commandWebAuth.h" />
-    <ClInclude Include="Loginbox\commandWinampAuth.h" />
+    <ClInclude Include="Loginbox\commandWinLAMPAuth.h" />
     <ClInclude Include="Loginbox\common.h" />
     <ClInclude Include="Loginbox\dataAddress.h" />
     <ClInclude Include="Loginbox\dataCredentials.h" />
@@ -361,7 +361,7 @@
     <ClInclude Include="Loginbox\providerOperation.h" />
     <ClInclude Include="Loginbox\providerParser.h" />
     <ClInclude Include="Loginbox\resultWebAuth.h" />
-    <ClInclude Include="Loginbox\resultWinampAuth.h" />
+    <ClInclude Include="Loginbox\resultWinLAMPAuth.h" />
     <ClInclude Include="Loginbox\stringBuilder.h" />
     <ClInclude Include="Loginbox\templateAddress.h" />
     <ClInclude Include="Loginbox\templateCredentials.h" />

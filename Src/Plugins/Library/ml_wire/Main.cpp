@@ -49,7 +49,7 @@ static void Quit();
 static INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR param3);
 
 DWORD threadStorage=TLS_OUT_OF_INDEXES;
-extern "C" winampMediaLibraryPlugin plugin =
+extern "C" winlampMediaLibraryPlugin plugin =
     {
         MLHDR_VER,
         "nullsoft(ml_wire.dll)",
@@ -91,7 +91,7 @@ static PodcastsFactory podcastsFactory;
 HANDLE                hMainThread                 = NULL;
 
 HCURSOR               hDragNDropCursor            = NULL;
-int                   winampVersion               = 0;
+int                   winlampVersion               = 0;
 
 JSAPI2::api_security *AGAVE_API_JSAPI2_SECURITY   = 0;
 JSAPI2Factory         jsapi2Creator;
@@ -144,8 +144,8 @@ int Init()
 			return 1;
 	}
 
-	winampVersion = SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETVERSION );
-	ml_cfg        = (wchar_t*)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETMLINIFILEW);
+	winlampVersion = SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETVERSION );
+	ml_cfg        = (wchar_t*)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETMLINIFILEW);
 
 	plugin.service->service_register( &podcastsFactory );
 	plugin.service->service_register( &jsapi2Creator );
@@ -192,7 +192,7 @@ int Init()
 	plugin.description = (char*)szDescription;
 
 	mediaLibrary.library  = plugin.hwndLibraryParent;
-	mediaLibrary.winamp   = plugin.hwndWinampParent;
+	mediaLibrary.winlamp   = plugin.hwndWinLAMPParent;
 	mediaLibrary.instance = plugin.hDllInstance;
 
 	RssCOM *rss;
@@ -202,11 +202,11 @@ int Init()
 		dispatchInfo.name = (LPWSTR)rss->GetName();
 		dispatchInfo.dispatch = rss;
 
-		SENDWAIPC(plugin.hwndWinampParent, IPC_ADD_DISPATCH_OBJECT, (WPARAM)&dispatchInfo);
+		SENDWAIPC(plugin.hwndWinLAMPParent, IPC_ADD_DISPATCH_OBJECT, (WPARAM)&dispatchInfo);
 		rss->Release();
 	}
 
-	BuildDefaultDownloadPath( plugin.hwndWinampParent );
+	BuildDefaultDownloadPath( plugin.hwndWinLAMPParent );
 
 	preferences.hInst = WASABI_API_LNG_HINST;
 	preferences.dlgID = IDD_PREFERENCES;
@@ -341,10 +341,10 @@ static INT_PTR Podcast_OnContextMenu( INT_PTR param1, HWND hHost, POINTS pts)
 				MLNavItem_Select( plugin.hwndLibraryParent, myItem );
 				break;
 			case ID_NAVIGATION_PREFERENCES:
-				SENDWAIPC( plugin.hwndWinampParent, IPC_OPENPREFSTOPAGE, &preferences );
+				SENDWAIPC( plugin.hwndWinLAMPParent, IPC_OPENPREFSTOPAGE, &preferences );
 				break;
 			case ID_NAVIGATION_HELP:
-				SENDWAIPC( plugin.hwndWinampParent, IPC_OPEN_URL, L"https://help.winamp.com/hc/articles/8112346487060-Podcast-Directory" );
+				SENDWAIPC( plugin.hwndWinLAMPParent, IPC_OPEN_URL, L"https://help.winlamp.com/hc/articles/8112346487060-Podcast-Directory" );
 				break;
 			case ID_NAVIGATION_REFRESHALL:
 				cloud.RefreshAll();
@@ -463,7 +463,7 @@ void addToLibrary_thread(const DownloadedFile& d)
 }
 
 
-extern "C" __declspec(dllexport) winampMediaLibraryPlugin *winampGetMediaLibraryPlugin()
+extern "C" __declspec(dllexport) winlampMediaLibraryPlugin *winlampGetMediaLibraryPlugin()
 {
 	return &plugin;
 }

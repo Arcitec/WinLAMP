@@ -147,9 +147,9 @@
     </Link>
     <PostBuildEvent>
       <Message>If you need to perform registration as service, use command line with following text 'regsvr32 elevatorps.dll'.</Message>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Shared\'</Message>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Shared\
-xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Shared\</Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Shared\'</Message>
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Shared\
+xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Shared\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -184,9 +184,9 @@ xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\Build\Winamp_$(PlatformShortName)_$
     </Link>
     <PostBuildEvent>
       <Message>If you need to perform registration as service, use command line with following text 'regsvr32 elevatorps.dll'.</Message>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Shared\'</Message>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Shared\
-xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Shared\</Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Shared\'</Message>
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Shared\
+xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Shared\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -225,8 +225,8 @@ xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\Build\Winamp_$(PlatformShortName)_$
     </Link>
     <PostBuildEvent>
       <Message>If you need to perform registration as service, use command line with following text 'regsvr32 elevatorps.dll'.</Message>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Shared\'</Message>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Shared\</Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Shared\'</Message>
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Shared\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -265,8 +265,8 @@ xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\Build\Winamp_$(PlatformShortName)_$
     </Link>
     <PostBuildEvent>
       <Message>If you need to perform registration as service, use command line with following text 'regsvr32 elevatorps.dll'.</Message>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Shared\'</Message>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Shared\</Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Shared\'</Message>
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Shared\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -61,7 +61,7 @@ int history_init()
 
 	if (!wa_oldWndProc) // don't double dip (we call history_init() dynamically if the user fiddles with prefs
 	{
-		wa_oldWndProc = (WNDPROC)SetWindowLongPtrW(plugin.hwndWinampParent, GWLP_WNDPROC, (LONG_PTR)wa_newWndProc);
+		wa_oldWndProc = (WNDPROC)SetWindowLongPtrW(plugin.hwndWinLAMPParent, GWLP_WNDPROC, (LONG_PTR)wa_newWndProc);
 	}
 
 

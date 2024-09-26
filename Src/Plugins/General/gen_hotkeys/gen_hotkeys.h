@@ -3,13 +3,13 @@
 
 #include <windows.h>
 #include <commctrl.h>
-#include "winamp.h"
+#include "winlamp.h"
 #include "wa_hotkeys.h"
 #include "resource.h"
 #include "hotkey.h"
 #include "WACommands.h"
 #include "HotKeyCtl.h"
-#include "../winamp/gen.h"
+#include "../winlamp/gen.h"
 #include "api__gen_hotkeys.h"
 #include <strsafe.h>
 
@@ -36,7 +36,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 ///////////////////////////////////////////////////////////
 //  Globals
 ///////////////////////////////////////////////////////////
-extern winampGeneralPurposePlugin psPlugin;
+extern winlampGeneralPurposePlugin psPlugin;
 extern HOTKEY *g_hotkeys;
 extern DWORD g_dwHotkeys;
 extern wchar_t *g_iniFile;

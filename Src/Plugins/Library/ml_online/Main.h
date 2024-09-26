@@ -17,7 +17,7 @@
 #define PLUGIN_VERSION_MINOR		03
 
 HINSTANCE Plugin_GetInstance(void);
-HWND Plugin_GetWinamp(void);
+HWND Plugin_GetWinLAMP(void);
 HWND Plugin_GetLibrary(void);
 
 class Navigation;
@@ -27,7 +27,7 @@ typedef void (CALLBACK *PLUGINUNLOADCALLBACK)(void);
 void Plugin_RegisterUnloadCallback(PLUGINUNLOADCALLBACK callback);
 
 
-extern int winampVersion;
+extern int winlampVersion;
 
 #define MUTEX_T CRITICAL_SECTION
 #define MUTEX_ENTER(n) EnterCriticalSection(&(n))

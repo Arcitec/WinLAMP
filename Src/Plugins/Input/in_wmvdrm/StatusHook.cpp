@@ -1,20 +1,20 @@
 #if 0
 #include <windows.h>
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "Main.h"
 #include <shlwapi.h>
 
 static WNDPROC waProc=0;
-static bool winampisUnicode=false;
+static bool winlampisUnicode=false;
 
 static LRESULT WINAPI StatusHookProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 
 	if (msg == WM_WA_IPC && lParam == IPC_HOOK_TITLESW)
 	{
-		LRESULT downTheLine = winampisUnicode?CallWindowProcW(waProc, hwnd, msg, wParam, lParam):CallWindowProcA(waProc, hwnd, msg, wParam, lParam);
+		LRESULT downTheLine = winlampisUnicode?CallWindowProcW(waProc, hwnd, msg, wParam, lParam):CallWindowProcA(waProc, hwnd, msg, wParam, lParam);
 		waHookTitleStructW *hook = (waHookTitleStructW *)wParam;
-		if (!PathIsURLW(hook->filename) && winamp.GetStatusHook(hook->title, 2048, hook->filename))
+		if (!PathIsURLW(hook->filename) && winlamp.GetStatusHook(hook->title, 2048, hook->filename))
 		{
 			return TRUE;
 		}
@@ -24,7 +24,7 @@ static LRESULT WINAPI StatusHookProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM 
 
 	if (waProc)
 	{
-		if (winampisUnicode)
+		if (winlampisUnicode)
 			return CallWindowProcW(waProc, hwnd, msg, wParam, lParam);
 		else 
 			return CallWindowProcA(waProc, hwnd, msg, wParam, lParam);
@@ -33,22 +33,22 @@ static LRESULT WINAPI StatusHookProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM 
 		return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-void Hook(HWND winamp)
+void Hook(HWND winlamp)
 {
-	if (winamp)
+	if (winlamp)
 	{
-		winampisUnicode = !!IsWindowUnicode(winamp);
-		if (winampisUnicode) 
-			waProc = (WNDPROC)SetWindowLongPtrW(winamp, GWLP_WNDPROC, (LONG_PTR)StatusHookProc);
+		winlampisUnicode = !!IsWindowUnicode(winlamp);
+		if (winlampisUnicode) 
+			waProc = (WNDPROC)SetWindowLongPtrW(winlamp, GWLP_WNDPROC, (LONG_PTR)StatusHookProc);
 		else 
-			waProc = (WNDPROC)SetWindowLongPtrA(winamp, GWLP_WNDPROC, (LONG_PTR)StatusHookProc);
+			waProc = (WNDPROC)SetWindowLongPtrA(winlamp, GWLP_WNDPROC, (LONG_PTR)StatusHookProc);
 	}
 }
 
-void Unhook(HWND winamp)
+void Unhook(HWND winlamp)
 {
-//	if (winamp && GetWindowLongA(winamp,GWL_WNDPROC) == (LONG)StatusHookProc)
-		//SetWindowLong(winamp, GWL_WNDPROC, (LONG)waProc);
+//	if (winlamp && GetWindowLongA(winlamp,GWL_WNDPROC) == (LONG)StatusHookProc)
+		//SetWindowLong(winlamp, GWL_WNDPROC, (LONG)waProc);
 	//waProc=0;
 }
 #endif

@@ -29,12 +29,12 @@
   Changes from v0.2 by Darren Owen aka DrO
 
   * Added Alt+A global shortcut to toggle the album art window
-  * Album art window is now included in Winamp's ctrl+tab feature (broken in some 5.5x builds)
+  * Album art window is now included in WinLAMP's ctrl+tab feature (broken in some 5.5x builds)
   * Double-click will now open the folder (like the native album art window does)
   * Changing menu id to be dynamic rather than hard-coded to show use of IPC_REGISTER_LOWORD_COMMAND
   * Made background colour match the media library album art views (override with waBkClr=1 in the plugin's ini section)
-  * Made compatible to deal with Winamp being minimised on startup so the window won't appear briefly
-  * Implemented winampUninstallPlugin(..) support
+  * Made compatible to deal with WinLAMP being minimised on startup so the window won't appear briefly
+  * Implemented winlampUninstallPlugin(..) support
 
   ---------------------------------------------------------------------------
 
@@ -52,8 +52,8 @@
 
   * Added detection of being used under a modern skin so the album art window and menu item can be automatically hidden (default: on)
   * Added in ability for the tracking action to work via the keyboard actions along with button clicking
-  * Tweaked the menu item text so the items (at least with en-us translations) is better consistant with the rest of Winamp (if that's possible, heh)
-  * Added config menu into the Winamp preferences so it's possible to access the options when the album art window isn't shown
+  * Tweaked the menu item text so the items (at least with en-us translations) is better consistant with the rest of WinLAMP (if that's possible, heh)
+  * Added config menu into the WinLAMP preferences so it's possible to access the options when the album art window isn't shown
 
 */
 
@@ -61,11 +61,11 @@
 #include <shlwapi.h>
 #include <strsafe.h>
 
-#include "../winamp/gen.h"
-#include "../winamp/wa_ipc.h"
-#include "../winamp/ipc_pe.h"
+#include "../winlamp/gen.h"
+#include "../winlamp/wa_ipc.h"
+#include "../winlamp/ipc_pe.h"
 #define WA_DLG_IMPLEMENT
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 
 #include "api.h"
 #include "resource.h"
@@ -80,7 +80,7 @@ int init();
 void quit();
 void config();
 
-winampGeneralPurposePlugin plugin =
+winlampGeneralPurposePlugin plugin =
 {
 	GPPHDR_VER,
 	"nullsoft(gen_classicart.dll)",
@@ -89,7 +89,7 @@ winampGeneralPurposePlugin plugin =
 	quit,
 };
 
-// winampGeneralPurposePlugin plugin = {GPPHDR_VER,PLUGIN_NAME" v"PLUGIN_VERSION,init,config,quit};
+// winlampGeneralPurposePlugin plugin = {GPPHDR_VER,PLUGIN_NAME" v"PLUGIN_VERSION,init,config,quit};
 
 static api_memmgr* WASABI_API_MEMMGR;
 static api_service* WASABI_API_SVC;
@@ -116,7 +116,7 @@ int artwindow_open=0,
 	on_click=0,
 	clickTrack=0,
 	hidemodern=1;
-UINT WINAMP_ARTVIEW_MENUID=0xa1ba;
+UINT WINLAMP_ARTVIEW_MENUID=0xa1ba;
 char* INI_FILE=NULL;
 RECT lastWnd={0};
 HDC cacheDC = NULL;
@@ -150,11 +150,11 @@ BOOL ArtView_SetMinimised(BOOL fMinimized)
 }
 
 UINT ver = -1;
-UINT GetWinampVersion(HWND winamp)
+UINT GetWinLAMPVersion(HWND winlamp)
 {
 	if(ver == -1)
 	{
-		return (ver = SendMessage(winamp,WM_WA_IPC,0,IPC_GETVERSION));
+		return (ver = SendMessage(winlamp,WM_WA_IPC,0,IPC_GETVERSION));
 	}
 	return ver;
 }
@@ -178,7 +178,7 @@ BOOL DetectModernSkinLoaded(void)
 }
 
 void InsertItemIntoMainMenu(void){
-	MENUITEMINFO i = {sizeof(i), MIIM_ID | MIIM_STATE | MIIM_TYPE, MFT_STRING, MFS_UNCHECKED, WINAMP_ARTVIEW_MENUID};
+	MENUITEMINFO i = {sizeof(i), MIIM_ID | MIIM_STATE | MIIM_TYPE, MFT_STRING, MFS_UNCHECKED, WINLAMP_ARTVIEW_MENUID};
 	i.dwTypeData = WASABI_API_LNGSTRINGW(IDS_ALBUM_ART_MENU);
 	InsertMenuItem(menu, 10 + (int)SendMessage(plugin.hwndParent,WM_WA_IPC,(WPARAM)0,IPC_ADJUST_OPTIONSMENUPOS), TRUE, &i);
 	SendMessage(plugin.hwndParent,WM_WA_IPC,(WPARAM)1,IPC_ADJUST_OPTIONSMENUPOS);
@@ -186,11 +186,11 @@ void InsertItemIntoMainMenu(void){
 
 int init()
 {
-	if(GetWinampVersion(plugin.hwndParent) < 0x5053)
+	if(GetWinLAMPVersion(plugin.hwndParent) < 0x5053)
 	{
 		// this is due to the api_application dependancy to allow for registering a hotkey correctly
-		MessageBoxA(plugin.hwndParent,"This plug-in requires Winamp v5.9 and up for it to work.\t\n"
-									  "Please upgrade your Winamp client to be able to use this.",
+		MessageBoxA(plugin.hwndParent,"This plug-in requires WinLAMP v5.9 and up for it to work.\t\n"
+									  "Please upgrade your WinLAMP client to be able to use this.",
 									  plugin.description,MB_OK|MB_ICONINFORMATION);
 		return GEN_INIT_FAILURE;
 	}
@@ -227,7 +227,7 @@ int init()
 															GWLP_WNDPROC, (LONG_PTR)SubclassPlaylistProc);
 
 			// do this dynamically (if on an older client then we'd need to check for a return of 1 and set an arbitrary default)
-			WINAMP_ARTVIEW_MENUID = SendMessage(plugin.hwndParent,WM_WA_IPC,0,IPC_REGISTER_LOWORD_COMMAND);
+			WINLAMP_ARTVIEW_MENUID = SendMessage(plugin.hwndParent,WM_WA_IPC,0,IPC_REGISTER_LOWORD_COMMAND);
 
 			// add our menu option
 			menu = (HMENU)SendMessage(plugin.hwndParent,WM_WA_IPC,(WPARAM)0,IPC_GET_HMENU);
@@ -271,8 +271,8 @@ int init()
 			if(SendMessage(plugin.hwndParent,WM_WA_IPC,0,IPC_INITIAL_SHOW_STATE) == SW_SHOWMINIMIZED && artwindow_open)
 			{
 				// we are starting minimised so process as needed (keep our window hidden)
-				MENUITEMINFO i = {sizeof(i), MIIM_STATE , MFT_STRING, MFS_UNCHECKED, WINAMP_ARTVIEW_MENUID};
-				SetMenuItemInfo(menu, WINAMP_ARTVIEW_MENUID, FALSE, &i);
+				MENUITEMINFO i = {sizeof(i), MIIM_STATE , MFT_STRING, MFS_UNCHECKED, WINLAMP_ARTVIEW_MENUID};
+				SetMenuItemInfo(menu, WINLAMP_ARTVIEW_MENUID, FALSE, &i);
 				ArtView_SetMinimised(TRUE);
 			}
 			else
@@ -281,7 +281,7 @@ int init()
 			}
 
 			// not working correctly at the moment
-			ACCEL accel = {FVIRTKEY|FALT,'A',WINAMP_ARTVIEW_MENUID};
+			ACCEL accel = {FVIRTKEY|FALT,'A',WINLAMP_ARTVIEW_MENUID};
 			addAccelerators(myWndChild,&accel,1,TRANSLATE_MODE_GLOBAL);
 
 			context_menu = WASABI_API_LOADMENUW(IDR_MENU1);
@@ -323,7 +323,7 @@ void quit()
 	DestroyWindow(myWnd);
 	WADlg_close();
 
-	// restores the original winamp window proc now that we are closing and if the window was subclassed
+	// restores the original winlamp window proc now that we are closing and if the window was subclassed
 	if(GetWindowLongPtr(plugin.hwndParent,GWLP_WNDPROC) == (LONG_PTR)SubclassProc){
 		SetWindowLongPtr(plugin.hwndParent,GWLP_WNDPROC,(LONG_PTR)oldWndProc);		
 	}
@@ -413,7 +413,7 @@ static LRESULT WINAPI SubclassProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lP
 {
 	// handles the item being selected through the main window menu
 	// including via the windows taskbar menu as it'll fail otherwise
-	if((msg == WM_COMMAND || msg == WM_SYSCOMMAND) && LOWORD(wParam) == WINAMP_ARTVIEW_MENUID)
+	if((msg == WM_COMMAND || msg == WM_SYSCOMMAND) && LOWORD(wParam) == WINLAMP_ARTVIEW_MENUID)
 	{
 		if(artwindow_open) PostMessage(myWndChild,WM_CLOSE,0,0);
 		else PostMessage(myWndChild,WM_USER+1,0,0);
@@ -435,7 +435,7 @@ static LRESULT WINAPI SubclassProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lP
 					if(last_artwindow_open==TRUE){
 						PostMessage(myWndChild,WM_CLOSE,0,0);
 					}
-					DeleteMenu(menu,WINAMP_ARTVIEW_MENUID,MF_BYCOMMAND);
+					DeleteMenu(menu,WINLAMP_ARTVIEW_MENUID,MF_BYCOMMAND);
 					SendMessage(plugin.hwndParent,WM_WA_IPC,(WPARAM)-1,IPC_ADJUST_OPTIONSMENUPOS);
 				}
 				modernloaded=TRUE;
@@ -750,7 +750,7 @@ static INT_PTR CALLBACK art_dlgproc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARA
 			if(cur_image) WASABI_API_MEMMGR->sysFree(cur_image); cur_image = 0;
 			if (AGAVE_API_ALBUMART->GetAlbumArt(filename, L"cover", &cur_w, &cur_h, &cur_image) != ALBUMART_SUCCESS)
 			{/*
-				SkinBitmap b(L"winamp.cover.notfound");
+				SkinBitmap b(L"winlamp.cover.notfound");
 				if(!b.isInvalid())
 				{
 					cur_w = b.getWidth();
@@ -828,7 +828,7 @@ static INT_PTR CALLBACK art_dlgproc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARA
 		break;
 	case WM_COMMAND:
 		// this is used when 'Alt+A' is pressed by the user as part of the registered global shortcut
-		if(LOWORD(wParam) == WINAMP_ARTVIEW_MENUID)
+		if(LOWORD(wParam) == WINLAMP_ARTVIEW_MENUID)
 		{
 			if(artwindow_open) PostMessage(myWndChild,WM_CLOSE,0,0);
 			else PostMessage(myWndChild,WM_USER+1,0,0);
@@ -896,8 +896,8 @@ static INT_PTR CALLBACK art_dlgproc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARA
 void viewArtWindow(BOOL show)
 {
 	artwindow_open=show;
-	MENUITEMINFO i = {sizeof(i), MIIM_STATE , MFT_STRING, (artwindow_open?MFS_CHECKED:MFS_UNCHECKED), WINAMP_ARTVIEW_MENUID};
-	SetMenuItemInfo(menu, WINAMP_ARTVIEW_MENUID, FALSE, &i);
+	MENUITEMINFO i = {sizeof(i), MIIM_STATE , MFT_STRING, (artwindow_open?MFS_CHECKED:MFS_UNCHECKED), WINLAMP_ARTVIEW_MENUID};
+	SetMenuItemInfo(menu, WINLAMP_ARTVIEW_MENUID, FALSE, &i);
 	ShowWindow(myWnd,(artwindow_open?SW_SHOW:SW_HIDE));
 }
 
@@ -911,12 +911,12 @@ void addAccelerators(HWND hwnd, ACCEL* accel, int accel_size, int translate_mode
 extern "C" {
 #endif
 
-	__declspec( dllexport ) winampGeneralPurposePlugin * winampGetGeneralPurposePlugin()
+	__declspec( dllexport ) winlampGeneralPurposePlugin * winlampGetGeneralPurposePlugin()
 	{
 		return &plugin;
 	}
 
-	__declspec(dllexport) int winampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param)
+	__declspec(dllexport) int winlampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param)
 	{
 		// prompt to remove our settings with default as no (just incase)
 		if(MessageBoxA(hwndDlg,WASABI_API_LNGSTRING(IDS_DO_YOU_ALSO_WANT_TO_REMOVE_SETTINGS),

@@ -1,5 +1,5 @@
 #include "avi_h264_decoder.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <mmsystem.h>
 #include <assert.h>
 #include <Mferror.h>

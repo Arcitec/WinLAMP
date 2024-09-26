@@ -183,10 +183,10 @@ static void playFiles(int enqueue, int all)
 		{
 			if (!cnt)
 			{
-				if(!enqueue) SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_DELETE);
+				if(!enqueue) SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_DELETE);
 				cnt++;
 			}
-			//send the file to winamp
+			//send the file to winlamp
 			COPYDATASTRUCT cds = {0};
 			cds.dwData = IPC_ENQUEUEFILEW;
 			wchar_t buf[1024] = {0};
@@ -194,12 +194,12 @@ static void playFiles(int enqueue, int all)
 			buf[1023]=0;
 			cds.lpData = (void *) buf;
 			cds.cbData = (lstrlenW((wchar_t*)cds.lpData)+1)*sizeof(wchar_t); // include space for null char
-			SendMessage(plugin.hwndWinampParent,WM_COPYDATA,(WPARAM)NULL,(LPARAM)&cds);
+			SendMessage(plugin.hwndWinLAMPParent,WM_COPYDATA,(WPARAM)NULL,(LPARAM)&cds);
 		}
 	}
 	if (cnt)
 	{
-		if(!enqueue) SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_STARTPLAY);
+		if(!enqueue) SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_STARTPLAY);
 	}
 }
 
@@ -230,7 +230,7 @@ static BOOL CALLBACK BookMarkEditProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPA
 					of.lStructSize = sizeof(OPENFILENAMEW);
 					of.hwndOwner = hwndDlg;
 					of.nMaxFileTitle = 32;
-					of.lpstrFilter = (wchar_t*)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,1,IPC_GET_EXTLISTW);
+					of.lpstrFilter = (wchar_t*)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,1,IPC_GET_EXTLISTW);
 					of.nMaxCustFilter = 1024;
 					of.lpstrFile = fn;
 					of.nMaxFile = 1024;
@@ -257,7 +257,7 @@ static void readbookmarks(int play1enqueue2=0)
 
 	int x=0;
 	FILE *fp=NULL;
-	wchar_t *fnp=(wchar_t*)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,666,IPC_ADDBOOKMARKW);
+	wchar_t *fnp=(wchar_t*)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,666,IPC_ADDBOOKMARKW);
 	if ((unsigned int)fnp < 65536) return;
 
 	fp=_wfopen(fnp,L"rt");
@@ -285,14 +285,14 @@ static void readbookmarks(int play1enqueue2=0)
 					{
 						if (!x)
 						{
-							if(play1enqueue2==1) SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_DELETE);
+							if(play1enqueue2==1) SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_DELETE);
 						}
-						//send the file to winamp
+						//send the file to winlamp
 						COPYDATASTRUCT cds = {0};
 						cds.dwData = IPC_ENQUEUEFILEW;
 						cds.lpData = (void *)AutoWideDup(fn,CP_UTF8);
 						cds.cbData = (lstrlenW((wchar_t *) cds.lpData)+1)*sizeof(wchar_t); // include space for null char
-						SendMessage(plugin.hwndWinampParent,WM_COPYDATA,(WPARAM)NULL,(LPARAM)&cds);
+						SendMessage(plugin.hwndWinLAMPParent,WM_COPYDATA,(WPARAM)NULL,(LPARAM)&cds);
 					}
 					x++;
 				}
@@ -308,13 +308,13 @@ static void readbookmarks(int play1enqueue2=0)
 
 	if (x && play1enqueue2 == 1)
 	{
-		SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_STARTPLAY);
+		SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_STARTPLAY);
 	}
 }
 
 static void writebookmarks()
 {
-	wchar_t *fnp = (wchar_t *)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 666, IPC_ADDBOOKMARKW );
+	wchar_t *fnp = (wchar_t *)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 666, IPC_ADDBOOKMARKW );
 	
 	if ( (unsigned int)fnp < 65536 )
 		return;
@@ -333,7 +333,7 @@ static void writebookmarks()
 	
 	bookmarks.Close();
 
-	fnp = (wchar_t *)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_ADDBOOKMARKW );
+	fnp = (wchar_t *)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_ADDBOOKMARKW );
 	
 	if ( (unsigned int)fnp < 65536 )
 		return;
@@ -466,7 +466,7 @@ static int bookmark_contextMenu(INT_PTR param1, HWND hHost, POINTS pts)
 			readbookmarks(2);
 			break;
 		case ID_BMWND_HELP:
-			SENDWAIPC(plugin.hwndWinampParent, IPC_OPEN_URL, L"https://help.winamp.com/hc/articles/8105304048660-The-Winamp-Media-Library");
+			SENDWAIPC(plugin.hwndWinLAMPParent, IPC_OPEN_URL, L"https://help.winlamp.com/hc/articles/8105304048660-The-WinLAMP-Media-Library");
 			break;
 	}
 	Sleep(100);
@@ -522,8 +522,8 @@ static void bookmarks_contextMenu(HWND hwndDlg, HWND from, int x, int y)
 	UpdateMenuItems(hwndDlg, menu);
 	ZeroMemory(&s, sizeof(librarySendToMenuStruct));
 				
-	IPC_LIBRARY_SENDTOMENU = (INT_PTR)SendMessage(plugin.hwndWinampParent, WM_WA_IPC,(WPARAM)&"LibrarySendToMenu",IPC_REGISTER_WINAMP_IPCMESSAGE);
-	if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage(plugin.hwndWinampParent, WM_WA_IPC,(WPARAM)0,IPC_LIBRARY_SENDTOMENU)==0xffffffff)
+	IPC_LIBRARY_SENDTOMENU = (INT_PTR)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC,(WPARAM)&"LibrarySendToMenu",IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC,(WPARAM)0,IPC_LIBRARY_SENDTOMENU)==0xffffffff)
 	{
 		s.mode = 1;
 		s.hwnd = hwndDlg;
@@ -571,7 +571,7 @@ static void bookmarks_contextMenu(HWND hwndDlg, HWND from, int x, int y)
 			if (s.mode == 2)
 			{
 				s.menu_id = r;
-				if (SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU) == 0xffffffff)
+				if (SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU) == 0xffffffff)
 				{
 					s.mode=3;
 					s.data_type=ML_TYPE_FILENAMESW;
@@ -596,7 +596,7 @@ static void bookmarks_contextMenu(HWND hwndDlg, HWND from, int x, int y)
 					
 					s.data = (void*)sendStr.c_str();
 			
-					if(SendMessage(plugin.hwndWinampParent, WM_WA_IPC,(WPARAM)&s,IPC_LIBRARY_SENDTOMENU)!=1)
+					if(SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC,(WPARAM)&s,IPC_LIBRARY_SENDTOMENU)!=1)
 					{
 						s.mode=3;
 						s.data_type=ML_TYPE_FILENAMES;
@@ -622,7 +622,7 @@ static void bookmarks_contextMenu(HWND hwndDlg, HWND from, int x, int y)
 						
 						s.data = (void*)sendStrA.c_str();
 				
-						SendMessage(plugin.hwndWinampParent, WM_WA_IPC,(WPARAM)&s,IPC_LIBRARY_SENDTOMENU);
+						SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC,(WPARAM)&s,IPC_LIBRARY_SENDTOMENU);
 					}
 				}
 			}
@@ -632,7 +632,7 @@ static void bookmarks_contextMenu(HWND hwndDlg, HWND from, int x, int y)
 	if (s.mode) 
 	{
 		s.mode=4;
-		SendMessage(plugin.hwndWinampParent, WM_WA_IPC,(WPARAM)&s,IPC_LIBRARY_SENDTOMENU); // cleanup
+		SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC,(WPARAM)&s,IPC_LIBRARY_SENDTOMENU); // cleanup
 	}
 	
 	if (NULL != s.build_hMenu)
@@ -1481,7 +1481,7 @@ INT_PTR CALLBACK view_bmDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM
 			if (wParam && (HMENU)wParam == s.build_hMenu && s.mode==1)
 			{
 				myMenu = TRUE;
-				if(SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU)==0xffffffff)
+				if(SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU)==0xffffffff)
 					s.mode=2;
 				myMenu = FALSE;
 			}

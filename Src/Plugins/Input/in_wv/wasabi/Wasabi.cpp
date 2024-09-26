@@ -1,5 +1,5 @@
-#include "Winamp/in2.h"
-#include "Winamp/wa_ipc.h"
+#include "WinLAMP/in2.h"
+#include "WinLAMP/wa_ipc.h"
 #include "Wasabi.h"
 
 AlbumArtFactory albumArtFactory;

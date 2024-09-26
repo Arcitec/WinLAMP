@@ -1,5 +1,5 @@
-#ifndef NULLSOFT_WINAMP_XMLSTRING_H
-#define NULLSOFT_WINAMP_XMLSTRING_H
+#ifndef NULLSOFT_WINLAMP_XMLSTRING_H
+#define NULLSOFT_WINLAMP_XMLSTRING_H
 
 #include "../xml/ifc_xmlreadercallback.h"
 /*

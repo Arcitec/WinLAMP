@@ -19,7 +19,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	if (lpCmdLine == NULL || !*lpCmdLine)
 	{
 		MSGBOXPARAMSW msgbx = {sizeof(MSGBOXPARAMS),0};
-		msgbx.lpszText = L"Winamp Elevator\nCopyright © 2008-2014 Winamp SA";
+		msgbx.lpszText = L"WinLAMP Elevator\nCopyright © 2008-2014 WinLAMP SA";
 		msgbx.lpszCaption = L"About...";
 		msgbx.lpszIcon = MAKEINTRESOURCEW(IDI_ICON1);
 		msgbx.hInstance = GetModuleHandle(0);
@@ -143,7 +143,7 @@ done:
 static HRESULT UnregisterComponent(const CLSID &clsid, LPCWSTR pszVersionIndProgId, LPCWSTR pszProgId);
 static HRESULT RegisterComponent(HMODULE hModule, const CLSID &clsid, LPCWSTR pszFriendlyName, 	 LPCWSTR pszVersionIndProgId, LPCWSTR pszProgId);
 
-static const WCHAR szComponentFriendlyName[]		= L"Winamp Elevator";
+static const WCHAR szComponentFriendlyName[]		= L"WinLAMP Elevator";
 static const WCHAR szVersionIndependentProgId[]		= L"Elevator.WFileTypeRegistrar2";
 static const WCHAR szProgId[]						= L"Elevator.WFileTypeRegistrar2.1";
 
@@ -256,7 +256,7 @@ HRESULT RegisterComponent(HMODULE hModule, const CLSID &clsid, LPCWSTR pszFriend
 	RegCloseKey(hKey3);		
 
 	wchar_t localizedString[MAX_PATH+15] = {0};
-	StringCbPrintf(localizedString, sizeof(localizedString), L"@%s,-%u", szBuffer, IDS_WINAMP);
+	StringCbPrintf(localizedString, sizeof(localizedString), L"@%s,-%u", szBuffer, IDS_WINLAMP);
 
 	br = (WriteRegKey(hKey, L"LocalServer32" , szBuffer, &hKey2) &&
 			WriteRegValue(hKey2, NULL, L"ThreadingModel", L"Both") &&

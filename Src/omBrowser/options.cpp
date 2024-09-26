@@ -8,7 +8,7 @@
 #include "./ifc_omtoolbarconfig.h"
 #include "./ifc_omstatusbarconfig.h"
 
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 #include <windows.h>
 #include <commctrl.h>
@@ -92,9 +92,9 @@ static void OptionsFrame_InitializePages(HWND hwnd, UINT style)
 	HWND hFrame = GetDlgItem(hwnd, IDC_TABFRAME);
 	if (NULL == hFrame) return;
 
-	HWND hWinamp = NULL;
-	if (FAILED(Plugin_GetWinampWnd(&hWinamp))) 
-		hWinamp = NULL;
+	HWND hWinLAMP = NULL;
+	if (FAILED(Plugin_GetWinLAMPWnd(&hWinLAMP))) 
+		hWinLAMP = NULL;
 
 	INT pageCount = 0;
 	WCHAR szBuffer[256] = {0};
@@ -107,8 +107,8 @@ static void OptionsFrame_InitializePages(HWND hwnd, UINT style)
 		HWND hPage = szPageList[i](hwnd, style);
 		if (NULL == hPage) continue;
 
-		if (NULL != hWinamp && 0 == SENDWAIPC(hWinamp, IPC_USE_UXTHEME_FUNC, IPC_ISWINTHEMEPRESENT))
-			SENDWAIPC(hWinamp, IPC_USE_UXTHEME_FUNC, hPage);
+		if (NULL != hWinLAMP && 0 == SENDWAIPC(hWinLAMP, IPC_USE_UXTHEME_FUNC, IPC_ISWINTHEMEPRESENT))
+			SENDWAIPC(hWinLAMP, IPC_USE_UXTHEME_FUNC, hPage);
 
 		if (0 == GetWindowText(hPage, szBuffer, ARRAYSIZE(szBuffer)))
 			StringCchPrintf(szBuffer, ARRAYSIZE(szBuffer), L"Page %d", pageCount + 1);
@@ -182,9 +182,9 @@ BOOL windowOffScreen(HWND hwnd, POINT pt)
 
 static INT_PTR OptionsFrame_OnInitDialog(HWND hwnd, HWND hFocus, LPARAM param)
 {
-	HWND hWinamp = NULL;
-	if (FAILED(Plugin_GetWinampWnd(&hWinamp))) 
-		hWinamp = NULL;
+	HWND hWinLAMP = NULL;
+	if (FAILED(Plugin_GetWinLAMPWnd(&hWinLAMP))) 
+		hWinLAMP = NULL;
 
 	OPTIONSDATA *optionsData = (OPTIONSDATA*)param;
 	SetProp(hwnd, OPTIONS_PROP, optionsData);
@@ -204,8 +204,8 @@ static INT_PTR OptionsFrame_OnInitDialog(HWND hwnd, HWND hFocus, LPARAM param)
 	HWND hFrame = GetDlgItem(hwnd, IDC_TABFRAME);
 	if (NULL != hFrame)
 	{
-		if (NULL != hWinamp && 0 == SENDWAIPC(hWinamp, IPC_USE_UXTHEME_FUNC, IPC_ISWINTHEMEPRESENT))
-		SENDWAIPC(hWinamp, IPC_USE_UXTHEME_FUNC, hFrame);
+		if (NULL != hWinLAMP && 0 == SENDWAIPC(hWinLAMP, IPC_USE_UXTHEME_FUNC, IPC_ISWINTHEMEPRESENT))
+		SENDWAIPC(hWinLAMP, IPC_USE_UXTHEME_FUNC, hFrame);
 
 		TabCtrl_SetMinTabWidth(hFrame, 60);
 		OptionsFrame_InitializePages(hwnd, optionsData->style);

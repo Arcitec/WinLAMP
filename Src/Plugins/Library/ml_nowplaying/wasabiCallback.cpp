@@ -62,9 +62,9 @@ int WasabiCallback::Notify(int msg, intptr_t param1, intptr_t param2)
 
 int WasabiCallback::OpenURL(const wchar_t *url, bool *override)
 {
-	WCHAR szTemplate[1024] = L"http://client.winamp.com/nowplaying";
+	WCHAR szTemplate[1024] = L"http://client.winlamp.com/nowplaying";
 	INT cchTemplate = ARRAYSIZE(szTemplate) - 1;
-	lstrcpynW(szTemplate, AutoWide(g_config->ReadString("nowplayingurl", "http://client.winamp.com/nowplaying")), ARRAYSIZE(szTemplate));
+	lstrcpynW(szTemplate, AutoWide(g_config->ReadString("nowplayingurl", "http://client.winlamp.com/nowplaying")), ARRAYSIZE(szTemplate));
 
 	if (NULL != url && 
 		CSTR_EQUAL == CompareString(CSTR_INVARIANT, NORM_IGNORECASE, url, cchTemplate, szTemplate, cchTemplate))

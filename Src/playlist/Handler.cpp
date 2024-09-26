@@ -169,7 +169,7 @@ const wchar_t *B4SHandler::GetName()
 {
 	static wchar_t wa3pl[64];
 	// no point re-loading this all of the time since it won't change once we've been loaded
-	return (!wa3pl[0]?WASABI_API_LNGSTRINGW_BUF(IDS_WINAMP3_PLAYLIST,wa3pl,64):wa3pl);
+	return (!wa3pl[0]?WASABI_API_LNGSTRINGW_BUF(IDS_WINLAMP3_PLAYLIST,wa3pl,64):wa3pl);
 }
 
 

@@ -2,7 +2,7 @@
 #define NULLSOFT_IN_MP4_MAINH
 
 #include "mp4.h"
-#include "../Winamp/in2.h"
+#include "../WinLAMP/in2.h"
 #include "mpeg4audio.h"
 #include "mpeg4video.h"
 #include "AudioSample.h"

@@ -54,7 +54,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON1               ICON                    "..\\Winamp\\resource\\WinampIcon.ico"
+IDI_ICON1               ICON                    "..\\WinLAMP\\resource\\WinLAMPIcon.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -63,7 +63,7 @@ IDI_ICON1               ICON                    "..\\Winamp\\resource\\WinampIco
 
 STRINGTABLE 
 BEGIN
-    IDS_WINAMP              "Winamp"
+    IDS_WINLAMP              "WinLAMP"
 END
 
 #endif    // English (U.S.) resources

@@ -20,9 +20,9 @@ SkinInfosXmlReader::SkinInfosXmlReader(const wchar_t *skinname) : SkinInfoBlock(
 				StringPathCombine skinPath(WASABI_API_SKIN->getSkinsPath(), skinname);
 
 				XMLAutoInclude include(parser, skinPath);
-				parser->xmlreader_registerCallback(L"WinampAbstractionLayer",this);
-				//parser->xmlreader_registerCallback(L"WinampAbstractionLayer\fSkinInfo", this);
-				parser->xmlreader_registerCallback(L"WinampAbstractionLayer\fSkinInfo\f*", this);
+				parser->xmlreader_registerCallback(L"WinLAMPAbstractionLayer",this);
+				//parser->xmlreader_registerCallback(L"WinLAMPAbstractionLayer\fSkinInfo", this);
+				parser->xmlreader_registerCallback(L"WinLAMPAbstractionLayer\fSkinInfo\f*", this);
 				parser->xmlreader_registerCallback(L"WasabiXML",this);
 				//parser->xmlreader_registerCallback(L"WasabiXML\fSkinInfo", this);
 				parser->xmlreader_registerCallback(L"WasabiXML\fSkinInfo\f*", this);
@@ -41,7 +41,7 @@ SkinInfosXmlReader::SkinInfosXmlReader(const wchar_t *skinname) : SkinInfoBlock(
 
 void SkinInfosXmlReader::xmlReaderOnStartElementCallback(const wchar_t *xmlpath, const wchar_t *xmltag, ifc_xmlreaderparams *params)
 {
-	if (!_wcsicmp(xmltag, L"WinampAbstractionLayer") || !_wcsicmp(xmltag, L"WasabiXML"))
+	if (!_wcsicmp(xmltag, L"WinLAMPAbstractionLayer") || !_wcsicmp(xmltag, L"WasabiXML"))
 	{
 		const wchar_t *version = params->getItemValue(L"version");
 		if (version)

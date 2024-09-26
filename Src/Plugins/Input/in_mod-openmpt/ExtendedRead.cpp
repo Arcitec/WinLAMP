@@ -105,17 +105,17 @@ static PlayParams *ExtendedOpen(const wchar_t *fn, int *size, int *bps, int *nch
 
 	return play_params;
 }
-extern "C" __declspec(dllexport) intptr_t winampGetExtendedRead_openW_float(const wchar_t *fn, int *size, int *bps, int *nch, int *srate)
+extern "C" __declspec(dllexport) intptr_t winlampGetExtendedRead_openW_float(const wchar_t *fn, int *size, int *bps, int *nch, int *srate)
 {
 	return (intptr_t)ExtendedOpen(fn, size, bps, nch, srate, true);
 }
 
-extern "C" __declspec(dllexport) intptr_t winampGetExtendedRead_openW(const wchar_t *fn, int *size, int *bps, int *nch, int *srate)
+extern "C" __declspec(dllexport) intptr_t winlampGetExtendedRead_openW(const wchar_t *fn, int *size, int *bps, int *nch, int *srate)
 {
 	return (intptr_t)ExtendedOpen(fn, size, bps, nch, srate, false);
 }
 
-extern "C" __declspec(dllexport) size_t winampGetExtendedRead_getData(intptr_t handle, char *dest, size_t len, int *killswitch)
+extern "C" __declspec(dllexport) size_t winlampGetExtendedRead_getData(intptr_t handle, char *dest, size_t len, int *killswitch)
 {
 	PlayParams *play_params = (PlayParams *)handle;
 	size_t requested_samples = len / (play_params->channels * play_params->bps/8);
@@ -132,7 +132,7 @@ extern "C" __declspec(dllexport) size_t winampGetExtendedRead_getData(intptr_t h
 	}
 }
 
-extern "C" __declspec(dllexport) void winampGetExtendedRead_close(intptr_t handle)
+extern "C" __declspec(dllexport) void winlampGetExtendedRead_close(intptr_t handle)
 {
 	PlayParams *play_params = (PlayParams *)handle;
 	delete play_params;

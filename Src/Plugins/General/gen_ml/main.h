@@ -5,13 +5,13 @@
 #include <windowsx.h>
 #include <commctrl.h>
 
-#include "../winamp/wa_dlg.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_dlg.h"
+#include "../winlamp/wa_ipc.h"
 
 
 #include "./itemlist.h"
 #include "./config.h"
-#include "../winamp/gen.h"
+#include "../winlamp/gen.h"
 #include "../Agave/Config/ifc_configitem.h"
 
 #define PLUGIN_VERSION		0x0378
@@ -21,11 +21,11 @@
 #include "../nu/trace.h"
 
 #define WA_MENUITEM_ID 23123
-#define WINAMP_VIDEO_TVBUTTON           40338 // we hook this =)
-#define WINAMP_LIGHTNING_CLICK          40339 // this three
-#define WINAMP_NEXT_WINDOW              40063
-#define WINAMP_SHOWLIBRARY              40379
-#define WINAMP_CLOSELIBRARY             40380
+#define WINLAMP_VIDEO_TVBUTTON           40338 // we hook this =)
+#define WINLAMP_LIGHTNING_CLICK          40339 // this three
+#define WINLAMP_NEXT_WINDOW              40063
+#define WINLAMP_SHOWLIBRARY              40379
+#define WINLAMP_CLOSELIBRARY             40380
 
 
 #define CSTR_INVARIANT		MAKELCID(MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US), SORT_DEFAULT)
@@ -42,13 +42,13 @@
 
 BOOL FlickerFixWindow(HWND hwnd, INT mode);
 
-extern "C" winampGeneralPurposePlugin plugin;
+extern "C" winlampGeneralPurposePlugin plugin;
 extern "C" int getFileInfo(const char *filename, const char *metadata, char *dest, int len);
 
 extern LARGE_INTEGER freq;
 extern int profile;
 extern HCURSOR hDragNDropCursor;
-extern wchar_t WINAMP_INI[MAX_PATH], WINAMP_INI_DIR[MAX_PATH];
+extern wchar_t WINLAMP_INI[MAX_PATH], WINLAMP_INI_DIR[MAX_PATH];
 extern wchar_t pluginPath[];
 extern C_Config *g_config;
 
@@ -124,7 +124,7 @@ INT_PTR CALLBACK view_devicesDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,L
 // webinfo_dlg
 HWND CreateWebInfoWindow(HWND hwndParent, UINT uMsgQuery, INT x, INT y, INT cx, INT cy, INT ctrlId);
 
-extern int winampVersion;
+extern int winlampVersion;
 
 void toggleVisible(int closecb = 0);
 bool IsVisible();

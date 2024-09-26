@@ -38,7 +38,7 @@ BufferLayer::~BufferLayer()
 
 void BufferLayer::BufferingStarted()
 {
-	winamp.SetStatus(WASABI_API_LNGSTRINGW(IDS_BUFFERING));
+	winlamp.SetStatus(WASABI_API_LNGSTRINGW(IDS_BUFFERING));
 	buffering=true;
 	SetEvent(startEvent);
 	WMHandler::BufferingStarted();
@@ -46,7 +46,7 @@ void BufferLayer::BufferingStarted()
 
 void BufferLayer::BufferingStopped()
 {
-	winamp.SetStatus(L"");
+	winlamp.SetStatus(L"");
 	buffering=false;
 	ResetEvent(startEvent);
 	WMHandler::BufferingStopped();
@@ -76,7 +76,7 @@ void BufferLayer::BufThread()
 					DWORD percent;
 					QWORD throwAway;
 					if (SUCCEEDED(reader2->GetBufferProgress(&percent, &throwAway)))
-						winamp.Buffering(percent, WASABI_API_LNGSTRINGW(IDS_BUFFERING));
+						winlamp.Buffering(percent, WASABI_API_LNGSTRINGW(IDS_BUFFERING));
 
 				}
 				Sleep(10);

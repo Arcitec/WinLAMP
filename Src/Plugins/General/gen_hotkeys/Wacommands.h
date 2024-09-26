@@ -1,12 +1,12 @@
-#ifndef ___WINAMP_COMMANDS___H___
-#define ___WINAMP_COMMANDS___H___
+#ifndef ___WINLAMP_COMMANDS___H___
+#define ___WINLAMP_COMMANDS___H___
 
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "wa_hotkeys.h"
 
 // calls SetForegroundWindow before sending the message
 #define HKF_BRING_TO_FRONT 0x1
-// sets wParam with Winamp's window handle
+// sets wParam with WinLAMP's window handle
 #define HKF_WPARAM_HWND 0x2
 // copies returned text to the clipboard (CF_TEXT)
 #define HKF_COPY_RET 0x4
@@ -15,7 +15,7 @@
 // sets wParam to genHotkeysAddStruct's wParam if playing, lParam if not
 // uses IPC_ISPLAYING to check if playing
 #define HKF_WPARAM_ISPLAYING_WL 0x10
-// brings Winamp to front or minimizes Winamp if already at front
+// brings WinLAMP to front or minimizes WinLAMP if already at front
 #define HKF_SHOWHIDE 0x20
 #define HKF_CUSTOM_FUNC 0x40
 // copies returned text to the clipboard (CF_UNICODETEXT)

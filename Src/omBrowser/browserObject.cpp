@@ -81,12 +81,12 @@ int OmBrowserObject::QueryInterface(GUID interface_guid, void **object)
 	return S_OK;
 }
 
-HRESULT OmBrowserObject::Initialize(LPCWSTR pszName, HWND hwndWinamp)
+HRESULT OmBrowserObject::Initialize(LPCWSTR pszName, HWND hwndWinLAMP)
 {		
 	if ( browserClass != NULL )
 		return S_FALSE;
 
-	HRESULT hr = Plugin_Initialize(hwndWinamp);
+	HRESULT hr = Plugin_Initialize(hwndWinLAMP);
 	if (SUCCEEDED(hr))
 	{
 		if (NULL == pszName || L'\0' == *pszName)
@@ -138,14 +138,14 @@ HRESULT OmBrowserObject::Finish(void)
 	return hr;
 }
 
-HRESULT OmBrowserObject::RegisterWinampHook(ifc_winamphook *hook, UINT *cookieOut)
+HRESULT OmBrowserObject::RegisterWinLAMPHook(ifc_winlamphook *hook, UINT *cookieOut)
 {
-	return Plugin_RegisterWinampHook(hook, cookieOut);
+	return Plugin_RegisterWinLAMPHook(hook, cookieOut);
 }
 
-HRESULT OmBrowserObject::UnregisterWinampHook(UINT cookie)
+HRESULT OmBrowserObject::UnregisterWinLAMPHook(UINT cookie)
 {
-	return Plugin_UnregisterWinampHook(cookie);
+	return Plugin_UnregisterWinLAMPHook(cookie);
 }
 
 HRESULT OmBrowserObject::GetConfig(const GUID *configIfc, void **configOut)
@@ -257,7 +257,7 @@ HRESULT OmBrowserObject::CreatePopup(ifc_omservice *service, INT x, INT y, INT c
 	if (NULL == hWindow) return E_POINTER;
 	*hWindow = NULL;
 
-	if (NULL == hOwner && FAILED(Plugin_GetWinampWnd(&hOwner)))
+	if (NULL == hOwner && FAILED(Plugin_GetWinLAMPWnd(&hOwner)))
 		return E_INVALIDARG;
 
 	HWND hPopup = BrowserPopup_Create(this, service, viewStyle, x, y, cx, cy, hOwner, NULL, 0L);
@@ -470,8 +470,8 @@ START_MULTIPATCH;
   M_CB(MPIID_OMBROWSER, obj_ombrowser, QUERYINTERFACE, QueryInterface);
   M_CB(MPIID_OMBROWSER, obj_ombrowser, API_INITIALIZE, Initialize);
   M_CB(MPIID_OMBROWSER, obj_ombrowser, API_FINISH, Finish);
-  M_CB(MPIID_OMBROWSER, obj_ombrowser, API_REGISTERWINAMPHOOK, RegisterWinampHook);
-  M_CB(MPIID_OMBROWSER, obj_ombrowser, API_UNREGISTERWINAMPHOOK, UnregisterWinampHook);
+  M_CB(MPIID_OMBROWSER, obj_ombrowser, API_REGISTERWINLAMPHOOK, RegisterWinLAMPHook);
+  M_CB(MPIID_OMBROWSER, obj_ombrowser, API_UNREGISTERWINLAMPHOOK, UnregisterWinLAMPHook);
   M_CB(MPIID_OMBROWSER, obj_ombrowser, API_GETCONFIG, GetConfig);
   M_CB(MPIID_OMBROWSER, obj_ombrowser, API_GETSESSIONID, GetSessionId);
   M_CB(MPIID_OMBROWSER, obj_ombrowser, API_GETCLIENTID, GetClientId);

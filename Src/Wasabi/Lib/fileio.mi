@@ -114,7 +114,7 @@ extern	String	XmlDoc.parser_onCloseCallback (String xmlpath, String xmltag);
 /**
  parser_onError()
 
- due to some API changes filename and incpath will hold an empty string since winamp 5.56
+ due to some API changes filename and incpath will hold an empty string since winlamp 5.56
 */
 extern  String  XmlDoc.parser_onError (String filename, int linenum, String incpath, int errcode, String errstr);
 

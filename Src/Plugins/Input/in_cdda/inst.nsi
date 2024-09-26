@@ -3,13 +3,13 @@ Name "CDDB2 test, beta 1"
 ; The file to write
 OutFile "cddb2.exe"
 
-InstallDir $PROGRAMFILES\Winamp
+InstallDir $PROGRAMFILES\WinLAMP
 InstallDirRegKey HKLM \
-                 "Software\Microsoft\Windows\CurrentVersion\Uninstall\Winamp" \
+                 "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinLAMP" \
                  "UninstallString"
 
 ; The text to prompt the user to enter a directory
-DirText "Please select your Winamp path below (you will be able to proceed when Winamp is detected):"
+DirText "Please select your WinLAMP path below (you will be able to proceed when WinLAMP is detected):"
 DirShow hide
 
 ; automatically close the installer when done.
@@ -29,15 +29,15 @@ Function .onInit
 FunctionEnd
 
 Function .onVerifyInstDir
-  IfFileExists $INSTDIR\Winamp.exe Good
+  IfFileExists $INSTDIR\WinLAMP.exe Good
     Abort
   Good:
 FunctionEnd
 
-Function CloseWinamp
+Function CloseWinLAMP
   Push $0
   loop:
-    FindWindow $0 "Winamp v1.x"
+    FindWindow $0 "WinLAMP v1.x"
     IntCmp $0 0 done
      SendMessage $0 16 0 0
      StrCpy $9 "yes"
@@ -50,19 +50,19 @@ FunctionEnd
 
 Section "ThisNameIsIgnoredSoWhyBother?"
   StrCpy $9 "no"
-  Call CloseWinamp
+  Call CloseWinLAMP
   SetOutPath $INSTDIR
-  File "C:\program files\winamp\winamp.exe"
+  File "C:\program files\winlamp\winlamp.exe"
   SetOutPath $INSTDIR\Plugins
 
-  UnRegDll $OUTDIR\cddbcontrolwinamp.dll
-  UnRegDll $OUTDIR\cddbuiwinamp.dll
-  File "C:\program files\winamp\plugins\in_cdda.dll"
-  File "C:\program files\winamp\plugins\in_mp3.dll"
-  File "cddbcontrolwinamp.dll"
-  File "cddbuiwinamp.dll"
-  RegDll $OUTDIR\cddbcontrolwinamp.dll
-  RegDll $OUTDIR\cddbuiwinamp.dll
+  UnRegDll $OUTDIR\cddbcontrolwinlamp.dll
+  UnRegDll $OUTDIR\cddbuiwinlamp.dll
+  File "C:\program files\winlamp\plugins\in_cdda.dll"
+  File "C:\program files\winlamp\plugins\in_mp3.dll"
+  File "cddbcontrolwinlamp.dll"
+  File "cddbuiwinlamp.dll"
+  RegDll $OUTDIR\cddbcontrolwinlamp.dll
+  RegDll $OUTDIR\cddbuiwinlamp.dll
 
   DetailPrint Completed.
 SectionEnd
@@ -71,7 +71,7 @@ SectionEnd
 Function .onInstSuccess
   MessageBox MB_OK|MB_ICONINFORMATION "Update installed."
   StrCmp $9 "no" nope
-    Exec '"$INSTDIR\Winamp.exe"'
+    Exec '"$INSTDIR\WinLAMP.exe"'
   nope:
 FunctionEnd
 

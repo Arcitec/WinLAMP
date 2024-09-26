@@ -2,7 +2,7 @@
 #include "./wasabi.h"
 #include "./main.h"
 
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 #include <strsafe.h>
 
@@ -167,7 +167,7 @@ HWND Plugin_GetDialogOwner(void)
 	if (NULL == hOwner || FALSE == IsWindowVisible(hOwner) ||
 		FALSE == IsWindowEnabled(hOwner))
 	{
-		hOwner = Plugin_GetWinamp();
+		hOwner = Plugin_GetWinLAMP();
 		if (NULL != hOwner)
 		{
 			HWND hDlgParent = (HWND)SENDWAIPC(hOwner, IPC_GETDIALOGBOXPARENT, 0L);

@@ -135,7 +135,7 @@ ARGB32 *imageLoader::makeBmp(const wchar_t *_filename, const wchar_t *path, int 
 		in = WFOPEN(file, WF_READONLY_BINARY);
 	}
 
-#if 0 // this isn't used in gen_ff, basically makes it look in C:/Program Files/Winamp/Skins/Default/
+#if 0 // this isn't used in gen_ff, basically makes it look in C:/Program Files/WinLAMP/Skins/Default/
 	if (in == OPEN_FAILED)
 	{
 		file.swap(StringPathCombine(Skin::getDefaultSkinPath(), _filename));
@@ -143,7 +143,7 @@ ARGB32 *imageLoader::makeBmp(const wchar_t *_filename, const wchar_t *path, int 
 	}
 #endif
 
-	// look in the fallback stuff (in Winamp5, this is c:/program files/winamp/plugins/freeform/xml)
+	// look in the fallback stuff (in WinLAMP5, this is c:/program files/winlamp/plugins/freeform/xml)
 	if (in == OPEN_FAILED)
 	{
 		file.swap(StringPathCombine(g_resourcepath, _filename));

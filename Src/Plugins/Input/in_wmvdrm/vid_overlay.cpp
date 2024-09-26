@@ -4,7 +4,7 @@
 #include "vid_overlay.h"
 #include "directdraw.h"
 #include <api.h>
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <assert.h>
 void getViewport(RECT *r, HWND wnd, int full, RECT *sr);
 

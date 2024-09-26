@@ -79,7 +79,7 @@ INT_PTR CALLBACK ffPrefsProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM lPara
 			if (WASABI_API_APP == NULL)
 			{
 				// wasabi is not initialized ! we need to init before we can access cfgitems otherwise we'd have
-				// to mirror their values with winamp.ini and that'd be seriously crappy
+				// to mirror their values with winlamp.ini and that'd be seriously crappy
 				initFFApi();
 			}
 
@@ -126,7 +126,7 @@ INT_PTR CALLBACK ffPrefsProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM lPara
 	return 0;
 }
 
-Wa2FFOptions::Wa2FFOptions() : CfgItemI(L"Winamp5", Wa2FFOptionsGuid) {
+Wa2FFOptions::Wa2FFOptions() : CfgItemI(L"WinLAMP5", Wa2FFOptionsGuid) {
   registerAttribute(&last_page);
 }
 

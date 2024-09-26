@@ -7,7 +7,7 @@
 !include "WordFunc.nsh"
 !include "WinVer.nsh"
 ;--------------------------------
-; this is the version for Winamp 5.9.1
+; this is the version for WinLAMP 5.9.1
 !define MINIMAL_VERSION "5.9.1.10021"
 
 ; The name of the installer
@@ -20,17 +20,17 @@ Name "${NAME}"
 
 BrandingText "${NAME} v${VERSION} Build ${BUILD}"
 
-; detect winamp path from uninstall string if available
-InstallDirRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Winamp" "UninstallString"
+; detect winlamp path from uninstall string if available
+InstallDirRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinLAMP" "UninstallString"
 
 ; The file to write
 OutFile "shoutcast-dsp-2-4-2-windows.exe"
 
 ; The default installation directory
-InstallDir "$PROGRAMFILES32\Winamp"
+InstallDir "$PROGRAMFILES32\WinLAMP"
 
 ; The text to prompt the user to enter a directory
-DirText "Please select your Winamp path below (you will be able to proceed when Winamp is detected):"
+DirText "Please select your WinLAMP path below (you will be able to proceed when WinLAMP is detected):"
 # currently doesn't work - DirShow hide
 
 ; Request application privileges for Windows Vista+
@@ -44,7 +44,7 @@ InstType "Full Install"
 InstType "Base Install"
 
 ; global variables
-Var /GLOBAL WINAMP_INI_DIR
+Var /GLOBAL WINLAMP_INI_DIR
 Var GetInstalledSize.total
 
 ;--------------------------------
@@ -58,12 +58,12 @@ Var GetInstalledSize.total
   !define MUI_UNICON "modern-install.ico"
 
   !define MUI_WELCOMEPAGE_TITLE_3LINES
-  !define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of the ${NAME}.$\n$\nIt is recommended that you close all instances of Winamp before starting Setup. This will make it possible to install relevant files within your Winamp installation without issues.$\n$\nClick Next to continue."
+  !define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of the ${NAME}.$\n$\nIt is recommended that you close all instances of WinLAMP before starting Setup. This will make it possible to install relevant files within your WinLAMP installation without issues.$\n$\nClick Next to continue."
   !define MUI_WELCOMEFINISHPAGE_BITMAP "win.bmp"
   !insertmacro MUI_PAGE_WELCOME
   !insertmacro MUI_PAGE_LICENSE "dsp_sc_license.txt"
 ; is best to call the version check when leaving the directory page so it will be working against correct path
-  !define MUI_PAGE_CUSTOMFUNCTION_LEAVE CheckWinampVersion
+  !define MUI_PAGE_CUSTOMFUNCTION_LEAVE CheckWinLAMPVersion
   !insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_INSTFILES
@@ -72,20 +72,20 @@ Var GetInstalledSize.total
   !define MUI_FINISHPAGE_RUN_FUNCTION SetAsCurrentDSP
   !define MUI_FINISHPAGE_RUN_TEXT "Set as the current DSP plug-in"
 
-  !define MUI_FINISHPAGE_SHOWREADME ; "$INSTDIR\winamp.exe"
-  !define MUI_FINISHPAGE_SHOWREADME_FUNCTION RunWinamp
-  !define MUI_FINISHPAGE_SHOWREADME_TEXT "Run Winamp"
+  !define MUI_FINISHPAGE_SHOWREADME ; "$INSTDIR\winlamp.exe"
+  !define MUI_FINISHPAGE_SHOWREADME_FUNCTION RunWinLAMP
+  !define MUI_FINISHPAGE_SHOWREADME_TEXT "Run WinLAMP"
 
   !define MUI_FINISHPAGE_TEXT_LARGE
   !define MUI_FINISHPAGE_TITLE_3LINES
-  !define MUI_FINISHPAGE_TEXT "${NAME} has been installed.$\n$\nTo enable the plug-in if it is not your current DSP plug-in, goto Winamp Preferences -> Plug-ins -> DSP/Effect and select the '${NAME}' entry.$\n$\nClick Finish to close this wizard."
+  !define MUI_FINISHPAGE_TEXT "${NAME} has been installed.$\n$\nTo enable the plug-in if it is not your current DSP plug-in, goto WinLAMP Preferences -> Plug-ins -> DSP/Effect and select the '${NAME}' entry.$\n$\nClick Finish to close this wizard."
   !define MUI_PAGE_CUSTOMFUNCTION_SHOW RestoreCheckedStates
   !define MUI_PAGE_CUSTOMFUNCTION_LEAVE SaveCheckedStates
   !insertmacro MUI_PAGE_FINISH
 
   !define MUI_UNWELCOMEFINISHPAGE_BITMAP "win.bmp"
-  !define MUI_UNWELCOMEPAGE_TEXT "This wizard will guide you through the uninstallation of the ${NAME}.$\n$\nBefore starting the uninstalltion, make sure Winamp and the ${NAME} are not running.$\n$\nClick Next to continue."
-  !define MUI_UNFINISHPAGE_TEXT "${NAME} has been uninstalled from your Winamp install.$\n$\nClick Finish to close this wizard."
+  !define MUI_UNWELCOMEPAGE_TEXT "This wizard will guide you through the uninstallation of the ${NAME}.$\n$\nBefore starting the uninstalltion, make sure WinLAMP and the ${NAME} are not running.$\n$\nClick Next to continue."
+  !define MUI_UNFINISHPAGE_TEXT "${NAME} has been uninstalled from your WinLAMP install.$\n$\nClick Finish to close this wizard."
   !insertmacro MUI_UNPAGE_WELCOME
   !insertmacro MUI_UNPAGE_CONFIRM
   !insertmacro MUI_UNPAGE_INSTFILES
@@ -197,7 +197,7 @@ Section "Uninstall"
   Delete "$INSTDIR\Plugins\Shoutcast Source DSP\res\docs.css"
   RMDir "$INSTDIR\Plugins\Shoutcast Source DSP\res"
   RMDir "$INSTDIR\Plugins\Shoutcast Source DSP"
-  ; Delete "$INSTDIR\Microsoft.VC142.CRT\*.dll" ; not wise, because then Winamp won't run on Win7-Win8.1 - - - why did this line exist for the VC90 Runtime?
+  ; Delete "$INSTDIR\Microsoft.VC142.CRT\*.dll" ; not wise, because then WinLAMP won't run on Win7-Win8.1 - - - why did this line exist for the VC90 Runtime?
   Delete "$INSTDIR\${UNINSTALLER}"
 
 SectionEnd
@@ -206,16 +206,16 @@ Function .onInit
 
   !insertmacro MUI_LANGDLL_DISPLAY
 
-  ;Detect running Winamp instances and close them
-  !define WINAMP_FILE_EXIT 40001
+  ;Detect running WinLAMP instances and close them
+  !define WINLAMP_FILE_EXIT 40001
 
-  FindWindow $R0 "Winamp v1.x"
+  FindWindow $R0 "WinLAMP v1.x"
   IntCmp $R0 0 ok
-    MessageBox MB_YESNO|MB_ICONEXCLAMATION "Please close all instances of Winamp before installing$\n${NAME}.$\n$\nAttempt to close Winamp now?" IDYES checkagain IDNO no
+    MessageBox MB_YESNO|MB_ICONEXCLAMATION "Please close all instances of WinLAMP before installing$\n${NAME}.$\n$\nAttempt to close WinLAMP now?" IDYES checkagain IDNO no
     checkagain:
-      FindWindow $R0 "Winamp v1.x"
+      FindWindow $R0 "WinLAMP v1.x"
       IntCmp $R0 0 ok
-      SendMessage $R0 ${WM_COMMAND} ${WINAMP_FILE_EXIT} 0
+      SendMessage $R0 ${WM_COMMAND} ${WINLAMP_FILE_EXIT} 0
       Goto checkagain
     no:
        Abort
@@ -225,9 +225,9 @@ FunctionEnd
 
 Function .onVerifyInstDir
 
-  ;Check for Winamp installation
+  ;Check for WinLAMP installation
 
-  IfFileExists $INSTDIR\Winamp.exe Good
+  IfFileExists $INSTDIR\WinLAMP.exe Good
     Abort
   Good:
 
@@ -272,37 +272,37 @@ Function un.onInit
 
 FunctionEnd */
 
-Function GetWinampIniPath
-  StrCpy $WINAMP_INI_DIR $INSTDIR
+Function GetWinLAMPIniPath
+  StrCpy $WINLAMP_INI_DIR $INSTDIR
   ${If} $0 == ""
-    StrCpy $WINAMP_INI_DIR "$PROGRAMFILES\Winamp"
+    StrCpy $WINLAMP_INI_DIR "$PROGRAMFILES\WinLAMP"
   ${EndIf}
   ClearErrors
 
-  ${If} ${FileExists} "$WINAMP_INI_DIR\paths.ini"
-    ReadINIStr $0 "$WINAMP_INI_DIR\paths.ini" "Winamp" "inidir"
+  ${If} ${FileExists} "$WINLAMP_INI_DIR\paths.ini"
+    ReadINIStr $0 "$WINLAMP_INI_DIR\paths.ini" "WinLAMP" "inidir"
     ${If} $0 != ""
       ${WordFind2X} $0 "{" "}" "E+1" $2
       ${If} ${Errors}
         ${IfNot} ${FileExists} "$0\*.*"
           ${WordFind2X} $0 "%" "%" "E+1" $2
 
-          ${If} $2 == "WINAMP_ROOT_DIR"
+          ${If} $2 == "WINLAMP_ROOT_DIR"
             ClearErrors
-            ${GetRoot} "$WINAMP_INI_DIR" $3
+            ${GetRoot} "$WINLAMP_INI_DIR" $3
             ${WordReplace} "$0" "%$2%" "$3" "E+1" $R0
             ${If} ${Errors}
               Return
             ${Else}
-              StrCpy $WINAMP_INI_DIR $R0
+              StrCpy $WINLAMP_INI_DIR $R0
             ${EndIf}
-          ${ElseIf} $2 == "WINAMP_PROGRAM_DIR"
+          ${ElseIf} $2 == "WINLAMP_PROGRAM_DIR"
             ClearErrors
-            ${WordReplace} "$0" "%$2%" "$WINAMP_INI_DIR" "E+1" $R0
+            ${WordReplace} "$0" "%$2%" "$WINLAMP_INI_DIR" "E+1" $R0
             ${If} ${Errors}
               Return
             ${Else}
-              StrCpy $WINAMP_INI_DIR $R0
+              StrCpy $WINLAMP_INI_DIR $R0
             ${EndIf}
           ${Else}
             ClearErrors
@@ -312,14 +312,14 @@ Function GetWinampIniPath
               ${If} ${Errors}
                 Return
               ${Else}
-                StrCpy $WINAMP_INI_DIR $R0
+                StrCpy $WINLAMP_INI_DIR $R0
               ${EndIf}
             ${Else}
               Return
             ${EndIf}
           ${EndIf}
         ${Else}
-          StrCpy $WINAMP_INI_DIR $0
+          StrCpy $WINLAMP_INI_DIR $0
         ${EndIf}
       ${Else}
         System::Call "shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r4, i $2, i0) i .r3"
@@ -328,7 +328,7 @@ Function GetWinampIniPath
         ${If} ${Errors}
           Return
         ${Else}
-          StrCpy $WINAMP_INI_DIR $R0
+          StrCpy $WINLAMP_INI_DIR $R0
         ${EndIf}
       ${EndIf}
     ${Else}
@@ -341,22 +341,22 @@ FunctionEnd
 
 ; set as the current DSP
 Function SetAsCurrentDSP
-  WriteINIStr "$WINAMP_INI_DIR\winamp.ini" "winamp" "dspplugin_name" "dsp_sc.dll"
-  WriteINIStr "$WINAMP_INI_DIR\winamp.ini" "winamp" "dspplugin_num" "0"
+  WriteINIStr "$WINLAMP_INI_DIR\winlamp.ini" "winlamp" "dspplugin_name" "dsp_sc.dll"
+  WriteINIStr "$WINLAMP_INI_DIR\winlamp.ini" "winlamp" "dspplugin_num" "0"
 FunctionEnd
 
-Function RunWinamp
+Function RunWinLAMP
   StrCpy $1 1
   File "/oname=$PLUGINSDIR\ShellDispatch.dll" "ShellDispatch.dll"
   ${If} ${FileExists} "$PLUGINSDIR\ShellDispatch.dll"
-  ${AndIf} ${FileExists} "$INSTDIR\winamp.exe"
+  ${AndIf} ${FileExists} "$INSTDIR\winlamp.exe"
     Push $0
     StrCpy $0 ""
     ClearErrors
     GetFullPathName /SHORT $0 "$PLUGINSDIR\ShellDispatch.dll"
     ${IfNot} ${Errors}
     ${AndIf} $0 != ""
-      ExecWait 'rundll32.exe $0,RunDll_ShellExecute "open" "$INSTDIR\winamp.exe"' $1
+      ExecWait 'rundll32.exe $0,RunDll_ShellExecute "open" "$INSTDIR\winlamp.exe"' $1
       ${If} ${Errors}
         StrCpy $1 1
       ${EndIf}
@@ -365,20 +365,20 @@ Function RunWinamp
   ${EndIf}
 
   ${If} $1 != 0
-    Exec "$INSTDIR\winamp.exe"
+    Exec "$INSTDIR\winlamp.exe"
   ${EndIf}
 FunctionEnd
 
 ; restore the last checked states on the finish page
 Function RestoreCheckedStates
-  Call GetWinampIniPath
+  Call GetWinLAMPIniPath
 
-  ReadINIStr $0 "$WINAMP_INI_DIR\plugins\dsp_sc.ini" "installer" "cur"
+  ReadINIStr $0 "$WINLAMP_INI_DIR\plugins\dsp_sc.ini" "installer" "cur"
   ${If} $0 == "0"
     ${NSD_Uncheck} $mui.FinishPage.Run
   ${EndIf}
 
-  ReadINIStr $0 "$WINAMP_INI_DIR\plugins\dsp_sc.ini" "installer" "run"
+  ReadINIStr $0 "$WINLAMP_INI_DIR\plugins\dsp_sc.ini" "installer" "run"
   ${If} $0 == "0"
     ${NSD_Uncheck} $mui.FinishPage.ShowReadme
   ${EndIf}
@@ -388,25 +388,25 @@ FunctionEnd
 Function SaveCheckedStates
 
   ${NSD_GetState} $mui.FinishPage.Run $0
-  WriteINIStr "$WINAMP_INI_DIR\plugins\dsp_sc.ini" "installer" "cur" $0
+  WriteINIStr "$WINLAMP_INI_DIR\plugins\dsp_sc.ini" "installer" "cur" $0
 
   ${NSD_GetState} $mui.FinishPage.ShowReadme $0
-  WriteINIStr "$WINAMP_INI_DIR\plugins\dsp_sc.ini" "installer" "run" $0
+  WriteINIStr "$WINLAMP_INI_DIR\plugins\dsp_sc.ini" "installer" "run" $0
 
 FunctionEnd
 
 ; the check version function
 ; only issue is that the strings won't be localised as i see the installer in the zip supports it
-Function CheckWinampVersion
-  ${GetFileVersion} "$INSTDIR\winamp.exe" $R0 ; Get Winamp.exe version information, $R0 = Actual Version
+Function CheckWinLAMPVersion
+  ${GetFileVersion} "$INSTDIR\winlamp.exe" $R0 ; Get WinLAMP.exe version information, $R0 = Actual Version
   ${if} $R0 != "" ; check if Version info is not empty
   ${VersionCompare} $R0 ${MINIMAL_VERSION} $R1 ; $R1 = Result $R1=0  Versions are equal, $R1=1  Version1 is newer, $R1=2  Version2 is newer
   ${if} $R1 == "2"
-    MessageBox MB_OK "Warning: This plug-in requires at least Winamp v${MINIMAL_VERSION} or higher.$\nThe detected version of your Winamp install is: $R0$\n$\nThe Shoutcast Source plug-in may not function correctly with the$\n version of winamp detected.Please update your Winamp client!!$\n"
+    MessageBox MB_OK "Warning: This plug-in requires at least WinLAMP v${MINIMAL_VERSION} or higher.$\nThe detected version of your WinLAMP install is: $R0$\n$\nThe Shoutcast Source plug-in may not function correctly with the$\n version of winlamp detected.Please update your WinLAMP client!!$\n"
     Abort
   ${EndIf}
   ${Else}
-    MessageBox MB_OK "Warning: A valid Winamp install was not detected in the specified path.$\n$\nPlease check the Winamp directory and either install the latest version$\nfrom Winamp.com or choose another directory with a valid Winamp install$\nbefore you can install the Shoutcast Source on your machine."
+    MessageBox MB_OK "Warning: A valid WinLAMP install was not detected in the specified path.$\n$\nPlease check the WinLAMP directory and either install the latest version$\nfrom WinLAMP.com or choose another directory with a valid WinLAMP install$\nbefore you can install the Shoutcast Source on your machine."
     Abort
   ${EndIf}
 FunctionEnd

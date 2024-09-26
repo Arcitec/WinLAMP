@@ -8,7 +8,7 @@
 #include <strsafe.h>
 
 static WACIrctell Irctell;
-extern "C" __declspec(dllexport) ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" __declspec(dllexport) ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &Irctell;
 }
@@ -64,7 +64,7 @@ int WACIrctell::ccb_notify(int msg, int param1, int param2)
 		const wchar_t *cur=core->core_getCurrent(0);
 
 		wchar_t msg[256];
-		StringCchPrintfW(msg, 256, L"/describe #winamp is now listening to \"%s\"", title);
+		StringCchPrintfW(msg, 256, L"/describe #winlamp is now listening to \"%s\"", title);
 		DdeCom::sendCommand(L"mIRC", msg, 1000);
 	}
 	return 0;

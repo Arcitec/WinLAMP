@@ -136,7 +136,7 @@
     <ClInclude Include="..\..\..\nu\ServiceBuilder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Winamp\Dsp.h">
+    <ClInclude Include="..\..\..\WinLAMP\Dsp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="api.h">

@@ -1,7 +1,7 @@
 #include "main.h"
 #include "api.h"
-#include "../Winamp/wa_ipc.h"
-#include "../Winamp/strutil.h"
+#include "../WinLAMP/wa_ipc.h"
+#include "../WinLAMP/strutil.h"
 #include <shlwapi.h>
 #include "FLVExternalInterface.h"
 #include <api/service/waServiceFactory.h>
@@ -178,7 +178,7 @@ static int PlayFLV(const wchar_t *filename)
 	if (!pluginPath[0] && !swfPath[0])
 	{
 		lstrcpynW(pluginPath, (wchar_t*)SendMessage(plugin.hMainWindow, WM_WA_IPC, 0, IPC_GETPLUGINDIRECTORYW), MAX_PATH);
-		PathAppend(pluginPath, L"winampFLV.swf");
+		PathAppend(pluginPath, L"winlampFLV.swf");
 		for (wchar_t *itr = pluginPath; *itr; itr++)
 		{
 			if (*itr == '\\')
@@ -441,7 +441,7 @@ void About(HWND hwndParent)
 	DoAboutMessageBox(hwndParent,text,message);
 }
 
-extern "C"	__declspec(dllexport) In_Module * winampGetInModule2()
+extern "C"	__declspec(dllexport) In_Module * winlampGetInModule2()
 {
 	return &plugin;
 }

@@ -7,7 +7,7 @@ void CALLBACK RefreshPlaylistsCallback(HWND hwnd, UINT uMsg, UINT_PTR idEvent, D
 {
 	if (idEvent == 777)
 	{
-		KillTimer(plugin.hwndWinampParent, idEvent);
+		KillTimer(plugin.hwndWinLAMPParent, idEvent);
 		refreshTimer = 0;
 		RefreshPlaylistsList();
 	}
@@ -29,8 +29,8 @@ int PlaylistsCB::notify(int msg, intptr_t param1, intptr_t param2)
 				if (makeTree)
 				*/
 				MakeTree(playlist);
-				if (refreshTimer) KillTimer(plugin.hwndWinampParent, refreshTimer);
-				refreshTimer = SetTimer(plugin.hwndWinampParent, 777, 250, RefreshPlaylistsCallback);
+				if (refreshTimer) KillTimer(plugin.hwndWinLAMPParent, refreshTimer);
+				refreshTimer = SetTimer(plugin.hwndWinLAMPParent, 777, 250, RefreshPlaylistsCallback);
 				if (!param2) AGAVE_API_PLAYLISTS->Flush(); // REVIEW: save immediately? or only at the end?
 			}
 			return 1;
@@ -74,8 +74,8 @@ int PlaylistsCB::notify(int msg, intptr_t param1, intptr_t param2)
 		break;
 		case api_playlists::PLAYLIST_REMOVED_POST:
 		{
-			if (refreshTimer) KillTimer(plugin.hwndWinampParent, refreshTimer);
-			refreshTimer = SetTimer(plugin.hwndWinampParent, 777, 250, RefreshPlaylistsCallback);
+			if (refreshTimer) KillTimer(plugin.hwndWinLAMPParent, refreshTimer);
+			refreshTimer = SetTimer(plugin.hwndWinLAMPParent, 777, 250, RefreshPlaylistsCallback);
 			return 1;
 		}
 		break;

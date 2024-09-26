@@ -83,7 +83,7 @@ STYLE DS_SETFONT | DS_FIXEDSYS | DS_CONTROL | WS_CHILD
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     GROUPBOX        "MP3 Encoder Options",-1,0,0,256,166
-    LTEXT           "MP3 encoding support is not available as ""lame_enc.dll"" is not present.\n\nYou will need to manually download ""lame_enc.dll"" to the Winamp\Shared folder to enable MP3 encoding support.",-1,12,14,231,34
+    LTEXT           "MP3 encoding support is not available as ""lame_enc.dll"" is not present.\n\nYou will need to manually download ""lame_enc.dll"" to the WinLAMP\Shared folder to enable MP3 encoding support.",-1,12,14,231,34
     LTEXT           "Click here for information on where you can obtain ""lame_enc.dll"".",-1,12,54,231,10
     CONTROL         "here",IDC_URL1,"Button",BS_OWNERDRAW | WS_TABSTOP,27,54,15,8
 END

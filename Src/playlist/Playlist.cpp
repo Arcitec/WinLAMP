@@ -2,7 +2,7 @@
 #include "Playlist.h"
 #include <algorithm>
 #include "../nu/AutoChar.h"
-#include "../Winamp/strutil.h"
+#include "../WinLAMP/strutil.h"
 
 void Playlist::Clear()
 {
@@ -148,7 +148,7 @@ static bool PlayList_sortByTitle( pl_entry *&a, pl_entry *&b )
 	int comp = CompareStringW( LOCALE_USER_DEFAULT, NORM_IGNORECASE /*|NORM_IGNOREKANATYPE*/ | NORM_IGNOREWIDTH, a->filetitle, -1, b->filetitle, -1 );
 
 	return comp == CSTR_LESS_THAN;
-	// TODO: grab this function from winamp - return CompareStringLogical(a.strTitle, b.strTitle)<0;
+	// TODO: grab this function from winlamp - return CompareStringLogical(a.strTitle, b.strTitle)<0;
 }
 
 static bool PlayList_sortByFile( pl_entry *&a, pl_entry *&b ) //const void *a, const void *b)
@@ -159,7 +159,7 @@ static bool PlayList_sortByFile( pl_entry *&a, pl_entry *&b ) //const void *a, c
 	int comp = CompareStringW( LOCALE_USER_DEFAULT, NORM_IGNORECASE |   /*NORM_IGNOREKANATYPE |*/ NORM_IGNOREWIDTH, file1, -1, file2, -1 );
 
 	return comp == CSTR_LESS_THAN;
-	// TODO: grab this function from winamp - return FileCompareLogical(file1, file2)<0;
+	// TODO: grab this function from winlamp - return FileCompareLogical(file1, file2)<0;
 }
 
 static bool PlayList_sortByDirectory( pl_entry *&a, pl_entry *&b ) // by dir, then by p_title
@@ -182,7 +182,7 @@ static bool PlayList_sortByDirectory( pl_entry *&a, pl_entry *&b ) // by dir, th
 	if ( !dirLen2 )                         // only the second dir empty?
 		return false;                       // empty dirs go first
 
-#if 0 // TODO: grab this function from winamp
+#if 0 // TODO: grab this function from winlamp
 	int comp = FileCompareLogicalN( directory1, dirLen1, directory2, dirLen2 );
 	if ( comp == 0 )
 		return PlayList_sortByFile( a, b );

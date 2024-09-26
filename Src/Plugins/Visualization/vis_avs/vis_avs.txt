@@ -35,7 +35,7 @@ TODO: write readme here :)
 
 Thanks to Paul Holden for the FunkyFX Firewurx APE  
 
-Once you install this baby, fire up Winamp, open up the preferences 
+Once you install this baby, fire up WinLAMP, open up the preferences 
 (CTRL+P), go to the Plugins/Visualization section, and select 
 Nullsoft AVS as the visualization plug-in. Hit start. 
 
@@ -56,7 +56,7 @@ You can also configure some of AVS's settings by selecting items from the
 Settings section of the Editor. 
 
 Hotkeys for main window:
- *  Any winamp key
+ *  Any winlamp key
  *  R toggles randomswitching
  *  F toggles fullscreen framerate counter
  *  Y and U cycle through presets in order
@@ -85,7 +85,7 @@ Version history:
 2.0a1:
 - preinit of presets for better transitions
 - integrated laser support (built-time option)
-- changed name to 'Winamp AVS'
+- changed name to 'WinLAMP AVS'
 - Improved SVP/UVS loading
 - Made superscope support 'red' 'green' and 'blue'
 
@@ -141,12 +141,12 @@ a50:
 			added 'go' button to fullscreen options
 			added wait for retrace options
 			revised logarithmic spectrum scaling table
-- ron: better no-minimize-on-winamp (now displays a separate window in taskman)
+- ron: better no-minimize-on-winlamp (now displays a separate window in taskman)
 - lone : bpm - better out of range detection in average calculation
 						 - better confidence calculation
 						 - added option to predict beats only if bpm has been found
 						 - fixed relearn/adapt on new song option
-						 - fixed unwanted resets when using 'don't minimize avs when minimizing winamp' option
+						 - fixed unwanted resets when using 'don't minimize avs when minimizing winlamp' option
 				 brightness - now works actually like a brightness filter (bit slower tho)
 				 text - fixed crash when window is smaller than width/height of text and random mode was checked
 				 bump - added invert depth
@@ -162,7 +162,7 @@ a49:
 			settings are now drageable (fixed).
 			deleting a setting now doesn't loose selection.
 			evallib now works when AVS is compiled in debug mode.
-			added "don't minimize avs with winamp" setting in Display tab.
+			added "don't minimize avs with winlamp" setting in Display tab.
 			added BMP Picture rendering.
 - lone: disabled resize in fullscreen mode, fixes directx lockups
       added Custom BPM filter
@@ -218,10 +218,10 @@ a23: custom transtabs much faster. buggier, though. will be fixed soon.
 a22: higher framerate, custom transtabs, more effects, etc.
 a21 adds new "Scatter" effect
 a20 adds DLL effect loading (APE)
-a18 fixes close-winamp die bug.
+a18 fixes close-winlamp die bug.
 a18 speeds up colorfade (all table driven)
 a17 fixes win2k fullscreen issues (afaik)
-a16 adds some fixes, and new winamp styled window
+a16 adds some fixes, and new winlamp styled window
 
 and before:
 

@@ -694,10 +694,10 @@ public:
         float   GetTime();             // returns current animation time (in seconds) (starts at zero) (updated once per frame)
         float   GetFps();              // returns current estimate of framerate (frames per second)
         eScrMode GetScreenMode();      // returns WINDOWED, FULLSCREEN, FAKE_FULLSCREEN, or NOT_YET_KNOWN (if called before or during OverrideDefaults()).
-        HWND    GetWinampWindow();     // returns handle to Winamp main window
+        HWND    GetWinLAMPWindow();     // returns handle to WinLAMP main window
         HINSTANCE GetInstance();       // returns handle to the plugin DLL module; used for things like loading resources (dialogs, bitmaps, icons...) that are built into the plugin.
-        char*   GetPluginsDirPath();   // usually returns 'c:\\program files\\winamp\\plugins\\'
-        char*   GetConfigIniFile();    // usually returns 'c:\\program files\\winamp\\plugins\\something.ini' - filename is determined from identifiers in 'defines.h'
+        char*   GetPluginsDirPath();   // usually returns 'c:\\program files\\winlamp\\plugins\\'
+        char*   GetConfigIniFile();    // usually returns 'c:\\program files\\winlamp\\plugins\\something.ini' - filename is determined from identifiers in 'defines.h'
 
         // GET METHODS THAT ONLY WORK ONCE DIRECTX IS READY
         // ------------------------------------------------------------

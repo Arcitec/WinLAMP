@@ -20,7 +20,7 @@ int Wa2Groupdefs::skincb_onBeforeLoadingElements() {
 
   s =  L"buf:"
        L"<?xml version=\"1.0\" encoding=\"UTF-16\" standalone=\"yes\"?>"
-       L"<WinampAbstractionLayer version=\"0.8\">"
+       L"<WinLAMPAbstractionLayer version=\"0.8\">"
 
        L"<groupdef id=\"library.content.group\">"
        L"  <windowholder hold=\"{6B0EDF80-C9A5-11d3-9F26-00C04F39FFC6}\" fitparent=\"1\" />"
@@ -28,7 +28,7 @@ int Wa2Groupdefs::skincb_onBeforeLoadingElements() {
 
        // footer
 
-	s += L"</WinampAbstractionLayer>";
+	s += L"</WinLAMPAbstractionLayer>";
 
   WASABI_API_SKIN->loadSkinFile(s);
   return 1;

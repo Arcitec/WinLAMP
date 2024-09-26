@@ -40,7 +40,7 @@
 #include ".\settings.h"
 #include "api__gen_crasher.h"
 
-extern char *winampVersion;
+extern char *winlampVersion;
 extern Settings settings;
 
 #ifndef _countof
@@ -650,9 +650,9 @@ BOOL CreateLog(PEXCEPTION_POINTERS pExceptPtrs, LPCWSTR lpszMessage)
 
 	wchar_t line[1024] = {0};
 	wchar_t msgBody[4*1024] = {0};
-	wchar_t winampVersionWide[1024] = {0};
-	MultiByteToWideCharSZ(CP_ACP, 0, winampVersion, -1, winampVersionWide, 1024);
-	StringCchPrintf(line, 1024, L"Winamp client version: %s\r\n", winampVersionWide);
+	wchar_t winlampVersionWide[1024] = {0};
+	MultiByteToWideCharSZ(CP_ACP, 0, winlampVersion, -1, winlampVersionWide, 1024);
+	StringCchPrintf(line, 1024, L"WinLAMP client version: %s\r\n", winlampVersionWide);
 	StringCchCopy(msgBody, 4*1024, line);
 	
 	PEXCEPTION_RECORD Exception = pExceptPtrs->ExceptionRecord;

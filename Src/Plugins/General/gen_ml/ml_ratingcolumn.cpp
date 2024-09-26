@@ -5,7 +5,7 @@
 #include "./ml.h"
 #include "./ml_IPC_0313.h"
 #include "./resource.h"
-#include "../winamp/gen.h"
+#include "../winlamp/gen.h"
 #include "./stockobjects.h"
 #include <commctrl.h>
 #include <strsafe.h>

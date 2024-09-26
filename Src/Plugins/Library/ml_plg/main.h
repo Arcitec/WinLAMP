@@ -5,7 +5,7 @@
 #include "../../General/gen_ml/ml.h"
 #include "IDScanner.h"
 #include "api__ml_plg.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../Agave/Language/api_language.h"
 #include "../nu/threadpool/api_threadpool.h"
 #include <api/service/waservicefactory.h>
@@ -15,7 +15,7 @@
 #define MAX_ML_QUERY_SIZE 8192
 #define MAX_TITLE_SIZE 512
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 
 //extern int plLength;
 extern int plItems;		

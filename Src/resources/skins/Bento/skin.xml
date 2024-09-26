@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
-<WinampAbstractionLayer version="1.35">
+<WinLAMPAbstractionLayer version="1.35">
 	<skininfo>
 		<version>1.2.4</version>
 		<name>Bento</name>
@@ -42,4 +42,4 @@
 		<script file="../Big Bento/scripts/maximize.maki" param="130,18"/>
 	</scripts>
 
-</WinampAbstractionLayer>
+</WinLAMPAbstractionLayer>

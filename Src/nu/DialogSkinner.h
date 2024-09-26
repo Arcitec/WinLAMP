@@ -2,7 +2,7 @@
 #define DIALOGSKINNERH
 
 #include "MediaLibraryInterface.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 
 COLORREF GetHTMLColor( int color );
 

@@ -13,15 +13,15 @@ B4SLoader::B4SLoader() : parser(0), parserFactory(0)
 	if (parser)
 	{
 		parser->xmlreader_registerCallback(L"WasabiXML\fplaylist\fentry\fname", &b4sXml.title);
-		parser->xmlreader_registerCallback(L"WinampXML\fplaylist\fentry\fname", &b4sXml.title);
+		parser->xmlreader_registerCallback(L"WinLAMPXML\fplaylist\fentry\fname", &b4sXml.title);
 
 		parser->xmlreader_registerCallback(L"WasabiXML\fplaylist\fentry\flength", &b4sXml.length);
-		parser->xmlreader_registerCallback(L"WinampXML\fplaylist\fentry\flength", &b4sXml.length);
+		parser->xmlreader_registerCallback(L"WinLAMPXML\fplaylist\fentry\flength", &b4sXml.length);
 
 		//parser->xmlreader_registerCallback(L"WasabiXML\fplaylist", this);
-		//parser->xmlreader_registerCallback(L"WinampXML\fplaylist", this);
+		//parser->xmlreader_registerCallback(L"WinLAMPXML\fplaylist", this);
 		parser->xmlreader_registerCallback(L"WasabiXML\fplaylist\fentry", &b4sXml);
-		parser->xmlreader_registerCallback(L"WinampXML\fplaylist\fentry", &b4sXml);
+		parser->xmlreader_registerCallback(L"WinLAMPXML\fplaylist\fentry", &b4sXml);
 		parser->xmlreader_open();
 		//parser->xmlreader_setEncoding(L"UTF-8"); 
 	}

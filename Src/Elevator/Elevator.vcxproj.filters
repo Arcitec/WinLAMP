@@ -51,7 +51,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Winamp\resource\WinampIcon.ico">
+    <Image Include="..\WinLAMP\resource\WinLAMPIcon.ico">
       <Filter>Image Files</Filter>
     </Image>
   </ItemGroup>

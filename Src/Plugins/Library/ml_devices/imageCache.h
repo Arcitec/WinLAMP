@@ -1,5 +1,5 @@
-#ifndef _NULLSOFT_WINAMP_ML_DEVICES_IMAGE_CACHE_HEADER
-#define _NULLSOFT_WINAMP_ML_DEVICES_IMAGE_CACHE_HEADER
+#ifndef _NULLSOFT_WINLAMP_ML_DEVICES_IMAGE_CACHE_HEADER
+#define _NULLSOFT_WINLAMP_ML_DEVICES_IMAGE_CACHE_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -73,4 +73,4 @@ DeviceColoredImage_GetBitmap(DeviceColoredImage *self, DeviceImageFlags flags);
 DeviceImage*
 DeviceColoredImage_GetBaseImage(DeviceColoredImage *self);
 
-#endif // _NULLSOFT_WINAMP_ML_DEVICES_IMAGE_CACHE_HEADER
+#endif // _NULLSOFT_WINLAMP_ML_DEVICES_IMAGE_CACHE_HEADER

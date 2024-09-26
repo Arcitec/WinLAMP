@@ -3,7 +3,7 @@
 #include <strsafe.h>
 #include <ocidl.h>
 
-#include "cddbcontrolwinamp.tlh"
+#include "cddbcontrolwinlamp.tlh"
 
 CDBBEventManager::CDBBEventManager(void) : ref(1), cookie(0), user(0),
 											fnCmdCompleted(NULL), fnCmdProgress(NULL),

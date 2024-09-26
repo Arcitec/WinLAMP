@@ -297,15 +297,15 @@ void ID3v2::add_set_latin_id3v2_frame(ID3_FrameID id, const wchar_t *c)
 		if (f)
 		{
 			SetFrameEncoding(f, ENCODING_FORCE_ASCII);
-			AutoChar temp(c); //AutoChar temp(c, 28591); // todo: benski> changed back to local to keep old winamp tagged files working
-			f->Field(ID3FN_URL).SetLocal(temp); //f->Field(ID3FN_TEXT).SetLatin(temp);// todo: benski> changed back to local to keep old winamp tagged files working
+			AutoChar temp(c); //AutoChar temp(c, 28591); // todo: benski> changed back to local to keep old winlamp tagged files working
+			f->Field(ID3FN_URL).SetLocal(temp); //f->Field(ID3FN_TEXT).SetLatin(temp);// todo: benski> changed back to local to keep old winlamp tagged files working
 		}
 		else
 		{
 			f = new ID3_Frame(id);
 			SetFrameEncoding(f, ENCODING_FORCE_ASCII);
-			AutoChar temp(c); //AutoChar temp(c, 28591); // todo: benski> changed back to local to keep old winamp tagged files working
-			f->Field(ID3FN_URL).SetLocal(temp); //f->Field(ID3FN_TEXT).SetLatin(temp);// todo: benski> changed back to local to keep old winamp tagged files working
+			AutoChar temp(c); //AutoChar temp(c, 28591); // todo: benski> changed back to local to keep old winlamp tagged files working
+			f->Field(ID3FN_URL).SetLocal(temp); //f->Field(ID3FN_TEXT).SetLatin(temp);// todo: benski> changed back to local to keep old winlamp tagged files working
 			id3v2.AddFrame(f, TRUE);
 		}
 	}

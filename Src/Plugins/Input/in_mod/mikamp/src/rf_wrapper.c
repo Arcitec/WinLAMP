@@ -1,8 +1,8 @@
 #include <windows.h>
 #include <mmio.h>
 #include <shlwapi.h>
-#include "../../winamp/wa_ipc.h"
-#include "../../winamp/in2.h"
+#include "../../winlamp/wa_ipc.h"
+#include "../../winlamp/in2.h"
 extern In_Module mikmod;
 //big mess here
 

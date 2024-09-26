@@ -12,9 +12,9 @@ enum
 
 	API_DECODEFILE_UNSUPPORTED = 2, // type is unsupported
 	API_DECODEFILE_NO_INTERFACE = 3, // type is supported, but plugin does provide any interfaces for direct decoding
-	API_DECODEFILE_WINAMP_PRO = 4, // user has to pay $$$ to do this
+	API_DECODEFILE_WINLAMP_PRO = 4, // user has to pay $$$ to do this
 	API_DECODEFILE_NO_RIGHTS = 5, // user is not allowed to decode this file (e.g. DRM)
-	API_DECODEFILE_BAD_RESAMPLE = 6, // Winamp is unable to resample this file to CDDA format (stereo 16bit 44.1kHz)
+	API_DECODEFILE_BAD_RESAMPLE = 6, // WinLAMP is unable to resample this file to CDDA format (stereo 16bit 44.1kHz)
 	API_DECODEFILE_FAIL_NO_WARN = 7, // we have already informed the user of an issue so do not show again e.g. CD playing so cannot also do a rip
 };
 
@@ -54,7 +54,7 @@ public:
 	ifc_audiostream *OpenAudioBackground(const wchar_t *filename, AudioParameters *parameters);
 	/* OpenAudio is the same as OpenAudioBackground
 	 * but, it will use the input plugin system to decode if necessary
-	 * so it's best to use this in a separate winamp.exe
+	 * so it's best to use this in a separate winlamp.exe
 	 * to be honest, it was designed for internal use in the CD burner
 	 * so it's best not to use this one at all
 	 */

@@ -1,10 +1,10 @@
 #include "pluginloader.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "nu/AutoWide.h"
 #include <shlwapi.h>
 #include "../nu/MediaLibraryInterface.h"
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 
 C_ItemList m_plugins;
 
@@ -36,7 +36,7 @@ PMPDevicePlugin * loadPlugin(wchar_t * file)
 	if(m)
 	{
 		PMPDevicePlugin *(*gp)();
-		gp=(PMPDevicePlugin *(__cdecl *)(void))GetProcAddress(m,"winampGetPMPDevicePlugin");
+		gp=(PMPDevicePlugin *(__cdecl *)(void))GetProcAddress(m,"winlampGetPMPDevicePlugin");
 		if(!gp)
 		{
 			FreeLibrary(m);
@@ -52,7 +52,7 @@ PMPDevicePlugin * loadPlugin(wchar_t * file)
 
 		devplugin->hDllInstance=m;
 		devplugin->hwndLibraryParent=plugin.hwndLibraryParent;
-		devplugin->hwndWinampParent=plugin.hwndWinampParent;
+		devplugin->hwndWinLAMPParent=plugin.hwndWinLAMPParent;
 		devplugin->hwndPortablesParent=mainMessageWindow;
 		devplugin->service = plugin.service;
 
@@ -73,7 +73,7 @@ BOOL loadDevPlugins(int *count)
 {
 	BOOL loaded = FALSE;
 	wchar_t tofind[MAX_PATH] = {0};
-	LPCWSTR dir = (LPCWSTR)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_GETPLUGINDIRECTORYW);
+	LPCWSTR dir = (LPCWSTR)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_GETPLUGINDIRECTORYW);
 	PathCombine(tofind, dir, L"pmp_*.dll"); 
 
 	WIN32_FIND_DATA d = {0};
@@ -98,7 +98,7 @@ BOOL testForDevPlugins()
 {
 	BOOL found = FALSE;
 	wchar_t tofind[MAX_PATH] = {0};
-	LPCWSTR dir = (LPCWSTR)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_GETPLUGINDIRECTORYW);
+	LPCWSTR dir = (LPCWSTR)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_GETPLUGINDIRECTORYW);
 	PathCombine(tofind, dir, L"pmp_*.dll"); 
 
 	WIN32_FIND_DATA d = {0};

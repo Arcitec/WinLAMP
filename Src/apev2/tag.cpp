@@ -37,7 +37,7 @@ int APEv2::Tag::Parse(const void *_data, size_t len)
 			len-=Header::SIZE;
 		}
 		flags = footer.GetFlags();
-		flags &= ~FLAG_HEADER_NO_FOOTER; // winamp 5.54 had this flag reversed, so let's correct it
+		flags &= ~FLAG_HEADER_NO_FOOTER; // winlamp 5.54 had this flag reversed, so let's correct it
 		return ParseData(dataStart, len);
 	}
 
@@ -55,7 +55,7 @@ int APEv2::Tag::Parse(const void *_data, size_t len)
 			//len-=Header::SIZE;
 		}
 		flags = header.GetFlags();
-		flags |= FLAG_HEADER_NO_FOOTER; // winamp 5.54 had this flag reversed, so let's correct it
+		flags |= FLAG_HEADER_NO_FOOTER; // winlamp 5.54 had this flag reversed, so let's correct it
 		return ParseData(dataStart, len);
 	}
 

@@ -6,7 +6,7 @@
 #include "./preferences.h"
 #include "./messagebox.h"
 #include "./serviceHelper.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "./import.h"
 #include <ifc_omservice.h>
 #include <browserView.h>
@@ -129,8 +129,8 @@ BOOL Command_OpenServicePopup(ifc_omservice *service)
 
 BOOL Command_ReportService(ifc_omservice *service)
 {
-	HWND hWinamp = Plugin_GetWinamp();
-	if (NULL == hWinamp || !IsWindow(hWinamp))
+	HWND hWinLAMP = Plugin_GetWinLAMP();
+	if (NULL == hWinLAMP || !IsWindow(hWinLAMP))
 		return FALSE;
 
 	if (NULL == service) 
@@ -141,10 +141,10 @@ BOOL Command_ReportService(ifc_omservice *service)
 
 	OMBROWSERMNGR->GetClientId(szClient, ARRAYSIZE(szClient));
 
-	StringCchPrintf(szUrl, ARRAYSIZE(szUrl), L"http://www.winamp.com/legal/abuse?svc_id=%u&unique=%s", 
+	StringCchPrintf(szUrl, ARRAYSIZE(szUrl), L"http://www.winlamp.com/legal/abuse?svc_id=%u&unique=%s", 
 					service->GetId(), szClient);
 
-	SENDWAIPC(hWinamp, IPC_OPEN_URL, szUrl);
+	SENDWAIPC(hWinLAMP, IPC_OPEN_URL, szUrl);
 	return TRUE;
 }
 
@@ -170,7 +170,7 @@ BOOL Command_ShowServiceInfo(ifc_omservice *service)
 		StringCchCopy(szName, ARRAYSIZE(szName), L"Info");
 	}
 
-	hr = StringCchPrintf(szUrl, ARRAYSIZE(szUrl), L"http://client.winamp.com/service/detail/%s/%d#", szName, service->GetId());
+	hr = StringCchPrintf(szUrl, ARRAYSIZE(szUrl), L"http://client.winlamp.com/service/detail/%s/%d#", szName, service->GetId());
 	if (FAILED(hr)) return hr;
 
 	Navigation *navigation;
@@ -214,7 +214,7 @@ static BOOL Command_OpenPreferences()
 
 static BOOL Command_OpenHelp()
 {	
-	return (BOOL)SENDWAIPC(Plugin_GetWinamp(), IPC_OPEN_URL, L"https://help.winamp.com/hc/articles/8112533645844-Online-Services");
+	return (BOOL)SENDWAIPC(Plugin_GetWinLAMP(), IPC_OPEN_URL, L"https://help.winlamp.com/hc/articles/8112533645844-Online-Services");
 }
 
 static BOOL Command_NavigateView(HWND hView, LPCWSTR navigateUrl)
@@ -387,11 +387,11 @@ static void CALLBACK BrowserOptions_Callback(HWND hOptions, UINT type, ULONG_PTR
 
 HRESULT Command_ShowBrowserOptions()
 {
-	HWND hWinamp = Plugin_GetWinamp();
-	if (NULL == hWinamp || NULL == OMBROWSERMNGR) 
+	HWND hWinLAMP = Plugin_GetWinLAMP();
+	if (NULL == hWinLAMP || NULL == OMBROWSERMNGR) 
 		return E_UNEXPECTED;
 
-	HRESULT hr = OMBROWSERMNGR->Initialize(NULL, hWinamp);
+	HRESULT hr = OMBROWSERMNGR->Initialize(NULL, hWinLAMP);
 	if (SUCCEEDED(hr))
 	{
 		HWND hOwner = Plugin_GetDialogOwner();

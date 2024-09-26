@@ -1,6 +1,6 @@
 #include "GracenoteApi.h"
 #include "api.h"
-#include "../winamp/api_decodefile.h"
+#include "../winlamp/api_decodefile.h"
 #include <bfc/error.h>
 #include <limits.h>
 #include <shlwapi.h>
@@ -85,11 +85,11 @@ ICDDBControl2 *GracenoteApi::GetCDDB()
 	Nullsoft::Utility::AutoLock lock(cddbGuard);
 	if (!cddbInitialized)
 	{
-		CoCreateInstance(__uuidof(CDDBNSWinampControl), 0, CLSCTX_INPROC_SERVER, IID_IUnknown, (void **)&pCDDBControl);
+		CoCreateInstance(__uuidof(CDDBNSWinLAMPControl), 0, CLSCTX_INPROC_SERVER, IID_IUnknown, (void **)&pCDDBControl);
 		if (pCDDBControl == NULL)
 			return 0;
 
-#if 1 // TODO: benski> put back in once we can match winamp lang pack to a gracenote language ID
+#if 1 // TODO: benski> put back in once we can match winlamp lang pack to a gracenote language ID
 		// translate if necessary
 		if (WASABI_API_LNG)
 		{
@@ -116,7 +116,7 @@ ICDDBControl2 *GracenoteApi::GetCDDB()
 				if (hFind != INVALID_HANDLE_VALUE)
 				{
 					ICddbUIPtr ui;
-					ui.CreateInstance(__uuidof(CddbNSWinampUI));
+					ui.CreateInstance(__uuidof(CddbNSWinLAMPUI));
 					if (ui)
 					{
 						long val = 0;
@@ -132,7 +132,7 @@ ICDDBControl2 *GracenoteApi::GetCDDB()
 		}
 #endif
 
-		// winamp browser id
+		// winlamp browser id
 		//HRESULT hr = pCDDBControl->SetClientInfo(L"7944448", L"F8DE207FBA826F136FF2C7EFE0AAB181", L"1", L"regstring");
 		//wa5's id
 
@@ -263,7 +263,7 @@ ICddbPlaylist25Mgr *GracenoteApi::GetPlaylistManager()
 	if (!cddb)
 		return 0;
 
-	CoCreateInstance(__uuidof(CddbNSWinampPlaylist2Mgr), 0, CLSCTX_INPROC_SERVER, IID_IUnknown, (void **)&playlistMgr);
+	CoCreateInstance(__uuidof(CddbNSWinLAMPPlaylist2Mgr), 0, CLSCTX_INPROC_SERVER, IID_IUnknown, (void **)&playlistMgr);
 	if (playlistMgr)
 	{
 		playlistMgr->AddRef();
@@ -354,7 +354,7 @@ int GracenoteApi::GetPlaylistManager(ICddbPlaylist25Mgr **playlistMgr, ICddbMLDB
 		mldbMgrCreated->SetOptions(autoFlags, bBackupPath);
 
 
-		CoCreateInstance(__uuidof(CddbNSWinampPlaylist2Mgr), 0, CLSCTX_INPROC_SERVER, IID_IUnknown, (void **)&playlistMgrCreated);
+		CoCreateInstance(__uuidof(CddbNSWinLAMPPlaylist2Mgr), 0, CLSCTX_INPROC_SERVER, IID_IUnknown, (void **)&playlistMgrCreated);
 		if (playlistMgrCreated)
 		{
 			playlistMgrCreated->AddRef();
@@ -453,7 +453,7 @@ ICDDBMusicIDManager3 *GracenoteApi::GetMusicID()
 	if (!cddb)
 		return 0;
 	ICDDBMusicIDManager3 *musicID;
-	CoCreateInstance(__uuidof(CDDBNSWinampMusicIDManager), 0, CLSCTX_INPROC_SERVER, IID_IUnknown, (void **)&musicID);
+	CoCreateInstance(__uuidof(CDDBNSWinLAMPMusicIDManager), 0, CLSCTX_INPROC_SERVER, IID_IUnknown, (void **)&musicID);
 	if (musicID)
 		musicID->Initialize(cddb);
 	cddb->Release();

@@ -1,4 +1,4 @@
-#include "../Winamp/IN2.h"
+#include "../WinLAMP/IN2.h"
 #include "api__in_mod.h"
 #include "../nu/ServiceBuilder.h"
 #include "resource.h"
@@ -212,8 +212,8 @@ extern In_Module plugin =
 {
 	IN_VER_RET,	// defined in IN2.H
 	"nullsoft(in_mod.dll)",
-	0,	// hMainWindow (filled in by winamp)
-	0,  // hDllInstance (filled in by winamp)
+	0,	// hMainWindow (filled in by winlamp)
+	0,  // hDllInstance (filled in by winlamp)
 	"S3M\0Scream Tracker\0", 	// this is a double-null limited list. "EXT\0Description\0EXT\0Description\0" etc.
 	1,	// is_seekable
 	1,	// uses output plug-in system
@@ -237,21 +237,21 @@ extern In_Module plugin =
 	SetVolume,
 	SetPan,
 
-	0,0,0,0,0,0,0,0,0, // visualization calls filled in by winamp
+	0,0,0,0,0,0,0,0,0, // visualization calls filled in by winlamp
 
-	0,0, // dsp calls filled in by winamp
+	0,0, // dsp calls filled in by winlamp
 
 	EQSet,
 
-	NULL,		// setinfo call filled in by winamp
+	NULL,		// setinfo call filled in by winlamp
 
-	0, // out_mod filled in by winamp
+	0, // out_mod filled in by winlamp
 };
 
 // exported symbol. Returns output module.
 extern "C"
 {
-	__declspec(dllexport) In_Module * winampGetInModule2()
+	__declspec(dllexport) In_Module * winlampGetInModule2()
 	{
 		return &plugin;
 	}

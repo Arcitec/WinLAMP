@@ -25,7 +25,7 @@
     <ClCompile Include="Loginbox\commandParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Loginbox\commandWinampAuth.cpp">
+    <ClCompile Include="Loginbox\commandWinLAMPAuth.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Loginbox\commandWebAuth.cpp">
@@ -64,7 +64,7 @@
     <ClCompile Include="Loginbox\imageCache.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Winamp\JSAPI_CallbackParameters.cpp">
+    <ClCompile Include="..\WinLAMP\JSAPI_CallbackParameters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Loginbox\imageLoader.cpp">
@@ -163,7 +163,7 @@
     <ClCompile Include="sha2.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Loginbox\resultWinampAuth.cpp">
+    <ClCompile Include="Loginbox\resultWinLAMPAuth.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Loginbox\stringBuilder.cpp">
@@ -240,7 +240,7 @@
     <ClInclude Include="Loginbox\commandWebAuth.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Loginbox\commandWinampAuth.h">
+    <ClInclude Include="Loginbox\commandWinLAMPAuth.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Loginbox\common.h">
@@ -372,7 +372,7 @@
     <ClInclude Include="Loginbox\resultWebAuth.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Loginbox\resultWinampAuth.h">
+    <ClInclude Include="Loginbox\resultWinLAMPAuth.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sha2.h">

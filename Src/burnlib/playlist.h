@@ -7,7 +7,7 @@
 #include <api/service/waServiceFactory.h>
 #include "../playlist/api_playlistmanager.h"
 #include "../playlist/ifc_playlistloadercallback.h"
-#include "../winamp/api_decodefile.h"
+#include "../winlamp/api_decodefile.h"
 
 #include "../nu/vector.h"
 

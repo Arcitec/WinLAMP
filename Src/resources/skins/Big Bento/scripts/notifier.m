@@ -10,14 +10,14 @@ E-Mail:		martin@skinconsortium.com
 Internet:	www.skinconsortium.com
 			www.martin.deimos.de.vu
 
-Note:		Based on notifier.m from Winamp Modern
+Note:		Based on notifier.m from WinLAMP Modern
 
 
 
 -----------------------------------------------------
-// Workaround for Winamp bug by Pieter Nieuwoudt (pjn123) - pjn123@outlook.com \\
+// Workaround for WinLAMP bug by Pieter Nieuwoudt (pjn123) - pjn123@outlook.com \\
 
-Temparary fix for the Winamp bug where the...
+Temparary fix for the WinLAMP bug where the...
 extern AlbumArtLayer.onAlbumArtLoaded(boolean success);
 ...event stops working.
 
@@ -66,7 +66,7 @@ Global AlbumArtLayer cover;
 Global Boolean triggerBug; //BUGFIX remove this
 Global Timer fallbackTempFix; //BUGFIX remove this
 
-#define WEBCOVER_SHOUTCAST "winamp.cover.shoutcast"
+#define WEBCOVER_SHOUTCAST "winlamp.cover.shoutcast"
 
 // ------------------------------------------------------------------------------
 // init
@@ -291,7 +291,7 @@ notifier_layout.onLeftButtonDown(int x, int y) {
 	{
 		String artist = getArtist();
 		if (artist == "") return;
-		System.navigateUrlBrowser("http://client.winamp.com/nowplaying/artist/?icid=notifierbento&artistName=" + artist);
+		System.navigateUrlBrowser("http://client.winlamp.com/nowplaying/artist/?icid=notifierbento&artistName=" + artist);
 	}*/
 	reset();
 }
@@ -480,7 +480,7 @@ cover.onAlbumArtLoaded(boolean success)
 {
 	/*
 	Created a seperate function for the code that was here because for some reason I couldn't force this
-	event (from the fallbackTempFix.onTimer) with cover.onAlbumArtLoaded(success) after the Winamp bug appears.
+	event (from the fallbackTempFix.onTimer) with cover.onAlbumArtLoaded(success) after the WinLAMP bug appears.
 	Weird, yes.
 	*/
 	FORCE_BUG_MODE onAlbumArt(success); 

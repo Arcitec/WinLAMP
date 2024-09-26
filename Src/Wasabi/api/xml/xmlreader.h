@@ -45,8 +45,8 @@ public:
 class XmlReader : public ifc_xmlreadercallbackI
 {
 public:
-	// matchstr is a regexp string such as "WinampAbstractionLayer/Layer[a-z]"
-	// or "Winamp*Layer/*/Layout"
+	// matchstr is a regexp string such as "WinLAMPAbstractionLayer/Layer[a-z]"
+	// or "WinLAMP*Layer/*/Layout"
 	 void registerCallback(const wchar_t *matchstr, XmlReaderCallbackI *callback);
 	 void registerCallback(const wchar_t *matchstr, void (*static_callback)(int start, const wchar_t *xmltag, skin_xmlreaderparams *params));
 

@@ -58,8 +58,8 @@
     <ClCompile Include="..\..\..\nu\sort.cpp">
       <Filter>Source Files\nu</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Winamp\strutil.cpp">
-      <Filter>Source Files\Winamp</Filter>
+    <ClCompile Include="..\..\..\WinLAMP\strutil.cpp">
+      <Filter>Source Files\WinLAMP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -111,8 +111,8 @@
     <ClInclude Include="..\..\..\nu\menushortcuts.h">
       <Filter>Header Files\nu</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Winamp\strutil.h">
-      <Filter>Header Files\Winamp</Filter>
+    <ClInclude Include="..\..\..\WinLAMP\strutil.h">
+      <Filter>Header Files\WinLAMP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -138,7 +138,7 @@
     <Filter Include="Source Files\nu">
       <UniqueIdentifier>{6091f753-b15a-4842-b822-d511183811d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Winamp">
+    <Filter Include="Source Files\WinLAMP">
       <UniqueIdentifier>{02146aa6-27b8-4603-89ac-f219ea316867}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\gen_ml">
@@ -147,7 +147,7 @@
     <Filter Include="Header Files\nu">
       <UniqueIdentifier>{a9cf0eec-25c4-45ad-a116-77cc32baf3fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Winamp">
+    <Filter Include="Header Files\WinLAMP">
       <UniqueIdentifier>{b4d6ce84-5fe5-48af-a5b1-f0e01e83d9c5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

@@ -26,7 +26,7 @@ static SendToMenu sendTo(plugin);
 static void PlaySelection(int enqueue, int is_all)
 {
 	if (!enqueue)
-		SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_DELETE);
+		SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_DELETE);
 
 	int numTracks = playlist_list.GetCount();
 	for (int i = 0;i < numTracks;i++)
@@ -39,7 +39,7 @@ static void PlaySelection(int enqueue, int is_all)
 				s.filename = currentPlaylist.ItemName(i);
 				s.title = currentPlaylist.ItemTitle(i);
 				s.length = currentPlaylist.GetItemLengthMilliseconds(i) / 1000;
-				SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
+				SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
 			}
 			else
 			{
@@ -47,7 +47,7 @@ static void PlaySelection(int enqueue, int is_all)
 				s.filename = currentPlaylist.ItemName(i);
 				s.title = 0;
 				s.length = 0;
-				SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
+				SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
 			}
 
 		}
@@ -60,13 +60,13 @@ static void PlaySelection(int enqueue, int is_all)
 			int pos = playlist_list.GetNextSelected(-1);
 			if (pos != -1)
 			{
-				SendMessage(plugin.hwndWinampParent, WM_WA_IPC, pos, IPC_SETPLAYLISTPOS);
-				SendMessage(plugin.hwndWinampParent, WM_COMMAND, 40047, 0); // stop button, literally
-				SendMessage(plugin.hwndWinampParent, WM_COMMAND, 40045, 0); // play button, literally
+				SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, pos, IPC_SETPLAYLISTPOS);
+				SendMessage(plugin.hwndWinLAMPParent, WM_COMMAND, 40047, 0); // stop button, literally
+				SendMessage(plugin.hwndWinLAMPParent, WM_COMMAND, 40045, 0); // play button, literally
 				return ;
 			}
 		}
-		SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_STARTPLAY);
+		SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_STARTPLAY);
 	}
 	/*
 		int cnt=0;

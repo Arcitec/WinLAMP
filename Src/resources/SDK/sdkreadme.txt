@@ -1,7 +1,7 @@
-Winamp 5 SDK
+WinLAMP 5 SDK
 ------------
 
-This ZIP file contains various SDKs for creating new plugins for Winamp 5.
+This ZIP file contains various SDKs for creating new plugins for WinLAMP 5.
 
 Here's a description of the various folders:
 
@@ -33,6 +33,6 @@ Here's a description of the various folders:
 /vis/vis_test - Sample code for a Visualisation plugin
 
 /vis/wa5vis.txt - Describes how to embed your visualisation plugin in the 
-                  Winamp 5 drawer
+                  WinLAMP 5 drawer
 
-/winamp - Headers and IPC calls for controlling Winamp
+/winlamp - Headers and IPC calls for controlling WinLAMP

@@ -3,7 +3,7 @@
 #include "main.h"
 
 
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "../nsmkv/nsmkv.h"
 #include "../nu/AutoLock.h"
 #include "../nu/ns_wc.h"
@@ -28,7 +28,7 @@ static const GUID playbackConfigGroupGUID =
 IVideoOutput *videoOutput = 0;
 /* benski> 
 TODO: keep track of "fully parsed position" we don't have to always start over at segment_position
-TODO: if we have multiple audio or video tracks, do that weird winamp interface for it
+TODO: if we have multiple audio or video tracks, do that weird winlamp interface for it
 */
 
 
@@ -391,7 +391,7 @@ int MKVPlayer::OutputPictures(uint64_t default_timestamp)
 				}
 				else
 				{
-					// winamp wants an "aspect correction value" not the true aspect ratio itself
+					// winlamp wants an "aspect correction value" not the true aspect ratio itself
 					aspect_ratio = 1.0/aspect_ratio; 
 				}
 				videoOutput->extended(VIDUSER_SET_THREAD_SAFE, 1, 0);

@@ -7,7 +7,7 @@
 #include "./config.h"
 
 #include "../omBrowser/browserView.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 #include "./serviceHost.h"
 #include "./serviceHelper.h"
@@ -144,7 +144,7 @@ HRESULT Navigation::Initialize()
 
 	// TODO make thie configurable?
 	if (SUCCEEDED(ServiceHelper_Create(ROOTSERVICE_ID, MAKEINTRESOURCE(IDS_ONLINE_SERVICES), 
-					NULL, L"http://client.winamp.com/services", SVCF_SPECIAL | SVCF_SUBSCRIBED, 1, FALSE, &service)))
+					NULL, L"http://client.winlamp.com/services", SVCF_SPECIAL | SVCF_SUBSCRIBED, 1, FALSE, &service)))
 	{
 		hRoot = CreateItemInt(NULL, service);
 		service->Release();
@@ -633,9 +633,9 @@ HRESULT Navigation::InitializeBrowser()
 	if (NULL == OMBROWSERMNGR) 
 		return E_UNEXPECTED;
 
-	HWND hWinamp = Plugin_GetWinamp();
+	HWND hWinLAMP = Plugin_GetWinLAMP();
 
-	HRESULT hr = OMBROWSERMNGR->Initialize(NULL, hWinamp);
+	HRESULT hr = OMBROWSERMNGR->Initialize(NULL, hWinLAMP);
 	if (SUCCEEDED(hr))
 	{
 		if (S_OK == hr)
@@ -670,7 +670,7 @@ HRESULT Navigation::CreatePopup(HNAVITEM hItem, HWND *hwnd)
 	hr = GetService(hItem, &service);
 	if (SUCCEEDED(hr))
 	{
-		HWND hWinamp = Plugin_GetWinamp();
+		HWND hWinLAMP = Plugin_GetWinLAMP();
 
 		hr = InitializeBrowser();
 		if (SUCCEEDED(hr))
@@ -689,7 +689,7 @@ HRESULT Navigation::CreatePopup(HNAVITEM hItem, HWND *hwnd)
 				rect.top += 16;
 				
 				hr = OMBROWSERMNGR->CreatePopup(service, rect.left, rect.top, 
-								rect.right - rect.left, rect.bottom - rect.top,	hWinamp, NULL, 0, hwnd);
+								rect.right - rect.left, rect.bottom - rect.top,	hWinLAMP, NULL, 0, hwnd);
 			}
 		}
 		service->Release();
@@ -1050,7 +1050,7 @@ const static ICONPATCHREC szIconPatch[] =
 	//{ L"11000", MAKEINTRESOURCEW(IDR_ICON_AOL)},
 	{ L"11001", MAKEINTRESOURCEW(IDR_ICON_SHOUTCASTRADIO)},
 	/*{ L"11002", MAKEINTRESOURCEW(IDR_ICON_SHOUTCASTTV)},
-	{ L"11003", MAKEINTRESOURCEW(IDR_ICON_WINAMPMUSIC)},
+	{ L"11003", MAKEINTRESOURCEW(IDR_ICON_WINLAMPMUSIC)},
 	{ L"11004", MAKEINTRESOURCEW(IDR_ICON_SINGINGFISH)},
 	{ L"11005", MAKEINTRESOURCEW(IDR_ICON_MUSICNOW)},
 	{ L"11006", MAKEINTRESOURCEW(IDR_ICON_AOL_GAMES)},

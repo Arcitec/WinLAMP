@@ -1,5 +1,5 @@
 /*
-** Copyright © 2007-2014 Winamp SA
+** Copyright © 2007-2014 WinLAMP SA
 **
 ** This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held 
 ** liable for any damages arising from the use of this software. 
@@ -14,7 +14,7 @@
 **
 **   3. This notice may not be removed or altered from any source distribution.
 **
-** Author: Ben Allison benski@winamp.com
+** Author: Ben Allison benski@winlamp.com
 ** Created: July 25, 2007
 **
 */
@@ -33,7 +33,7 @@ bool FLAC_AlbumArtProvider::IsMine(const wchar_t *filename)
 	if (extension && *extension)
 	{
 		wchar_t exts[128] = {0};
-		GetPrivateProfileStringW(L"in_flac", L"extensions", DEFAULT_EXTENSIONSW, exts, 128, winampINI);
+		GetPrivateProfileStringW(L"in_flac", L"extensions", DEFAULT_EXTENSIONSW, exts, 128, winlampINI);
 
 		extension++;
 		wchar_t *b = exts;

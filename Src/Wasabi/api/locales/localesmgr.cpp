@@ -201,8 +201,8 @@ void LocalesManager::LoadStringTable(const wchar_t *name)
 				StringW path = name;
 				path.trunc( -fnlen);
 				XMLAutoInclude include(parser, path);
-				parser->xmlreader_registerCallback(L"WinampLocaleDefinition\fStringTable", &stringTableXmlCallback);
-				parser->xmlreader_registerCallback(L"WinampLocaleDefinition\fStringTable\fStringEntry", &stringTableXmlEntryCallback);
+				parser->xmlreader_registerCallback(L"WinLAMPLocaleDefinition\fStringTable", &stringTableXmlCallback);
+				parser->xmlreader_registerCallback(L"WinLAMPLocaleDefinition\fStringTable\fStringEntry", &stringTableXmlEntryCallback);
 				parser->xmlreader_open();
 #ifdef LOCALES_CUSTOM_LOAD
 				LoadXmlFile(parser, name);
@@ -234,9 +234,9 @@ void LocalesManager::loadFile(const wchar_t *name)
 				StringW path = name;
 				path.trunc( -fnlen);
 				XMLAutoInclude include(parser, path);
-				parser->xmlreader_registerCallback(L"WinampLocaleDefinition\faccelerators", &accelSectionXmlCallback);
-				parser->xmlreader_registerCallback(L"WinampLocaleDefinition\faccelerators\faccelerator", &accelXmlCallback);
-				parser->xmlreader_registerCallback(L"WinampLocaleDefinition\ftranslations\ftranslation", &transXmlCallback);
+				parser->xmlreader_registerCallback(L"WinLAMPLocaleDefinition\faccelerators", &accelSectionXmlCallback);
+				parser->xmlreader_registerCallback(L"WinLAMPLocaleDefinition\faccelerators\faccelerator", &accelXmlCallback);
+				parser->xmlreader_registerCallback(L"WinLAMPLocaleDefinition\ftranslations\ftranslation", &transXmlCallback);
 				parser->xmlreader_open();
 #ifdef LOCALES_CUSTOM_LOAD
 				LoadXmlFile(parser, name);

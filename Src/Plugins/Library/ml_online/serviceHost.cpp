@@ -15,8 +15,8 @@
 #include <ifc_omstoragehandlerenum.h>
 #include <ifc_omfilestorage.h>
 
-#include "../winamp/IWasabiDispatchable.h"
-#include "../winamp/JSAPI_Info.h"
+#include "../winlamp/IWasabiDispatchable.h"
+#include "../winlamp/JSAPI_Info.h"
 
 #include <shlwapi.h>
 #include <strsafe.h>

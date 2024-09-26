@@ -77,7 +77,7 @@ BOOL Settings::Load(void)
     sendBySMTP = cfg.ReadInt(L"UseSMTP", FALSE);
 	smtpPort = cfg.ReadInt(L"Port", 25);
 	smtpAuth = cfg.ReadInt(L"ReqAuth", TRUE);
-	CreateStrCopy(&smtpAddress, cfg.ReadStringW(L"Address", L"bug@winamp.com"));
+	CreateStrCopy(&smtpAddress, cfg.ReadStringW(L"Address", L"bug@winlamp.com"));
 	CreateStrCopy(&smtpServer, cfg.ReadStringW(L"Server", NULL));
 	CreateStrCopy(&smtpUser, cfg.ReadStringW(L"User", NULL));
 	CreateStrCopy(&smtpPwd, cfg.ReadStringW(L"Pwd", NULL));
@@ -166,7 +166,7 @@ BOOL Settings::CreateDefault(wchar_t* iniPath)
 	sendBySMTP = FALSE;
 	smtpPort = 25;
 	smtpAddress = (wchar_t*) malloc(32*2);
-	StringCchCopy(smtpAddress, 32, L"bug@winamp.com");
+	StringCchCopy(smtpAddress, 32, L"bug@winlamp.com");
 	smtpAuth = TRUE;
 	smtpServer = NULL;
 	smtpUser = NULL;
@@ -216,9 +216,9 @@ void Settings::WriteDmpCollectResult(BOOL result)
 	cfg.Write(L"Temp", L"DMP", result);
 }
 
-void Settings::WriteWinamp(const wchar_t *winamp)
+void Settings::WriteWinLAMP(const wchar_t *winlamp)
 {
-	cfg.Write(L"Temp", L"WA", winamp);
+	cfg.Write(L"Temp", L"WA", winlamp);
 }
 
 const wchar_t* Settings::ReadErrorTS(void)
@@ -235,7 +235,7 @@ BOOL Settings::ReadDmpCollectResult(void)
 	return cfg.ReadInt(L"Temp", L"DMP", 0);
 }
 
-const wchar_t* Settings::ReadWinamp(void)
+const wchar_t* Settings::ReadWinLAMP(void)
 {
 	return cfg.ReadStringW(L"Temp", L"WA", L"");
 }

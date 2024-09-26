@@ -39,7 +39,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "resource.h"
 #include "bpm.h"
 #include "api.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../Agave/Language/api_language.h"
 #include <api/service/waServiceFactory.h>
 
@@ -72,10 +72,10 @@ HINSTANCE g_hInstance;
 
 static unsigned int WINAPI RenderThread(LPVOID a);
 
-static void config(struct winampVisModule *this_mod);
-static int init(struct winampVisModule *this_mod);
-static int render(struct winampVisModule *this_mod);
-static void quit(struct winampVisModule *this_mod);
+static void config(struct winlampVisModule *this_mod);
+static int init(struct winlampVisModule *this_mod);
+static int render(struct winlampVisModule *this_mod);
+static void quit(struct winlampVisModule *this_mod);
 
 HANDLE g_hThread;
 volatile int g_ThreadQuit;
@@ -91,8 +91,8 @@ api_language *WASABI_API_LNG = 0;
 HINSTANCE WASABI_API_LNG_HINST = 0, WASABI_API_ORIG_HINST = 0;
 static char module1[128];
 
-static winampVisModule *getModule(int which);
-static winampVisHeader hdr = { VIS_HDRVER, 0, getModule };
+static winlampVisModule *getModule(int which);
+static winlampVisHeader hdr = { VIS_HDRVER, 0, getModule };
 
 // use this to get our own HINSTACE since overriding DllMain(..) causes instant crashes (should see why)
 
@@ -105,7 +105,7 @@ static HINSTANCE GetMyInstance()
 }
 
 extern "C" {
-	__declspec( dllexport ) winampVisHeader* winampVisGetHeader(HWND hwndParent)
+	__declspec( dllexport ) winlampVisHeader* winlampVisGetHeader(HWND hwndParent)
 	{
 		if(!WASABI_API_LNG_HINST)
 		{
@@ -132,9 +132,9 @@ extern "C" {
 	}
 }
 
-static winampVisModule *getModule(int which)
+static winlampVisModule *getModule(int which)
 {
-	static winampVisModule mod =
+	static winlampVisModule mod =
 	{
 #ifdef LASER
 		"Advanced Visualization Studio/Laser",
@@ -176,11 +176,11 @@ void about(HWND hwndParent)
 	about_here = 0;
 }
 
-HWND GetDialogBoxParent(HWND winamp)
+HWND GetDialogBoxParent(HWND winlamp)
 {
-	HWND parent = (HWND)SendMessage(winamp, WM_WA_IPC, 0, IPC_GETDIALOGBOXPARENT);
+	HWND parent = (HWND)SendMessage(winlamp, WM_WA_IPC, 0, IPC_GETDIALOGBOXPARENT);
 	if (!parent || parent == (HWND)1)
-		return winamp;
+		return winlamp;
 	return parent;
 
 /*
@@ -206,7 +206,7 @@ BOOL CALLBACK aboutProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM lParam)
 
 }
 
-static void config(struct winampVisModule *this_mod)
+static void config(struct winlampVisModule *this_mod)
 {
   if (!g_hwnd || !IsWindow(g_hwnd))
   {
@@ -245,7 +245,7 @@ extern void random_preset(HWND hwnd);
 HINSTANCE hRich;
 #endif
 
-static int init(struct winampVisModule *this_mod)
+static int init(struct winlampVisModule *this_mod)
 {
 	DWORD id;
   FILETIME ft;
@@ -323,7 +323,7 @@ static int init(struct winampVisModule *this_mod)
   return 0;
 }
 
-static int render(struct winampVisModule *this_mod)
+static int render(struct winlampVisModule *this_mod)
 {
 	int x,avs_beat=0,b;
 	if (g_ThreadQuit) return 1;
@@ -391,7 +391,7 @@ static int render(struct winampVisModule *this_mod)
   return 0;
 }
 
-static void quit(struct winampVisModule *this_mod)
+static void quit(struct winlampVisModule *this_mod)
 {
 #define DS(x) 
   //MessageBox(this_mod->hwndParent,x,"AVS Debug",MB_OK)
@@ -570,7 +570,7 @@ static unsigned int WINAPI RenderThread(LPVOID a)
 }
 
 #ifdef REAPLAY_PLUGIN
-static winampVisModule dummyMod;
+static winlampVisModule dummyMod;
 extern "C"
 {
   

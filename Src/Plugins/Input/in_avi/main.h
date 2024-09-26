@@ -1,5 +1,5 @@
 #pragma once
-#include "../winamp/in2.h"
+#include "../winlamp/in2.h"
 #include "../nu/VideoClock.h"
 #include "../nsavi/nsavi.h"
 extern In_Module plugin, *dshow_mod;

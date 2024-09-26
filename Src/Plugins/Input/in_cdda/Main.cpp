@@ -12,8 +12,8 @@
 #include "PlayStatus.h"
 #include "../nu/AutoWide.h"
 #include "../nu/AutoChar.h"
-#include "../Winamp/strutil.h"
-#include "../winamp/wa_ipc.h"
+#include "../WinLAMP/strutil.h"
+#include "../winlamp/wa_ipc.h"
 #include <shlwapi.h>
 #include "api__in_cdda.h"
 #include "workorder.h"
@@ -458,7 +458,7 @@ int m_nblock = 0;
 
 extern "C"
 {
-	__declspec(dllexport) In_Module * winampGetInModule2()
+	__declspec(dllexport) In_Module * winlampGetInModule2()
 	{
 		s_last_error = NULL;
 		return &line;
@@ -469,7 +469,7 @@ extern "C"
 
 #if 0 // TODO?
 
-	__declspec(dllexport) int winampWriteExtendedFileInfo()
+	__declspec(dllexport) int winlampWriteExtendedFileInfo()
 	{
 		s_last_error = NULL;
 		// write it out

@@ -14,7 +14,7 @@ Display *Linux::display = NULL;
 
 int linux_atoms_loaded = 0;
 
-Atom winamp_msg;
+Atom winlamp_msg;
 Atom dnd_enter, dnd_position, dnd_status, dnd_leave, dnd_drop, dnd_finished;
 Atom dnd_selection, dnd_wa3drop, dnd_private, dnd_typelist;
 Atom dnd_urilist, dnd_textplain, dnd_mozurl;
@@ -26,8 +26,8 @@ Atom dnd_urilist, dnd_textplain, dnd_mozurl;
 void LoadAtoms() {
   if ( !linux_atoms_loaded ) {
     linux_atoms_loaded = 1;
-    winamp_msg = XInternAtom( Linux::getDisplay(), "Winamp3", False );
-    dnd_wa3drop = XInternAtom( Linux::getDisplay(), "Winamp3_drop", False );
+    winlamp_msg = XInternAtom( Linux::getDisplay(), "WinLAMP3", False );
+    dnd_wa3drop = XInternAtom( Linux::getDisplay(), "WinLAMP3_drop", False );
     dnd_enter = XInternAtom( Linux::getDisplay(), "XdndEnter", True );
     dnd_position = XInternAtom( Linux::getDisplay(), "XdndPosition", True );
     dnd_status = XInternAtom( Linux::getDisplay(), "XdndStatus", True );
@@ -358,7 +358,7 @@ int Linux::convertEvent( MSG *m, XEvent *e ) {
 
       break;
 
-    } else if ( message == winamp_msg ) {
+    } else if ( message == winlamp_msg ) {
       // Internal Message ...
 
       m->message = e->xclient.data.l[0];
@@ -423,7 +423,7 @@ void PostMessage( HWND win, UINT msg, WPARAM wParam, LPARAM lParam ) {
 
   e.type = ClientMessage;
   e.xclient.window = win;
-  e.xclient.message_type = winamp_msg;
+  e.xclient.message_type = winlamp_msg;
   e.xclient.format = 32;
   e.xclient.data.l[0] = msg;
   e.xclient.data.l[1] = wParam;

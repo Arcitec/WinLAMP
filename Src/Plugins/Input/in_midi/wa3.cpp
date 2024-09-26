@@ -64,7 +64,7 @@ void WACNAME::onCreate()
 	
 	registerSkinFile("xml/midi-prefs.xml"); 
 
-	api->preferences_registerGroup("winamp.preferences.midi", "MIDI playback", guid, cfg_audio_guid);
+	api->preferences_registerGroup("winlamp.preferences.midi", "MIDI playback", guid, cfg_audio_guid);
 
 	MIDI_core::GlobalInit();
 

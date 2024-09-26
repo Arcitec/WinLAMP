@@ -41,7 +41,7 @@ CAudioPlugIn::~CAudioPlugIn()
 HRESULT CAudioPlugIn::Initialize()
 {
   SPS_initapp();
-  strcpy(g_path,"c:\\progra~1\\winamp\\plugins\\dsp_sps"); //FUCKO
+  strcpy(g_path,"c:\\progra~1\\winlamp\\plugins\\dsp_sps"); //FUCKO
 	return S_OK;
 }
 

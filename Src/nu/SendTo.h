@@ -3,12 +3,12 @@
 
 #include "../gen_ml/ml_ipc.h"
 #include "../gen_ml/ml.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 class SendToMenu
 {
 public:
-	SendToMenu(winampMediaLibraryPlugin &_plugin) : IPC_LIBRARY_SENDTOMENU(0), plugin(&_plugin)
+	SendToMenu(winlampMediaLibraryPlugin &_plugin) : IPC_LIBRARY_SENDTOMENU(0), plugin(&_plugin)
 	{
 		memset(&sendTo, 0, sizeof(sendTo));
 	}
@@ -18,8 +18,8 @@ public:
 		sendTo.hwnd = 0;
 		sendTo.build_hMenu = 0;
 
-		IPC_LIBRARY_SENDTOMENU = SendMessage(plugin->hwndWinampParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINAMP_IPCMESSAGE);
-		if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage(plugin->hwndWinampParent, WM_WA_IPC, (WPARAM)0, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
+		IPC_LIBRARY_SENDTOMENU = SendMessage(plugin->hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+		if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage(plugin->hwndWinLAMPParent, WM_WA_IPC, (WPARAM)0, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
 		{
 			sendTo.mode = 1;
 			sendTo.hwnd = hwnd;
@@ -32,7 +32,7 @@ public:
 		if (sendTo.mode == 2)
 		{
 			sendTo.menu_id = popUpReturnVal;
-			if (SendMessage(plugin->hwndWinampParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
+			if (SendMessage(plugin->hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
 				return true;
 		}
 		return false;
@@ -42,7 +42,7 @@ public:
 		if (sendTo.mode)
 		{
 			sendTo.mode = 4;
-			SendMessage(plugin->hwndWinampParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU); // cleanup
+			SendMessage(plugin->hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU); // cleanup
 		}
 		sendTo.build_hMenu = 0;
 	}
@@ -51,7 +51,7 @@ public:
 	{
 		if (wParam && (HMENU)wParam == sendTo.build_hMenu && sendTo.mode == 1)
 		{
-			if (SendMessage(plugin->hwndWinampParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
+			if (SendMessage(plugin->hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
 				sendTo.mode = 2;
 
 			return true;
@@ -66,7 +66,7 @@ public:
 		sendTo.mode = 3;
 		sendTo.data = (void*) & obj;
 
-		SendMessage(plugin->hwndWinampParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU);
+		SendMessage(plugin->hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU);
 	}
 
 	void SendFilenames(const char *filenames)
@@ -75,7 +75,7 @@ public:
 		sendTo.mode = 3;
 		sendTo.data = (void*)filenames;
 
-		SendMessage(plugin->hwndWinampParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU);
+		SendMessage(plugin->hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU);
 	}
 
 		void SendFilenames(const wchar_t *filenames)
@@ -84,7 +84,7 @@ public:
 		sendTo.mode = 3;
 		sendTo.data = (void*)filenames;
 
-		SendMessage(plugin->hwndWinampParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU);
+		SendMessage(plugin->hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU);
 	}
 
 
@@ -94,13 +94,13 @@ public:
 		sendTo.mode = 3;
 		sendTo.data = (void*)playlist;
 
-		return SendMessage(plugin->hwndWinampParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU);
+		return SendMessage(plugin->hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&sendTo, IPC_LIBRARY_SENDTOMENU);
 	}
 
 private:
 	LRESULT IPC_LIBRARY_SENDTOMENU;
 	librarySendToMenuStruct sendTo;
-	winampMediaLibraryPlugin *plugin;
+	winlampMediaLibraryPlugin *plugin;
 };
 
 #endif

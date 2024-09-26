@@ -64,7 +64,7 @@ void ADPCMComponent::DeregisterServices(api_service *service)
 }
 
 static ADPCMComponent component;
-extern "C" DLLEXPORT ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" DLLEXPORT ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &component;
 }

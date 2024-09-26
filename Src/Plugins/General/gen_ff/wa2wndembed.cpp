@@ -15,7 +15,7 @@
 extern TList<HWND> forcedoffwnds;
 
 #define BUCKETITEM_WNDTYPE L"buck"
-#define WINAMP_OPTIONS_WINDOWSHADE_PL   40266
+#define WINLAMP_OPTIONS_WINDOWSHADE_PL   40266
 ReentryFilterObject wndMsgFilter;
 
 int embedTable[] = {
@@ -49,7 +49,7 @@ void WaOsWndHost::onBeforeReparent(int host)
 		}
 		return ;
 	}
-	ws->extra_data[EMBED_STATE_EXTRA_REPARENTING] = 1; // tell winamp to ignore show/hide events
+	ws->extra_data[EMBED_STATE_EXTRA_REPARENTING] = 1; // tell winlamp to ignore show/hide events
 	if (!host)
 	{
 		ShowWindow(getHWND(), SW_HIDE);
@@ -79,7 +79,7 @@ void WaOsWndHost::onAfterReparent(int host)
 		}
 		return ;
 	}
-	ws->extra_data[EMBED_STATE_EXTRA_REPARENTING] = 0; // tell winamp NOT to ignore show/hide events anymore
+	ws->extra_data[EMBED_STATE_EXTRA_REPARENTING] = 0; // tell winlamp NOT to ignore show/hide events anymore
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -340,28 +340,28 @@ ifc_window *Wa2WndEmbed::createWindowOfType(const wchar_t *windowtype, ifc_windo
 		case 0:
 			{
 				PlBucketItem *bi = new PlBucketItem();
-				bi->setBitmaps(L"winamp.thinger.pledit", NULL, L"winamp.thinger.pledit.hilited", L"winamp.thinger.pledit.selected");
+				bi->setBitmaps(L"winlamp.thinger.pledit", NULL, L"winlamp.thinger.pledit.hilited", L"winlamp.thinger.pledit.selected");
 				bucketitems.addItem(bi);
 				return bi;
 			}
 		case 1:
 			{
 				MlBucketItem *bi = new MlBucketItem();
-				bi->setBitmaps(L"winamp.thinger.library", NULL, L"winamp.thinger.library.hilited", L"winamp.thinger.library.selected");
+				bi->setBitmaps(L"winlamp.thinger.library", NULL, L"winlamp.thinger.library.hilited", L"winlamp.thinger.library.selected");
 				bucketitems.addItem(bi);
 				return bi;
 			}
 		case 2:
 			{
 				VidBucketItem *bi = new VidBucketItem();
-				bi->setBitmaps(L"winamp.thinger.video", NULL, L"winamp.thinger.video.hilited", L"winamp.thinger.video.selected");
+				bi->setBitmaps(L"winlamp.thinger.video", NULL, L"winlamp.thinger.video.hilited", L"winlamp.thinger.video.selected");
 				bucketitems.addItem(bi);
 				return bi;
 			}
 		case 3:
 			{
 				VisBucketItem *bi = new VisBucketItem();
-				bi->setBitmaps(L"winamp.thinger.vis", NULL, L"winamp.thinger.vis.hilited", L"winamp.thinger.vis.selected");
+				bi->setBitmaps(L"winlamp.thinger.vis", NULL, L"winlamp.thinger.vis.hilited", L"winlamp.thinger.vis.selected");
 				bucketitems.addItem(bi);
 				return bi;
 			}
@@ -423,7 +423,7 @@ int Wa2WndEmbed::destroyWindow(ifc_window *w)
 			ReentryFilter f(&wndMsgFilter, ee->whichwnd);
 			if (!f.mustLeave())
 			{
-				// this would hide the winamp window, which is probably not what we want to do (it should remain visible if it
+				// this would hide the winlamp window, which is probably not what we want to do (it should remain visible if it
 				// was visible, no?
 
 				// well, no, because we don't only run this in skin unloading, but also when a window gets destroyed (this is the wndcreation
@@ -769,7 +769,7 @@ void Wa2WndEmbed::rememberVisibleWindows()
 				if (!m_loading_at_startup || GetPrivateProfileIntW(L"gen_ff", L"classicplws", -1, INI_FILE) == -1)
 					WritePrivateProfileStringW(L"gen_ff", L"classicplws", classicpews ? L"1" : L"0", INI_FILE);
 				if (classicpews)
-					SendMessageW(wa2.getMainWindow(), WM_COMMAND, WINAMP_OPTIONS_WINDOWSHADE_PL, 0);
+					SendMessageW(wa2.getMainWindow(), WM_COMMAND, WINLAMP_OPTIONS_WINDOWSHADE_PL, 0);
 				GetWindowRect(w, &ws->position);
 			}
 		}
@@ -805,7 +805,7 @@ void Wa2WndEmbed::restoreVisibleWindows()
 				int classicpews = GetPrivateProfileIntW(L"gen_ff", L"classicplws", 0, INI_FILE);
 				if (classicpews)
 				{
-					SendMessageW(wa2.getMainWindow(), WM_COMMAND, WINAMP_OPTIONS_WINDOWSHADE_PL, 0);
+					SendMessageW(wa2.getMainWindow(), WM_COMMAND, WINLAMP_OPTIONS_WINDOWSHADE_PL, 0);
 				}
 				int classicwidth = GetPrivateProfileIntW(L"gen_ff", L"classicplwidth", 275, INI_FILE);
 				int classicheight = GetPrivateProfileIntW(L"gen_ff", L"classicplheight", 145, INI_FILE);
@@ -860,19 +860,19 @@ void PlaylistAppCmds::appcmds_onCommand(int id, const RECT *buttonRect, int whic
 	switch (id)
 	{
 	case PL_ADD:
-		wa2.sendPlCmd(Winamp2FrontEnd::WA2_PLEDITPOPUP_ADD, buttonRect->left, buttonRect->top, TPM_BOTTOMALIGN | TPM_LEFTALIGN);
+		wa2.sendPlCmd(WinLAMP2FrontEnd::WA2_PLEDITPOPUP_ADD, buttonRect->left, buttonRect->top, TPM_BOTTOMALIGN | TPM_LEFTALIGN);
 		break;
 	case PL_REM:
-		wa2.sendPlCmd(Winamp2FrontEnd::WA2_PLEDITPOPUP_REM, buttonRect->left, buttonRect->top, TPM_BOTTOMALIGN | TPM_LEFTALIGN);
+		wa2.sendPlCmd(WinLAMP2FrontEnd::WA2_PLEDITPOPUP_REM, buttonRect->left, buttonRect->top, TPM_BOTTOMALIGN | TPM_LEFTALIGN);
 		break;
 	case PL_SEL:
-		wa2.sendPlCmd(Winamp2FrontEnd::WA2_PLEDITPOPUP_SEL, buttonRect->left, buttonRect->top, TPM_BOTTOMALIGN | TPM_LEFTALIGN);
+		wa2.sendPlCmd(WinLAMP2FrontEnd::WA2_PLEDITPOPUP_SEL, buttonRect->left, buttonRect->top, TPM_BOTTOMALIGN | TPM_LEFTALIGN);
 		break;
 	case PL_MISC:
-		wa2.sendPlCmd(Winamp2FrontEnd::WA2_PLEDITPOPUP_MISC, buttonRect->left, buttonRect->top, TPM_BOTTOMALIGN | TPM_LEFTALIGN);
+		wa2.sendPlCmd(WinLAMP2FrontEnd::WA2_PLEDITPOPUP_MISC, buttonRect->left, buttonRect->top, TPM_BOTTOMALIGN | TPM_LEFTALIGN);
 		break;
 	case PL_LIST:
-		wa2.sendPlCmd(Winamp2FrontEnd::WA2_PLEDITPOPUP_LIST, buttonRect->right, buttonRect->top, TPM_BOTTOMALIGN | TPM_RIGHTALIGN);
+		wa2.sendPlCmd(WinLAMP2FrontEnd::WA2_PLEDITPOPUP_LIST, buttonRect->right, buttonRect->top, TPM_BOTTOMALIGN | TPM_RIGHTALIGN);
 		break;
 	}
 }
@@ -894,19 +894,19 @@ void MinibrowserAppCmds::appcmds_onCommand(int id, const RECT *buttonRect, int w
 	switch (id)
 	{
 	case MB_BACK:
-		wa2.sendMbCmd(Winamp2FrontEnd::WA2_MBCMD_BACK);
+		wa2.sendMbCmd(WinLAMP2FrontEnd::WA2_MBCMD_BACK);
 		break;
 	case MB_FORWARD:
-		wa2.sendMbCmd(Winamp2FrontEnd::WA2_MBCMD_FORWARD);
+		wa2.sendMbCmd(WinLAMP2FrontEnd::WA2_MBCMD_FORWARD);
 		break;
 	case MB_STOP:
-		wa2.sendMbCmd(Winamp2FrontEnd::WA2_MBCMD_STOP);
+		wa2.sendMbCmd(WinLAMP2FrontEnd::WA2_MBCMD_STOP);
 		break;
 	case MB_RELOAD:
-		wa2.sendMbCmd(Winamp2FrontEnd::WA2_MBCMD_RELOAD);
+		wa2.sendMbCmd(WinLAMP2FrontEnd::WA2_MBCMD_RELOAD);
 		break;
 	case MB_MISC:
-		wa2.sendMbCmd(Winamp2FrontEnd::WA2_MBPOPUP_MISC, buttonRect->right, buttonRect->top, TPM_BOTTOMALIGN | TPM_RIGHTALIGN);
+		wa2.sendMbCmd(WinLAMP2FrontEnd::WA2_MBPOPUP_MISC, buttonRect->right, buttonRect->top, TPM_BOTTOMALIGN | TPM_RIGHTALIGN);
 		break;
 	}
 }
@@ -927,19 +927,19 @@ void VideoAppCmds::appcmds_onCommand(int id, const RECT *buttonRect, int which_b
 	switch (id)
 	{
 	case VID_FULLSCREEN:
-		wa2.sendVidCmd(Winamp2FrontEnd::WA2_VIDCMD_FULLSCREEN);
+		wa2.sendVidCmd(WinLAMP2FrontEnd::WA2_VIDCMD_FULLSCREEN);
 		break;
 	case VID_1X:
-		wa2.sendVidCmd(Winamp2FrontEnd::WA2_VIDCMD_1X);
+		wa2.sendVidCmd(WinLAMP2FrontEnd::WA2_VIDCMD_1X);
 		break;
 	case VID_2X:
-		wa2.sendVidCmd(Winamp2FrontEnd::WA2_VIDCMD_2X);
+		wa2.sendVidCmd(WinLAMP2FrontEnd::WA2_VIDCMD_2X);
 		break;
 	case VID_LIB:
-		wa2.sendVidCmd(Winamp2FrontEnd::WA2_VIDCMD_LIB);
+		wa2.sendVidCmd(WinLAMP2FrontEnd::WA2_VIDCMD_LIB);
 		break;
 	case VID_MISC:
-		wa2.sendVidCmd(Winamp2FrontEnd::WA2_VIDPOPUP_MISC, buttonRect->right, buttonRect->top, TPM_BOTTOMALIGN | TPM_RIGHTALIGN);
+		wa2.sendVidCmd(WinLAMP2FrontEnd::WA2_VIDPOPUP_MISC, buttonRect->right, buttonRect->top, TPM_BOTTOMALIGN | TPM_RIGHTALIGN);
 		break;
 	}
 }

@@ -29,14 +29,14 @@ struct T_ENCODER_OGG_INFO : public T_ENCODER_NSV_INFO
 
 class C_ENCODER_OGG : public C_ENCODER_NSV {
 private:
-	HWND winamp;
+	HWND winlamp;
 protected:
 	virtual void FillAttribs();
 public:
     static HINSTANCE hEncoderInstance;
     C_ENCODER_OGG(HWND hwnd = 0);
     virtual ~C_ENCODER_OGG();
-    static bool isPresent(HWND winamp);
+    static bool isPresent(HWND winlamp);
     virtual void ReadConfFile(char * conf_file, char * section=NULL);
     virtual void FillConfFile(char * conf_file, char * section=NULL);
     static void Unload() { if(hEncoderInstance) FreeLibrary(hEncoderInstance); hEncoderInstance=0; }

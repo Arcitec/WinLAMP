@@ -4,7 +4,7 @@
 #include "resource1.h"
 #include "metadata_utils.h"
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 
 #define SKIP_THE_AND_WHITESPACE(x) { while (!iswalnum(*x) && *x) x++; if (!_wcsnicmp(x,L"the ",4)) x+=4; while (*x == L' ') x++; }
 int STRCMP_NULLOK(const wchar_t *pa, const wchar_t *pb) {

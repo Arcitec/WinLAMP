@@ -8,7 +8,7 @@
 #include "./config.h"
 
 #include "../omBrowser/browserView.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 #include "./serviceHost.h"
 #include "./serviceHelper.h"
@@ -150,7 +150,7 @@ HRESULT Navigation::Initialize()
 
 		
 	if (SUCCEEDED(ServiceHelper_Create(701, MAKEINTRESOURCE(IDS_DOCSERVICE_NAME), 
-				MAKEINTRESOURCE(IDR_HELP_ICON), L"http://dev.winamp.com/online-service-developers", 
+				MAKEINTRESOURCE(IDR_HELP_ICON), L"http://dev.winlamp.com/online-service-developers", 
 				WDSVCF_SPECIAL, FALSE, &service)))
 	{
 		CreateItemInt(hRoot, service);
@@ -625,14 +625,14 @@ HRESULT Navigation::CreatePopup(HNAVITEM hItem, HWND *hwnd)
 	hr = GetService(hItem, &service);
 	if (SUCCEEDED(hr))
 	{
-		HWND hWinamp = Plugin_GetWinamp();
+		HWND hWinLAMP = Plugin_GetWinLAMP();
 
 		if (NULL == OMBROWSERMNGR) 
 			hr = E_UNEXPECTED;
 
 		if (SUCCEEDED(hr))
 		{
-			hr = OMBROWSERMNGR->Initialize(NULL, hWinamp);
+			hr = OMBROWSERMNGR->Initialize(NULL, hWinLAMP);
 			if (SUCCEEDED(hr))
 			{
 				RECT rect;
@@ -649,7 +649,7 @@ HRESULT Navigation::CreatePopup(HNAVITEM hItem, HWND *hwnd)
 					rect.top += 16;
 					
 					hr = OMBROWSERMNGR->CreatePopup(service, rect.left, rect.top, 
-									rect.right - rect.left, rect.bottom - rect.top,	hWinamp, NULL, 0, hwnd);
+									rect.right - rect.left, rect.bottom - rect.top,	hWinLAMP, NULL, 0, hwnd);
 				}
 			}
 		}
@@ -1057,7 +1057,7 @@ HRESULT Navigation::OnCreateView(HNAVITEM hItem, HWND hParent, HWND *hView)
 
 		if (SUCCEEDED(hr))
 		{
-			hr = OMBROWSERMNGR->Initialize(NULL, Plugin_GetWinamp());
+			hr = OMBROWSERMNGR->Initialize(NULL, Plugin_GetWinLAMP());
 			if (SUCCEEDED(hr))
 			{
 				LPCWSTR forceUrl;

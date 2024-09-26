@@ -2,7 +2,7 @@
 #define NULLSOFT_AUDIOOUTH
 
 #include <windows.h>
-#include "../../../../Winamp/out.h"
+#include "../../../../WinLAMP/out.h"
 
 enum InitState
 {
@@ -14,7 +14,7 @@ enum InitState
 class AudioOut
 {
 public:
-	AudioOut() : dllInstance(0), winampWnd(NULL) {}
+	AudioOut() : dllInstance(0), winlampWnd(NULL) {}
 	virtual void Init() = 0;
 	virtual void Quit() = 0;
 	virtual int CanWrite() = 0;
@@ -32,7 +32,7 @@ public:
 	virtual void Config(HWND w) = 0;
 
 	HINSTANCE dllInstance;
-	HWND winampWnd;
+	HWND winlampWnd;
 };
 
 #endif

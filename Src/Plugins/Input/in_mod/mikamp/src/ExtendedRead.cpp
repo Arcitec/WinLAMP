@@ -23,7 +23,7 @@ BOOL InitPlayer(UNIMOD *mf, MPLAYER **ps, const PlayParams *params, BOOL quick);
 // TODO; is there a way to get floating point out of this stuff?
 extern "C" 
 {
-	__declspec(dllexport) intptr_t winampGetExtendedRead_open(const char *fn, int *size, int *bps, int *nch, int *srate)
+	__declspec(dllexport) intptr_t winlampGetExtendedRead_open(const char *fn, int *size, int *bps, int *nch, int *srate)
 	{
 		PlayParams params;
 		if (!GetPlayParams(fn, FALSE, &params))
@@ -95,7 +95,7 @@ extern "C"
 		return (intptr_t)mp;
 	}
 
-	__declspec(dllexport) size_t winampGetExtendedRead_getData(intptr_t handle, char *dest, size_t len, int *killswitch)
+	__declspec(dllexport) size_t winlampGetExtendedRead_getData(intptr_t handle, char *dest, size_t len, int *killswitch)
 	{
 		MPLAYER *mp = (MPLAYER *)handle;
 		DecodeInfo  *hwdata = (DecodeInfo *)mp->mf->md->device.local;
@@ -111,7 +111,7 @@ extern "C"
 	}
 
 
-	__declspec(dllexport) void winampGetExtendedRead_close(intptr_t handle)
+	__declspec(dllexport) void winlampGetExtendedRead_close(intptr_t handle)
 	{
 		MPLAYER *mp = (MPLAYER *)handle;
 		MDRIVER *md = mp->mf->md;

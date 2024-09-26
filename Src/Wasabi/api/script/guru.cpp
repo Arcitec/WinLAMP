@@ -134,7 +134,7 @@ int Guru::onPaint(Canvas *canvas) {
 		fontInfo.opaque = false;
 		w = canvas->getTextHeight(&fontInfo);
 		RECT s = {40, w*2, 560, w*3};
-		canvas->textOutCentered(&s, L"Winamp Script Failure. Press the left mouse button to continue.", &fontInfo);
+		canvas->textOutCentered(&s, L"WinLAMP Script Failure. Press the left mouse button to continue.", &fontInfo);
 		StringPrintfW t(L"Guru Meditation #%04X.%04X%04X.%d%s%s", code, (intinfo & 0xFFFF), VCPU::VIP & 0xFFFF, VCPU::VSD, txt?L" ":L"", txt?txt:L"");
 		s.top=w*4;
 		s.bottom=s.top+w;

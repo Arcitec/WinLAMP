@@ -3,7 +3,7 @@
 #include "usbplaylist.h"
 #include "usbplaylistsaver.h"
 #include "api.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include <tataki/bitmap/bitmap.h>
 #include <tataki/canvas/bltcanvas.h>
 #include <shlobj.h>
@@ -240,7 +240,7 @@ void USBDevice::commitChanges()
 	//update cache
 	tag();
 	cacheUpToDate = true;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)0,IPC_WRITE_EXTENDED_FILE_INFO);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)0,IPC_WRITE_EXTENDED_FILE_INFO);
 }
 
 // called from ml_pmp
@@ -803,7 +803,7 @@ bool USBDevice::playTracks(songid_t * songidList, int listLength, int startPlayb
 	// return false if unsupported
 	if(!enqueue) //clear playlist
 	{ 
-		SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_DELETE);
+		SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_DELETE);
 	}
 
 	for(int i=0; i<listLength; i++) 
@@ -818,12 +818,12 @@ bool USBDevice::playTracks(songid_t * songidList, int listLength, int startPlayb
 			s.ext      = NULL;
 			s.length   = curSong->length/1000;
 
-			SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
+			SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
 		}
 		else
 		{
 			char titleStr[32] = {0};
-			MessageBoxA(plugin.hwndWinampParent,WASABI_API_LNGSTRING(IDS_CANNOT_OPEN_FILE),
+			MessageBoxA(plugin.hwndWinLAMPParent,WASABI_API_LNGSTRING(IDS_CANNOT_OPEN_FILE),
 						WASABI_API_LNGSTRING_BUF(IDS_ERROR,titleStr,32),0);
 		}
 	}
@@ -831,9 +831,9 @@ bool USBDevice::playTracks(songid_t * songidList, int listLength, int startPlayb
 	if(!enqueue) 
 	{ 
 		//play item startPlaybackAt
-		SendMessage(plugin.hwndWinampParent,WM_WA_IPC,startPlaybackAt,IPC_SETPLAYLISTPOS);
-		SendMessage(plugin.hwndWinampParent,WM_COMMAND,40047,0); //stop
-		SendMessage(plugin.hwndWinampParent,WM_COMMAND,40045,0); //play
+		SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,startPlaybackAt,IPC_SETPLAYLISTPOS);
+		SendMessage(plugin.hwndWinLAMPParent,WM_COMMAND,40047,0); //stop
+		SendMessage(plugin.hwndWinLAMPParent,WM_COMMAND,40045,0); //play
 	}
 	return true;
 }
@@ -1030,8 +1030,8 @@ USBPlaylist* USBDevice::getMasterPlaylist()
 // constructor
 USBDevice::USBDevice(wchar_t drive, pmpDeviceLoading * load): transcoder(NULL) {
 	deviceTable = 0;
-	StringCchPrintf(ndeDataFile, 100, L"%c:\\winamp_metadata.dat", drive);
-	StringCchPrintf(ndeIndexFile, 100, L"%c:\\winamp_metadata.idx", drive);
+	StringCchPrintf(ndeDataFile, 100, L"%c:\\winlamp_metadata.dat", drive);
+	StringCchPrintf(ndeIndexFile, 100, L"%c:\\winlamp_metadata.idx", drive);
 	load->dev = this;
 	load->UpdateCaption = NULL;
 	//pass load to ml_pmp, ml updates load->UpdateCaption and context
@@ -1383,7 +1383,7 @@ static wchar_t* db_getFieldString(nde_scanner_t s, unsigned char id)
 
 void USBDevice::refreshNDECache(void) {
 	tag();
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)0,IPC_WRITE_EXTENDED_FILE_INFO);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)0,IPC_WRITE_EXTENDED_FILE_INFO);
 }
 
 int filenamecmp(const wchar_t *f1, const wchar_t *f2)

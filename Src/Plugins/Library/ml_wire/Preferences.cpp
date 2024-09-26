@@ -1,6 +1,6 @@
 #include "main.h"
 #include "api__ml_wire.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "Defaults.h"
 #include "UpdateTime.h"
 #include "UpdateAutoDownload.h"
@@ -137,7 +137,7 @@ BOOL CALLBACK PreferencesDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 				GetDlgItemText(hwndDlg, IDC_DOWNLOADLOCATION, defaultDownloadPath, MAX_PATH);
 				if (!PathFileExists(defaultDownloadPath))
 				{
-					BuildDefaultDownloadPath(plugin.hwndWinampParent);
+					BuildDefaultDownloadPath(plugin.hwndWinLAMPParent);
 					SetDlgItemText(hwndDlg, IDC_DOWNLOADLOCATION, defaultDownloadPath);
 				}
 			}

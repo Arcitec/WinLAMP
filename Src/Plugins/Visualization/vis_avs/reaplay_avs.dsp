@@ -111,9 +111,9 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ddraw.lib vfw32.lib /nologo /dll /machine:I386 /out:"c:\program files\winamp\plugins\reaplay_avs.dll"
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ddraw.lib vfw32.lib /nologo /dll /machine:I386 /out:"c:\program files\winlamp\plugins\reaplay_avs.dll"
 # SUBTRACT BASE LINK32 /debug
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ddraw.lib vfw32.lib /nologo /dll /machine:I386 /out:"c:\program files\winamp\plugins\reaplay_avs_laser.dll"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ddraw.lib vfw32.lib /nologo /dll /machine:I386 /out:"c:\program files\winlamp\plugins\reaplay_avs_laser.dll"
 # SUBTRACT LINK32 /debug
 
 !ELSEIF  "$(CFG)" == "reaplay_avs - Win32 NoMMX Release"
@@ -142,9 +142,9 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ddraw.lib vfw32.lib /nologo /dll /map /machine:I386 /out:"c:\progra~1\winamp\plugins\reaplay_avs.dll"
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ddraw.lib vfw32.lib /nologo /dll /map /machine:I386 /out:"c:\progra~1\winlamp\plugins\reaplay_avs.dll"
 # SUBTRACT BASE LINK32 /debug
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ddraw.lib vfw32.lib /nologo /dll /map /machine:I386 /out:"c:\progra~1\winamp\plugins\reaplay_avs.dll"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ddraw.lib vfw32.lib /nologo /dll /map /machine:I386 /out:"c:\progra~1\winlamp\plugins\reaplay_avs.dll"
 # SUBTRACT LINK32 /debug
 
 !ENDIF 

@@ -14,7 +14,7 @@
 **
 **   3. This notice may not be removed or altered from any source distribution.
 **
-** Author: Ben Allison benski@winamp.com
+** Author: Ben Allison benski@winlamp.com
 ** Created: March 1, 2007
 **
 */
@@ -62,7 +62,7 @@ static INT_PTR CALLBACK PreferencesProc(HWND hwndDlg, UINT msg, WPARAM wParam, L
 	case WM_INITDIALOG:
 		{
 			wchar_t config_extensions[128] = {0};
-			GetPrivateProfileStringW(L"in_flac", L"extensions", DEFAULT_EXTENSIONSW, config_extensions, 128, winampINI);
+			GetPrivateProfileStringW(L"in_flac", L"extensions", DEFAULT_EXTENSIONSW, config_extensions, 128, winlampINI);
 			SetDlgItemTextW(hwndDlg, IDC_EXTENSIONS, config_extensions);
 			CheckDlgButton(hwndDlg, IDC_AVERAGE_BITRATE, config_average_bitrate?BST_CHECKED:BST_UNCHECKED);
 		}
@@ -79,16 +79,16 @@ static INT_PTR CALLBACK PreferencesProc(HWND hwndDlg, UINT msg, WPARAM wParam, L
 				wchar_t config_extensions[128] = {0};
 				GetDlgItemTextW(hwndDlg, IDC_EXTENSIONS, config_extensions, 128);
 				if (!lstrcmpiW(config_extensions, DEFAULT_EXTENSIONSW))
-					WritePrivateProfileStringW(L"in_flac", L"extensions", 0, winampINI);
+					WritePrivateProfileStringW(L"in_flac", L"extensions", 0, winlampINI);
 				else
-					WritePrivateProfileStringW(L"in_flac", L"extensions", config_extensions, winampINI);
+					WritePrivateProfileStringW(L"in_flac", L"extensions", config_extensions, winlampINI);
 
 				plugin.FileExtensions = BuildExtensions(AutoChar(config_extensions));
 				config_average_bitrate = !!IsDlgButtonChecked(hwndDlg, IDC_AVERAGE_BITRATE);
 				if (config_average_bitrate)
-					WritePrivateProfileStringW(L"in_flac", L"average_bitrate", L"1", winampINI);
+					WritePrivateProfileStringW(L"in_flac", L"average_bitrate", L"1", winlampINI);
 				else
-					WritePrivateProfileStringW(L"in_flac", L"average_bitrate", L"0", winampINI);
+					WritePrivateProfileStringW(L"in_flac", L"average_bitrate", L"0", winlampINI);
 
 				fixBitrate=true;
 				EndDialog(hwndDlg, 0);

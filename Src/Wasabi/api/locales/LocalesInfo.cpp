@@ -18,7 +18,7 @@ LocalesInfosXmlReader::LocalesInfosXmlReader(const wchar_t *localename) : Locale
 		{
       {
       XMLAutoInclude include(parser, L"Locales");
-      parser->xmlreader_registerCallback(L"WinampLocaleDefinition", this);
+      parser->xmlreader_registerCallback(L"WinLAMPLocaleDefinition", this);
 			parser->xmlreader_open();
 
 			StringPathCombine fn(L"Locales", localename);

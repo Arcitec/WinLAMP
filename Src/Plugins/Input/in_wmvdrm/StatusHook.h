@@ -2,6 +2,6 @@
 #define NULLSOFT_STATUSHOOKH
 
 #include <windows.h>
-void Hook(HWND winamp);
-void Unhook(HWND winamp);
+void Hook(HWND winlamp);
+void Unhook(HWND winlamp);
 #endif

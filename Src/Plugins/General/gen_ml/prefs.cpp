@@ -486,7 +486,7 @@ static INT_PTR CALLBACK Prefs3Proc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
 		LPCWSTR pszPath = (LPCWSTR)SendMessageW(plugin.hwndParent, WM_WA_IPC, 0, IPC_GETPLUGINDIRECTORYW);
 		if(PathCombineW(buffer, pszPath, L"ml_disc.dll") && PathFileExistsW(buffer))
 		{			
-			PathCombineW(buffer, WINAMP_INI_DIR, L"Plugins\\ml\\cdrom.vmd");
+			PathCombineW(buffer, WINLAMP_INI_DIR, L"Plugins\\ml\\cdrom.vmd");
 			g_view_metaconf = new C_Config(buffer);
 
 			CheckDlgButton(hwndDlg, IDC_SHOW_EJECT_ICONS, g_view_metaconf->ReadInt(L"showeject", 1));
@@ -512,7 +512,7 @@ static INT_PTR CALLBACK Prefs3Proc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
 
 		CheckDlgButton(hwndDlg, IDC_PARENT_PODCASTS, g_config->ReadInt(L"podcast_parent", 0));
 
-		/*if (IPC_GET_CLOUD_HINST == -1) IPC_GET_CLOUD_HINST = (INT)SendMessage(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"WinampCloud", IPC_REGISTER_WINAMP_IPCMESSAGE);
+		/*if (IPC_GET_CLOUD_HINST == -1) IPC_GET_CLOUD_HINST = (INT)SendMessage(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"WinLAMPCloud", IPC_REGISTER_WINLAMP_IPCMESSAGE);
 		if (!cloud_hinst) cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
 
 		SendDlgItemMessageW(hwndDlg, IDC_TRANSFERS_COMBO, CB_SETITEMDATA, SendDlgItemMessageW(hwndDlg, IDC_TRANSFERS_COMBO, CB_ADDSTRING, 0, (LPARAM)L"as a top level tree item (default)"), 0);
@@ -606,8 +606,8 @@ static INT_PTR CALLBACK Prefs3Proc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
 										WASABI_API_LNGSTRINGW_BUF(IDS_RESTART, titleStr, 32),
 										MB_ICONQUESTION | MB_YESNO) == IDYES)
 						{
-							WritePrivateProfileStringW(L"winamp", L"show_prefs", L"-1", WINAMP_INI);
-							PostMessage(plugin.hwndParent, WM_WA_IPC, 0, IPC_RESTARTWINAMP);
+							WritePrivateProfileStringW(L"winlamp", L"show_prefs", L"-1", WINLAMP_INI);
+							PostMessage(plugin.hwndParent, WM_WA_IPC, 0, IPC_RESTARTWINLAMP);
 						}
 					}
 				}
@@ -636,7 +636,7 @@ static INT_PTR CALLBACK Prefs4Proc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
 		CheckDlgButton(hwndDlg, IDC_FF_SCROLLBARS, config_use_ff_scrollbars);
 		CheckDlgButton(hwndDlg, IDC_ALTERNATEITEMS, config_use_alternate_colors);
 		CheckDlgButton(hwndDlg, IDC_SKINNED_MENUS, IsSkinnedPopupEnabled(FALSE));
-		CheckDlgButton(hwndDlg, IDC_GENO, !!GetPrivateProfileIntW(L"winamp", L"geno", 1, WINAMP_INI));
+		CheckDlgButton(hwndDlg, IDC_GENO, !!GetPrivateProfileIntW(L"winlamp", L"geno", 1, WINLAMP_INI));
 	}
 	break;
 
@@ -664,7 +664,7 @@ static INT_PTR CALLBACK Prefs4Proc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
 		{
 			wchar_t buf[64] = {L"1"};
 			StringCchPrintfW(buf, 64, L"%d", !!IsDlgButtonChecked(hwndDlg, IDC_GENO));
-			WritePrivateProfileStringW(L"winamp", L"geno", buf, WINAMP_INI);
+			WritePrivateProfileStringW(L"winlamp", L"geno", buf, WINLAMP_INI);
 			break;
 		}
 		case IDC_RATING_COLUMN:

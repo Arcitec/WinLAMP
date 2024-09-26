@@ -12,8 +12,8 @@
 #include <map>
 #include "..\..\General\gen_ml/itemlist.h"
 #include "..\..\General\gen_ml/childwnd.h"
-#include "../winamp/wa_ipc.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_ipc.h"
+#include "../winlamp/wa_dlg.h"
 #include "config.h"
 
 class ListField {

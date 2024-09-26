@@ -15,7 +15,7 @@
 #ifndef IGNORE_API_GRACENOTE
 #include "../primo/obj_primo.h"
 #endif
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <api/service/waservicefactory.h>
 #include <shlwapi.h>
 #include <atlbase.h>
@@ -28,7 +28,7 @@ BOOL CALLBACK ripConfigProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 static int cachedev_used;
 static MCIDEVICEID cachedev;
 static wchar_t last_fn[8];
-extern "C" __declspec(dllexport) int winampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, int destlen)
+extern "C" __declspec(dllexport) int winlampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, int destlen)
 {
 	s_last_error = NULL;
 	if (!_stricmp(data, "type"))
@@ -646,7 +646,7 @@ static DINFO setInfo;
 
 void ParseIntSlashInt(const wchar_t *string, int *part, int *parts);
 
-extern "C" __declspec(dllexport) int winampSetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *val)
+extern "C" __declspec(dllexport) int winlampSetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *val)
 {
 //#ifndef IGNORE_API_GRACENOTE
 	s_last_error = NULL;
@@ -730,7 +730,7 @@ extern "C" __declspec(dllexport) int winampSetExtendedFileInfoW(const wchar_t *f
 	return 1;
 }
 
-extern "C" __declspec(dllexport) int winampWriteExtendedFileInfo()
+extern "C" __declspec(dllexport) int winlampWriteExtendedFileInfo()
 {
 	s_last_error = NULL;
 	// write it out
@@ -752,9 +752,9 @@ extern "C" __declspec(dllexport) int winampWriteExtendedFileInfo()
 	return 0;
 }
 
-// return 1 if you want winamp to show it's own file info dialogue, 0 if you want to show your own (via In_Module.InfoBox)
-// if returning 1, remember to implement winampGetExtendedFileInfo("formatinformation")!
-extern "C" __declspec(dllexport) int winampUseUnifiedFileInfoDlg(const wchar_t * fn)
+// return 1 if you want winlamp to show it's own file info dialogue, 0 if you want to show your own (via In_Module.InfoBox)
+// if returning 1, remember to implement winlampGetExtendedFileInfo("formatinformation")!
+extern "C" __declspec(dllexport) int winlampUseUnifiedFileInfoDlg(const wchar_t * fn)
 {
 	return 1;
 }
@@ -1201,7 +1201,7 @@ static INT_PTR CALLBACK CDText_Proc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARA
 // The window you return will recieve WM_COMMAND, IDOK/IDCANCEL messages when the user clicks OK or Cancel.
 // when the user edits a field which is duplicated in another pane, do a SendMessage(GetParent(hwnd),WM_USER,(WPARAM)L"fieldname",(LPARAM)L"newvalue");
 // this will be broadcast to all panes (including yours) as a WM_USER.
-extern "C" __declspec(dllexport) HWND winampAddUnifiedFileInfoPane(int n, const wchar_t * filename, HWND parent, wchar_t *name, size_t namelen)
+extern "C" __declspec(dllexport) HWND winlampAddUnifiedFileInfoPane(int n, const wchar_t * filename, HWND parent, wchar_t *name, size_t namelen)
 {
 	if (!lstrcmpiW(PathFindExtensionW(filename), L".cda") && !_wcsnicmp(filename + 1, L":\\track", 7)) // stupid hack, converts x:\\trackXX.cda to cda://x,XX
 	{

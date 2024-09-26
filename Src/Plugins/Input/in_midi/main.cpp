@@ -2,8 +2,8 @@
 #include "main.h"
 #include <math.h>
 #include "resource.h"
-#include "../Winamp/in2.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/in2.h"
+#include "../WinLAMP/wa_ipc.h"
 
 extern In_Module mod;
 void get_temp_file(char* fn)

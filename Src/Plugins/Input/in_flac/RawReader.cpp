@@ -16,7 +16,7 @@ static bool IsMyExtension(const wchar_t *filename)
 	if (extension && *extension)
 	{
 		wchar_t exts[128] = {0};
-		GetPrivateProfileStringW(L"in_flac", L"extensions", DEFAULT_EXTENSIONSW, exts, 128, winampINI);
+		GetPrivateProfileStringW(L"in_flac", L"extensions", DEFAULT_EXTENSIONSW, exts, 128, winlampINI);
 
 		extension++;
 		wchar_t *b = exts;

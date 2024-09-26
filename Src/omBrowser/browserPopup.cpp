@@ -9,7 +9,7 @@
 #include "./toolbar.h"
 #include "./statusbar.h"
 #include "./curtain.h"
-#include "../winamp/skinWindowIPC.h"
+#include "../winlamp/skinWindowIPC.h"
 #include "../Plugins/General/gen_ml/colors.h"
 
 #include "./obj_ombrowser.h"
@@ -41,7 +41,7 @@
 #endif
 
 
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 
 #include <exdispid.h>
 #include <strsafe.h>
@@ -138,7 +138,7 @@ HWND BrowserPopup_Create(obj_ombrowser *browserManager, ifc_omservice *service, 
 	Toolbar_RegisterClass(Plugin_GetInstance());
 	Statusbar_RegisterClass(Plugin_GetInstance());
 	
-	if (NULL == hOwner && FAILED(Plugin_GetWinampWnd(&hOwner)))
+	if (NULL == hOwner && FAILED(Plugin_GetWinLAMPWnd(&hOwner)))
 		hOwner = NULL;
 
 	BROWSERPOPUPCREATEPARAM param;
@@ -503,11 +503,11 @@ static BOOL BrowserPopup_SwitchToFullscreen(HWND hwnd)
 
 	restore->hOwner = (HWND)(LONG_PTR)GetWindowLongPtr(hwnd, GWLP_HWNDPARENT);
 
-	HWND hWinamp;
-	if (FAILED(Plugin_GetWinampWnd(&hWinamp)))
-		hWinamp = NULL;
+	HWND hWinLAMP;
+	if (FAILED(Plugin_GetWinLAMPWnd(&hWinLAMP)))
+		hWinLAMP = NULL;
 
-	HWND hDlgParent = (HWND)SENDWAIPC(hWinamp, IPC_GETDIALOGBOXPARENT, 0);
+	HWND hDlgParent = (HWND)SENDWAIPC(hWinLAMP, IPC_GETDIALOGBOXPARENT, 0);
 	if (NULL != hDlgParent && restore->hOwner == hDlgParent)
 		restore->hOwner = NULL;
 
@@ -552,10 +552,10 @@ static BOOL BrowserPopup_Restore(HWND hwnd)
 
 	if (NULL == restore->hOwner)
 	{
-		HWND hWinamp;
-		if (SUCCEEDED(Plugin_GetWinampWnd(&hWinamp)))
+		HWND hWinLAMP;
+		if (SUCCEEDED(Plugin_GetWinLAMPWnd(&hWinLAMP)))
 		{
-			restore->hOwner = (HWND)SENDWAIPC(hWinamp, IPC_GETDIALOGBOXPARENT, 0);
+			restore->hOwner = (HWND)SENDWAIPC(hWinLAMP, IPC_GETDIALOGBOXPARENT, 0);
 		}
 	}
 
@@ -775,11 +775,11 @@ static void BrowserPopup_OnDestroy(HWND hwnd)
 		if (0 != (WS_VISIBLE & browserStyle))
 			SetWindowLongPtr(hBrowser, GWL_STYLE, browserStyle & ~WS_VISIBLE);
 		
-		HWND hWinamp = NULL;
-		if (Plugin_GetWinampWnd(&hWinamp))
-			hWinamp = NULL;
+		HWND hWinLAMP = NULL;
+		if (Plugin_GetWinLAMPWnd(&hWinLAMP))
+			hWinLAMP = NULL;
 
-		SetWindowLongPtr(hBrowser, GWLP_HWNDPARENT, (LONGX86)(LONG_PTR)hWinamp);
+		SetWindowLongPtr(hBrowser, GWLP_HWNDPARENT, (LONGX86)(LONG_PTR)hWinLAMP);
 
 		if (NULL == popup || NULL == popup->browserManager ||
 			S_OK == popup->browserManager->IsFinishing() ||
@@ -881,11 +881,11 @@ static void BrowserPopup_OnWindowPosChanging(HWND hwnd, WINDOWPOS *pwp)
 	BROWSERPOPUP *popup = GetPopup(hwnd);
 	if (NULL != popup && 0 != (BPF_LOCKRESIZE & popup->flags))
 	{
-		HWND hWinamp = NULL;
-		if (FAILED(Plugin_GetWinampWnd(&hWinamp))) 
-			hWinamp = NULL;
+		HWND hWinLAMP = NULL;
+		if (FAILED(Plugin_GetWinLAMPWnd(&hWinLAMP))) 
+			hWinLAMP = NULL;
 
-		if (NULL != hWinamp && hWinamp == (HWND)(LONG_PTR)GetWindowLongPtr(hwnd, GWLP_HWNDPARENT))
+		if (NULL != hWinLAMP && hWinLAMP == (HWND)(LONG_PTR)GetWindowLongPtr(hwnd, GWLP_HWNDPARENT))
 		{
 			RECT rect;
 			if (BrowserPopup_PopRect(hwnd, &rect, TRUE))
@@ -1228,12 +1228,12 @@ static void BrowserPopup_OnVisibleChange(HWND hwnd, BOOL fVisible)
 	{
 		ShowWindow(hFrame, (0 == (WS_VISIBLE & GetWindowLongPtr(hFrame, GWL_STYLE))) ? SW_SHOWNOACTIVATE : SW_SHOW);
 		
-		HWND hWinamp;
-		if (FAILED(Plugin_GetWinampWnd(&hWinamp))) 
-			hWinamp = NULL;
+		HWND hWinLAMP;
+		if (FAILED(Plugin_GetWinLAMPWnd(&hWinLAMP))) 
+			hWinLAMP = NULL;
 
 		HWND hFrame = BrowserPopup_GetFrame(hwnd);
-		HWND hDlgParent = (HWND)SENDWAIPC(hWinamp, IPC_GETDIALOGBOXPARENT, 0);
+		HWND hDlgParent = (HWND)SENDWAIPC(hWinLAMP, IPC_GETDIALOGBOXPARENT, 0);
 		if (NULL != hFrame && NULL != hDlgParent && hFrame != hDlgParent)
 		{
 			DWORD frameStyle = GetWindowStyleEx(hFrame);
@@ -1729,19 +1729,19 @@ static void BrowserPopup_OnParentChanged(HWND hwnd)
 	
 	popup->flags &= ~BPF_LOCKRESIZE;
 
-	HWND hWinamp;
-	if (FAILED(Plugin_GetWinampWnd(&hWinamp))) 
-		hWinamp = NULL;
+	HWND hWinLAMP;
+	if (FAILED(Plugin_GetWinLAMPWnd(&hWinLAMP))) 
+		hWinLAMP = NULL;
 
 	oldStyleEx = GetWindowStyleEx(hwnd);
 	newStyleEx = oldStyleEx;
 	
 	if (hRoot != hwnd)
 	{
-		HWND hDlgParent = (HWND)SENDWAIPC(hWinamp, IPC_GETDIALOGBOXPARENT, 0);
-		if (hRoot != hWinamp && hRoot != hDlgParent)
+		HWND hDlgParent = (HWND)SENDWAIPC(hWinLAMP, IPC_GETDIALOGBOXPARENT, 0);
+		if (hRoot != hWinLAMP && hRoot != hDlgParent)
 		{			
-			if (NULL != hDlgParent && hWinamp == (HWND)(LONG_PTR)GetWindowLongPtr(hRoot, GWLP_HWNDPARENT))
+			if (NULL != hDlgParent && hWinLAMP == (HWND)(LONG_PTR)GetWindowLongPtr(hRoot, GWLP_HWNDPARENT))
 			{
 				SetWindowLongPtr(hRoot, GWLP_HWNDPARENT, (LONGX86)(LONG_PTR)hDlgParent);
 			}
@@ -1753,8 +1753,8 @@ static void BrowserPopup_OnParentChanged(HWND hwnd)
 		newStyleEx &= ~WS_EX_CONTROLPARENT;
 		
 
-		if (NULL != hWinamp && hWinamp != (HWND)(LONG_PTR)GetWindowLongPtr(hwnd, GWLP_HWNDPARENT))
-			SetWindowLongPtr(hwnd, GWLP_HWNDPARENT, (LONGX86)(LONG_PTR)hWinamp);
+		if (NULL != hWinLAMP && hWinLAMP != (HWND)(LONG_PTR)GetWindowLongPtr(hwnd, GWLP_HWNDPARENT))
+			SetWindowLongPtr(hwnd, GWLP_HWNDPARENT, (LONGX86)(LONG_PTR)hWinLAMP);
 
 		RECT rect;
 		if (BrowserPopup_PopRect(hwnd, &rect, FALSE))
@@ -1826,14 +1826,14 @@ static LRESULT BrowserPopup_OnSkinRefreshing(HWND hwnd)
 	HWND hRoot = GetAncestor(hwnd, GA_ROOT);
 	if (hRoot != hwnd)
 	{
-		HWND hWinamp;
-		if (FAILED(Plugin_GetWinampWnd(&hWinamp))) 
-			hWinamp = NULL;
+		HWND hWinLAMP;
+		if (FAILED(Plugin_GetWinLAMPWnd(&hWinLAMP))) 
+			hWinLAMP = NULL;
 
-		HWND hDlgParent = (HWND)SENDWAIPC(hWinamp, IPC_GETDIALOGBOXPARENT, 0);
+		HWND hDlgParent = (HWND)SENDWAIPC(hWinLAMP, IPC_GETDIALOGBOXPARENT, 0);
 		if (NULL != hDlgParent && hDlgParent == (HWND)(LONG_PTR)GetWindowLongPtr(hRoot, GWLP_HWNDPARENT))
 		{
-            SetWindowLongPtr(hRoot, GWLP_HWNDPARENT, (LONGX86)(LONG_PTR)hWinamp);
+            SetWindowLongPtr(hRoot, GWLP_HWNDPARENT, (LONGX86)(LONG_PTR)hWinLAMP);
 		}
 	}
 	return 0;
@@ -1866,11 +1866,11 @@ static LRESULT BrowserPopup_OnSetFramePos(HWND hwnd, WINDOWPOS *pwp)
 		hFrame = wasabiParent->gethWnd();
 		if (NULL == hFrame) return FALSE;
 
-		HWND hWinamp;
-		if (FAILED(Plugin_GetWinampWnd(&hWinamp))) 
-			hWinamp = NULL;
+		HWND hWinLAMP;
+		if (FAILED(Plugin_GetWinLAMPWnd(&hWinLAMP))) 
+			hWinLAMP = NULL;
 
-		HWND hDlgParent = (HWND)SENDWAIPC(hWinamp, IPC_GETDIALOGBOXPARENT, 0);
+		HWND hDlgParent = (HWND)SENDWAIPC(hWinLAMP, IPC_GETDIALOGBOXPARENT, 0);
 		if (hDlgParent == hFrame)
 			return FALSE;  // do not change size/pos if we are part of the sui
 		

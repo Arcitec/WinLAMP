@@ -1,23 +1,23 @@
-#ifndef NULLSOFT_WINAMP_OMBROWSER_UI_HOOK_HEADER
-#define NULLSOFT_WINAMP_OMBROWSER_UI_HOOK_HEADER
+#ifndef NULLSOFT_WINLAMP_OMBROWSER_UI_HOOK_HEADER
+#define NULLSOFT_WINLAMP_OMBROWSER_UI_HOOK_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
 #endif
 
-#include "./ifc_winamphook.h"
+#include "./ifc_winlamphook.h"
 #include "./ifc_omserviceevent.h"
 #include "./ifc_omconfigcallback.h"
 #include <bfc/multipatch.h>
 
-#define MPIID_WINAMPHOOK			10
+#define MPIID_WINLAMPHOOK			10
 #define MPIID_SERVICEEVENT			20
 #define MPIID_CONFIGCALLBACK		30
 
 class ifc_omservice;
 class obj_ombrowser;
 
-class BrowserUiHook :	public MultiPatch<MPIID_WINAMPHOOK, ifc_winamphook>,
+class BrowserUiHook :	public MultiPatch<MPIID_WINLAMPHOOK, ifc_winlamphook>,
 						public MultiPatch<MPIID_SERVICEEVENT, ifc_omserviceevent>,
 						public MultiPatch<MPIID_CONFIGCALLBACK, ifc_omconfigcallback>
 {
@@ -34,7 +34,7 @@ public:
 	size_t Release();
 	int QueryInterface(GUID interface_guid, void **object);
 
-	/*ifc_winamphook (partial) */
+	/*ifc_winlamphook (partial) */
 	HRESULT SkinChanging(void);
 	HRESULT SkinChanged(const wchar_t *skinName);
 	HRESULT SkinColorChange(const wchar_t *colorTheme);
@@ -58,7 +58,7 @@ protected:
 	ULONG ref;
 	BOOL popupMode;
 	HWND hwnd;
-	UINT winampCookie;
+	UINT winlampCookie;
 	UINT configCookie;
 
 protected:
@@ -67,4 +67,4 @@ protected:
 };
 
 
-#endif //NULLSOFT_WINAMP_OMBROWSER_UI_HOOK_HEADER
+#endif //NULLSOFT_WINLAMP_OMBROWSER_UI_HOOK_HEADER

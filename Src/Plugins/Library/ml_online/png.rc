@@ -21,7 +21,7 @@ IDR_ICON_SHOUTCASTRADIO  RCDATA
 //".\\resources\\iconShoutcastTv.png" 
 //IDR_ICON_SINGINGFISH  RCDATA
 //".\\resources\\iconSingingfish.png" 
-//IDR_ICON_WINAMPMUSIC  RCDATA
+//IDR_ICON_WINLAMPMUSIC  RCDATA
 //".\\resources\\iconWaMusic.png" 
 //IDR_ICON_WINAMREMOTE  RCDATA
 //".\\resources\\iconWaRemote.png"

@@ -125,8 +125,8 @@ void DownloadsParse::ReadNodes( const wchar_t *url )
 	XMLNode::NodeList::const_iterator itr;
 	const XMLNode *curNode = xmlDOM.GetRoot();
 
-	if ( curNode->Present( L"winamp:preferences" ) )
-		curNode = curNode->Get( L"winamp:preferences" );
+	if ( curNode->Present( L"winlamp:preferences" ) )
+		curNode = curNode->Get( L"winlamp:preferences" );
 
 	curNode = curNode->Get( L"downloads" );
 	if ( curNode )

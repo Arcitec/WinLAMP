@@ -63,7 +63,7 @@ class DXContext
 {
     public:
         // PUBLIC FUNCTIONS
-        DXContext(HWND hWndWinamp,HINSTANCE hInstance,LPCWSTR szClassName,LPCSTR szWindowCaption,WNDPROC pProc,LONG_PTR uWindowLong, int minimize_winamp, wchar_t* szIniFile);
+        DXContext(HWND hWndWinLAMP,HINSTANCE hInstance,LPCWSTR szClassName,LPCSTR szWindowCaption,WNDPROC pProc,LONG_PTR uWindowLong, int minimize_winlamp, wchar_t* szIniFile);
         ~DXContext();
         BOOL StartOrRestartDevice(DXCONTEXT_PARAMS *pParams); // also serves as Init() function
         BOOL OnUserResizeWindow(RECT *new_window_rect, RECT *new_client_rect);
@@ -106,7 +106,7 @@ class DXContext
         HMODULE m_hmod_d3d9, m_hmod_d3dx9;
         int  m_ordinal_adapter;
         HWND m_hwnd;
-        HWND m_hwnd_winamp;
+        HWND m_hwnd_winlamp;
         LONG_PTR m_uWindowLong;
 		ATOM m_classAtom;
         char m_szWindowCaption[512];
@@ -115,8 +115,8 @@ class DXContext
         char m_szDesc[MAX_DEVICE_IDENTIFIER_STRING];
         HINSTANCE m_hInstance;
         int  m_ignore_wm_destroy;
-        int  m_minimize_winamp;
-        int  m_winamp_minimized;
+        int  m_minimize_winlamp;
+        int  m_winlamp_minimized;
         int  m_truly_exiting;
         int  m_bpp;
 
@@ -128,10 +128,10 @@ class DXContext
         BOOL TestFormat(int ordinal_adapter, D3DFORMAT fmt);
         int  CheckAndCorrectFullscreenDispMode(int ordinal_adapter, D3DDISPLAYMODE *pdm);
         void SetViewport();
-        void MinimizeWinamp(HMONITOR hPluginMonitor);
+        void MinimizeWinLAMP(HMONITOR hPluginMonitor);
         BOOL Internal_Init(DXCONTEXT_PARAMS *pParams, BOOL bFirstInit);
         void Internal_CleanUp();
-        void RestoreWinamp();
+        void RestoreWinLAMP();
         void GetSnappedClientSize(); //windowed mode only
 };
 

@@ -5,7 +5,7 @@
 #include "./resource.h"
 #include "./externalCOM.h"
 
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include <strsafe.h>
 
 #define IS_INVALIDISPATCH(__disp) (((IDispatch *)1) == (__disp) || NULL == (__disp))
@@ -146,15 +146,15 @@ HRESULT OmService::GetExternal( IDispatch **ppDispatch )
 	
 	*ppDispatch = NULL;
 
-	HWND hWinamp = plugin.hwndWinampParent;
-	if ( hWinamp == NULL )
+	HWND hWinLAMP = plugin.hwndWinLAMPParent;
+	if ( hWinLAMP == NULL )
 		return E_UNEXPECTED;
 		
-	//////*ppDispatch = (IDispatch*)SENDWAIPC(hWinamp, IPC_GET_DISPATCH_OBJECT, 0);
+	//////*ppDispatch = (IDispatch*)SENDWAIPC(hWinLAMP, IPC_GET_DISPATCH_OBJECT, 0);
 
 	WCHAR szBuffer[ 64 ] = { 0 };
 	if ( SUCCEEDED( StringCchPrintfW( szBuffer, ARRAYSIZE( szBuffer ), L"%u", id ) ) )
-		*ppDispatch = (IDispatch *) SENDWAIPC( hWinamp, IPC_JSAPI2_GET_DISPATCH_OBJECT, (WPARAM) szBuffer );
+		*ppDispatch = (IDispatch *) SENDWAIPC( hWinLAMP, IPC_JSAPI2_GET_DISPATCH_OBJECT, (WPARAM) szBuffer );
 
 
 	if (IS_INVALIDISPATCH(*ppDispatch) && FAILED(ExternalCOM::CreateInstance((ExternalCOM**)ppDispatch)))
@@ -244,7 +244,7 @@ HRESULT OmService::CreateView( HWND hParent, HWND *hView )
 	{
 		if ( OMBROWSERMNGR != NULL )
 		{
-			hr = OMBROWSERMNGR->Initialize( NULL, plugin.hwndWinampParent );
+			hr = OMBROWSERMNGR->Initialize( NULL, plugin.hwndWinLAMPParent );
 			if ( SUCCEEDED( hr ) )
 				hr = OMBROWSERMNGR->CreateView( this, hParent, NULL, 0, hView );
 		}

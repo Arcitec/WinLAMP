@@ -9,17 +9,17 @@
 #include "ParseUtil.h"
 #include <strsafe.h>
 
-static void ReadWinampSpecificItem(const XMLNode *item, RSS::Item &newItem)
+static void ReadWinLAMPSpecificItem(const XMLNode *item, RSS::Item &newItem)
 {
-	newItem.listened = PropertyIsTrue(item, L"winamp:listened");
-	newItem.downloaded = PropertyIsTrue(item, L"winamp:downloaded");
+	newItem.listened = PropertyIsTrue(item, L"winlamp:listened");
+	newItem.downloaded = PropertyIsTrue(item, L"winlamp:downloaded");
 }
 
-static void ReadRSSItem(XMLNode *item, Channel &channel, bool doWinampSpecificTags)
+static void ReadRSSItem(XMLNode *item, Channel &channel, bool doWinLAMPSpecificTags)
 {
 	RSS::MutableItem newItem;
-	if (doWinampSpecificTags)
-		ReadWinampSpecificItem(item, newItem);
+	if (doWinLAMPSpecificTags)
+		ReadWinLAMPSpecificItem(item, newItem);
 
 	const wchar_t *pubdate = GetContent(item, L"pubDate");
 	if (pubdate && pubdate[0])
@@ -92,15 +92,15 @@ static void ReadRSSItem(XMLNode *item, Channel &channel, bool doWinampSpecificTa
 	}
 }
 
-void ReadWinampSpecificChannel(const XMLNode *node, Channel &newChannel)
+void ReadWinLAMPSpecificChannel(const XMLNode *node, Channel &newChannel)
 {
 	const XMLNode *curNode = 0;
-	const wchar_t *lastupdate = node->GetProperty(L"winamp:lastupdate");
+	const wchar_t *lastupdate = node->GetProperty(L"winlamp:lastupdate");
 	if (lastupdate && lastupdate[0])
 		newChannel.lastUpdate = MakeRFCDate(lastupdate);
 
-	const wchar_t *winamp_url = GetContent(node, L"winamp:url");
-	newChannel.SetURL(winamp_url);
+	const wchar_t *winlamp_url = GetContent(node, L"winlamp:url");
+	newChannel.SetURL(winlamp_url);
 
 	// set to preference value first
 	newChannel.updateTime = updateTime;
@@ -108,7 +108,7 @@ void ReadWinampSpecificChannel(const XMLNode *node, Channel &newChannel)
 	newChannel.autoDownload = autoDownload;
 	newChannel.autoDownloadEpisodes = autoDownloadEpisodes;
 
-	curNode = node->Get(L"winamp:update");
+	curNode = node->Get(L"winlamp:update");
 	if (curNode)
 	{
 		newChannel.useDefaultUpdate = PropertyIsTrue(curNode, L"usedefaultupdate");
@@ -120,7 +120,7 @@ void ReadWinampSpecificChannel(const XMLNode *node, Channel &newChannel)
 		}
 	}
 
-	curNode = node->Get(L"winamp:download");
+	curNode = node->Get(L"winlamp:download");
 	if (curNode) 
 	{
 		newChannel.autoDownload = PropertyIsTrue(curNode, L"autodownload");
@@ -133,11 +133,11 @@ void ReadWinampSpecificChannel(const XMLNode *node, Channel &newChannel)
 	}
 }
 
-static void ReadRSSChannel(const XMLNode *node, Channel &newChannel, bool doWinampSpecificTags)
+static void ReadRSSChannel(const XMLNode *node, Channel &newChannel, bool doWinLAMPSpecificTags)
 {
 	XMLNode::NodeList::const_iterator itemItr;
-	if (doWinampSpecificTags)
-		ReadWinampSpecificChannel(node, newChannel);
+	if (doWinLAMPSpecificTags)
+		ReadWinLAMPSpecificChannel(node, newChannel);
 
 	const wchar_t *title = GetContent(node, L"title");
 	newChannel.SetTitle(title);
@@ -156,11 +156,11 @@ static void ReadRSSChannel(const XMLNode *node, Channel &newChannel, bool doWina
 	if (items)
 	{
 		for (itemItr = items->begin(); itemItr != items->end(); itemItr++)
-			ReadRSSItem(*itemItr, newChannel, doWinampSpecificTags);
+			ReadRSSItem(*itemItr, newChannel, doWinLAMPSpecificTags);
 	}
 }
 
-void ReadRSS(const XMLNode *rss, ChannelSync *sync, bool doWinampSpecificTags, const wchar_t *url)
+void ReadRSS(const XMLNode *rss, ChannelSync *sync, bool doWinLAMPSpecificTags, const wchar_t *url)
 {
 	XMLNode::NodeList::const_iterator itr;
 
@@ -171,7 +171,7 @@ void ReadRSS(const XMLNode *rss, ChannelSync *sync, bool doWinampSpecificTags, c
 		for (itr = channelList->begin(); itr != channelList->end(); itr ++)
 		{
 			Channel newChannel;
-			ReadRSSChannel(*itr, newChannel, doWinampSpecificTags);
+			ReadRSSChannel(*itr, newChannel, doWinLAMPSpecificTags);
 			if (!newChannel.url || !newChannel.url[0])
 				newChannel.SetURL(url);
 			sync->NewChannel(newChannel);

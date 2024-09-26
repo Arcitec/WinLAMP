@@ -31,13 +31,13 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define __NULLSOFT_DX8_PLUGIN_SHELL_DEFINES_H__ 1
 
 // APPNAME should be something like "MyPlugin 1.0".
-// This is the name that will appear in Winamp's list of installed plugins.
+// This is the name that will appear in WinLAMP's list of installed plugins.
 // Try to include the version number with the name.
 // Note: to change the name of the *file* (DLL) that the plugin is
 //   compiled to, go to Project Settings -> Link tab -> and change the
 //   'output file name'.  Don't forget to do it for both Debug AND 
 //   Release builds!
-#define SHORTNAME        "MilkDrop 2" // used as window caption for both MilkDrop and the config panel.  avoid numbers or punctuation; when 'integrate with winamp' option is enabled, these characters don't always work with all skins.
+#define SHORTNAME        "MilkDrop 2" // used as window caption for both MilkDrop and the config panel.  avoid numbers or punctuation; when 'integrate with winlamp' option is enabled, these characters don't always work with all skins.
 #define LONGNAME         "MilkDrop v2.25d" // appears at bottom of config panel
 #define LONGNAMEW        L"MilkDrop v2.25d" // appears at bottom of config panel
 
@@ -56,25 +56,25 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define INT_SUBVERSION  5      //straight=0, a=1, b=2, ...
 
 // SUBDIR puts milkdrop's documentation, INI file, presets folder, etc.
-// in a subdir underneath Winamp\Plugins.
+// in a subdir underneath WinLAMP\Plugins.
 #define SUBDIR  L"Milkdrop2\\"   //""
 
 // INIFILE is the name of the .INI file that will save the user's
 // config panel settings.  Do not include a path; just give the filename.
-// The actual file will be stored in the WINAMP\PLUGINS directory,
-// OR POSSIBLY c:\application data\...(user)...\winamp\plugins!!! - if 
+// The actual file will be stored in the WINLAMP\PLUGINS directory,
+// OR POSSIBLY c:\application data\...(user)...\winlamp\plugins!!! - if 
 // they have sep. settings for each user!
 #define INIFILE         L"milk2.ini"      //*** DO NOT PUT IN A SUBDIR because on save, if dir doesn't already exist,
                                          //     it won't be able to save the INI file.  
-#define MSG_INIFILE     L"milk2_msg.ini"  //*** could be in c:\program files\winamp\plugins, or in 
-#define IMG_INIFILE     L"milk2_img.ini"  //                c:\application data\...user...\winamp\plugins !!
+#define MSG_INIFILE     L"milk2_msg.ini"  //*** could be in c:\program files\winlamp\plugins, or in 
+#define IMG_INIFILE     L"milk2_img.ini"  //                c:\application data\...user...\winlamp\plugins !!
 #define ADAPTERSFILE	L"milk2_adapters.txt"
 
 // DOCFILE is the name of the documentation file that you'll write
 // for your users.  Do not include a path; just give the filename.
 // When a user clicks the 'View Docs' button on the config panel,
 // the plugin will try to display this file, located in the 
-// WINAMP\PLUGINS directory.  
+// WINLAMP\PLUGINS directory.  
 //
 // ***Note that the button will be invisible (on the config panel) 
 // at runtime if this string is empty.***
@@ -93,7 +93,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // in a little box in the config panel, to identify the author & copyright 
 // holder of the plugin.  Keep them short so they fit in the box.
 #define AUTHOR_NAME     L"Ryan Geiss"
-#define COPYRIGHT       L"(c) 2001-2023 Winamp SA"
+#define COPYRIGHT       L"(c) 2001-2023 WinLAMP SA"
 
 // CLASSNAME is the name of the window class that the plugin will
 // use.  You don't want this to overlap with any other plugins
@@ -180,7 +180,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define EXTRA_FONT_2_DEFAULT_AA   1
 
 #define WINDOWCAPTION   SHORTNAME   // the caption that will appear on the plugin window
-#define DLLDESC         LONGNAME    // the desc. of this DLL, as it appears in Winamp's list of viz plugins
+#define DLLDESC         LONGNAME    // the desc. of this DLL, as it appears in WinLAMP's list of viz plugins
 #define MODULEDESC      LONGNAME    // the desc. of this viz module within the DLL (..this framework is set up for just 1 module per DLL)
 
 // Finally, a few parameters that will control how things are done

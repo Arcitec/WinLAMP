@@ -1,6 +1,6 @@
 #include "./commandParser.h"
 #include "./loginCommand.h"
-#include "./commandWinampAuth.h"
+#include "./commandWinLAMPAuth.h"
 #include "./commandWebAuth.h"
 
 #include "./common.h"
@@ -35,8 +35,8 @@ HRESULT LoginCommandParser::Begin(obj_xml *reader, ifc_xmlreaderparams *params)
 		return E_INVALIDARG;
 
 	HRESULT hr;
-	if (IsEqualGUID(LCUID_WINAMPAUTH, commandId))
-		hr = LoginCommandWinampAuth::CreateInstance((LoginCommandWinampAuth**)&object);
+	if (IsEqualGUID(LCUID_WINLAMPAUTH, commandId))
+		hr = LoginCommandWinLAMPAuth::CreateInstance((LoginCommandWinLAMPAuth**)&object);
 	else if (IsEqualGUID(LCUID_WEBAUTH, commandId))
 		hr = LoginCommandWebAuth::CreateInstance((LoginCommandWebAuth**)&object);
 	else

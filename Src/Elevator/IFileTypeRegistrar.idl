@@ -75,7 +75,7 @@ interface IFileTypeRegistrar : IUnknown
 
 	HRESULT  SetupFileType(
 		 [in, string]  LPCWSTR programName, 
-		 [in, string]  LPCWSTR winamp_file, 
+		 [in, string]  LPCWSTR winlamp_file, 
 		 [in, string]  LPCWSTR name, 
 		 [in] int iconNumber, 
 		 [in, string]  LPCWSTR defaultShellCommand,
@@ -84,19 +84,19 @@ interface IFileTypeRegistrar : IUnknown
 
 	HRESULT  SetupShell(
 		 [in, string] LPCWSTR commandLine, 
-		 [in, string] LPCWSTR winamp_file, 
+		 [in, string] LPCWSTR winlamp_file, 
 		 [in, string] LPCWSTR description, 
 		 [in, string] LPCWSTR commandName,
 		 [in, string] LPCWSTR dragAndDropGUID
 		);
 
 	HRESULT  RemoveShell(
-		 [in, string] LPCWSTR winamp_file,
+		 [in, string] LPCWSTR winlamp_file,
 		 [in, string] LPCWSTR commandName
 		);
 
 	HRESULT SetupDefaultFileType(
-		 [in, string] LPCWSTR winamp_file,
+		 [in, string] LPCWSTR winlamp_file,
 		 [in, string] LPCWSTR defaultShellCommand
 		);
 
@@ -165,7 +165,7 @@ interface IFileTypeRegistrar : IUnknown
 
 	HRESULT RegisterCapability(
 		[in, string] LPCWSTR programName, 
-		[in, string] LPCWSTR winamp_file,
+		[in, string] LPCWSTR winlamp_file,
 		[in, string] LPCWSTR extension
 		);
 };

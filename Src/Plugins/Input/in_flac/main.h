@@ -6,7 +6,7 @@
 #include <windows.h>
 extern HANDLE killswitch;
 
-#include "../Winamp/in2.h"
+#include "../WinLAMP/in2.h"
 extern In_Module plugin;
 
 DWORD CALLBACK FLACThread(LPVOID param);
@@ -21,7 +21,7 @@ void ResetMetadataCache();
 #include <FLAC/all.h>
 void InterleaveAndTruncate(const FLAC__int32 *const buffer[], void *_output, int bps, int channels, int blocksize, double gain=1.0);
 
-extern const wchar_t *winampINI;
+extern const wchar_t *winlampINI;
 char *BuildExtensions(const char *extensions);
 extern bool config_average_bitrate;
 extern bool fixBitrate;

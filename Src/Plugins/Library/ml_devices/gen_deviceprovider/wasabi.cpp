@@ -58,10 +58,10 @@ Wasabi_Initialize(HINSTANCE instance, api_service *serviceMngr)
 }
 
 BOOL 
-Wasabi_InitializeFromWinamp(HINSTANCE instance, HWND winampWindow)
+Wasabi_InitializeFromWinLAMP(HINSTANCE instance, HWND winlampWindow)
 {
 	api_service *serviceMngr;
-	serviceMngr = (api_service*)SENDWAIPC(winampWindow, IPC_GET_API_SERVICE, 0);
+	serviceMngr = (api_service*)SENDWAIPC(winlampWindow, IPC_GET_API_SERVICE, 0);
 	return Wasabi_Initialize(instance, serviceMngr);
 }
 

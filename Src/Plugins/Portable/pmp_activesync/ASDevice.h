@@ -10,7 +10,7 @@
 
 #include <vector>
 
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "../Plugins/General/gen_ml/ml.h"
 #include "../Plugins/Library/ml_pmp/pmp.h"
 #include "../Plugins/Library/ml_pmp/transcoder.h"

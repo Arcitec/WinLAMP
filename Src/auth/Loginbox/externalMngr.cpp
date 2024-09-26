@@ -1,7 +1,7 @@
 #include "./externalMngr.h"
 #include "./common.h"
 
-#include "../../winamp/jsapi.h"
+#include "../../winlamp/jsapi.h"
 
 ExternalManager::ExternalManager()
 	: ref(1), lastDispId(0)

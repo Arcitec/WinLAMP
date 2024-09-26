@@ -8,8 +8,8 @@
 #include <wtypes.h>
 #include <bfc/multipatch.h>
 
-#include "../../winamp/setup/ifc_setuppage.h"
-#include "../../winamp/setup/ifc_setupjob.h"
+#include "../../winlamp/setup/ifc_setuppage.h"
+#include "../../winlamp/setup/ifc_setupjob.h"
 
 #include "./setupGroupList.h"
 

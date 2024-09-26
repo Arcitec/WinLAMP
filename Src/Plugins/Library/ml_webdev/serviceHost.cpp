@@ -12,9 +12,9 @@
 #include <ifc_omservicecommand.h>
 #include <browserView.h>
 
-#include "../winamp/wa_ipc.h"
-#include "../winamp/IWasabiDispatchable.h"
-#include "../winamp/JSAPI_Info.h"
+#include "../winlamp/wa_ipc.h"
+#include "../winlamp/IWasabiDispatchable.h"
+#include "../winlamp/JSAPI_Info.h"
 
 #include <strsafe.h>
 

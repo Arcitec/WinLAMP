@@ -166,18 +166,18 @@ static const struct
   int newidx;
 } NamedApeToBuiltinTrans[] = 
 {
-  {"Winamp Brightness APE v1", 22},
-  {"Winamp Interleave APE v1", 23},
-  {"Winamp Grain APE v1", 24 },
-  {"Winamp ClearScreen APE v1", 25},
+  {"WinLAMP Brightness APE v1", 22},
+  {"WinLAMP Interleave APE v1", 23},
+  {"WinLAMP Grain APE v1", 24 },
+  {"WinLAMP ClearScreen APE v1", 25},
   {"Nullsoft MIRROR v1", 26},
-  {"Winamp Starfield v1", 27},
-  {"Winamp Text v1", 28 },
-  {"Winamp Bump v1", 29 },
-  {"Winamp Mosaic v1", 30 },
-  {"Winamp AVIAPE v1", 32},
+  {"WinLAMP Starfield v1", 27},
+  {"WinLAMP Text v1", 28 },
+  {"WinLAMP Bump v1", 29 },
+  {"WinLAMP Mosaic v1", 30 },
+  {"WinLAMP AVIAPE v1", 32},
 	{"Nullsoft Picture Rendering v1", 34},
-	{"Winamp Interf APE v1", 41}
+	{"WinLAMP Interf APE v1", 41}
 };
 
 void C_RLibrary::initbuiltinape(void)

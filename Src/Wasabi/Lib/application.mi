@@ -31,19 +31,19 @@ extern	int	Application.GetBuildNumber();
 
 /**
   A unique ID that represents what GUID this application is
-  Winamp 5 is {4BE592C7-6937-426a-A388-ACF0EBC88E93}
-  other Wasabi-based applications (e.g. ClipX, Winamp3, wasabi.player) will have a different GUID
-  however, this maki class only currently resides in Winamp5, so it's a bit irrevelant :)
+  WinLAMP 5 is {4BE592C7-6937-426a-A388-ACF0EBC88E93}
+  other Wasabi-based applications (e.g. ClipX, WinLAMP3, wasabi.player) will have a different GUID
+  however, this maki class only currently resides in WinLAMP5, so it's a bit irrevelant :)
 */
 extern	String	Application.GetGUID();
 
 /**
-  The commandline that Winamp was called with
+  The commandline that WinLAMP was called with
 */
 extern	String	Application.GetCommandLine();
 
 /**
-  Shuts Winamp down.
+  Shuts WinLAMP down.
 */
 extern	Application.Shutdown();
 
@@ -54,7 +54,7 @@ extern	Application.Shutdown();
 extern	Application.CancelShutdown ();
 
 /**
-  tests if we're in the middle of shutting down winamp.
+  tests if we're in the middle of shutting down winlamp.
   This is part of the application API in Wasabi, so it's reflected here
   but it might not be of much use to your script,
   since you'll likely be unloaded before this function
@@ -63,19 +63,19 @@ extern	Application.CancelShutdown ();
 extern	boolean	Application.IsShuttingDown();
 
 /**
-  Path where winamp.exe (or studio.exe) lives
+  Path where winlamp.exe (or studio.exe) lives
 */
 extern	String	Application.GetApplicationPath();
 
 /**
-  Path where Winamp stores it's settings (studio.xnf, winamp.ini, etc)
+  Path where WinLAMP stores it's settings (studio.xnf, winlamp.ini, etc)
 */
 extern	String	Application.GetSettingsPath();
 
 /**
   Gets the current working path.  This is the same path that will open by default
-  in Winamp's "Open File" dialog.
-  Working path persists across Winamp launches
+  in WinLAMP's "Open File" dialog.
+  Working path persists across WinLAMP launches
 */
 
 extern	String	Application.GetWorkingPath();

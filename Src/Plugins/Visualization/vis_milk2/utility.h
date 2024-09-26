@@ -93,10 +93,10 @@ inline void SelectItemByPos(HWND ctrl, int pos) {
 int SelectItemByValue(HWND ctrl, DWORD value);
 bool ReadCBValue(HWND hwnd, DWORD ctrl_id, int* pRetValue);
 
-LRESULT GetWinampVersion(HWND winamp);
+LRESULT GetWinLAMPVersion(HWND winlamp);
 void* GetTextResource(UINT id, int no_fallback);
 
-HMODULE FindD3DX9(HWND winamp);
+HMODULE FindD3DX9(HWND winlamp);
 
 intptr_t myOpenURL(HWND hwnd, wchar_t *loc);
 

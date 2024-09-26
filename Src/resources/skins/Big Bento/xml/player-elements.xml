@@ -39,7 +39,7 @@
 	<bitmap id="window.titlebar.grid.over.middle" file="window/window.png" x="125" y="0" h="23" w="10" gammagroup="Titlebar"/>
 	<bitmap id="window.titlebar.grid.over.right" file="window/window.png" x="135" y="0" h="23" w="5" gammagroup="Titlebar"/>
 
-	<bitmap id="window.titlebar.text.winamp" file="window/window.png" x="120" y="30" h="9" w="48" gammagroup="TitlebarText"/>
+	<bitmap id="window.titlebar.text.winlamp" file="window/window.png" x="120" y="30" h="9" w="48" gammagroup="TitlebarText"/>
 
 	<bitmap id="window.titlebar.menu.normal" file="window/window.png" x="125" y="1" h="21" w="10" gammagroup="Titlebar"/>
 	<bitmap id="window.titlebar.menu.hover" file="window/window.png" x="140" y="1" h="21" w="10" gammagroup="Titlebar"/>
@@ -324,14 +324,14 @@
 
 	<bitmap id="infocomp.branding" file="window/branding.png" x="0" y="0" h="53" w="129"/>
 
-	<bitmap id="winamp.cover.notfound" file="xml/winamp/cover/notfound.png" gammagroup="DisplayText"/>
-	<bitmap id="winamp.cover.notfound.60" file="xml/winamp/cover/notfound60.png" gammagroup="DisplayText"/>
-	<bitmap id="winamp.cover.notfound.90" file="xml/winamp/cover/notfound90.png" gammagroup="DisplayText"/>
-	<bitmap id="winamp.cover.notfound.84x84" file="window/no_alb_art_big.png" x="0" y="0" h="111" w="111" gammagroup="DisplayText"/>
-	<bitmap id="winamp.cover.notfound.50" file="window/notfound.png" x="0" y="158" h="50" w="50" gammagroup="DisplayText"/>
-	<bitmap id="winamp.cover.notfound.70" file="window/notfound.png" x="0" y="84" h="70" w="70" gammagroup="DisplayText"/>
-	<bitmap id="winamp.cover.notfound.xxl" file="window/notfoundXXL.png" gammagroup="DisplayText"/>
-	<bitmap id="winamp.cover.shoutcast" file="window/sc_alb_art.jpg" x="0" y="0" h="111" w="111" />
+	<bitmap id="winlamp.cover.notfound" file="xml/winlamp/cover/notfound.png" gammagroup="DisplayText"/>
+	<bitmap id="winlamp.cover.notfound.60" file="xml/winlamp/cover/notfound60.png" gammagroup="DisplayText"/>
+	<bitmap id="winlamp.cover.notfound.90" file="xml/winlamp/cover/notfound90.png" gammagroup="DisplayText"/>
+	<bitmap id="winlamp.cover.notfound.84x84" file="window/no_alb_art_big.png" x="0" y="0" h="111" w="111" gammagroup="DisplayText"/>
+	<bitmap id="winlamp.cover.notfound.50" file="window/notfound.png" x="0" y="158" h="50" w="50" gammagroup="DisplayText"/>
+	<bitmap id="winlamp.cover.notfound.70" file="window/notfound.png" x="0" y="84" h="70" w="70" gammagroup="DisplayText"/>
+	<bitmap id="winlamp.cover.notfound.xxl" file="window/notfoundXXL.png" gammagroup="DisplayText"/>
+	<bitmap id="winlamp.cover.shoutcast" file="window/sc_alb_art.jpg" x="0" y="0" h="111" w="111" />
 
 	<bitmap id="coverflow.button.play.normal" file="window/compcontrols.png" x="256" y="0" h="21" w="24" gammagroup="WindowText"/>
 	<bitmap id="coverflow.button.play.hover" file="window/compcontrols.png" x="256" y="21" h="21" w="24" gammagroup="WindowText"/>
@@ -438,7 +438,7 @@
 	<!-- Equalizer -->
 
 	<bitmap id="equalizer.background" file="window/equalizer.png" x="0" y="0" h="92" w="188" gammagroup="WindowText" />
-	<bitmap id="equalizer.labels.winamp" file="window/equalizer.png" x="0" y="195" h="5" w="188" gammagroup="WindowText" />
+	<bitmap id="equalizer.labels.winlamp" file="window/equalizer.png" x="0" y="195" h="5" w="188" gammagroup="WindowText" />
 	<bitmap id="equalizer.labels.iso" file="window/equalizer.png" x="0" y="189" h="5" w="188" gammagroup="WindowText" />
 	<bitmap id="equalizer.button.xfade.normal" file="window/equalizer.png" x="0" y="92" h="12" w="25" gammagroup="PlayerButton" />
 	<bitmap id="equalizer.button.xfade.hover" file="window/equalizer.png" x="0" y="104" h="12" w="25" gammagroup="PlayerButton" />

@@ -1,10 +1,10 @@
-#include "../Winamp/OUT.H"
+#include "../WinLAMP/OUT.H"
 #include "api.h"
 #include "resource.h"
 #include <Mmdeviceapi.h>
 #include <Audioclient.h>
 #include <Audiosessiontypes.h>
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include <api/service/waServiceFactory.h>
 #include <strsafe.h>
 
@@ -379,14 +379,14 @@ Out_Module plugin = {
 
 extern "C" {
 
-	__declspec(dllexport) int __cdecl winampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param)
+	__declspec(dllexport) int __cdecl winlampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param)
 	{
 		return OUT_PLUGIN_UNINSTALL_REBOOT;
 	}
 
-	__declspec(dllexport) Out_Module * __cdecl winampGetOutModule(){ return &plugin; }
+	__declspec(dllexport) Out_Module * __cdecl winlampGetOutModule(){ return &plugin; }
 
-	__declspec(dllexport) void __cdecl winampGetOutModeChange(int mode)
+	__declspec(dllexport) void __cdecl winlampGetOutModeChange(int mode)
 	{ 
 	}
 

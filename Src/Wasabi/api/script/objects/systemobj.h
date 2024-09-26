@@ -367,9 +367,9 @@ class SystemObject : public SYSTEMOBJECT_PARENT, public BrowserCallbackI {
 	static scriptVar vcpu_getDownloadPath(SCRIPT_FUNCTION_PARAMS, ScriptObject *object);
 	static scriptVar vcpu_setDownloadPath(SCRIPT_FUNCTION_PARAMS, ScriptObject *object, scriptVar new_path);
 	static scriptVar vcpu_getAlbumArt(SCRIPT_FUNCTION_PARAMS, ScriptObject *object, scriptVar filename);
-	static scriptVar vcpu_isWinampPro(SCRIPT_FUNCTION_PARAMS, ScriptObject *object);
+	static scriptVar vcpu_isWinLAMPPro(SCRIPT_FUNCTION_PARAMS, ScriptObject *object);
 	static scriptVar vcpu_enumEmbedGUID(SCRIPT_FUNCTION_PARAMS, ScriptObject *object, scriptVar index);
-	static scriptVar vcpu_getWinampVersion(SCRIPT_FUNCTION_PARAMS, ScriptObject *object);
+	static scriptVar vcpu_getWinLAMPVersion(SCRIPT_FUNCTION_PARAMS, ScriptObject *object);
 	static scriptVar vcpu_getBuildNumber(SCRIPT_FUNCTION_PARAMS, ScriptObject *object);
 	static scriptVar vcpu_getFileSize(SCRIPT_FUNCTION_PARAMS, ScriptObject *object, scriptVar file);
 	static scriptVar vcpu_translate(SCRIPT_FUNCTION_PARAMS, ScriptObject *object, scriptVar str);

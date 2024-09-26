@@ -77,7 +77,7 @@ BEGIN
     RTEXT           "-67 dB",IDC_STATIC,28,243,21,8
     RTEXT           "-inf dB",IDC_STATIC,28,253,21,8
     CONTROL         "Progress1",IDC_VOLUMEGRAPH_R,"msctls_progress32",PBS_SMOOTH | PBS_VERTICAL,53,215,9,47
-    CONTROL         "&Winamp",IDC_INPUT_WINAMP,"Button",BS_AUTORADIOBUTTON,73,168,40,8
+    CONTROL         "&WinLAMP",IDC_INPUT_WINLAMP,"Button",BS_AUTORADIOBUTTON,73,168,40,8
     CONTROL         "&Soundcard",IDC_INPUT_SOUNDCARD,"Button",BS_AUTORADIOBUTTON,114,168,48,8
 END
 
@@ -107,7 +107,7 @@ BEGIN
     GROUPBOX        "",IDC_PANEL_RECT,0,109,193,138,NOT WS_VISIBLE
 END
 
-IDD_PANEL_WINAMP DIALOGEX 0, 0, 194, 160
+IDD_PANEL_WINLAMP DIALOGEX 0, 0, 194, 160
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
 EXSTYLE WS_EX_CONTROLPARENT
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
@@ -267,7 +267,7 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Title Update Configuration",IDC_STATIC,0,0,180,109
     CONTROL         "Disable title updates",IDC_NOTITLES,"Button",BS_AUTORADIOBUTTON,5,13,81,10
-    CONTROL         "Follow Winamp's title updates",IDC_AUTOTITLE,"Button",BS_AUTORADIOBUTTON,5,27,110,10
+    CONTROL         "Follow WinLAMP's title updates",IDC_AUTOTITLE,"Button",BS_AUTORADIOBUTTON,5,27,110,10
     CONTROL         "Send next track title to the server (if available)",IDC_SENDNEXTTITLES,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,41,166,10
     CONTROL         "Manual title updates",IDC_MANUALTITLE,"Button",BS_AUTORADIOBUTTON,5,55,81,10
@@ -290,7 +290,7 @@ EXSTYLE WS_EX_CONTROLPARENT
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Title Update Configuration",IDC_STATIC,0,0,180,94
-    CONTROL         "Follow Winamp updates",IDC_AUTOTITLE,"Button",BS_AUTORADIOBUTTON,5,13,91,10
+    CONTROL         "Follow WinLAMP updates",IDC_AUTOTITLE,"Button",BS_AUTORADIOBUTTON,5,13,91,10
     CONTROL         "Send next track title to the server (if available)",IDC_SENDNEXTTITLES,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,27,166,10
     CONTROL         "Manually update",IDC_MANUALTITLE,"Button",BS_AUTORADIOBUTTON,5,41,69,10
@@ -465,7 +465,7 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "CompanyName", "Radionomy SA"
-            VALUE "FileDescription", "Winamp DSP Plug-in"
+            VALUE "FileDescription", "WinLAMP DSP Plug-in"
             VALUE "FileVersion", "2, 4, 2, 449"
             VALUE "InternalName", "dsp_sc.dll"
             VALUE "LegalCopyright", "Copyright © 2023 Radionomy SA"
@@ -516,7 +516,7 @@ BEGIN
     IDS_TAB_INPUT           "Input"
     IDS_COL_OUTPUT_NAME     "Stream"
     IDS_COL_STATUS          "Status"
-    IDS_INPUT_WINAMP        "Winamp (Recommended)"
+    IDS_INPUT_WINLAMP        "WinLAMP (Recommended)"
     IDS_INPUT_SOUNDCARD     "Soundcard Input"
     IDS_X_DB                "%d dB"
     IDS_INF_DB              "-Inf dB"
@@ -584,7 +584,7 @@ BEGIN
     IDS_PANEL_TITLES        "Titles"
     IDS_PUBLIC              "Public"
     IDS_PRIVATE             "Private"
-    IDS_FOLLOW_WA           "Follow Winamp"
+    IDS_FOLLOW_WA           "Follow WinLAMP"
     IDS_MANUAL              "Manual"
     IDS_DISABLED            "Disabled"
     IDS_NOT_SET             "Not set"
@@ -645,12 +645,12 @@ BEGIN
     IDS_V2_MODE             "v2.x mode"
     IDS_V1_MODE             "v1.x mode (legacy servers)"
     IDS_ENABLE_OTHER_MODE   "Unable To Connect To The Server.\nEnable 'Automatic' or 'v%d.x' mode."
-    IDS_24BIT_MODE_DETECTED "Winamp appears to be configured to provide 24-bit audio via the 'Playback' preferences.\n\nThis is not supported by this plug-in and it will now abort loading.\n\nDisabling the 24-bit audio option on the 'Playback' preferences page will allow this plug-in to be used."
+    IDS_24BIT_MODE_DETECTED "WinLAMP appears to be configured to provide 24-bit audio via the 'Playback' preferences.\n\nThis is not supported by this plug-in and it will now abort loading.\n\nDisabling the 24-bit audio option on the 'Playback' preferences page will allow this plug-in to be used."
     IDS_UPDATE_HEADER       "Update: v%hs is now available"
     IDS_UPDATE_TITLE        "<> Plug-in Update Available <>"
     IDS_TAB_ABOUT           "About | Support | Updates"
     IDS_UPDATE              "Updates"
-    IDS_UPDATE_CHECK_ERROR  "The Winamp install is not able to run the update check\nat this time. If this warning persists you will need to\nmanually check for an updated version of the plug-in.\n\nChoose 'Yes' to go to the Shoutcast download page."
+    IDS_UPDATE_CHECK_ERROR  "The WinLAMP install is not able to run the update check\nat this time. If this warning persists you will need to\nmanually check for an updated version of the plug-in.\n\nChoose 'Yes' to go to the Shoutcast download page."
     IDS_CHECK_FOR_UPDATES   "Check for updates"
     IDS_CHECKING_FOR_UPDATES "Checking for updates..."
     IDS_NO_NEW_UPDATE       "This is the current version of the Source DSP plug-in."

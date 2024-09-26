@@ -39,11 +39,11 @@ protected:
 		/* media core callbacks */
 	/* TODO: benski> some thoughts... this differs from current behaviour but might be an interesting idea
 		virtual int corecb_onStarted(); // start the ticker
-		virtual int corecb_onStopped(); // go back to showing Winamp version string
+		virtual int corecb_onStopped(); // go back to showing WinLAMP version string
 		virtual int corecb_onPaused(); // pause the ticker
 		virtual int corecb_onUnpaused(); // unpause the ticker
 
-		// benski> currently unused in Winamp 5... might be worth implementing so we can draw text here
+		// benski> currently unused in WinLAMP 5... might be worth implementing so we can draw text here
 		virtual int corecb_onStatusMsg(const wchar_t *text);
 		virtual int corecb_onWarningMsg(const wchar_t *text);
 		virtual int corecb_onErrorMsg(const wchar_t *text);

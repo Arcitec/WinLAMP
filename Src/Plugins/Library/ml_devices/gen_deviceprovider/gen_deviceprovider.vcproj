@@ -64,7 +64,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib shlwapi.lib windowscodecs.lib"
-				OutputFile="$(ProgramFiles)\winamp\plugins\gen_deviceprovider.dll"
+				OutputFile="$(ProgramFiles)\winlamp\plugins\gen_deviceprovider.dll"
 				LinkIncremental="2"
 				IgnoreDefaultLibraryNames="msvcprt.lib"
 				GenerateDebugInformation="true"
@@ -146,7 +146,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib shlwapi.lib windowscodecs.lib"
-				OutputFile="$(ProgramFiles)\winamp\plugins\gen_deviceprovider.dll"
+				OutputFile="$(ProgramFiles)\winlamp\plugins\gen_deviceprovider.dll"
 				LinkIncremental="1"
 				IgnoreDefaultLibraryNames="msvcprt.lib"
 				GenerateDebugInformation="true"

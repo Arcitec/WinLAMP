@@ -3,7 +3,7 @@
 #include <windows.h>
 #include "resource.h"
 #include "../../General/gen_ml/ml.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../Agave/Language/api_language.h"
 #include "../nu/MediaLibraryInterface.h"
 #include "../nu/ComboBox.h"
@@ -386,8 +386,8 @@ INT_PTR CALLBACK PrefsProcedure(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lP
 				CheckDlgButton(hwndDlg,IDC_CHECK_USE_SEED,TRUE);
 
 			// show config window and restore last position as applicable
-			POINT pt = {(LONG)GetPrivateProfileInt(L"ml_plg", L"prefs_x", -1, mediaLibrary.GetWinampIniW()),
-						(LONG)GetPrivateProfileInt(L"ml_plg", L"prefs_y", -1, mediaLibrary.GetWinampIniW())};
+			POINT pt = {(LONG)GetPrivateProfileInt(L"ml_plg", L"prefs_x", -1, mediaLibrary.GetWinLAMPIniW()),
+						(LONG)GetPrivateProfileInt(L"ml_plg", L"prefs_y", -1, mediaLibrary.GetWinLAMPIniW())};
 			if (!windowOffScreen(hwndDlg, pt))
 				SetWindowPos(hwndDlg, HWND_TOP, pt.x, pt.y, 0, 0, SWP_NOSIZE | SWP_SHOWWINDOW | SWP_NOSENDCHANGING);
 		}
@@ -422,15 +422,15 @@ INT_PTR CALLBACK PrefsProcedure(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lP
 					GetWindowRect(hwndDlg, &rect);
 					char buf[16] = {0};
 					StringCchPrintfA(buf, 16, "%d", rect.left);
-					WritePrivateProfileStringA("ml_plg", "prefs_x", buf, mediaLibrary.GetWinampIni());
+					WritePrivateProfileStringA("ml_plg", "prefs_x", buf, mediaLibrary.GetWinLAMPIni());
 					StringCchPrintfA(buf, 16, "%d", rect.top);
-					WritePrivateProfileStringA("ml_plg", "prefs_y", buf, mediaLibrary.GetWinampIni());
+					WritePrivateProfileStringA("ml_plg", "prefs_y", buf, mediaLibrary.GetWinLAMPIni());
 
 					EndDialog(hwndDlg, 0);
 
 					StringCchPrintfA(buf, 10, "%d", scanMode);
-					WritePrivateProfileStringA("ml_plg", "scanmode", buf, mediaLibrary.GetWinampIni());
-					WritePrivateProfileStringA("ml_plg", "enable", pluginEnabled ? "1" : "0", mediaLibrary.GetWinampIni());
+					WritePrivateProfileStringA("ml_plg", "scanmode", buf, mediaLibrary.GetWinLAMPIni());
+					WritePrivateProfileStringA("ml_plg", "enable", pluginEnabled ? "1" : "0", mediaLibrary.GetWinLAMPIni());
 				}
 				break;
 				case IDC_SCANDISABLE:

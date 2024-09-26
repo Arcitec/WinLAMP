@@ -1,5 +1,5 @@
 #include "./skinnedstatic.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 #include "./skinning.h"
 #include <strsafe.h>
 

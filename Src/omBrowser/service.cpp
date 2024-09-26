@@ -3,7 +3,7 @@
 #include "./ifc_omservicehost.h"
 #include "./ifc_omserviceeventmngr.h"
 
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 #include <strsafe.h>
 
@@ -169,10 +169,10 @@ HRESULT OmService::GetExternal(IDispatch **ppDispatch)
 
 	*ppDispatch = NULL;
 
-	HWND hWinamp = NULL;
-	IDispatch *winampDisp = NULL;
+	HWND hWinLAMP = NULL;
+	IDispatch *winlampDisp = NULL;
 
-	if (SUCCEEDED(Plugin_GetWinampWnd(&hWinamp)) && NULL != hWinamp)
+	if (SUCCEEDED(Plugin_GetWinLAMPWnd(&hWinLAMP)) && NULL != hWinLAMP)
 	{
 		EnterCriticalSection(&lock);
 		UINT generation_cached = generation;
@@ -182,18 +182,18 @@ HRESULT OmService::GetExternal(IDispatch **ppDispatch)
 		{
 			WCHAR szBuffer[64] = {0};
 			if (SUCCEEDED(StringCchPrintfW(szBuffer, ARRAYSIZE(szBuffer), L"%u", id)))
-				winampDisp = (IDispatch*)SENDWAIPC(hWinamp, IPC_JSAPI2_GET_DISPATCH_OBJECT, (WPARAM)szBuffer);
+				winlampDisp = (IDispatch*)SENDWAIPC(hWinLAMP, IPC_JSAPI2_GET_DISPATCH_OBJECT, (WPARAM)szBuffer);
 		}
 		else if (1 == generation_cached)
 		{
-			winampDisp = (IDispatch*)SENDWAIPC(hWinamp, IPC_GET_DISPATCH_OBJECT, 0);
+			winlampDisp = (IDispatch*)SENDWAIPC(hWinLAMP, IPC_GET_DISPATCH_OBJECT, 0);
 		}
 
-		if (IS_INVALIDISPATCH(winampDisp))
-			winampDisp = NULL;
+		if (IS_INVALIDISPATCH(winlampDisp))
+			winlampDisp = NULL;
 	}
 
-	*ppDispatch = winampDisp;
+	*ppDispatch = winlampDisp;
 
 	EnterCriticalSection(&lock);
 	ifc_omservicehost *host_cached = host;

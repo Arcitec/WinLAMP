@@ -68,7 +68,7 @@ void VP8XComponent::DeregisterServices(api_service *service)
 }
 
 static VP8XComponent component;
-extern "C" DLLEXPORT ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" DLLEXPORT ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &component;
 }

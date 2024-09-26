@@ -1,5 +1,5 @@
-#ifndef NULLSOFT_WINAMP_ALBUMART_H
-#define NULLSOFT_WINAMP_ALBUMART_H
+#ifndef NULLSOFT_WINLAMP_ALBUMART_H
+#define NULLSOFT_WINLAMP_ALBUMART_H
 
 #include "../Agave/AlbumArt/api_albumart.h"
 

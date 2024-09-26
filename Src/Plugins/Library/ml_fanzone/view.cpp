@@ -12,9 +12,9 @@
 
 
 #ifdef _DEBUG
-constexpr auto FANZONE_BASE_URL = L"https://player-stg.winamp.com/fanzone/music?mtm_campaign=legendary_player";
+constexpr auto FANZONE_BASE_URL = L"https://player-stg.winlamp.com/fanzone/music?mtm_campaign=legendary_player";
 #else
-constexpr auto FANZONE_BASE_URL = L"https://player.winamp.com/fanzone/music?mtm_campaign=legendary_player";
+constexpr auto FANZONE_BASE_URL = L"https://player.winlamp.com/fanzone/music?mtm_campaign=legendary_player";
 #endif // _DEBUG
 
 INT_PTR CALLBACK view_FANZONEDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM lParam);
@@ -96,18 +96,18 @@ INT_PTR fanzone_pluginMessageProc( int message_type, INT_PTR param1, INT_PTR par
 	}
 	else if ( message_type == IPC_SETVOLUME )
 	{
-		int curvol = IPC_GETVOLUME( plugin.hwndWinampParent );
+		int curvol = IPC_GETVOLUME( plugin.hwndWinLAMPParent );
 
 
 		int l_toto = 0;
 	}
-	else if ( message_type == WINAMP_VOLUMEDOWN )
+	else if ( message_type == WINLAMP_VOLUMEDOWN )
 	{
 
 
 		int l_toto = 0;
 	}
-	else if ( message_type == WINAMP_VOLUMEUP )
+	else if ( message_type == WINLAMP_VOLUMEUP )
 	{
 
 
@@ -427,7 +427,7 @@ INT_PTR CALLBACK view_FANZONEDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,L
 			if (wParam && (HMENU)wParam == s.build_hMenu && s.mode==1)
 			{
 				myMenu = TRUE;
-				if(SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU)==0xffffffff)
+				if(SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU)==0xffffffff)
 					s.mode=2;
 				myMenu = FALSE;
 			}

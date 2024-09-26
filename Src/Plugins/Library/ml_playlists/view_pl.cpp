@@ -44,8 +44,8 @@ using namespace Nullsoft::Utility;
 
 
 #define SIMULTANEOUS_DOWNLOADS            1
-#define PLAYLIST_DOWNLOAD_SUBFOLDER       "\\Winamp_Library\\"
-#define WINAMP_REDIRECT_LINK_PROXY_FILE   L"http://client.winamp.com/fileproxy?destination="
+#define PLAYLIST_DOWNLOAD_SUBFOLDER       "\\WinLAMP_Library\\"
+#define WINLAMP_REDIRECT_LINK_PROXY_FILE   L"http://client.winlamp.com/fileproxy?destination="
 
 std::vector<DownloadToken> plDownloads;
 LockGuard itemsPlaylistQueueLock;
@@ -106,7 +106,7 @@ void SyncPlaylist()
 		UpdatePlaylistTime( GetParent( playlist_list.getwnd() ) );
 
 		if ( !current_playing[ 0 ] )
-			lstrcpynW( current_playing, (wchar_t *)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_PLAYING_FILENAME ), FILENAME_SIZE );
+			lstrcpynW( current_playing, (wchar_t *)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_PLAYING_FILENAME ), FILENAME_SIZE );
 
 		PostMessage( activeHWND, WM_APP + 103, (WPARAM)current_playing, 1 );
 	}
@@ -150,7 +150,7 @@ void TagEditor( HWND hwnd )
 			p.filename = fn;
 			p.parent   = hwnd;
 
-			if ( SendMessage( plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&p, IPC_INFOBOXW ) )
+			if ( SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&p, IPC_INFOBOXW ) )
 				break;
 
 			int length = -1;
@@ -196,7 +196,7 @@ void Playlist_GenerateHtmlPlaylist(void)
 	fprintf(fp, "<!DOCTYPE html>\n"
 				"<html><head>\n"
 				"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n"
-				"<meta name=\"generator\" content=\"Winamp 5.9\">\n"
+				"<meta name=\"generator\" content=\"WinLAMP 5.9\">\n"
 				"<style type=\"text/css\">body{background:#000040;font-family:arial,helvetica;font-size:9pt;font-weight:normal;}"
 				".name{margin-top:-1em;margin-left:15px;font-size:40pt;color:#004080;text-align:left;font-weight:900;}"
 				".name-small{margin-top:-3em;margin-left:140px;font-size:22pt;color:#E1E1E1;text-align:left;}"
@@ -207,10 +207,10 @@ void Playlist_GenerateHtmlPlaylist(void)
 				".val{color:#FFBF00;}"
 				".header{color:#FFBF00;font-size:14pt;}"
 				"</style>\n"
-				"<title>Winamp Generated PlayList</title></head>\n"
+				"<title>WinLAMP Generated PlayList</title></head>\n"
 				"<body>"
 				"<div>"
-				"<div class=\"name\"><p>WINAMP</p></div>"
+				"<div class=\"name\"><p>WINLAMP</p></div>"
 				"<div class=\"name-small\"><p>playlist</p></div>"
 				"</div>"
 				"<hr><div>\n"
@@ -368,7 +368,7 @@ void Playlist_RecycleSelected( HWND hwndDlg, int selected )
 	fileOp.wFunc                 = FO_DELETE;
 	fileOp.pFrom                 = 0;
 	fileOp.pTo                   = 0;
-	fileOp.fFlags                = SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_USES_RECYCLEBIN ) ? FOF_ALLOWUNDO : 0;
+	fileOp.fFlags                = SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_USES_RECYCLEBIN ) ? FOF_ALLOWUNDO : 0;
 	fileOp.fAnyOperationsAborted = 0;
 	fileOp.hNameMappings         = 0;
 	fileOp.lpszProgressTitle     = 0;
@@ -555,7 +555,7 @@ static wchar_t *BuildFilenameList( int is_all )
 void PlaySelection( int enqueue, int is_all )
 {
 	if ( !enqueue )
-		SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_DELETE );
+		SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_DELETE );
 
 	int numTracks = playlist_list.GetCount();
 	for ( int i = 0; i < numTracks; i++ )
@@ -577,7 +577,7 @@ void PlaySelection( int enqueue, int is_all )
 					l_ext.append( ( *l_extended_infos.find( L"ext" ) ).second );
 					l_ext.toUpper();
 
-					wa::strings::wa_string l_filename( WINAMP_REDIRECT_LINK_PROXY_FILE );
+					wa::strings::wa_string l_filename( WINLAMP_REDIRECT_LINK_PROXY_FILE );
 
 					l_filename.append( filename );
 
@@ -629,7 +629,7 @@ void PlaySelection( int enqueue, int is_all )
 				}
 
 				plstring_retain( (wchar_t *)l_enqueue_file.filename );
-				SendMessage( plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&l_enqueue_file, IPC_PLAYFILEW_NDE_TITLE );
+				SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&l_enqueue_file, IPC_PLAYFILEW_NDE_TITLE );
 			}
 		}
 	}
@@ -641,15 +641,15 @@ void PlaySelection( int enqueue, int is_all )
 			int pos = playlist_list.GetNextSelected( -1 );
 			if ( pos != -1 )
 			{
-				SendMessage( plugin.hwndWinampParent, WM_WA_IPC, pos, IPC_SETPLAYLISTPOS );
-				SendMessage( plugin.hwndWinampParent, WM_COMMAND, 40047, 0 ); // stop button, literally
-				SendMessage( plugin.hwndWinampParent, WM_COMMAND, 40045, 0 ); // play button, literally
+				SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, pos, IPC_SETPLAYLISTPOS );
+				SendMessage( plugin.hwndWinLAMPParent, WM_COMMAND, 40047, 0 ); // stop button, literally
+				SendMessage( plugin.hwndWinLAMPParent, WM_COMMAND, 40045, 0 ); // play button, literally
 
 				return;
 			}
 		}
 
-		SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_STARTPLAY );
+		SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_STARTPLAY );
 	}
 }
 
@@ -726,11 +726,11 @@ LRESULT playlist_cloud_listview( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 					}
 					else
 					{
-						winampMediaLibraryPlugin *( *gp )( );
-						gp = ( winampMediaLibraryPlugin * ( __cdecl * )( void ) )GetProcAddress( cloud_hinst, "winampGetMediaLibraryPlugin" );
+						winlampMediaLibraryPlugin *( *gp )( );
+						gp = ( winlampMediaLibraryPlugin * ( __cdecl * )( void ) )GetProcAddress( cloud_hinst, "winlampGetMediaLibraryPlugin" );
 						if ( gp )
 						{
-							winampMediaLibraryPlugin *mlplugin = gp();
+							winlampMediaLibraryPlugin *mlplugin = gp();
 							if ( mlplugin && ( mlplugin->version >= MLHDR_VER_OLD && mlplugin->version <= MLHDR_VER ) )
 							{
 								// TODO handle case when not in a device
@@ -1286,8 +1286,8 @@ static void playlist_Command( HWND hwndDlg, WPARAM wParam, LPARAM lParam )
 				Changed();
 			SyncPlaylist();
 			break;
-		case IDC_IMPORT_WINAMP_PLAYLIST:
-			if ( currentPlaylist_ImportFromWinamp( hwndDlg ) ) Changed();
+		case IDC_IMPORT_WINLAMP_PLAYLIST:
+			if ( currentPlaylist_ImportFromWinLAMP( hwndDlg ) ) Changed();
 			SyncPlaylist();
 			break;
 		case ID_PLAYLIST_GENERATE_HTML:
@@ -1447,7 +1447,7 @@ void playlist_ContextMenu( HWND hwndDlg, HWND from, int x, int y )
 		mf.extinf.mlplaylist.pl   = &currentPlaylist;
 		mf.extinf.mlplaylist.list = playlist_list.getwnd();
 
-		pluginMessage message_build = { SendMessage( plugin.hwndWinampParent, WM_WA_IPC, ( WPARAM ) & "menufucker_build", IPC_REGISTER_WINAMP_IPCMESSAGE ),(intptr_t)&mf,0 };
+		pluginMessage message_build = { SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, ( WPARAM ) & "menufucker_build", IPC_REGISTER_WINLAMP_IPCMESSAGE ),(intptr_t)&mf,0 };
 		SendMessage( plugin.hwndLibraryParent, WM_ML_IPC, (WPARAM)&message_build, ML_IPC_SEND_PLUGIN_MESSAGE );
 
 		do_mf = 1;
@@ -1503,7 +1503,7 @@ void playlist_ContextMenu( HWND hwndDlg, HWND from, int x, int y )
 
 	if ( do_mf )
 	{
-		pluginMessage message_result = { SendMessage( plugin.hwndWinampParent, WM_WA_IPC, ( WPARAM ) & "menufucker_result", IPC_REGISTER_WINAMP_IPCMESSAGE ), (intptr_t)&mf, r, 0 };
+		pluginMessage message_result = { SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, ( WPARAM ) & "menufucker_result", IPC_REGISTER_WINLAMP_IPCMESSAGE ), (intptr_t)&mf, r, 0 };
 		SendMessage( plugin.hwndLibraryParent, WM_ML_IPC, (WPARAM)&message_result, ML_IPC_SEND_PLUGIN_MESSAGE );
 	}
 
@@ -2369,7 +2369,7 @@ static INT_PTR CALLBACK entryProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
 					of.lStructSize    = sizeof( OPENFILENAME );
 					of.hwndOwner      = hwndDlg;
 					of.nMaxFileTitle  = 32;
-					of.lpstrFilter    = (wchar_t *)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 1, IPC_GET_EXTLISTW );
+					of.lpstrFilter    = (wchar_t *)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 1, IPC_GET_EXTLISTW );
 					of.nMaxCustFilter = 1024;
 					of.lpstrFile      = buf;
 					of.nMaxFile       = FILENAME_SIZE;
@@ -2858,7 +2858,7 @@ void DownloadSelectedEntries( HWND parent )
 
 						l_source = l_source.mid( 0, l_source.findFirst( "/" ) );
 
-						wa::strings::wa_string l_redirect_url( WINAMP_REDIRECT_LINK_PROXY_FILE );
+						wa::strings::wa_string l_redirect_url( WINLAMP_REDIRECT_LINK_PROXY_FILE );
 						l_redirect_url.append( l_url.GetW() );
 
 						if ( !l_ext_is_find )

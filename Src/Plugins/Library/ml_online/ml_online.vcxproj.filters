@@ -109,7 +109,7 @@
     <ClCompile Include="..\..\..\nu\ConfigCOM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Winamp\JSAPI_CallbackParameters.cpp">
+    <ClCompile Include="..\..\..\WinLAMP\JSAPI_CallbackParameters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\nu\MediaLibraryInterface.cpp">

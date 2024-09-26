@@ -1,7 +1,7 @@
 #include "main.h"
 #include <windows.h>
 #include "api__in_flv.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "FLVHeader.h"
 #include "FLVStreamHeader.h"
 #include "FLVAudioHeader.h"
@@ -295,7 +295,7 @@ static void CALLBACK SWFAPC(ULONG_PTR param)
 	{
 		typedef In_Module *(*MODULEGETTER)();
 		MODULEGETTER moduleGetter=0;
-		moduleGetter = (MODULEGETTER)GetProcAddress(in_swf, "winampGetInModule2");
+		moduleGetter = (MODULEGETTER)GetProcAddress(in_swf, "winlampGetInModule2");
 		if (moduleGetter)
 			swf_mod = moduleGetter();
 	}

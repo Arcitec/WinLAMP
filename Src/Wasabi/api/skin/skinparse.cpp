@@ -150,8 +150,8 @@ void SkinParser::initialize()
 	}
 
 	// first two are for back compatibility
-	skinXML.registerCallback(L"WinampAbstractionLayer", xmlReaderCallback);
-	skinXML.registerCallback(L"WinampAbstractionLayer\f*", xmlReaderCallback);
+	skinXML.registerCallback(L"WinLAMPAbstractionLayer", xmlReaderCallback);
+	skinXML.registerCallback(L"WinLAMPAbstractionLayer\f*", xmlReaderCallback);
 	skinXML.registerCallback(L"WasabiXML", xmlReaderCallback);
 	skinXML.registerCallback(L"WasabiXML\f*", xmlReaderCallback);
 
@@ -1201,7 +1201,7 @@ void SkinParser::_onXmlStartElement(int object_type, const wchar_t *object_name,
 
 	if (object_type == XML_TAG_UNKNOWN)
 	{
-		if (loading_main_skinfile && (!WCSICMP(object_name, L"WinampAbstractionLayer") || !WCSICMP(object_name, L"WasabiXML")))
+		if (loading_main_skinfile && (!WCSICMP(object_name, L"WinLAMPAbstractionLayer") || !WCSICMP(object_name, L"WasabiXML")))
 		{
 			skinversion = WTOF(params->getItemValue(L"version"));
 		}
@@ -1686,7 +1686,7 @@ void SkinParser::emmergencyReloadDefaultSkin()
 		if (!STRCASEEQLSAFE("Default", WASABI_API_SKIN->getSkinName()))
 		{
 			WASABI_API_WND->appdeactivation_setbypass(1);
-			Std::messageBox(StringPrintfW(L"Failed to load the skin (%s). Did you remove it ?\nThis could also be due to missing components (ie: wa2skin.wac for winamp 2 skins), please check the skin's documentation.\nReverting to default skin.", WASABI_API_SKIN->getSkinName()), "Error", 0);
+			Std::messageBox(StringPrintfW(L"Failed to load the skin (%s). Did you remove it ?\nThis could also be due to missing components (ie: wa2skin.wac for winlamp 2 skins), please check the skin's documentation.\nReverting to default skin.", WASABI_API_SKIN->getSkinName()), "Error", 0);
 			WASABI_API_WND->appdeactivation_setbypass(0);
 			Skin::toggleSkin("Default");
 		}

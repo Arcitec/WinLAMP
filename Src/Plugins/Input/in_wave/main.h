@@ -5,7 +5,7 @@ extern volatile int currentSongLength;
 #define ENABLE_SNDFILE_WINDOWS_PROTOTYPES
 #include "sndfile.h"
 extern SNDFILE *sndFile;
-#include "../Winamp/in2.h"
+#include "../WinLAMP/in2.h"
 extern In_Module plugin;
 
 extern int pan, volume;

@@ -20,7 +20,7 @@ Internet:	www.skinconsortium.com
 #define FILE_NAME "fileinfo.m"
 #include <lib/com/debug.m>
 
-#define WEBCOVER_SHOUTCAST "winamp.cover.shoutcast"
+#define WEBCOVER_SHOUTCAST "winlamp.cover.shoutcast"
 
 Function loadFileInfo();
 Function loadPlaylistArtWork();
@@ -77,7 +77,7 @@ System.onScriptLoaded()
 	delayLoad = new Timer;
 	delayLoad.setDelay(10);
 
-	//debug(getWinampVersion() + "#" + integerToString(getBuildNumber()));
+	//debug(getWinLAMPVersion() + "#" + integerToString(getBuildNumber()));
 
 	g_rating = scriptGroup.findObject("infodisplay.line.rating");
 	g_title = scriptGroup.findObject("infodisplay.line.title");
@@ -130,7 +130,7 @@ System.onScriptLoaded()
 	g_cover = parent.findObject("info.component.cover");
 	_BrandingInit(l_branding, parent, 1, 0);
 
-	l_albumart = g_cover.getObjecT("winamp.albumart");
+	l_albumart = g_cover.getObjecT("winlamp.albumart");
 
 	rate1 = g_rating.findObject("rate.1");
 	rate2 = g_rating.findObject("rate.2");
@@ -259,7 +259,7 @@ loadPlaylistArtWork()
 					g_cover2 = pl_dualwnd.findObject("player.component.playlist.albumart");
 					if(g_cover2)
 					{
-						AlbumArt = g_cover2.findObject("winamp.albumart");
+						AlbumArt = g_cover2.findObject("winlamp.albumart");
 					}
 				}
 			}
@@ -307,7 +307,7 @@ loadFileInfo ()
 //	stationLink = "";
 
 	artRetries = 0;
-	l_albumart.setXMLParam("notfoundImage", "winamp.cover.notfound.xxl");
+	l_albumart.setXMLParam("notfoundImage", "winlamp.cover.notfound.xxl");
 
 	Boolean _cycle = (infocomp_cycle.getData() == "1");
 	Boolean _rating = (infocomp_show_rating.getData() == "1");
@@ -458,7 +458,7 @@ loadFileInfo ()
 		{
 			debugString(DEBUG_PREFIX " songinfo_streamAlbumArt: " + songinfo_streamAlbumArt, D_WTF);
 			l_albumart.setXMLParam("image", songinfo_streamAlbumArt);
-			l_albumart.setXMLParam("notfoundImage", "winamp.cover.notfound.xxl");
+			l_albumart.setXMLParam("notfoundImage", "winlamp.cover.notfound.xxl");
 		}
 
 		if(songinfo_streamType == SONGINFO_STREAMTYPE_SHOUTCAST || songinfo_streamType == SONGINFO_STREAMTYPE_SHOUTCAST2)
@@ -1049,7 +1049,7 @@ LinkObject.onLeftButtonUp (int x, int y)
 
 	String artist = t_artist.getText();
 	if (artist == "") return;
-	System.navigateUrlBrowser("http://client.winamp.com/nowplaying/artist/?artistName=" + artist);
+	System.navigateUrlBrowser("http://client.winlamp.com/nowplaying/artist/?artistName=" + artist);
 }
 
 */
@@ -1174,7 +1174,7 @@ t_rating.onTextChanged (String newtxt)
 }
 
 //----------------------------------------------------------------------------------------------------------------
-// Winamp Branding
+// WinLAMP Branding
 //----------------------------------------------------------------------------------------------------------------
 
 showBranding()

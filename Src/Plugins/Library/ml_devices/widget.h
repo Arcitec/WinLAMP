@@ -1,5 +1,5 @@
-#ifndef _NULLSOFT_WINAMP_ML_DEVICES_WIDGET_HEADER
-#define _NULLSOFT_WINAMP_ML_DEVICES_WIDGET_HEADER
+#ifndef _NULLSOFT_WINLAMP_ML_DEVICES_WIDGET_HEADER
+#define _NULLSOFT_WINLAMP_ML_DEVICES_WIDGET_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -126,4 +126,4 @@ Widget_CreateWindow(unsigned int type,
 #define WIDGET_GET_HELP_URL(/*HWND*/ _hwnd, /* wchar_t* */ _buffer, /*size_t*/ _bufferMax)\
 		((BOOL)SendMessageW((_hwnd), WIDGET_WM_GET_HELP_URL, (WPARAM)(_bufferMax), (LPARAM)(_buffer)))
 
-#endif //_NULLSOFT_WINAMP_ML_DEVICES_WIDGET_HEADER
+#endif //_NULLSOFT_WINLAMP_ML_DEVICES_WIDGET_HEADER

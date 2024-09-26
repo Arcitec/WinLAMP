@@ -43,13 +43,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "Winamp SA"
-            VALUE "FileDescription", "Winamp 5.x System Component"
+            VALUE "CompanyName", "WinLAMP SA"
+            VALUE "FileDescription", "WinLAMP 5.x System Component"
             VALUE "FileVersion", "5, 6, 4, 0"
             VALUE "InternalName", "burner.w5s"
-            VALUE "LegalCopyright", "Copyright © 2005-2014 Winamp SA"
+            VALUE "LegalCopyright", "Copyright © 2005-2014 WinLAMP SA"
             VALUE "OriginalFilename", "burner.w5s"
-            VALUE "ProductName", "Winamp CD Rip & Burn Support Service"
+            VALUE "ProductName", "WinLAMP CD Rip & Burn Support Service"
             VALUE "ProductVersion", "5, 6, 4, 0"
         END
     END

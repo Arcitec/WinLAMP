@@ -13,7 +13,7 @@ ifc_omutility *omUtility = NULL;
 
 HINSTANCE WASABI_API_LNG_HINST = NULL;
 HINSTANCE WASABI_API_ORIG_HINST = NULL;
-EXTERN_C winampMediaLibraryPlugin plugin;
+EXTERN_C winlampMediaLibraryPlugin plugin;
 
 void *Wasabi_QueryInterface(REFGUID interfaceGuid)
 {

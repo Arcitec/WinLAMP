@@ -1,7 +1,7 @@
 #ifndef _EMBEDWNDGUID_H
 #define _EMBEDWNDGUID_H
 
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 class EmbedWndGuid 
 {

@@ -79,8 +79,8 @@
 
 <a name="Introduction_to_the_Source_DSP"></a><h2>1.&nbsp;Introduction to the Source DSP</h2>
 <hr>
-<p>The aim of this document is to show you the different features offered by the Source DSP plug-in. Version 2 of the plug-in is designed to work only on <b>Winamp 5.9</b> and higher due to better api usage and integration with the Winamp player. If you want to use the Source DSP in an alternative player, then it would need to support all of the required Winamp api and services which the plug-in makes use off.</p>
-<p>The key feature of the plug-in is the ability to use Winamp as a source to a DNAS server or a Transcoder / AutoDJ instance or any compatible tool which accepts Shoutcast streams.</p>
+<p>The aim of this document is to show you the different features offered by the Source DSP plug-in. Version 2 of the plug-in is designed to work only on <b>WinLAMP 5.9</b> and higher due to better api usage and integration with the WinLAMP player. If you want to use the Source DSP in an alternative player, then it would need to support all of the required WinLAMP api and services which the plug-in makes use off.</p>
+<p>The key feature of the plug-in is the ability to use WinLAMP as a source to a DNAS server or a Transcoder / AutoDJ instance or any compatible tool which accepts Shoutcast streams.</p>
 <p>Additionally the plug-in will allow you to capture an audio input from the soundcard and its line-in or microphone inputs (<a href="#Soundcard_Mixer_Control" title="">see section 3.3.2</a>) subject to OS and the audio system.</p>
 <p><br></p>
 
@@ -91,9 +91,9 @@
 
 <a name="Installing_the_Plug-in"></a><h2>2.1.&nbsp;Installing the Plug-in <a style="font-size:55%;" href="#">[top]</a></h2>
 <hr>
-<div class="thumb_about"><a href="res/Select_Source_DSP_in_Winamp.png" title="Select Source DSP in Winamp's Preferences"><img class="about" alt="Select Source DSP in Winamp's Preferences" src="res/Select_Source_DSP_in_Winamp.png"></a></div>
-<p>The installer will detect the Winamp install on your machine and will then install it to the correct location. If the detected Winamp version is prior to v5.6 or if there is no winamp.exe present in the folder chosen then the installer will abort the installation.</p>
-<p>Once installed, if you have not chosen to make the Source DSP the default DSP plug-in, you will need to open Winamp and go to the following location:</p>
+<div class="thumb_about"><a href="res/Select_Source_DSP_in_WinLAMP.png" title="Select Source DSP in WinLAMP's Preferences"><img class="about" alt="Select Source DSP in WinLAMP's Preferences" src="res/Select_Source_DSP_in_WinLAMP.png"></a></div>
+<p>The installer will detect the WinLAMP install on your machine and will then install it to the correct location. If the detected WinLAMP version is prior to v5.6 or if there is no winlamp.exe present in the folder chosen then the installer will abort the installation.</p>
+<p>Once installed, if you have not chosen to make the Source DSP the default DSP plug-in, you will need to open WinLAMP and go to the following location:</p>
 <pre>Preferences -&gt; Plug-ins -&gt; DSP/Effect</pre>
 <p>follwed by selecting the 'Nullsoft Shoutcast Source DSP' entry shown in the plug-in list.</p>
 <p><br></p>
@@ -112,7 +112,7 @@ window and click on the notification area icon added when the minimise happened.
 <p><b>Status / Info</b>&nbsp;: This will show information about the status of the 5 possible outputs the plug-in is able to provide going from not connected to current duration of the connection.</p>
 <pre>If you double-click one of the output items you will be taken to the 'Output Tab'
 (<a href="#Output_Tab" title="">see section 3.2</a>) where it will show the current settings for the output selected.</pre>
-<p><b>Active Input Device</b>&nbsp;: This allows you to toggle between using Winamp and the configured soundcard input as well seeing the current audio capture mode. For more configuration options go to the 'Input Tab' (<a href="#Input_Tab" title="">see section 3.3</a>).</p>
+<p><b>Active Input Device</b>&nbsp;: This allows you to toggle between using WinLAMP and the configured soundcard input as well seeing the current audio capture mode. For more configuration options go to the 'Input Tab' (<a href="#Input_Tab" title="">see section 3.3</a>).</p>
 <p><b>Input Levels</b>&nbsp;: These show the current and peak audio level of the left and right channels as is being passed through the plug-ins core. This can aid in seeing if the input source is possibly not working or to check the audio is clipped.</p>
 <p><br></p>
 
@@ -186,7 +186,7 @@ is provided to listeners when they connect to the DNAS server based on the versi
 <pre>MP3    (audio/mpeg)
 AAC    (audio/aacp)</pre>
 <p><br></p>
-<p>The AAC (actually ADTS-AAC) encoding is provided by enc_aacplus.dll (Winamp 5.1 to 5.61) or enc_fhgaac.dll (Winamp 5.62 and up). If this is not detected in the Winamp plug-ins folder then only MP3 encoding is available.</p>
+<p>The AAC (actually ADTS-AAC) encoding is provided by enc_aacplus.dll (WinLAMP 5.1 to 5.61) or enc_fhgaac.dll (WinLAMP 5.62 and up). If this is not detected in the WinLAMP plug-ins folder then only MP3 encoding is available.</p>
 <p>Based on the encoder selected, the 'encoder settings' section will provide different options for controlling the encoder settings as either a button to open a configuration window or a dropdown list with options to choose from.</p>
 <p><br></p>
 
@@ -201,12 +201,12 @@ encoder option to ensure that the file can be easily played in most media player
 <a name="Titles_Tab"></a><h2>3.2.4.&nbsp;Titles Tab <a style="font-size:55%;" href="#">[top]</a></h2>
 <hr>
 <div class="thumb"><a href="res/Output_tab_titles_tab.png" title="Shoutcast Source Output Titles Tab"><img alt="Shoutcast Source Output Titles Tab" src="res/Output_tab_titles_tab.png"></a></div>
-<p>This tab allows you to specify how the stream metadata is gathered from Winamp or if it is manually entered with the options provided.<br><br></>
+<p>This tab allows you to specify how the stream metadata is gathered from WinLAMP or if it is manually entered with the options provided.<br><br></>
 <p><b>Disable title updates</b>&nbsp;: This will prevent the Source DSP from sending any title updates.</p>
-<p><b>Follow Winamp's title updates</b>&nbsp;: This makes the Source DSP use Winamp's title updates for stream title updates, sent in the format based on the 'Connect using' setting.</p>
+<p><b>Follow WinLAMP's title updates</b>&nbsp;: This makes the Source DSP use WinLAMP's title updates for stream title updates, sent in the format based on the 'Connect using' setting.</p>
 <p><b>Send next track title to</b>&nbsp;: This sends the next track title to the server when using the v2 mode and if the plug-in can determine the next track.</p>
-<pre>The current version of Winamp is always recommended to use
-due to the improved support for this feature since Winamp v5.61.</pre>
+<pre>The current version of WinLAMP is always recommended to use
+due to the improved support for this feature since WinLAMP v5.61.</pre>
 <p><b>Manual title updates</b>&nbsp;: This will only send titles updates when 'Send Update' is pressed which uses the custom title information entered into the 'now' and 'next' fields (which are enabled as applicable to the mode in use).</p>
 <pre>The 'Send Update' button is enabled when a title is entered or it is
 different from the existing title. When using Shoutcast v2 mode the
@@ -244,14 +244,14 @@ ensure you are connecting to a v2.x server.</pre>
 <a name="Logs_Tab"></a><h2>3.2.6.&nbsp;Logs Tab <a style="font-size:55%;" href="#">[top]</a></h2>
 <hr>
 <div class="thumb"><a href="res/Output_tab_logs_tab.png" title="Shoutcast Source Output Logs Tab"><img alt="Shoutcast Source Output Logs Tab" src="res/Output_tab_logs_tab.png"></a></div>
-<p>This tab allows you to specify the logging options of the status messages as shown at the top of this page. Additionally it also provides the means to log the filepath of the next tracks (if known) which are going to be played by Winamp with support for logging of the track titles if using the xml output mode.<br></p>
+<p>This tab allows you to specify the logging options of the status messages as shown at the top of this page. Additionally it also provides the means to log the filepath of the next tracks (if known) which are going to be played by WinLAMP with support for logging of the track titles if using the xml output mode.<br></p>
 <pre>The main logging options are not enabled by default though this can be used
 for tracking problems with the plug-in e.g. if you are having connection issues.</pre>
 <p><br><b>Enable logging of connection status messages</b>&nbsp;: Enables or disables connection logging.</p>
 <p><b>Clear log file on logging startup</b>&nbsp;: This will reset the log everytime the plug-in starts.</p>
 <p><b>Open log file...</b>&nbsp;: This will open the log file in the associated program for .log files.</p>
 <p><b>Clear log file</b>&nbsp;: This will clear the log file if it exists. It will not remove the file.</p>
-<p><b>Enable next track logging</b>&nbsp;: This will enable creating a log file (based on the following options) of the known next tracks to be played by Winamp.</p>
+<p><b>Enable next track logging</b>&nbsp;: This will enable creating a log file (based on the following options) of the known next tracks to be played by WinLAMP.</p>
 <p><b>Save report as xml instead of plain text</b>&nbsp;: Changing this will create the log as an xml file containing filepath and title with each item identified by the 'seq' attribute.</p>
 <pre>The next track logging is only updated when the plug-in detects a track change.
 If the plain text / xml mode is changed or the plug-in starts then the file contents
@@ -263,10 +263,10 @@ will be cleared until the next track title change happens.</pre>
 
 <a name="Input_Configuration"></a><h2>3.3.1.&nbsp;Input Configuration <a style="font-size:55%;" href="#">[top]</a></h2>
 <hr>
-<div class="thumb"><a href="res/Input_tab_winamp_input.png" title="Shoutcast Source Input Tab in Winamp mode"><img alt="Shoutcast Source Input Tab in Winamp mode" src="res/Input_tab_winamp_input.png"></a></div>
-<p><b>Input Device</b>&nbsp;: This allows you to choose between using Winamp or your soundcard (usually the line-in) as the input source for the output stream the plug-in makes. Depending upon the selection made additional options will be shown below.</p>
+<div class="thumb"><a href="res/Input_tab_winlamp_input.png" title="Shoutcast Source Input Tab in WinLAMP mode"><img alt="Shoutcast Source Input Tab in WinLAMP mode" src="res/Input_tab_winlamp_input.png"></a></div>
+<p><b>Input Device</b>&nbsp;: This allows you to choose between using WinLAMP or your soundcard (usually the line-in) as the input source for the output stream the plug-in makes. Depending upon the selection made additional options will be shown below.</p>
 <p><b>Input Levels</b>&nbsp;: These show the current and peak audio level of the left and right channels as is being passed through the plug-ins core. This can aid in seeing if the input source is possibly not working or to check the audio is clipped.</p>
-<p><b>Input Settings</b>&nbsp;: When the soundcard input is selected then this allows for control over the sample rate used on the input source.  When the Winamp input is selected then this will show information about what's currently playing.</p>
+<p><b>Input Settings</b>&nbsp;: When the soundcard input is selected then this allows for control over the sample rate used on the input source.  When the WinLAMP input is selected then this will show information about what's currently playing.</p>
 <p><br></p>
 
 <a name="Soundcard_Mixer_Control"></a><h2>3.3.2.&nbsp;Soundcard Mixer Control <a style="font-size:55%;" href="#">[top]</a></h2>
@@ -275,8 +275,8 @@ will be cleared until the next track title change happens.</pre>
 <p><b>Refresh Button</b>&nbsp;: This allows you to refresh the capture device list on Vista / Windows 7 (is disabled otherwise) since the plug-in was started. This is useful if you have connected a device to the machine and now want to use it.</p>
 <div class="thumb"><a href="res/Input_tab_soundcard_input.png" title="Shoutcast Source Input Tab in soundcard mode"><img alt="Shoutcast Source Input Tab in soundcard mode" src="res/Input_tab_soundcard_input.png"></a></div>
 <p><b>Open Mixer</b>&nbsp;: This will open the operating systems recording and playback options (when using Windows 2000 / XP) which will allow you to change any required input and output settings for the system (though the amount you can change does depend upon the operating system being used - (<a href="#Known_Issues" title="">see section 4.0</a>)).</p>
-<p><b>Music Level</b>&nbsp;: This controls the Winamp output level (from no audio to full audio level).</p>
-<p><b>BG Level</b>&nbsp;: This controls the Winamp output level when the 'Push to Talk' option is active (from no audio to full audio level).</p>
+<p><b>Music Level</b>&nbsp;: This controls the WinLAMP output level (from no audio to full audio level).</p>
+<p><b>BG Level</b>&nbsp;: This controls the WinLAMP output level when the 'Push to Talk' option is active (from no audio to full audio level).</p>
 <p><b>Mic Level</b>&nbsp;: This controls the chosen microphone device's output level when the 'Push to Talk' option is active (from no audio to full audio level).</p>
 <p><b>Fade Time</b>&nbsp;: This controls the amount of time it takes for the audio to fade from the non 'Push to Talk' mode to 'Push to Talk' being the active mode in usage (from no fade i.e. instantly changes to 2.5 second fade duration).</p>
 <p><b>Capture Device Fade Time</b>&nbsp;: This controls the amount of time it takes for the selected capture device to fade from the non 'Push to Talk' mode to 'Push to Talk' being the active mode in usage (from no fade i.e. instantly changes to 2.5 second fade duration).</p>
@@ -294,7 +294,7 @@ will be cleared until the next track title change happens.</pre>
 <a name="Documentation_and_Support"></a><h2>3.4.1.&nbsp;Documentation and Support <a style="font-size:55%;" href="#">[top]</a></h2>
 <hr>
 <p>This part of the tab provides links to access the available documentation and also for going to the Shoutcast support forum if issues are being experienced with the plug-in.</p>
-<p>The documentation is either the current version as shipped with the plug-in if selected during install (stored in <b>&lt;winampdir&gt;\Plugins\Shoutcast Source DSP</b>) or if not found it directs you to an online copy available at <a target="_blank" href="http://wiki.shoutcast.com/wiki/Source_DSP_Plug-in">http://wiki.shoutcast.com/wiki/Source_DSP_Plug-in</a></p>
+<p>The documentation is either the current version as shipped with the plug-in if selected during install (stored in <b>&lt;winlampdir&gt;\Plugins\Shoutcast Source DSP</b>) or if not found it directs you to an online copy available at <a target="_blank" href="http://wiki.shoutcast.com/wiki/Source_DSP_Plug-in">http://wiki.shoutcast.com/wiki/Source_DSP_Plug-in</a></p>
 <p>The support forum is accessed via <a href="http://forums.shoutcast.com/forumdisplay.php?f=140" title="http://forums.shoutcast.com/forumdisplay.php?f=140">http://forums.shoutcast.com/forumdisplay.php?f=140</a></p>
 <p><br></p>
 
@@ -315,8 +315,8 @@ will be cleared until the next track title change happens.</pre>
 <p>If you find that you do need to change the uvoxcipherkey (<a target="_blank" href="http://wiki.shoutcast.com/wiki/Shoutcast_DNAS_Server_2#YP_Server_Behaviour" title="Shoutcast DNAS Server 2">DNAS Server - section 4.14</a>) in you sc_serv setup, then you can change the cipher key the DSP uses. You will only need to do this if you get the following status message when making a connection:</p>
 <pre>Authentication Error:
 Cipher Does Not Match</pre>
-<p>This is done currently via editing 'Cipherkey' entry in dsp_sc.ini in your Winamp config folder where you just need to change the string after the equal sign to the value from 'uvoxcipherkey' or 'djcipher' depending upon what you are trying to connect to.</p>
-<p>The dsp_sc.ini file can usually be found by entering <b>%appdata%\Winamp\plugins</b> into the address bar in Windows Explorer. If it is not there then you should search for <b>dsp_sc.ini</b> and make sure to have the search program you are using to look for hidden files (this is just incase the OS is hiding the settings folder).</p>
+<p>This is done currently via editing 'Cipherkey' entry in dsp_sc.ini in your WinLAMP config folder where you just need to change the string after the equal sign to the value from 'uvoxcipherkey' or 'djcipher' depending upon what you are trying to connect to.</p>
+<p>The dsp_sc.ini file can usually be found by entering <b>%appdata%\WinLAMP\plugins</b> into the address bar in Windows Explorer. If it is not there then you should search for <b>dsp_sc.ini</b> and make sure to have the search program you are using to look for hidden files (this is just incase the OS is hiding the settings folder).</p>
 <p><br></p>
 
 <a name="Example_Configurations"></a><h2>6.&nbsp;Example Configurations <a style="font-size:55%;" href="#">[top]</a></h2>

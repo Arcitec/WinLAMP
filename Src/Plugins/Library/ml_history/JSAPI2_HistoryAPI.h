@@ -1,7 +1,7 @@
 #pragma once
 
 #include <ocidl.h>
-#include "../Winamp/JSAPI_Info.h"
+#include "../WinLAMP/JSAPI_Info.h"
 
 namespace JSAPI2
 {

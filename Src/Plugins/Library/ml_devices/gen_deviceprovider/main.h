@@ -1,5 +1,5 @@
-#ifndef _NULLSOFT_WINAMP_GEN_DEVICE_PROVIDER_MAIN_HEADER
-#define _NULLSOFT_WINAMP_GEN_DEVICE_PROVIDER_MAIN_HEADER
+#ifndef _NULLSOFT_WINLAMP_GEN_DEVICE_PROVIDER_MAIN_HEADER
+#define _NULLSOFT_WINLAMP_GEN_DEVICE_PROVIDER_MAIN_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -22,10 +22,10 @@
 #include "./testSuiteLoader.h"
 #include "./iconStore.h"
 
-#include "../../winamp/wa_ipc.h"
+#include "../../winlamp/wa_ipc.h"
 #include "../../nu/trace.h"
 
 #include <math.h>
 #include <shlwapi.h>
 
-#endif //_NULLSOFT_WINAMP_GEN_DEVICE_PROVIDER_MAIN_HEADER
+#endif //_NULLSOFT_WINLAMP_GEN_DEVICE_PROVIDER_MAIN_HEADER

@@ -1,5 +1,5 @@
-#ifndef __WINAMP2FRONTEND_H
-#define __WINAMP2FRONTEND_H
+#ifndef __WINLAMP2FRONTEND_H
+#define __WINLAMP2FRONTEND_H
 
 #define WA2_GETINFO_SAMPLERATE  0
 #define WA2_GETINFO_BITRATE     1
@@ -28,30 +28,30 @@
 #define WA2_USERBUTTONMOD_SHIFT 1
 #define WA2_USERBUTTONMOD_CTRL  2
 
-#define WINAMP_MAIN_WINDOW         40258
-#define WINAMP_OPTIONS_MINIBROWSER 40298
-#define WINAMP_OPTIONS_VIDEO       40328
-#define WINAMP_OPTIONS_PLEDIT      40040
-#define WINAMP_OPTIONS_EQ          40036
+#define WINLAMP_MAIN_WINDOW         40258
+#define WINLAMP_OPTIONS_MINIBROWSER 40298
+#define WINLAMP_OPTIONS_VIDEO       40328
+#define WINLAMP_OPTIONS_PLEDIT      40040
+#define WINLAMP_OPTIONS_EQ          40036
 
-#define WINAMP_FILE_LOC                 40185
-#define WINAMP_FILE_PLAY                40029
-#define WINAMP_FILE_DIR                 40187
+#define WINLAMP_FILE_LOC                 40185
+#define WINLAMP_FILE_PLAY                40029
+#define WINLAMP_FILE_DIR                 40187
 
 //-----------------------------------------------------------------------------------------------
 
 #include <windows.h>
 #include "../gen_ml/ml.h"
-#include "../winamp/wa_ipc.h"
-#include "../winamp/ipc_pe.h"
+#include "../winlamp/wa_ipc.h"
+#include "../winlamp/ipc_pe.h"
 
 //-----------------------------------------------------------------------------------------------
 
-class Winamp2FrontEnd {
+class WinLAMP2FrontEnd {
   public:
     friend BOOL CALLBACK findVisWndProc(HWND hwnd, LPARAM lParam);
-    Winamp2FrontEnd();
-    virtual ~Winamp2FrontEnd();
+    WinLAMP2FrontEnd();
+    virtual ~WinLAMP2FrontEnd();
   
     void init(HWND hwndParent);
 
@@ -323,12 +323,12 @@ class Winamp2FrontEnd {
 	void setDownloadPath(const wchar_t * path2store);
 
 	bool GetAlbumArt(const wchar_t *filename);
-	bool IsWinampPro();
+	bool IsWinLAMPPro();
 
 private:
     void setFoundVis() { foundvis = 1; }
     char *m_version;
-    HWND hwnd_winamp;
+    HWND hwnd_winlamp;
     HWND hwnd_playlist;
     int foundvis;
     int enabled;
@@ -352,7 +352,7 @@ private:
 
 //-----------------------------------------------------------------------------------------------
 
-extern Winamp2FrontEnd wa2;
+extern WinLAMP2FrontEnd wa2;
 
 BOOL DoTrackPopup(HMENU hMenu, UINT fuFlags, int x, int y, HWND hwnd);
 

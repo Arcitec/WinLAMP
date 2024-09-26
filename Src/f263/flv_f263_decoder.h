@@ -2,7 +2,7 @@
 #include "../Plugins/Input/in_flv/svc_flvdecoder.h"
 #include "../Plugins/Input/in_flv/FLVVideoHeader.h"
 #include "../Plugins/Input/in_flv/ifc_flvvideodecoder.h"
-#include "../Winamp/wa_ipc.h" // for YV12_PLANES
+#include "../WinLAMP/wa_ipc.h" // for YV12_PLANES
 
 // {8E100A48-C03B-4453-A1FA-6B944FC23F6A}
 static const GUID flv_h263_guid=

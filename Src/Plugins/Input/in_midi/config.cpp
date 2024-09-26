@@ -2,7 +2,7 @@
 #include <shlobj.h>
 #include <commctrl.h>
 #include "resource.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../pfc/string_unicode.h"
 
 static HWND g_theConfig;

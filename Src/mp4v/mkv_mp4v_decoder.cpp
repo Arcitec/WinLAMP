@@ -1,5 +1,5 @@
 #include "mkv_mp4v_decoder.h"
-#include "../Winamp/wa_ipc.h" // for YV12_PLANES
+#include "../WinLAMP/wa_ipc.h" // for YV12_PLANES
 #include <mmsystem.h>
 #include <assert.h>
 

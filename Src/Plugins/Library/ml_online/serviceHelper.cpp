@@ -480,7 +480,7 @@ HRESULT ServiceHelper_SetRating(ifc_omservice *service, UINT rating, UINT flags)
 					szClient[0] = L'\0';
 
 				hr = StringCchPrintf(szUrl, ARRAYSIZE(szUrl), 
-							L"http://services.winamp.com/svc/rating?svc_id=%u&unique_id=%s&rating=%d", 
+							L"http://services.winlamp.com/svc/rating?svc_id=%u&unique_id=%s&rating=%d", 
 							service->GetId(), szClient, rating*2);
 
 				if (SUCCEEDED(hr))
@@ -703,7 +703,7 @@ HRESULT ServiceHelper_ResetSubscription(UINT flags)
 	if (SUCCEEDED(hr))
 	{
 		// discover new services
-		hr = ServiceHelper_BeginDiscover(L"http://services.winamp.com/svc/default.php");
+		hr = ServiceHelper_BeginDiscover(L"http://services.winlamp.com/svc/default.php");
 	}
 
 	return hr;
@@ -843,7 +843,7 @@ HRESULT ServiceHelper_GetDetailsUrl(LPWSTR pszBuffer, UINT cchBufferMax, ifc_oms
 	LPWSTR cursor = pszBuffer;
 
 	hr = StringCchPrintfEx(cursor, remaining, &cursor, &remaining, STRSAFE_NULL_ON_FAILURE, 
-					L"http://services.winamp.com/svc/details?svc_id=%u", service->GetId());
+					L"http://services.winlamp.com/svc/details?svc_id=%u", service->GetId());
 	
 	WCHAR szClient[128] = {0};
 	if (SUCCEEDED(hr) && 
@@ -1109,8 +1109,8 @@ HRESULT ServiceHelper_UpdateOperationInfo(HWND hBrowser)
 		return E_INVALIDARG;
 
 	DWORD currentTID = GetCurrentThreadId();
-	DWORD winampTID = GetWindowThreadProcessId(Plugin_GetWinamp(), NULL);
-	if (NULL != winampTID && winampTID != currentTID)
+	DWORD winlampTID = GetWindowThreadProcessId(Plugin_GetWinLAMP(), NULL);
+	if (NULL != winlampTID && winlampTID != currentTID)
 	{
 		HRESULT hr;
 		if (NULL != OMUTILITY)
@@ -1187,7 +1187,7 @@ HRESULT ServiceHelper_ShowService(UINT serviceId, UINT showMode)
 	{
 		if (0 != serviceId && ROOTSERVICE_ID != serviceId &&
 			SUCCEEDED(StringCchPrintfW(szBuffer, ARRAYSIZE(szBuffer), 
-						L"http://client.winamp.com/service/detail/gallery/%u", serviceId)))
+						L"http://client.winlamp.com/service/detail/gallery/%u", serviceId)))
 		{
 			pszUrl = szBuffer;
 		}

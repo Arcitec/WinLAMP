@@ -42,13 +42,13 @@ int Application::Init()
 	
 #endif
 /* set the device id */
-	GUID winamp_id;
-	WASABI_API_APP->GetUserID(&winamp_id);
+	GUID winlamp_id;
+	WASABI_API_APP->GetUserID(&winlamp_id);
 	ReferenceCountedNXString device_id;
 	NXStringCreateWithFormatting(&device_id, "%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x",
-				(int)winamp_id.Data1, (int)winamp_id.Data2, (int)winamp_id.Data3, (int)winamp_id.Data4[0],
-				(int)winamp_id.Data4[1], (int)winamp_id.Data4[2], (int)winamp_id.Data4[3],
-				(int)winamp_id.Data4[4], (int)winamp_id.Data4[5], (int)winamp_id.Data4[6], (int)winamp_id.Data4[7]);
+				(int)winlamp_id.Data1, (int)winlamp_id.Data2, (int)winlamp_id.Data3, (int)winlamp_id.Data4[0],
+				(int)winlamp_id.Data4[1], (int)winlamp_id.Data4[2], (int)winlamp_id.Data4[3],
+				(int)winlamp_id.Data4[4], (int)winlamp_id.Data4[5], (int)winlamp_id.Data4[6], (int)winlamp_id.Data4[7]);
 
 	ApplicationBase::SetDeviceID(device_id);
 
@@ -65,7 +65,7 @@ int Application::Init()
 	OSVERSIONINFO info;
 	info.dwOSVersionInfoSize=sizeof(info);
 	GetVersionExW(&info);
-	StringCbPrintfA(user_agent, sizeof(user_agent), "Winamp/%S (Windows NT %u.%u) Replicant/%s", WASABI_API_APP->main_getVersionNumString(), info.dwMajorVersion, info.dwMinorVersion, replicant_version);
+	StringCbPrintfA(user_agent, sizeof(user_agent), "WinLAMP/%S (Windows NT %u.%u) Replicant/%s", WASABI_API_APP->main_getVersionNumString(), info.dwMajorVersion, info.dwMinorVersion, replicant_version);
 	ApplicationBase::EnableAllPermissions();
 	return NErr_Success;
 }
@@ -90,5 +90,5 @@ int Application::Application_GetVersionString(nx_string_t *version)
 
 int Application::Application_GetProductShortName(nx_string_t *name)
 {
-	return NXStringCreateWithUTF8(name, "Winamp");
+	return NXStringCreateWithUTF8(name, "WinLAMP");
 }

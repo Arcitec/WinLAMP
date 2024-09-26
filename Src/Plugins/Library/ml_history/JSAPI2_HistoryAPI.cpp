@@ -1,6 +1,6 @@
 #include "api__ml_history.h"
 #include "JSAPI2_HistoryAPI.h"
-#include "../Winamp/JSAPI.h"
+#include "../WinLAMP/JSAPI.h"
 #include "JSAPI2_HistoryRecordList.h"
 #include "HistoryAPI.h"
 

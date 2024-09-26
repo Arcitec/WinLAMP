@@ -3,8 +3,8 @@
 #include <winuser.h>
 #include <assert.h>
 #include "./ml.h"
-#include "../winamp/wa_ipc.h"
-#include "../winamp/ipc_pe.h"
+#include "../winlamp/wa_ipc.h"
+#include "../winlamp/ipc_pe.h"
 #include "./resource.h"
 #include "./comboskin.h"
 #include "./childwnd.h"
@@ -289,9 +289,9 @@ static BOOL IPC_GetView(INT msg, INT_PTR param)
 	return TRUE;
 }
 
-static INT_PTR IPC_SendToWinamp(INT_PTR param)
+static INT_PTR IPC_SendToWinLAMP(INT_PTR param)
 {
-	mlSendToWinampStruct *p = (mlSendToWinampStruct*)param;
+	mlSendToWinLAMPStruct *p = (mlSendToWinLAMPStruct*)param;
 	if (p->data)
 	{
 		int enq = p->enqueue & 1;
@@ -1336,8 +1336,8 @@ INT_PTR pluginHandleIpcMessage(HWND hwndML, int msg, INT_PTR param)
 			}
 			return 0;
 
-		case ML_IPC_SENDTOWINAMP:
-			return IPC_SendToWinamp(param);
+		case ML_IPC_SENDTOWINLAMP:
+			return IPC_SendToWinLAMP(param);
 
 		case ML_IPC_SKIN_WADLG_GETFUNC:
 			switch (param)
@@ -1413,7 +1413,7 @@ INT_PTR pluginHandleIpcMessage(HWND hwndML, int msg, INT_PTR param)
 		case ML_IPC_REMOVE_PLUGIN:
 			if (param)
 			{
-				winampMediaLibraryPlugin *p = (winampMediaLibraryPlugin *)param;
+				winlampMediaLibraryPlugin *p = (winlampMediaLibraryPlugin *)param;
 				int x, l = m_plugins.GetSize();
 				for (x = 0; x < l && m_plugins.Get(x) != (void *)param; x ++);
 				if (x < l)
@@ -1436,7 +1436,7 @@ INT_PTR pluginHandleIpcMessage(HWND hwndML, int msg, INT_PTR param)
 					assert(dummyLoad == p->hDllInstance);
 				}
 				p->hwndLibraryParent = hwndML;
-				p->hwndWinampParent = plugin.hwndParent;
+				p->hwndWinLAMPParent = plugin.hwndParent;
 
 				m_plugins.Add(p);
 				return 1;

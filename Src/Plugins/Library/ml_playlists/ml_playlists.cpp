@@ -26,7 +26,7 @@ int( *warand )( void ) = 0;
 INT_PTR sendToIgnoreID = 0;
 int IPC_LIBRARY_PLAYLISTS_REFRESH = -1, IPC_CLOUD_ENABLED = -1;
 
-extern "C" winampMediaLibraryPlugin plugin =
+extern "C" winlampMediaLibraryPlugin plugin =
 {
 	MLHDR_VER,
 	"nullsoft(ml_playlists.dll)",
@@ -74,7 +74,7 @@ wchar_t prefsname[ 64 ] = { 0 };
 extern WORD waMenuID;
 int Init()
 {
-	waMenuID = (WORD)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_REGISTER_LOWORD_COMMAND );
+	waMenuID = (WORD)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_REGISTER_LOWORD_COMMAND );
 
 	AGAVE_API_PLAYLISTMANAGER = GetService<api_playlistmanager>( api_playlistmanagerGUID );
 	if ( !AGAVE_API_PLAYLISTMANAGER ) // no sense in continuing
@@ -94,8 +94,8 @@ int Init()
 
 	WASABI_API_EXPLORERFINDFILE = GetService<api_explorerfindfile>( ExplorerFindFileApiGUID );
 
-	//	Hook(plugin.hwndWinampParent);
-	warand = ( int( * )( void ) )SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_RANDFUNC );
+	//	Hook(plugin.hwndWinLAMPParent);
+	warand = ( int( * )( void ) )SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_RANDFUNC );
 
 	// need to get WASABI_API_APP first
 	plstring_init();
@@ -111,10 +111,10 @@ int Init()
 	plugin.description = (char *)szDescription;
 
 	mediaLibrary.library  = plugin.hwndLibraryParent;
-	mediaLibrary.winamp   = plugin.hwndWinampParent;
+	mediaLibrary.winlamp   = plugin.hwndWinLAMPParent;
 	mediaLibrary.instance = plugin.hDllInstance;
 
-	mediaLibrary.GetWinampIni(); // to prevent a SendMessage hang later
+	mediaLibrary.GetWinLAMPIni(); // to prevent a SendMessage hang later
 
 	mediaLibrary.AddDispatch( L"Playlists", &playlistsCOM );
 	wchar_t inifile[ MAX_PATH ] = { 0 };
@@ -126,7 +126,7 @@ int Init()
 
 	// if m3udir has been changed (not the same as inidir) then
 	// we attempt to use the same folder for our playlist files
-	const wchar_t *m3udir = (wchar_t *)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETM3UDIRECTORYW );
+	const wchar_t *m3udir = (wchar_t *)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETM3UDIRECTORYW );
 	const wchar_t *inidir = mediaLibrary.GetIniDirectoryW();
 	if ( !lstrcmpiW( m3udir, inidir ) )
 		mediaLibrary.BuildPath( L"Plugins\\ml\\playlists", g_path, MAX_PATH );
@@ -143,7 +143,7 @@ int Init()
 
 	hDragNDropCursor = LoadCursor( GetModuleHandle( L"gen_ml.dll" ), MAKEINTRESOURCE( ML_IDC_DRAGDROP ) );
 
-	HMENU wa_plcontext_menu = GetSubMenu( (HMENU)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, -1, IPC_GET_HMENU ), 2 );
+	HMENU wa_plcontext_menu = GetSubMenu( (HMENU)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, -1, IPC_GET_HMENU ), 2 );
 	if ( wa_plcontext_menu )
 	{
 		wa_playlists_cmdmenu = GetSubMenu( wa_plcontext_menu, 4 );
@@ -151,19 +151,19 @@ int Init()
 		{
 			MENUITEMINFO i = { sizeof( i ), MIIM_TYPE, MFT_SEPARATOR, 0, 0 };
 			InsertMenuItem( wa_playlists_cmdmenu, 9, TRUE, &i );
-			MENUITEMINFO j = { sizeof( i ), MIIM_ID | MIIM_STATE | MIIM_TYPE, MFT_STRING, 0, WINAMP_MANAGEPLAYLISTS };
+			MENUITEMINFO j = { sizeof( i ), MIIM_ID | MIIM_STATE | MIIM_TYPE, MFT_STRING, 0, WINLAMP_MANAGEPLAYLISTS };
 			j.dwTypeData = WASABI_API_LNGSTRINGW( IDS_MANAGE_PLAYLISTS );
 			InsertMenuItem( wa_playlists_cmdmenu, 10, TRUE, &j );
 		}
 	}
 
-	IPC_CLOUD_ENABLED             = SendMessage( plugin.hwndWinampParent, WM_WA_IPC, ( WPARAM ) & "WinampCloudEnabled", IPC_REGISTER_WINAMP_IPCMESSAGE );
-	IPC_LIBRARY_PLAYLISTS_REFRESH = SendMessage( plugin.hwndWinampParent, WM_WA_IPC, ( WPARAM ) & "ml_playlist_refresh", IPC_REGISTER_WINAMP_IPCMESSAGE );
-	wa_play_menu                  = GetSubMenu( (HMENU)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_HMENU ), 2 );
+	IPC_CLOUD_ENABLED             = SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, ( WPARAM ) & "WinLAMPCloudEnabled", IPC_REGISTER_WINLAMP_IPCMESSAGE );
+	IPC_LIBRARY_PLAYLISTS_REFRESH = SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, ( WPARAM ) & "ml_playlist_refresh", IPC_REGISTER_WINLAMP_IPCMESSAGE );
+	wa_play_menu                  = GetSubMenu( (HMENU)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_HMENU ), 2 );
 
 	// lets extend menu that called on button press
-	int   IPC_GET_ML_HMENU = (int)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, ( WPARAM ) & "LibraryGetHmenu", IPC_REGISTER_WINAMP_IPCMESSAGE );
-	HMENU context_menu     = (HMENU)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_ML_HMENU );
+	int   IPC_GET_ML_HMENU = (int)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, ( WPARAM ) & "LibraryGetHmenu", IPC_REGISTER_WINLAMP_IPCMESSAGE );
+	HMENU context_menu     = (HMENU)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_ML_HMENU );
 
 	if ( context_menu )
 	{
@@ -182,7 +182,7 @@ int Init()
 
 			mii.dwTypeData = WASABI_API_LNGSTRINGW( IDS_MANAGE_PLAYLISTS );
 			mii.cch        = (unsigned int)lstrlen( mii.dwTypeData );
-			mii.wID        = WINAMP_MANAGEPLAYLISTS;
+			mii.wID        = WINLAMP_MANAGEPLAYLISTS;
 			InsertMenuItem( btnMenu, 0, TRUE, &mii );
 
 			mii.dwTypeData = WASABI_API_LNGSTRINGW( IDS_NEW_PLAYLIST );
@@ -207,7 +207,7 @@ int Init()
 
 	LoadPlaylists();
 
-	Hook( plugin.hwndWinampParent );
+	Hook( plugin.hwndWinLAMPParent );
 	HookPlaylistEditor();
 
 	return ML_INIT_SUCCESS;
@@ -231,7 +231,7 @@ void Quit()
 	delete g_config;
 }
 
-extern "C" __declspec( dllexport ) winampMediaLibraryPlugin * winampGetMediaLibraryPlugin()
+extern "C" __declspec( dllexport ) winlampMediaLibraryPlugin * winlampGetMediaLibraryPlugin()
 {
 	return &plugin;
 }

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../Winamp/in2.h"
+#include "../WinLAMP/in2.h"
 extern In_Module plugin;
 
 #include <windows.h>
 
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 extern IVideoOutput *videoOutput;
 	
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

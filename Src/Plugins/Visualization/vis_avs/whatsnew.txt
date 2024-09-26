@@ -67,7 +67,7 @@ added extended APE interface, that lets you access evallib, global registers,
 
 - mig: removed ability to RMB in fullscreen mode.  Bug 331 from the database.  want make new gui.  want make now.
 - basu: added 'onbeat enabled' option to lists
-- christophe: added thread priority settings (so you can set avs in idle prority while keeping winamp in
+- christophe: added thread priority settings (so you can set avs in idle prority while keeping winlamp in
   high prio.)
 2.0a7:
 - made better multimonitor support -- still needs more work (making it able to go fullscreen and you do other things
@@ -91,7 +91,7 @@ added extended APE interface, that lets you access evallib, global registers,
 2.0a1:
 - preinit of presets for better transitions
 - integrated laser support (built-time option)
-- changed name to 'Winamp AVS'
+- changed name to 'WinLAMP AVS'
 - Improved SVP/UVS loading
 - Made superscope support 'red' 'green' and 'blue'
 
@@ -150,12 +150,12 @@ a50:
 			added 'go' button to fullscreen options
 			added wait for retrace options
 			revised logarithmic spectrum scaling table
-- ron: better no-minimize-on-winamp (now displays a separate window in taskman)
+- ron: better no-minimize-on-winlamp (now displays a separate window in taskman)
 - lone : bpm - better out of range detection in average calculation
 						 - better confidence calculation
 						 - added option to predict beats only if bpm has been found
 						 - fixed relearn/adapt on new song option
-						 - fixed unwanted resets when using 'don't minimize avs when minimizing winamp' option
+						 - fixed unwanted resets when using 'don't minimize avs when minimizing winlamp' option
 				 brightness - now works actually like a brightness filter (bit slower tho)
 				 text - fixed crash when window is smaller than width/height of text and random mode was checked
 				 bump - added invert depth
@@ -171,7 +171,7 @@ a49:
 			settings are now drageable (fixed).
 			deleting a setting now doesn't loose selection.
 			evallib now works when AVS is compiled in debug mode.
-			added "don't minimize avs with winamp" setting in Display tab.
+			added "don't minimize avs with winlamp" setting in Display tab.
 			added BMP Picture rendering.
 - lone: disabled resize in fullscreen mode, fixes directx lockups
       added Custom BPM filter
@@ -227,7 +227,7 @@ a23: custom transtabs much faster. buggier, though. will be fixed soon.
 a22: higher framerate, custom transtabs, more effects, etc.
 a21 adds new "Scatter" effect
 a20 adds DLL effect loading (APE)
-a18 fixes close-winamp die bug.
+a18 fixes close-winlamp die bug.
 a18 speeds up colorfade (all table driven)
 a17 fixes win2k fullscreen issues (afaik)
-a16 adds some fixes, and new winamp styled window
+a16 adds some fixes, and new winlamp styled window

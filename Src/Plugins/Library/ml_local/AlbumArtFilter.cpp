@@ -25,7 +25,7 @@ int config_use_alternate_colors=1;
 #define LVN_EX_SIZECHANGED		(LVN_LAST)
 
 AlbumArtFilter::AlbumArtFilter(HWND hwndDlg, int dlgitem, C_Config *c) : hwndDlg(hwndDlg), dlgitem(dlgitem),
-		notfound(L"winamp.cover.notfound"), notfound60(L"winamp.cover.notfound.60"), notfound90(L"winamp.cover.notfound.90"),
+		notfound(L"winlamp.cover.notfound"), notfound60(L"winlamp.cover.notfound.60"), notfound90(L"winlamp.cover.notfound.90"),
 		hbmpNames(NULL), ratingHotItem((DWORD)-1), bgBrush(NULL)
 {
 	mode = c->ReadInt(L"albumartviewmode",1);
@@ -793,7 +793,7 @@ INT_PTR AlbumArtFilter::DialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM
 						artFetchData d = {sizeof(d),hwndDlg,albumList.Items[x+1].artist,albumList.Items[x+1].name,0};
 						d.gracenoteFileId = albumList.Items[x+1].gracenoteFileId;
 						d.showCancelAll = 1;
-						int r = (int)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(LPARAM)&d,IPC_FETCH_ALBUMART);
+						int r = (int)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(LPARAM)&d,IPC_FETCH_ALBUMART);
 						if(r == -2) break; // cancel all was pressed
 						if(r == 0 && d.imgData && d.imgDataLen) // success, save art in correct location
 						{
@@ -847,8 +847,8 @@ INT_PTR AlbumArtFilter::DialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM
 				if (sel != LB_ERR)
 				{
 					char url[1024] = {0};
-					StringCchPrintfA(url, 1024, "http://client.winamp.com/nowplaying/artist?artistName=%s&icid=localmediagetartistinfo", AutoUrl(albumList.Items[sel+1].artist));
-					SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(LPARAM)url,IPC_OPEN_URL);
+					StringCchPrintfA(url, 1024, "http://client.winlamp.com/nowplaying/artist?artistName=%s&icid=localmediagetartistinfo", AutoUrl(albumList.Items[sel+1].artist));
+					SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(LPARAM)url,IPC_OPEN_URL);
 				}
 			}
 			break;

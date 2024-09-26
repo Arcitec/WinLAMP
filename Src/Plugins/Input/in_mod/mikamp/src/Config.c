@@ -1,5 +1,5 @@
 /*
-    Mikmod for Winamp
+    Mikmod for WinLAMP
 
     By Jake Stine and Justin Frankel.  Really.
 
@@ -14,7 +14,7 @@ extern "C" {
 }
 #include <shlobj.h>
 #include <commctrl.h>
-#include "../../winamp/wa_ipc.h"
+#include "../../winlamp/wa_ipc.h"
 #include <strsafe.h>
 #include "../nu/AutoWide.h"
 
@@ -44,7 +44,7 @@ typedef struct tag_cdlghdr
 } CFG_DLGHDR; 
 
 
-// Winamp Stuff
+// WinLAMP Stuff
 UBYTE    config_savestr  = 0;                   // save stream to disk
 
 // Output Settings

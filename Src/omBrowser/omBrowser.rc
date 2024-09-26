@@ -148,7 +148,7 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,29,161,10
     CONTROL         "Enable script &debugging",IDC_SHOWDEBUGGER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,42,92,10
     LTEXT           "Note:",IDC_STATIC,11,57,19,8
-    LTEXT           "Some changes made on this page will take affect only after Winamp restart.",IDC_STATIC,34,57,161,18
+    LTEXT           "Some changes made on this page will take affect only after WinLAMP restart.",IDC_STATIC,34,57,161,18
 END
 
 IDD_OPTIONS_INFO DIALOGEX 0, 0, 220, 128
@@ -157,7 +157,7 @@ EXSTYLE WS_EX_CONTROLPARENT
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     GROUPBOX        "",IDC_STATIC,4,4,212,107,0,WS_EX_TRANSPARENT
-    CTEXT           "Nullsoft Winamp omBrowser Service",IDC_TITLE,17,14,189,13,SS_CENTERIMAGE
+    CTEXT           "Nullsoft WinLAMP omBrowser Service",IDC_TITLE,17,14,189,13,SS_CENTERIMAGE
     RTEXT           "version:",IDC_STATIC,13,32,31,8
     EDITTEXT        IDC_VERSION,48,32,158,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
     RTEXT           "class:",IDC_STATIC,13,44,31,8
@@ -236,7 +236,7 @@ BEGIN
     IDS_CONNECTION_UNSECURE "Connection Not Encrypted"
     IDS_CONNECTION_ENCRYPTED "Connection Encrypted"
     IDS_CURRENT_PAGE        "Current Page"
-    IDS_OMBROWSER_TITLE     "Winamp Browser"
+    IDS_OMBROWSER_TITLE     "WinLAMP Browser"
     IDS_RATING_0            "not rated"
 END
 

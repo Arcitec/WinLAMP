@@ -7,7 +7,7 @@
 #include "./defaults.h"
 #include "./errors.h"
 
-#include "../winamp/jsapi.h"
+#include "../winlamp/jsapi.h"
 
 #include "./rssCOM.h"
 

@@ -6,7 +6,7 @@
 #include <api/wnd/wndevent.h>
 #include <api/wnd/wndevent.h>
 #include <shobjidl.h>
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 #ifndef AC_SRC_ALPHA
 const int AC_SRC_ALPHA = 1;

@@ -82,8 +82,8 @@
     <ClCompile Include="..\..\..\playlist\plstring.cpp">
       <Filter>Source Files\playlist</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Winamp\strutil.cpp">
-      <Filter>Source Files\Winamp</Filter>
+    <ClCompile Include="..\..\..\WinLAMP\strutil.cpp">
+      <Filter>Source Files\WinLAMP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -138,8 +138,8 @@
     <ClInclude Include="..\..\..\playlist\plstring.h">
       <Filter>Header Files\playlist</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Winamp\strutil.h">
-      <Filter>Header Files\Winamp</Filter>
+    <ClInclude Include="..\..\..\WinLAMP\strutil.h">
+      <Filter>Header Files\WinLAMP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -175,7 +175,7 @@
     <Filter Include="Source Files\playlist">
       <UniqueIdentifier>{2be30a31-bc6a-4220-9c58-832fd397d80a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Winamp">
+    <Filter Include="Source Files\WinLAMP">
       <UniqueIdentifier>{dd4f54cd-8631-41f9-92a8-1b4c37afa4ce}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\gen_ml">
@@ -187,7 +187,7 @@
     <Filter Include="Header Files\playlist">
       <UniqueIdentifier>{fd06d71f-c851-433d-a4bb-6458c5452422}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Winamp">
+    <Filter Include="Header Files\WinLAMP">
       <UniqueIdentifier>{0df480a4-437b-429d-860f-7110e7d6c78d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

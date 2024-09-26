@@ -4,7 +4,7 @@
 #include "resource1.h"
 #include "metadata_utils.h"
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 
 #define RETIFNZ(v) if ((v)<0) return use_dir?1:-1; if ((v)>0) return use_dir?-1:1;
 

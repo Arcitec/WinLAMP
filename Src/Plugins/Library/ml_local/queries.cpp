@@ -664,16 +664,16 @@ static INT_PTR CALLBACK childAdvanced(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPA
 
 BOOL IsDirectMouseWheelMessage(const UINT uMsg)
 {
-	static UINT WINAMP_WM_DIRECT_MOUSE_WHEEL = WM_NULL;
+	static UINT WINLAMP_WM_DIRECT_MOUSE_WHEEL = WM_NULL;
 
-	if (WM_NULL == WINAMP_WM_DIRECT_MOUSE_WHEEL)
+	if (WM_NULL == WINLAMP_WM_DIRECT_MOUSE_WHEEL)
 	{
-		WINAMP_WM_DIRECT_MOUSE_WHEEL = RegisterWindowMessageW(L"WINAMP_WM_DIRECT_MOUSE_WHEEL");
-		if (WM_NULL == WINAMP_WM_DIRECT_MOUSE_WHEEL)
+		WINLAMP_WM_DIRECT_MOUSE_WHEEL = RegisterWindowMessageW(L"WINLAMP_WM_DIRECT_MOUSE_WHEEL");
+		if (WM_NULL == WINLAMP_WM_DIRECT_MOUSE_WHEEL)
 			return FALSE;
 	}
 
-	return (WINAMP_WM_DIRECT_MOUSE_WHEEL == uMsg);
+	return (WINLAMP_WM_DIRECT_MOUSE_WHEEL == uMsg);
 }
 
 static INT_PTR CALLBACK filterProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM lParam) 
@@ -1469,7 +1469,7 @@ static INT_PTR CALLBACK ml_newWndProc2(HWND hwndDlg, UINT uMsg, WPARAM wParam, L
 			if (wParam && (HMENU)wParam == s_menu.build_hMenu && s_menu.mode==1)
 			{
 				myMenu = TRUE;
-				if (SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s_menu, IPC_LIBRARY_SENDTOMENU)==(LRESULT)-1)
+				if (SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s_menu, IPC_LIBRARY_SENDTOMENU)==(LRESULT)-1)
 					s_menu.mode=2;
 				myMenu = FALSE;
 				if(ml_oldWndProc2) SetWindowLongPtrW(hwndDlg,GWLP_WNDPROC,(LONG_PTR)ml_oldWndProc2);
@@ -1499,8 +1499,8 @@ void view_queryContextMenu(INT_PTR param1, HWND hHost, POINTS pts, int n)
 	s_menu.hwnd = 0;
 	s_menu.build_hMenu = 0;
 
-	IPC_LIBRARY_SENDTOMENU = SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINAMP_IPCMESSAGE);
-	if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)0, IPC_LIBRARY_SENDTOMENU)==(LRESULT)-1)
+	IPC_LIBRARY_SENDTOMENU = SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)0, IPC_LIBRARY_SENDTOMENU)==(LRESULT)-1)
 	{
 		s_menu.mode = 1;
 		s_menu.hwnd = hHost;
@@ -1560,7 +1560,7 @@ void view_queryContextMenu(INT_PTR param1, HWND hHost, POINTS pts, int n)
 			if (s_menu.mode == 2)
 			{
 				s_menu.menu_id = r;
-				if (SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s_menu, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
+				if (SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s_menu, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
 				{
 					// build my data.
 					s_menu.mode=3;
@@ -1578,7 +1578,7 @@ void view_queryContextMenu(INT_PTR param1, HWND hHost, POINTS pts, int n)
 					LeaveCriticalSection(&g_db_cs);
 					s_menu.data = (void*)&obj;
 
-					LRESULT result = SendMessage(plugin.hwndWinampParent, WM_WA_IPC,(WPARAM)&s_menu,IPC_LIBRARY_SENDTOMENU);
+					LRESULT result = SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC,(WPARAM)&s_menu,IPC_LIBRARY_SENDTOMENU);
 					if (result != 1)
 					{
 						s_menu.mode=3;
@@ -1586,7 +1586,7 @@ void view_queryContextMenu(INT_PTR param1, HWND hHost, POINTS pts, int n)
 						itemRecordList objA={0,};
 						convertRecordList(&objA, &obj);
 						s_menu.data = (void*)&objA;
-						SendMessage(plugin.hwndWinampParent, WM_WA_IPC,(WPARAM)&s_menu,IPC_LIBRARY_SENDTOMENU);
+						SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC,(WPARAM)&s_menu,IPC_LIBRARY_SENDTOMENU);
 						freeRecordList(&objA);
 					}
 					freeRecordList(&obj);
@@ -1598,7 +1598,7 @@ void view_queryContextMenu(INT_PTR param1, HWND hHost, POINTS pts, int n)
 	if (s_menu.mode) 
 	{
 		s_menu.mode=4;
-		SendMessage(plugin.hwndWinampParent, WM_WA_IPC,(WPARAM)&s_menu,IPC_LIBRARY_SENDTOMENU); // cleanup
+		SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC,(WPARAM)&s_menu,IPC_LIBRARY_SENDTOMENU); // cleanup
 	}
 	main_sendto_hmenu=0;
 	EatKeyboard();
@@ -1629,10 +1629,10 @@ void queriesContextMenu(INT_PTR param1, HWND hHost, POINTS pts) {
 			addNewQuery(hHost);
 		break;
 		case ID_QUERYMENU_PREFERENCES:
-			SENDWAIPC(plugin.hwndWinampParent, IPC_OPENPREFSTOPAGE, &preferences);
+			SENDWAIPC(plugin.hwndWinLAMPParent, IPC_OPENPREFSTOPAGE, &preferences);
 		break;
 		case ID_QUERYMENU_HELP:
-			SENDWAIPC(plugin.hwndWinampParent, IPC_OPEN_URL, L"https://help.winamp.com/hc/articles/8105304048660-The-Winamp-Media-Library");
+			SENDWAIPC(plugin.hwndWinLAMPParent, IPC_OPEN_URL, L"https://help.winlamp.com/hc/articles/8105304048660-The-WinLAMP-Media-Library");
 		break;
 	}
 	EatKeyboard();

@@ -173,7 +173,7 @@ static void autoDetectCallback(wchar_t driveW, UINT type)
 int init()
 {
 	wchar_t mlipod[MAX_PATH] = {0};
-	PathCombineW(mlipod, (LPCWSTR)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_GETPLUGINDIRECTORYW), L"ml_ipod.dll");
+	PathCombineW(mlipod, (LPCWSTR)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_GETPLUGINDIRECTORYW), L"ml_ipod.dll");
 	FILE * f = _wfopen(mlipod, L"rb");
 	if (f) {
 		fclose(f);
@@ -327,8 +327,8 @@ intptr_t MessageProc(int msg, intptr_t param1, intptr_t param2, intptr_t param3)
 }
 
 extern "C" {
-	__declspec( dllexport ) PMPDevicePlugin * winampGetPMPDevicePlugin(){return &plugin;}
-	__declspec( dllexport ) int winampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
+	__declspec( dllexport ) PMPDevicePlugin * winlampGetPMPDevicePlugin(){return &plugin;}
+	__declspec( dllexport ) int winlampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
 		int i = iPods.size();
 		while(i-- > 0) iPods[i]->Close();
 		return PMP_PLUGIN_UNINSTALL_NOW;

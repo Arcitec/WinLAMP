@@ -30,7 +30,7 @@ const wchar_t *api_localesI::locales_getBindFromAction(int action)
 	return LocalesManager::getBindFromAction(action);
 }
 
-/* // TODO: benski> maybe hook up to Winamp 5.5's new lang pack stuff
+/* // TODO: benski> maybe hook up to WinLAMP 5.5's new lang pack stuff
 int api_localesI::locales_getNumEntries() 
 {
 	return LocalesManager::getNumLocales();

@@ -1,5 +1,5 @@
-#ifndef NULLSOFT_WINAMP_WASABI_HELPER_INTERFACE_HEADER
-#define NULLSOFT_WINAMP_WASABI_HELPER_INTERFACE_HEADER
+#ifndef NULLSOFT_WINLAMP_WASABI_HELPER_INTERFACE_HEADER
+#define NULLSOFT_WINLAMP_WASABI_HELPER_INTERFACE_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -14,7 +14,7 @@ class api_service;
 #include "../Agave/Language/api_language.h"
 #include <api/memmgr/api_memmgr.h>
 #include <api/service/svcs/svc_imgload.h>
-#include "../Winamp/JSAPI2_api_security.h"
+#include "../WinLAMP/JSAPI2_api_security.h"
 #include "../Components/wac_downloadManager/wac_downloadManager_api.h"
 #include "../nu/threadpool/api_threadpool.h"
 
@@ -121,4 +121,4 @@ inline HRESULT ifc_wasabihelper::GetThreadpoolApi(api_threadpool **threadpool)
 	return _call(API_GETTHREADPOOL, (HRESULT)E_NOTIMPL, threadpool);
 }
 
-#endif // NULLSOFT_WINAMP_WASABI_HELPER_INTERFACE_HEADER
+#endif // NULLSOFT_WINLAMP_WASABI_HELPER_INTERFACE_HEADER

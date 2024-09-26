@@ -1,6 +1,6 @@
 #include "./skinnedcombo.h"
 #include "./skinnedheader.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 #include "./skinning.h"
 #include "../nu/trace.h"
 #include <windowsx.h>

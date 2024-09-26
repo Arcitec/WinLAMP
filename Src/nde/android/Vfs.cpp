@@ -198,9 +198,9 @@ size_t Vfread(void *ptr, size_t size, VFILE *f)
 		{
 			//      if (!f->flushtable) // this would be ideal, if we could figure out f->flushtable
 			//      f->flushtable=MessageBox(g_hwnd,"DB read failed, DB may be corrupted.\r\n\r\n"
-			//    "Hit Retry to continue, or Cancel to clear the DB and start over","Winamp Library Error",MB_RETRYCANCEL) == IDCANCEL; //fucko
+			//    "Hit Retry to continue, or Cancel to clear the DB and start over","WinLAMP Library Error",MB_RETRYCANCEL) == IDCANCEL; //fucko
 			//MessageBox(g_hwnd,"DB read failed, DB may be corrupted. If this error persists, remove all files from the library.",
-			//        "Winamp Library Error",MB_OK);
+			//        "WinLAMP Library Error",MB_OK);
 			return 0;
 		}
 		s = f->filesize - f->ptr;

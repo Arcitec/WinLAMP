@@ -1,6 +1,6 @@
 
 /**
-	Example Winamp AVS plug-in
+	Example WinLAMP AVS plug-in
 	Copyright (c) 2000, Nullsoft Inc.
 	
 	Hello, welcome to the first Advanced Visualization 

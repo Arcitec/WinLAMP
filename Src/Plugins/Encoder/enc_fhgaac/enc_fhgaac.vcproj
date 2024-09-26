@@ -65,7 +65,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="shlwapi.lib"
-				OutputFile="$(ProgramFiles)/Winamp/Plugins/enc_fhgaac.dll"
+				OutputFile="$(ProgramFiles)/WinLAMP/Plugins/enc_fhgaac.dll"
 				LinkIncremental="2"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
@@ -150,7 +150,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="shlwapi.lib msvcrt.lib"
-				OutputFile="$(ProgramFiles)/Winamp/Plugins/enc_fhgaac.dll"
+				OutputFile="$(ProgramFiles)/WinLAMP/Plugins/enc_fhgaac.dll"
 				LinkIncremental="1"
 				GenerateManifest="false"
 				IgnoreAllDefaultLibraries="true"

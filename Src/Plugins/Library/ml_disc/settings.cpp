@@ -27,7 +27,7 @@
 #define DEF_EF_PATH				GetDefaultExtractPath()
 #define DEF_EF_TITLEFMT			TEXT("<Artist> - <Album>\\## - <Trackartist> - <Title>")
 #define DEF_EF_PLAYLISTFMT		TEXT("<Artist> - <Album>\\<Artist> - <Album>")
-#define DEF_EF_COMMENTTEXT		TEXT("Ripped by Winamp")
+#define DEF_EF_COMMENTTEXT		TEXT("Ripped by WinLAMP")
 #define DEF_EF_UPPEREXTENSION	FALSE
 #define DEF_EF_ADDMETADATA		TRUE
 #define DEF_EF_CALCULATERG		FALSE

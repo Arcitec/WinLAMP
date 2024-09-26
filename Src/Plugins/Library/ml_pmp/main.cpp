@@ -9,7 +9,7 @@
 #include <shlwapi.h>
 #include "..\..\General\gen_ml/ml.h"
 #include "..\..\General\gen_ml/itemlist.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "nu/ns_wc.h"
 #include "..\..\General\gen_hotkeys/wa_hotkeys.h"
 #include "resource1.h"
@@ -49,7 +49,7 @@ void UpdateTransfersListView(bool softUpdate, CopyInst * item=NULL);
 
 static void CALLBACK ProgressTimerTickCb(HWND hwnd, UINT uMsg, UINT_PTR eventId, unsigned long elapsed);
 
-extern "C" winampMediaLibraryPlugin plugin = 
+extern "C" winlampMediaLibraryPlugin plugin = 
 {
 	MLHDR_VER,
 	"nullsoft(ml_pmp.dll)",
@@ -259,11 +259,11 @@ static int init()
 	if (!testForDevPlugins())
 		return ML_INIT_FAILURE;
 
-	genrand_int31 = (int (*)())SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_RANDFUNC);
+	genrand_int31 = (int (*)())SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_RANDFUNC);
 
 	if (0 == viewAtom)
 	{
-		viewAtom = GlobalAddAtomW(L"WinampPortableMediaView");
+		viewAtom = GlobalAddAtomW(L"WinLAMPPortableMediaView");
 		if (0 == viewAtom)
 			return 2;
 	}
@@ -295,7 +295,7 @@ static int init()
 
 
 	mediaLibrary.library  = plugin.hwndLibraryParent;
-	mediaLibrary.winamp   = plugin.hwndWinampParent;
+	mediaLibrary.winlamp   = plugin.hwndWinLAMPParent;
 	mediaLibrary.instance = plugin.hDllInstance;
 
 	mediaLibrary.GetIniDirectory();
@@ -310,10 +310,10 @@ static int init()
 
 	hMainThread      = GetCurrentThread();
 	//InitializeCriticalSection(&listTransfersLock);
-	global_config    = new C_Config( (wchar_t *)mediaLibrary.GetWinampIniW() );
-	profile          = global_config->ReadInt( L"profile", 0, L"Winamp" );
+	global_config    = new C_Config( (wchar_t *)mediaLibrary.GetWinLAMPIniW() );
+	profile          = global_config->ReadInt( L"profile", 0, L"WinLAMP" );
 
-	gen_mlconfig     = new C_Config( (wchar_t *)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETMLINIFILEW ), L"gen_ml_config" );
+	gen_mlconfig     = new C_Config( (wchar_t *)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETMLINIFILEW ), L"gen_ml_config" );
 
 	m_context_menus  = WASABI_API_LOADMENU( IDR_CONTEXTMENUS );
 	m_context_menus2 = WASABI_API_LOADMENU( IDR_CONTEXTMENUS );
@@ -347,7 +347,7 @@ static int init()
 	Menu_ConvertRatingMenuStar(rate_hmenu, ID_RATE_2);
 	Menu_ConvertRatingMenuStar(rate_hmenu, ID_RATE_1);
 
-	//subclass winamp window
+	//subclass winlamp window
 	mainMessageWindow = CreateDummyWindow();
 
 	prefsPage.hInst = WASABI_API_LNG_HINST;
@@ -366,7 +366,7 @@ static int init()
 	int count = 0;
 	if(loadDevPlugins(&count) && count > 0)
 	{
-		SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(intptr_t)&pluginsPrefsPage,IPC_ADD_PREFS_DLGW);
+		SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(intptr_t)&pluginsPrefsPage,IPC_ADD_PREFS_DLGW);
 	}
 	else if (!count)
 	{
@@ -375,11 +375,11 @@ static int init()
 		// anything else running (as unlikely we'd have use for it without ml_pmp
 		quit();
 
-		winampMediaLibraryPlugin *(*gp)();
-		gp = (winampMediaLibraryPlugin * (__cdecl *)(void))GetProcAddress(GetModuleHandleW(L"ml_devices.dll"), "winampGetMediaLibraryPlugin");
+		winlampMediaLibraryPlugin *(*gp)();
+		gp = (winlampMediaLibraryPlugin * (__cdecl *)(void))GetProcAddress(GetModuleHandleW(L"ml_devices.dll"), "winlampGetMediaLibraryPlugin");
 		if (gp)
 		{
-			winampMediaLibraryPlugin *mlplugin = gp();
+			winlampMediaLibraryPlugin *mlplugin = gp();
 			if (mlplugin && (mlplugin->version >= MLHDR_VER_OLD && mlplugin->version <= MLHDR_VER))
 			{
 				mlplugin->quit();
@@ -402,19 +402,19 @@ static int init()
 
 	SetTimer(mainMessageWindow,COMMITTIMERID,5000,NULL);
 
-	IPC_LIBRARY_PLAYLISTS_REFRESH = SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"ml_playlist_refresh", IPC_REGISTER_WINAMP_IPCMESSAGE);
-	IPC_GET_CLOUD_HINST = (INT)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"WinampCloud", IPC_REGISTER_WINAMP_IPCMESSAGE);
-	cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
+	IPC_LIBRARY_PLAYLISTS_REFRESH = SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"ml_playlist_refresh", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	IPC_GET_CLOUD_HINST = (INT)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"WinLAMPCloud", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
 
 	// set up hotkeys...
-	genhotkeys_add_ipc = SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&"GenHotkeysAdd",IPC_REGISTER_WINAMP_IPCMESSAGE);
+	genhotkeys_add_ipc = SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&"GenHotkeysAdd",IPC_REGISTER_WINLAMP_IPCMESSAGE);
 	hksync.wnd = hkautofill.wnd = hkeject.wnd = mainMessageWindow;
 	hksync.name = (char*)_wcsdup(WASABI_API_LNGSTRINGW(IDS_GHK_SYNC_PORTABLE_DEVICE));
-	PostMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&hksync,genhotkeys_add_ipc);
+	PostMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&hksync,genhotkeys_add_ipc);
 	hkautofill.name = (char*)_wcsdup(WASABI_API_LNGSTRINGW(IDS_GHK_AUTOFILL_PORTABLE_DEVICE));
-	PostMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&hkautofill,genhotkeys_add_ipc);
+	PostMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&hkautofill,genhotkeys_add_ipc);
 	hkeject.name = (char*)_wcsdup(WASABI_API_LNGSTRINGW(IDS_GHK_EJECT_PORTABLE_DEVICE));
-	PostMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&hkeject,genhotkeys_add_ipc);
+	PostMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&hkeject,genhotkeys_add_ipc);
 	return ML_INIT_SUCCESS;
 }
 
@@ -552,7 +552,7 @@ static VOID CALLBACK getTranscoder(ULONG_PTR dwParam)
 		if(d->dev == *(Device **)dwParam) { conf = d->config; break; }
 	}
 	Transcoder ** t = (Transcoder**)dwParam;
-	*t = new TranscoderImp(plugin.hwndWinampParent,plugin.hDllInstance,conf, *(Device **)dwParam);
+	*t = new TranscoderImp(plugin.hwndWinLAMPParent,plugin.hDllInstance,conf, *(Device **)dwParam);
 }
 
 static void CALLBACK ProgressTimerTickCb(HWND hwnd, UINT uMsg, UINT_PTR eventId, unsigned long elapsed)
@@ -1075,12 +1075,12 @@ CenterWindow(HWND window, HWND centerWindow)
 	{
 		centerWindow = plugin.hwndLibraryParent;
 		if (NULL == centerWindow || FALSE == IsWindowVisible(centerWindow))
-			centerWindow = CENTER_OVER_WINAMP;
+			centerWindow = CENTER_OVER_WINLAMP;
 	}
 	
-	if (CENTER_OVER_WINAMP == centerWindow)
+	if (CENTER_OVER_WINLAMP == centerWindow)
 	{
-		centerWindow = (HWND)SENDWAIPC(plugin.hwndWinampParent, IPC_GETDIALOGBOXPARENT, 0);
+		centerWindow = (HWND)SENDWAIPC(plugin.hwndWinLAMPParent, IPC_GETDIALOGBOXPARENT, 0);
 		if (FALSE == IsChild(centerWindow, plugin.hwndLibraryParent))
 			centerWindow = NULL;
 	}
@@ -1092,7 +1092,7 @@ CenterWindow(HWND window, HWND centerWindow)
 		HMONITOR monitor;
 		MONITORINFO monitorInfo;
 
-		monitor = MonitorFromWindow(plugin.hwndWinampParent, MONITOR_DEFAULTTONEAREST);
+		monitor = MonitorFromWindow(plugin.hwndWinLAMPParent, MONITOR_DEFAULTTONEAREST);
 		
 		monitorInfo.cbSize = sizeof(monitorInfo);
 
@@ -1300,10 +1300,10 @@ static INT_PTR PluginMessageProc(int message_type, INT_PTR param1, INT_PTR param
 										}
 										break;
 									case ID_MAINTREEROOT_PREFERENCES:
-										SENDWAIPC(plugin.hwndWinampParent, IPC_OPENPREFSTOPAGE, &pluginsPrefsPage);
+										SENDWAIPC(plugin.hwndWinLAMPParent, IPC_OPENPREFSTOPAGE, &pluginsPrefsPage);
 										break;
 									case ID_MAINTREEROOT_HELP:
-										SENDWAIPC(plugin.hwndWinampParent, IPC_OPEN_URL, L"https://help.winamp.com/hc/articles/8106455294612-Winamp-Portables-Guide");
+										SENDWAIPC(plugin.hwndWinLAMPParent, IPC_OPEN_URL, L"https://help.winlamp.com/hc/articles/8106455294612-WinLAMP-Portables-Guide");
 										break;
 								}
 							}
@@ -1335,7 +1335,7 @@ static INT_PTR PluginMessageProc(int message_type, INT_PTR param1, INT_PTR param
 	else if (message_type == ML_MSG_CONFIG)
 	{
 		if(prefsPage._id == 0) return 0;
-		SendMessage(plugin.hwndWinampParent, WM_WA_IPC, prefsPage._id, IPC_OPENPREFSTOPAGE);
+		SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, prefsPage._id, IPC_OPENPREFSTOPAGE);
 	}
 	else if (message_type == ML_MSG_NOTOKTOQUIT)
 	{
@@ -1425,12 +1425,12 @@ static INT_PTR PluginMessageProc(int message_type, INT_PTR param1, INT_PTR param
 }
 
 extern "C" {
-	__declspec( dllexport ) winampMediaLibraryPlugin * winampGetMediaLibraryPlugin()
+	__declspec( dllexport ) winlampMediaLibraryPlugin * winlampGetMediaLibraryPlugin()
 	{
 		return &plugin;
 	}
 
-	__declspec( dllexport ) int winampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
+	__declspec( dllexport ) int winlampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
 		// cleanup the ml tree so the portables root isn't left
 
 		HNAVITEM rootItem = GetNavigationRoot(FALSE);
@@ -1446,7 +1446,7 @@ extern "C" {
 			global_config->WriteString(0,0);
 		}
 
-		SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(intptr_t)&pluginsPrefsPage,IPC_REMOVE_PREFS_DLG);
+		SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(intptr_t)&pluginsPrefsPage,IPC_REMOVE_PREFS_DLG);
 
 		// allow an on-the-fly removal (since we've got to be with a compatible client build)
 		return ML_PLUGIN_UNINSTALL_NOW;

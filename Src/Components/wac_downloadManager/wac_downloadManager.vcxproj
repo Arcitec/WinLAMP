@@ -89,8 +89,8 @@
       <AdditionalDependencies>comctl32.lib;ws2_32.lib;Crypt32.lib;shlwapi.lib;%(AdditionalDependencies);$(Qt_LIBS_)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System\</Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System'</Message>
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System\</Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -110,9 +110,9 @@
       <AdditionalDependencies>comctl32.lib;ws2_32.lib;Crypt32.lib;shlwapi.lib;%(AdditionalDependencies);$(Qt_LIBS_)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System\
-xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System\</Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System'</Message>
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System\
+xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System\</Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

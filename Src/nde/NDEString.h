@@ -1,5 +1,5 @@
 /*
- Ben Allison benski@winamp.com Nov 14 2007
+ Ben Allison benski@winlamp.com Nov 14 2007
  Simple reference counted string, to avoid a whole bunch of _wcsdup's in NDE and ml_local
  */
 

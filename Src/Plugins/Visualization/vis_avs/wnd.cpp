@@ -42,7 +42,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "avs_eelif.h"
 
-#define WINAMP_NEXT_WINDOW 40063
+#define WINLAMP_NEXT_WINDOW 40063
 #include "wa_ipc.h"
 #include "ff_ipc.h"
 #include "../Agave/Language/api_language.h"
@@ -59,7 +59,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define ID_VIS_PREV                     40383
 #define ID_VIS_RANDOM                   40384
 
-struct winampVisModule *g_mod;
+struct winlampVisModule *g_mod;
 extern volatile int g_ThreadQuit;
 extern int /*g_preset_dirty,*/ config_prompt_save_preset, config_reuseonresize;
 int g_saved_preset_dirty;
@@ -114,7 +114,7 @@ void GetClientRect_adj(HWND hwnd, RECT *r)
 
 HWND g_hwnd;
 
-HWND hwnd_WinampParent;
+HWND hwnd_WinLAMPParent;
 extern HWND g_hwndDlg;
 extern char last_preset[2048];
 char *scanstr_back(char *str, char *toscan, char *defval)
@@ -397,7 +397,7 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
 
 int cfg_fs_dblclk=1;
 
-int Wnd_Init(struct winampVisModule *this_mod)
+int Wnd_Init(struct winlampVisModule *this_mod)
 {
 	WNDCLASS wc={0,};
 	g_mod=this_mod;
@@ -408,7 +408,7 @@ int Wnd_Init(struct winampVisModule *this_mod)
 	wc.lpszClassName = "avswnd";
 	wc.hCursor=LoadCursor(NULL,IDC_ARROW);
 
-  hwnd_WinampParent=this_mod->hwndParent;
+  hwnd_WinLAMPParent=this_mod->hwndParent;
 
 
 	if (!RegisterClass(&wc)) 
@@ -534,7 +534,7 @@ int Wnd_Init(struct winampVisModule *this_mod)
 
 #ifndef WA2_EMBED
 
-  CreateWindowEx(WS_EX_ACCEPTFILES,"avswnd","Winamp AVS Display",
+  CreateWindowEx(WS_EX_ACCEPTFILES,"avswnd","WinLAMP AVS Display",
 		styles,cfg_x,cfg_y,cfg_w,cfg_h,par,NULL,
 				this_mod->hDllInstance,0);
 #else
@@ -908,7 +908,7 @@ static HMENU presetTreeMenu;
 static int presetTreeCount;
 
 void DoPopupMenu() {
-  // Winamp3 Bug#331: Don't let the popupmenu pop when in fullscreen.
+  // WinLAMP3 Bug#331: Don't let the popupmenu pop when in fullscreen.
   if (!DDraw_IsFullScreen())
   {
     void DDraw_NoUpdateScreen(int r);
@@ -1250,7 +1250,7 @@ static LRESULT CALLBACK WndProc( HWND hwnd, UINT message, WPARAM wParam, LPARAM 
             }
             if ( ( GetAsyncKeyState( VK_MENU ) & 0x8000 ) && wParam == VK_F4 )
             {
-                PostMessage( hwnd_WinampParent, message, wParam, lParam );
+                PostMessage( hwnd_WinLAMPParent, message, wParam, lParam );
                 break;
             }
 
@@ -1339,7 +1339,7 @@ static LRESULT CALLBACK WndProc( HWND hwnd, UINT message, WPARAM wParam, LPARAM 
                 {
                     if ( !cfg_fs_use_overlay ) Wnd_GoWindowed( hwnd );
                 }
-                else PostMessage( hwnd_WinampParent, message, wParam, lParam );
+                else PostMessage( hwnd_WinLAMPParent, message, wParam, lParam );
             }
             return 0;
         case WM_TIMER:
@@ -1371,7 +1371,7 @@ static LRESULT CALLBACK WndProc( HWND hwnd, UINT message, WPARAM wParam, LPARAM 
                 DWORD a;
 
 #ifndef REAPLAY_PLUGIN
-                if ( SendMessageTimeout( hwnd_WinampParent, WM_USER, (WPARAM) 0, 201, SMTO_BLOCK, 1000, &a ) && a )
+                if ( SendMessageTimeout( hwnd_WinLAMPParent, WM_USER, (WPARAM) 0, 201, SMTO_BLOCK, 1000, &a ) && a )
                 {
                     if ( strcmp( g_skin_name, (char *) a ) )
                     {
@@ -1404,7 +1404,7 @@ static LRESULT CALLBACK WndProc( HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 #ifndef WA2_EMBED
             if ( wParam == 29 )
             {
-                if ( !IsIconic( hwnd_WinampParent ) )
+                if ( !IsIconic( hwnd_WinLAMPParent ) )
                 {
                     KillTimer( hwnd, 29 );
                     g_mod->Quit( g_mod );
@@ -1440,7 +1440,7 @@ static LRESULT CALLBACK WndProc( HWND hwnd, UINT message, WPARAM wParam, LPARAM 
             hFrameBitmap = NULL;
             {
                 char buf[ MAX_PATH ];
-                if ( SendMessage( hwnd_WinampParent, WM_USER, (WPARAM) buf, 201 ) )
+                if ( SendMessage( hwnd_WinLAMPParent, WM_USER, (WPARAM) buf, 201 ) )
                 {
                     strcat( buf, "\\avs.bmp" );
                     hFrameBitmap = (HBITMAP) LoadImage( g_hInstance, buf, IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE );
@@ -1465,7 +1465,7 @@ static LRESULT CALLBACK WndProc( HWND hwnd, UINT message, WPARAM wParam, LPARAM 
             {
                 char buf[ MAX_PATH ];
                 int a;
-                if ( ( a = SendMessage( hwnd_WinampParent, WM_USER, (WPARAM) buf, 201 ) ) )
+                if ( ( a = SendMessage( hwnd_WinLAMPParent, WM_USER, (WPARAM) buf, 201 ) ) )
                 {
                     lstrcpyn( g_skin_name, (char *) a, sizeof( g_skin_name ) );
                     strcat( buf, "\\avs.bmp" );
@@ -1550,15 +1550,15 @@ static LRESULT CALLBACK WndProc( HWND hwnd, UINT message, WPARAM wParam, LPARAM 
                         GetWindowRect( hwnd, &r2 );
                         my_getViewport( &r, &r2 );
                     }
-                    else if ( w == 1 && IsWindowVisible( hwnd_WinampParent ) )
-                        GetWindowRect( hwnd_WinampParent, &r );
-                    else if ( w == 2 && ( hw = FindWindowEx( NULL, NULL, "Winamp EQ", NULL ) )
+                    else if ( w == 1 && IsWindowVisible( hwnd_WinLAMPParent ) )
+                        GetWindowRect( hwnd_WinLAMPParent, &r );
+                    else if ( w == 2 && ( hw = FindWindowEx( NULL, NULL, "WinLAMP EQ", NULL ) )
                               && IsWindowVisible( hw ) )
                         GetWindowRect( hw, &r );
-                    else if ( w == 3 && ( hw = FindWindowEx( NULL, NULL, "Winamp PE", NULL ) )
+                    else if ( w == 3 && ( hw = FindWindowEx( NULL, NULL, "WinLAMP PE", NULL ) )
                               && IsWindowVisible( hw ) )
                         GetWindowRect( hw, &r );
-                    else if ( w == 4 && ( hw = FindWindowEx( NULL, NULL, "Winamp MB", NULL ) )
+                    else if ( w == 4 && ( hw = FindWindowEx( NULL, NULL, "WinLAMP MB", NULL ) )
                               && IsWindowVisible( hw ) )
                         GetWindowRect( hw, &r );
                     else continue;

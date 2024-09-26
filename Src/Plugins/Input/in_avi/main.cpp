@@ -1,5 +1,5 @@
 #include "main.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "api__in_avi.h"
 #include "../nsavi/nsavi.h"
 #include "win32_avi_reader.h"
@@ -135,7 +135,7 @@ int IsOurFile(const wchar_t *fn)
 }
 
 
-int Play(const wchar_t *fn)		// return zero on success, -1 on file-not-found, some other value on other (stopping winamp) error
+int Play(const wchar_t *fn)		// return zero on success, -1 on file-not-found, some other value on other (stopping winlamp) error
 {
 	g_duration = -1;
 	seek_position = -1;
@@ -324,7 +324,7 @@ In_Module plugin =
 	0
 };
 
-extern "C"	__declspec(dllexport) In_Module * winampGetInModule2()
+extern "C"	__declspec(dllexport) In_Module * winlampGetInModule2()
 {
 	return &plugin;
 }

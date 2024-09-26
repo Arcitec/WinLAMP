@@ -1,7 +1,7 @@
 #include <shlwapi.h>
 
 #include "main.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "CurrentPlaylist.h"
 #include "SendTo.h"
 #include "Playlist.h"
@@ -170,7 +170,7 @@ static INT_PTR PlaylistIPC(int msg, INT_PTR param)
 		case ML_IPC_NEWPLAYLIST: playlists_Add((HWND)param);	return 1;
 		case ML_IPC_IMPORTPLAYLIST: Playlist_importFromFile((HWND)param);	return 1;
 		case ML_IPC_SAVEPLAYLIST: CurrentPlaylist_Export((HWND)param);	return 1; // TODO: can we guarantee a currently active playlist?
-		case ML_IPC_IMPORTCURRENTPLAYLIST: Playlist_importFromWinamp();	return 1;
+		case ML_IPC_IMPORTCURRENTPLAYLIST: Playlist_importFromWinLAMP();	return 1;
 		// play/load the playlist passed as param
 		case ML_IPC_PLAY_PLAYLIST: PlayPlaylist(param);	return 1;
 		case ML_IPC_LOAD_PLAYLIST: LoadPlaylist(param);	return 1;
@@ -196,7 +196,7 @@ INT_PTR CALLBACK MediaLibraryProcedure(HWND hwndDlg, UINT uMsg, WPARAM wParam, L
 		{
 			switch (LOWORD(wParam))
 			{
-				case WINAMP_MANAGEPLAYLISTS:
+				case WINLAMP_MANAGEPLAYLISTS:
 					mediaLibrary.SelectTreeItem(playlistsTreeId);
 					return 1;
 				case ID_DOSHITMENU_ADDNEWPLAYLIST:
@@ -249,13 +249,13 @@ INT_PTR LoadPlaylist(INT_PTR treeId)
 		PathCombineW(wstr, g_path, info.GetFilename());
 	}
 
-	SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_DELETE);
+	SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_DELETE);
 	enqueueFileWithMetaStructW s;
 	s.filename = wstr;
 	s.title    = 0;
 	s.ext      = NULL;
 	s.length   = -1;
-	SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
+	SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
 	return 1;
 }
 
@@ -263,7 +263,7 @@ INT_PTR PlayPlaylist(INT_PTR treeId)
 {
 	if (LoadPlaylist(treeId))
 	{
-		SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_STARTPLAY);
+		SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_STARTPLAY);
 		return 1;
 	}
 	else

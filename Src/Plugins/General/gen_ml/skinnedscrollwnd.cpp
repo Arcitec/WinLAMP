@@ -3,7 +3,7 @@
 #include "main.h"
 #include <commctrl.h>
 #include <windowsx.h>
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 #include "api__gen_ml.h"
 #include "./colors.h"
 #include <tataki/bitmap/bitmap.h>

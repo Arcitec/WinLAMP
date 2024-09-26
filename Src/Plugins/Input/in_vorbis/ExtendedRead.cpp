@@ -5,7 +5,7 @@ extern "C"
 {
 	//returns handle!=0 if successful, 0 if error
 	//size will return the final nb of bytes written to the output, -1 if unknown
-	__declspec( dllexport ) intptr_t winampGetExtendedRead_openW(const wchar_t *fn, int *size, int *bps, int *nch, int *srate) {
+	__declspec( dllexport ) intptr_t winlampGetExtendedRead_openW(const wchar_t *fn, int *size, int *bps, int *nch, int *srate) {
 		VorbisFile * f = VorbisFile::Create(fn,false);
 		if(f) {
 			if(!*bps) *bps=16; // FUCKO HAX
@@ -20,7 +20,7 @@ extern "C"
 		return 0;
 	}
 
-	__declspec( dllexport ) intptr_t winampGetExtendedRead_openW_float(const wchar_t *fn, int *size, int *bps, int *nch, int *srate) {
+	__declspec( dllexport ) intptr_t winlampGetExtendedRead_openW_float(const wchar_t *fn, int *size, int *bps, int *nch, int *srate) {
 		VorbisFile * f = VorbisFile::Create(fn,false);
 		if(f) {
 			Decoder * d = new Decoder();
@@ -35,7 +35,7 @@ extern "C"
 	}
 
 	//returns nb of bytes read. -1 if read error (like CD ejected). if (ret<len), EOF is assumed
-	__declspec( dllexport ) intptr_t winampGetExtendedRead_getData(intptr_t handle, char *dest, size_t len, int *killswitch) {
+	__declspec( dllexport ) intptr_t winlampGetExtendedRead_getData(intptr_t handle, char *dest, size_t len, int *killswitch) {
 		Decoder * d = (Decoder *)handle;
 		size_t used = 0;
 		for(;;) {
@@ -50,13 +50,13 @@ extern "C"
 	}
 
 	// return nonzero on success, zero on failure.
-	__declspec( dllexport ) int winampGetExtendedRead_setTime(intptr_t handle, int millisecs) {
+	__declspec( dllexport ) int winlampGetExtendedRead_setTime(intptr_t handle, int millisecs) {
 		Decoder * d = (Decoder *)handle;
 		d->Flush();
 		return !d->Seek(((double)millisecs) / 1000.0);
 	}
 
-	__declspec( dllexport ) void winampGetExtendedRead_close(intptr_t handle) {
+	__declspec( dllexport ) void winlampGetExtendedRead_close(intptr_t handle) {
 		Decoder * d = (Decoder *)handle;
 		d->Flush();
 		delete d->file;

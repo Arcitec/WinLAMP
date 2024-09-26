@@ -1,13 +1,13 @@
 #include <precomp.h>
 #include "wa2core.h"
 #include "wa2frontend.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "wa2pledit.h"
 #include "../nu/AutoWide.h"
 #include "gen.h"
 #include "../nu/ns_wc.h"
 #include "../Agave/Language/api_language.h"
-#include "../Winamp/in2.h"
+#include "../WinLAMP/in2.h"
 #include "resource.h"
 #include "../nu/AutoChar.h"
 #include <shlwapi.h>
@@ -223,7 +223,7 @@ void Core::gotCallback(int wParam, int forcecb)
 		break;
 	case IPC_CB_MISC_EQ:
 		{
-			// check if the band frequencies changed (winamp vs ISO)
+			// check if the band frequencies changed (winlamp vs ISO)
 			int new_freqband = config->GetInt(eqConfigGroupGUID, L"frequencies", 0);
 			if (m_lastfreqband != new_freqband)
 			{

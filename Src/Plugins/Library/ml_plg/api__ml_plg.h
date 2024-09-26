@@ -13,7 +13,7 @@ extern api_playlistmanager *playlistManagerApi;
 //extern api_config *agaveConfigApi;
 //#define AGAVE_API_CONFIG agaveConfigApi
 
-#include "../Winamp/api_decodefile.h"
+#include "../WinLAMP/api_decodefile.h"
 extern api_decodefile *decodeApi;
 #define AGAVE_API_DECODE decodeApi
 
@@ -43,7 +43,7 @@ extern api_playlists *playlistsApi;
 #define AGAVE_API_PLAYLISTS playlistsApi
 
 // Added for Stat collection
-#include "../Winamp/api_stats.h"
+#include "../WinLAMP/api_stats.h"
 extern api_stats *statsApi;
 #define AGAVE_API_STATS statsApi
 

@@ -316,13 +316,13 @@ wchar_t *lastGetInfoFn;
 #endif
 
 extern "C" __declspec(dllexport)
-	int winampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, int destlen)
+	int winlampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, int destlen)
 {
 	/* Check if there's a status message for this filename 
-		 doing this forces Winamp to hit plugin.getfileinfo, which gives us better control
+		 doing this forces WinLAMP to hit plugin.getfileinfo, which gives us better control
 		 over adding things like [Individualizing] to the playlist title for local files
 	*/
-	if (winamp.HasStatus(fn))
+	if (winlamp.HasStatus(fn))
 		return 0;
 
 	if ((!fn || !*fn) && KeywordMatch(data, "type"))
@@ -463,7 +463,7 @@ extern "C" __declspec(dllexport)
 	#endif
 }
 
-extern "C" __declspec(dllexport) int winampClearExtendedFileInfoW(const wchar_t *fn)
+extern "C" __declspec(dllexport) int winlampClearExtendedFileInfoW(const wchar_t *fn)
 {
 	// TODO: press stop if it's the currently playing file
 	WMInformation wmInfo(fn);
@@ -472,7 +472,7 @@ extern "C" __declspec(dllexport) int winampClearExtendedFileInfoW(const wchar_t 
 	return 1;
 }
 
-extern "C" __declspec(dllexport) int winampSetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *val)
+extern "C" __declspec(dllexport) int winlampSetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *val)
 {
 	//	if (!lastSetInfoFilename.empty() && lastSetInfoFilename != fn)
 	//		dosomething();
@@ -493,7 +493,7 @@ extern "C" __declspec(dllexport) int winampSetExtendedFileInfoW(const wchar_t *f
 		{
 			forcedStop = true;
 			outTime = mod.GetOutputTime();
-			winamp.PressStop();
+			winlamp.PressStop();
 		}
 		free(setFileInfoName);
 		setFileInfoName = _wcsdup(fn);
@@ -572,7 +572,7 @@ extern "C" __declspec(dllexport) int winampSetExtendedFileInfoW(const wchar_t *f
 	return 0;
 }
 
-extern "C" __declspec(dllexport) int winampWriteExtendedFileInfo()
+extern "C" __declspec(dllexport) int winlampWriteExtendedFileInfo()
 {
 	if (setFileInfo)
 	{
@@ -583,7 +583,7 @@ extern "C" __declspec(dllexport) int winampWriteExtendedFileInfo()
 		if (forcedStop)
 		{
 			mod.startAtMilliseconds = outTime;
-			winamp.PressPlay();
+			winlamp.PressPlay();
 		}
 		forcedStop=false;
 

@@ -1,5 +1,5 @@
 #include "api__in_mod.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "MODPlayer.h"
 #include <libopenmpt/libopenmpt_stream_callbacks_file.h>
 #include <nx/nxuri.h>

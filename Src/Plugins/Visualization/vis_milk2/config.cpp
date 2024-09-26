@@ -49,7 +49,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define MAX_MAX_FPS 120
 #define MAX_DISPLAY_MODES 1024
 
-extern winampVisModule mod1;
+extern winlampVisModule mod1;
 
 IDirect3D9* g_lpDX;
 HMODULE     g_hmod_d3d9;
@@ -223,8 +223,8 @@ void CPluginShell::UpdateAdapters(int screenmode)
             FILE* f = _wfopen(szDebugFile, L"w");
             if (f)
             {
-                DWORD winamp_version = SendMessage(GetWinampWindow(),WM_WA_IPC,0,0);
-                fprintf(f, "Winamp version = 0x%04X\n", winamp_version);
+                DWORD winlamp_version = SendMessage(GetWinLAMPWindow(),WM_WA_IPC,0,0);
+                fprintf(f, "WinLAMP version = 0x%04X\n", winlamp_version);
                 fprintf(f, "Plugin long name = \"%s\", version=%d, subversion=%d\n", LONGNAME, INT_VERSION, INT_SUBVERSION);
                 fprintf(f, "Enumeration of Display Adapters:\n");
                 //fprintf(f, "...this is a temporary debug file created by MilkDrop 2.\n");
@@ -891,9 +891,9 @@ void CPluginShell::OnTabChanged(int nNewTab)
         // which is where 'g_subwnd' will get set.
 
         // do this here to ensure that the current prefs page is correctly themed
-        if(!SendMessage(this->m_hWndWinamp,WM_WA_IPC,IPC_ISWINTHEMEPRESENT,IPC_USE_UXTHEME_FUNC))
+        if(!SendMessage(this->m_hWndWinLAMP,WM_WA_IPC,IPC_ISWINTHEMEPRESENT,IPC_USE_UXTHEME_FUNC))
         {
-            SendMessage(this->m_hWndWinamp,WM_WA_IPC,(WPARAM)h,IPC_USE_UXTHEME_FUNC);
+            SendMessage(this->m_hWndWinLAMP,WM_WA_IPC,(WPARAM)h,IPC_USE_UXTHEME_FUNC);
         }
     }
 }
@@ -970,7 +970,7 @@ BOOL CPluginShell::PluginShellConfigTab1Proc(HWND hwnd,UINT msg,WPARAM wParam,LP
             CheckDlgButton(hwnd, IDC_CB_WPT, m_allow_page_tearing_w);
             CheckDlgButton(hwnd, IDC_CB_FSPT, m_allow_page_tearing_fs);
             CheckDlgButton(hwnd, IDC_CB_DMSPT, m_allow_page_tearing_dm);
-            CheckDlgButton(hwnd, IDC_CB_MIN, m_minimize_winamp);
+            CheckDlgButton(hwnd, IDC_CB_MIN, m_minimize_winlamp);
             CheckDlgButton(hwnd, IDC_CB_SAVE_CPU, m_save_cpu);
             CheckDlgButton(hwnd, IDC_CB_SKIN, m_skin);
 			CheckDlgButton(hwnd, IDC_CB_FIXSLOWTEXT, m_fix_slow_text);
@@ -1006,7 +1006,7 @@ BOOL CPluginShell::PluginShellConfigTab1Proc(HWND hwnd,UINT msg,WPARAM wParam,LP
             m_allow_page_tearing_w = DlgItemIsChecked(hwnd, IDC_CB_WPT  );
             m_allow_page_tearing_fs= DlgItemIsChecked(hwnd, IDC_CB_FSPT  );
             m_allow_page_tearing_dm= DlgItemIsChecked(hwnd, IDC_CB_DMSPT);
-            m_minimize_winamp      = DlgItemIsChecked(hwnd, IDC_CB_MIN  );
+            m_minimize_winlamp      = DlgItemIsChecked(hwnd, IDC_CB_MIN  );
             m_save_cpu             = DlgItemIsChecked(hwnd, IDC_CB_SAVE_CPU );
             m_fix_slow_text        = DlgItemIsChecked(hwnd, IDC_CB_FIXSLOWTEXT);
             m_vj_mode              = DlgItemIsChecked(hwnd, IDC_CB_VJMODE);
@@ -1249,8 +1249,8 @@ BOOL CPluginShell::PluginShellConfigTab1Proc(HWND hwnd,UINT msg,WPARAM wParam,LP
                 break;
 
             case IDC_CB_MIN:
-                WASABI_API_LNGSTRINGW_BUF(IDS_HELP_MINIMIZE_WINAMP, title, 1024);
-				WASABI_API_LNGSTRINGW_BUF(IDS_HELP_MINIMIZE_WINAMP_HELP, buf, 2048);
+                WASABI_API_LNGSTRINGW_BUF(IDS_HELP_MINIMIZE_WINLAMP, title, 1024);
+				WASABI_API_LNGSTRINGW_BUF(IDS_HELP_MINIMIZE_WINLAMP_HELP, buf, 2048);
                 break;
 
             case IDC_CB_FIXSLOWTEXT:
@@ -1357,7 +1357,7 @@ BOOL CPluginShell::PluginShellConfigDialogProc(HWND hwnd,UINT msg,WPARAM wParam,
             }
 
 				    if (!g_hmod_d3dx9)
-					    g_hmod_d3dx9 = FindD3DX9(GetWinampWindow());
+					    g_hmod_d3dx9 = FindD3DX9(GetWinLAMPWindow());
 
 						if ((!g_hmod_d3dx9))
 						{

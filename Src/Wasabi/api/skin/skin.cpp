@@ -511,7 +511,7 @@ void Skin::toggleSkin(const wchar_t *skin_name, const wchar_t *skin_path, int de
 			WASABI_API_WND->appdeactivation_setbypass(0);
 			if (ret == IDNO) return ;
 #else
-			DebugString( "The skin you are trying to load is meant for an older Winamp3 version.\n" );
+			DebugString( "The skin you are trying to load is meant for an older WinLAMP3 version.\n" );
 #endif
 			break;
 		}
@@ -525,7 +525,7 @@ void Skin::toggleSkin(const wchar_t *skin_name, const wchar_t *skin_path, int de
 			WASABI_API_WND->appdeactivation_setbypass(0);
 			if (ret == IDNO) return ;
 #else
-			DebugString( "The skin you are trying to load is meant for an older Winamp3 version.\n" );
+			DebugString( "The skin you are trying to load is meant for an older WinLAMP3 version.\n" );
 #endif
 			break;
 		}
@@ -536,7 +536,7 @@ void Skin::toggleSkin(const wchar_t *skin_name, const wchar_t *skin_path, int de
 		           WASABI_API_LNGSTRING_BUF(IDS_ERROR,title,32), MB_ICONERROR);
 		WASABI_API_WND->appdeactivation_setbypass(0);
 #else
-		DebugString( "The skin you are trying to load is meant for an older Winamp3 version.\n" );
+		DebugString( "The skin you are trying to load is meant for an older WinLAMP3 version.\n" );
 #endif
 		return ;
 

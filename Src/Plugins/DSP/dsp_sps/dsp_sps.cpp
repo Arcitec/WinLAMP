@@ -1,9 +1,9 @@
 #include <windows.h>
 #include <commctrl.h>
-#include "../winamp/dsp.h"
+#include "../winlamp/dsp.h"
 #include "resource.h"
 #include "sps_common.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../../General/gen_hotkeys/wa_hotkeys.h"
 #define SPS_HOTKEY_ID "dsp_sps sc"
 #include "sps_configdlg.h"
@@ -11,7 +11,7 @@
 //#define PLUGIN_NAME		"Nullsoft Signal Processing Studio DSP v1.0b"
 #define PLUGIN_VERSION	"v1.0b"
 
-  // config, winamp specific shit here:
+  // config, winlamp specific shit here:
 struct
 {
 	int showeditor; //def 0
@@ -32,21 +32,21 @@ api_language *WASABI_API_LNG       = 0;
 HINSTANCE     WASABI_API_LNG_HINST = 0, WASABI_API_ORIG_HINST = 0;
 
 // module getter.
-winampDSPModule *getModule(int which);
+winlampDSPModule *getModule(int which);
 
-void config(struct winampDSPModule *this_mod);
-int init(struct winampDSPModule *this_mod);
-void quit(struct winampDSPModule *this_mod);
-int modify_samples(struct winampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate);
+void config(struct winlampDSPModule *this_mod);
+int init(struct winlampDSPModule *this_mod);
+void quit(struct winlampDSPModule *this_mod);
+int modify_samples(struct winlampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate);
 
 // Module header, includes version, description, and address of the module retriever function
 typedef struct
 {
 	int version;       // DSP_HDRVER
 	char *description; // description of library
-	winampDSPModule* (*getModule)(int);	// module retrieval function
+	winlampDSPModule* (*getModule)(int);	// module retrieval function
 	int (*sf)(int);
-} winampDSPHeaderEx;
+} winlampDSPHeaderEx;
 
 static int sf(int v)
 {
@@ -58,10 +58,10 @@ static int sf(int v)
 	return res;
 }
 
-winampDSPHeaderEx hdr = { DSP_HDRVER+1, 0, getModule, sf };
+winlampDSPHeaderEx hdr = { DSP_HDRVER+1, 0, getModule, sf };
 
 // first module
-winampDSPModule mod =
+winlampDSPModule mod =
 {
 	0,//"Signal Processing Studio",
 	NULL,	// hwndParent
@@ -84,7 +84,7 @@ extern "C"
 		return NULL;
 	}
 
-	__declspec( dllexport ) winampDSPHeaderEx *winampDSPGetHeader2(HWND hwndParent)
+	__declspec( dllexport ) winlampDSPHeaderEx *winlampDSPGetHeader2(HWND hwndParent)
 	{
 		if(IsWindow(hwndParent))
 		{
@@ -125,7 +125,7 @@ extern "C"
 
 // getmodule routine from the main header. Returns NULL if an invalid module was requested,
 // otherwise returns either mod1 or mod2 depending on 'which'.
-winampDSPModule *getModule(int which)
+winlampDSPModule *getModule(int which)
 {
 	switch (which)
 	{
@@ -134,7 +134,7 @@ winampDSPModule *getModule(int which)
 	}
 }
 
-void config(struct winampDSPModule *this_mod)
+void config(struct winlampDSPModule *this_mod)
 {
 	// show config
 	if (g_configwindow && IsWindow(g_configwindow))
@@ -163,7 +163,7 @@ static genHotkeysAddStruct sps_ghas_showconfig = {
 };
 static int m_genhotkeys_add_ipc;
 
-int init(struct winampDSPModule *this_mod)
+int init(struct winlampDSPModule *this_mod)
 {
 	wsprintf(g_path,"%s\\dsp_sps",(char*)SendMessageW(this_mod->hwndParent,WM_WA_IPC,0,IPC_GETPLUGINDIRECTORY));
 	CreateDirectory(g_path,NULL);
@@ -200,14 +200,14 @@ int init(struct winampDSPModule *this_mod)
 	{
 		loaded_once = 1;
 		if (g_config.visible)
-			ShowWindow(g_configwindow,!GetPrivateProfileInt("Winamp","minimized",1,INI_FILE)?SW_SHOWNA:SW_SHOWMINNOACTIVE);
+			ShowWindow(g_configwindow,!GetPrivateProfileInt("WinLAMP","minimized",1,INI_FILE)?SW_SHOWNA:SW_SHOWMINNOACTIVE);
 	}
 	else{
 		if (g_config.visible)
 			ShowWindow(g_configwindow,SW_SHOWNA);
 	}
 
-	m_genhotkeys_add_ipc=SendMessageW(this_mod->hwndParent,WM_WA_IPC,(WPARAM)&"GenHotkeysAdd",IPC_REGISTER_WINAMP_IPCMESSAGE);
+	m_genhotkeys_add_ipc=SendMessageW(this_mod->hwndParent,WM_WA_IPC,(WPARAM)&"GenHotkeysAdd",IPC_REGISTER_WINLAMP_IPCMESSAGE);
 
 	WASABI_API_LNGSTRING_BUF(IDS_SPS_SHOW_CONFIG,ghkStr,64);
 	sps_ghas_showconfig.flags &= ~HKF_DISABLED;
@@ -219,7 +219,7 @@ int init(struct winampDSPModule *this_mod)
 	return 0;
 }
 
-void quit(struct winampDSPModule *this_mod)
+void quit(struct winlampDSPModule *this_mod)
 {
 	if(IsWindow(helpWnd))
 	{
@@ -265,7 +265,7 @@ void quit(struct winampDSPModule *this_mod)
 	}
 }
 
-int modify_samples(struct winampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate)
+int modify_samples(struct winlampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate)
 {
 	return SPS_process_samples(&g_wacontext,samples,numsamples,0,bps,nch,srate,numsamples*2,1);
 }
@@ -280,7 +280,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID)
 	return TRUE;
 }
 
-extern "C" __declspec( dllexport ) int winampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param)
+extern "C" __declspec( dllexport ) int winlampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param)
 {
 	// force plugin to be uninstalled from a restart so that we can deal with the case of the help dialog being open
 	return helpWndOpenHack;

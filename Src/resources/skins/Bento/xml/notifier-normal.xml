@@ -1,7 +1,7 @@
 <groupdef id="notifier.albumart" sysregion="1" ghost="1" >
 	
 	<layer id="notifier.cover.bg" x="0" y="0" image="notifier.bg.cover" move="0"/>
-	<AlbumArt id="notifier.cover" x="18" y="15" h="50" w="50" move="0" rectrgn="1" notfoundImage="winamp.cover.notfound.50" noAutoRefresh="1"/>
+	<AlbumArt id="notifier.cover" x="18" y="15" h="50" w="50" move="0" rectrgn="1" notfoundImage="winlamp.cover.notfound.50" noAutoRefresh="1"/>
 	<layer id="notifier.webcover" x="18" y="15" h="50" w="50" move="0" rectrgn="1" visible="0"/>
 
 </groupdef>

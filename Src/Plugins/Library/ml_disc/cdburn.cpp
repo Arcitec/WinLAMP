@@ -7,8 +7,8 @@
 #include "../nu/ChildSizer.h"
 #include "config.h"
 #include "../../General/gen_ml/gaystring.h"
-#include "../Winamp/burn.h"
-#include "../Winamp/strutil.h"
+#include "../WinLAMP/burn.h"
+#include "../WinLAMP/strutil.h"
 #include <std::vector>
 #include "../nu/AutoChar.h"
 #include "../nu/AutoWide.h"
@@ -98,7 +98,7 @@ static int LETTERTOINDEX(char c)
 	return c -'A';
 }
 
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 
 #define TIMER_NOTIFYINFO_ID		1985
@@ -174,7 +174,7 @@ static void startBurn(HWND hwndDlg, char driveletter)
 	    hwndDlg,
 	    "",
 	  };
-	pidBurner = (DWORD)(INT_PTR)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM) & bcds, IPC_BURN_CD);
+	pidBurner = (DWORD)(INT_PTR)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM) & bcds, IPC_BURN_CD);
 	if (!pidBurner)
 	{
 		wchar_t title[16] = {0};
@@ -422,21 +422,21 @@ static void selectAll()
 static void playSelectedItems(HWND hwndDlg, int enqueue)
 {
 	int idx = LETTERTOINDEX(m_cdrom);
-	if (!enqueue) SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_DELETE);
+	if (!enqueue) SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_DELETE);
 
 	for (int i = 0;i < itemCache[idx].Size;i++)
 	{
 		if (!m_statuslist.GetSelected(i)) continue;
 
-		//send the file to winamp
+		//send the file to winlamp
 		COPYDATASTRUCT cds;
 		cds.dwData = IPC_PLAYFILEW;
 		cds.lpData = (void *)itemCache[idx].Items[i].filename;
 		cds.cbData = (DWORD)(sizeof(wchar_t *) * (wcslen(itemCache[idx].Items[i].filename) + 1)); // include space for null char
-		SendMessageW(plugin.hwndWinampParent, WM_COPYDATA, (WPARAM)NULL, (LPARAM)&cds);
+		SendMessageW(plugin.hwndWinLAMPParent, WM_COPYDATA, (WPARAM)NULL, (LPARAM)&cds);
 	}
 
-	if (!enqueue) SendMessageW(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_STARTPLAY);
+	if (!enqueue) SendMessageW(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_STARTPLAY);
 }
 BOOL CALLBACK CantBurnProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -561,7 +561,7 @@ HRESULT ResolveShortCut(HWND hwnd, LPCWSTR pszShortcutFile, LPWSTR pszPath)
 
 static int checkFile(const char *file)
 {
-	//check if the file is supported by winamp
+	//check if the file is supported by winlamp
 	const char *ext = extension(file);
 	if (!ext || !ext[0]) return 0;
 	if (strstr(file, "://") && !strstr(file, "cda://")) return 0;
@@ -577,7 +577,7 @@ static int checkFile(const char *file)
 	CloseHandle(hFile);
 #endif
 
-	char *m_extlist = (char*)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_EXTLIST);
+	char *m_extlist = (char*)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_EXTLIST);
 	{
 		int found = 0;
 		char *a = m_extlist;
@@ -632,7 +632,7 @@ static int checkFile(const char *file)
 
 static int checkFile(const wchar_t *file)
 {
-	//check if the file is supported by winamp
+	//check if the file is supported by winlamp
 	const wchar_t *ext = PathFindExtension(file);
 	if (!ext || !ext[0]) return 0;
 	ext++;
@@ -648,7 +648,7 @@ static int checkFile(const wchar_t *file)
 	}
 	CloseHandle(hFile);
 #endif
-	wchar_t *m_extlist = (wchar_t*)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_EXTLISTW);
+	wchar_t *m_extlist = (wchar_t*)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_EXTLISTW);
 	{
 		int found = 0;
 		wchar_t *a = m_extlist;
@@ -743,7 +743,7 @@ void cdburn_appendFile(char *file, char cLetter)
 
 			char title[2048] = {0};
 			basicFileInfoStruct bfis = {fn, 0, 0, title, sizeof(title) - 1,};
-			SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&bfis, IPC_GET_BASIC_FILE_INFO);
+			SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&bfis, IPC_GET_BASIC_FILE_INFO);
 			if (bfis.length > 0)
 			{
 				memset((void *)&(newItems.Items[newItems.Size]), 0, sizeof(itemRecordW));
@@ -796,7 +796,7 @@ void cdburn_appendFile(wchar_t *file, char cLetter)
 
 			wchar_t title[2048] = {0};
 			basicFileInfoStructW bfis = {fn, 0, 0, title, ARRAYSIZE(title) - 1,};
-			SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&bfis, IPC_GET_BASIC_FILE_INFOW);
+			SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&bfis, IPC_GET_BASIC_FILE_INFOW);
 			if (bfis.length > 0)
 			{
 				memset((void *)&(newItems.Items[newItems.Size]), 0, sizeof(itemRecordW));
@@ -1544,7 +1544,7 @@ static INT_PTR CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM l
 								wchar_t *temp;
 								const int len = 256 * 1024 - 128;
 								wchar_t *m_extlist = 0;
-								m_extlist = (wchar_t*)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 1, IPC_GET_EXTLISTW);
+								m_extlist = (wchar_t*)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 1, IPC_GET_EXTLISTW);
 								if ((int)(INT_PTR)m_extlist == 1) m_extlist = 0;
 
 								temp = (wchar_t *)GlobalAlloc(GPTR, len);
@@ -1610,10 +1610,10 @@ static INT_PTR CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM l
 							break;
 							case ID_BURNADDMENU_CURRENTPLAYLIST:
 							{
-								int plsize = (int)(INT_PTR)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETLISTLENGTH);
+								int plsize = (int)(INT_PTR)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETLISTLENGTH);
 								for (int i = 0;i < plsize;i++)
 								{
-									wchar_t *name = (wchar_t *)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, i, IPC_GETPLAYLISTFILEW);
+									wchar_t *name = (wchar_t *)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, i, IPC_GETPLAYLISTFILEW);
 									cdburn_appendFile(name, m_cdrom);
 								}
 								SetStatus(hwndDlg, m_cdrom);

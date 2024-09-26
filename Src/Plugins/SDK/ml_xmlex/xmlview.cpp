@@ -4,7 +4,7 @@
 #include "shlobj.h"
 #include "..\..\General\gen_ml\ml_ipc_0313.h"
 #include "..\..\General\gen_ml\childwnd.h"
-#include "../Winamp/wa_dlg.h"
+#include "../WinLAMP/wa_dlg.h"
 #include "../xml/ifc_xmlreadercallback.h"
 #include "../xml/obj_xml.h"
 #include <api/service/waServiceFactory.h>

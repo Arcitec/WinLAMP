@@ -1,6 +1,6 @@
 #include "main.h"
 #include "cddb.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "../nu/AutoChar.h"
 #include "../nu/AutoWide.h"
 #include "api__in_cdda.h"

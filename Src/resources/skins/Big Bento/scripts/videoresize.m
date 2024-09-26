@@ -3,7 +3,7 @@
 **  Version:	1.0					**
 **  Date:	23. Jan. 2008 - 11:23 			**
 **********************************************************
-**  Type:	winamp.wasabi/maki			**
+**  Type:	winlamp.wasabi/maki			**
 **  Project:	Bento					**
 **********************************************************
 **  Author:	Martin Poehlmann aka Deimos		**

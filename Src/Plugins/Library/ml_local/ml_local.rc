@@ -114,7 +114,7 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,120,193,10
     CONTROL         "Display 'Refine' search field in album views",IDC_CHECK5,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,132,151,10
-    CONTROL         "Do not load the Library database at Winamp start-up",IDC_CHECK6,
+    CONTROL         "Do not load the Library database at WinLAMP start-up",IDC_CHECK6,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,145,206,10
     CONTROL         "Use Artist as Album Artist if not available",IDC_ARTIST_AS_ALBUMARTIST,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,158,146,10
@@ -122,7 +122,7 @@ BEGIN
     EDITTEXT        IDC_EDIT_QUERYDELAY,78,171,27,13,ES_AUTOHSCROLL | ES_NUMBER
     LTEXT           "ms  (default: 250)",IDC_STATIC,109,173,104,10
     GROUPBOX        "Clear Library",IDC_STATIC,4,190,256,35
-    LTEXT           "Use this to remove all items from your Winamp Library. This will not physically remove any files from disk.",IDC_STATIC,10,202,176,18
+    LTEXT           "Use this to remove all items from your WinLAMP Library. This will not physically remove any files from disk.",IDC_STATIC,10,202,176,18
     PUSHBUTTON      "Clear Library...",IDC_BUTTON1,190,202,64,18
 END
 
@@ -271,7 +271,7 @@ IDD_NDE_RECOVERY$(DISABLED) DIALOGEX 0, 0, 261, 107
 IDD_NDE_RECOVERY DIALOGEX 0, 0, 261, 107
 #endif
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION
-CAPTION "Winamp5 Library Recovery"
+CAPTION "WinLAMP5 Library Recovery"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     LTEXT           "Inconsistencies were detected while loading your Library database, we are now trying to correct them.",IDC_STATIC,13,8,235,18
@@ -297,7 +297,7 @@ BEGIN
     PUSHBUTTON      "Import from iTunes",IDC_IMPORT_ITUNES,52,49,96,14,WS_DISABLED
     CONTROL         "Do not show me this again",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,70,99,10
     PUSHBUTTON      "Close",IDOK,7,85,50,13
-    CONTROL         "Learn More About Winamp",IDC_BTN_LINK_PROMO,"Button",BS_OWNERDRAW | BS_RIGHT | BS_BOTTOM | WS_TABSTOP,73,85,121,13
+    CONTROL         "Learn More About WinLAMP",IDC_BTN_LINK_PROMO,"Button",BS_OWNERDRAW | BS_RIGHT | BS_BOTTOM | WS_TABSTOP,73,85,121,13
 END
 
 IDD_SCROLLCHILD DIALOGEX 0, 0, 310, 17
@@ -1062,8 +1062,8 @@ BEGIN
     IDS_OPEN_MEDIA_LIBRARY_VIEW_RESULTS "Open Library &view results"
     IDS_MEDIA_LIBRARY_VIEW_RESULTS "Library &view results"
     IDS_ADD_MEDIA_TO_LIBRARY_ "Add media to Library"
-    IDS_SELECT_FOLDER_TO_ADD_TO_WINAMP_MEDIA_LIBRARY 
-                            "Select folder to add to the Winamp Library."
+    IDS_SELECT_FOLDER_TO_ADD_TO_WINLAMP_MEDIA_LIBRARY 
+                            "Select folder to add to the WinLAMP Library."
     IDS_ADD                 "Add"
     IDS_SCAN_FOLDER_IN_BACKGROUND "Scan folder in background"
     IDS_FOLDER_NAME_IS_INCORRECT 
@@ -1189,7 +1189,7 @@ BEGIN
     IDS_ALBUM_ALT           "album"
     IDS_KBPS                "kbps"
     IDS_RECENTLY_PLAYED_TEXT 
-                            "When 'Recently Played' is enabled, Winamp will keep track of when\nand how many times items in the Library are played.\n\nNote: When the first match against any of the selected option(s)\nis met then the playing item will be tracked."
+                            "When 'Recently Played' is enabled, WinLAMP will keep track of when\nand how many times items in the Library are played.\n\nNote: When the first match against any of the selected option(s)\nis met then the playing item will be tracked."
     IDS_PRODUCER            "Producer"
 END
 

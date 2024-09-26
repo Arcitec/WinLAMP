@@ -145,7 +145,7 @@ Order of Function Calls
         d   -song titles + custom messages are working again
         ?   -fixed?: crashes on window resize [out of mem]
                 -Rova: BTW the same bug as krash with the window resizing.
-                -NOT due to the 'integrate w/winamp' option.
+                -NOT due to the 'integrate w/winlamp' option.
                 -> might be fixed now (had forgotten to release m_lpDDSText)
         <AFTER BETA 3..>
         d   -added checkbox to config screen to automatically turn SCROLL LOCK on @ startup
@@ -217,7 +217,7 @@ Order of Function Calls
                 now it's fixed, though, and you can just write "x = q1; y = q2;".
             -fixed some bugs where the plugin start up, in windowed mode, on the wrong window
                 (and hence run super slow).
-            -fixed some bugs w/a munged window frame when the "integrate with winamp" option
+            -fixed some bugs w/a munged window frame when the "integrate with winlamp" option
                 was checked.
         <AFTER BETA 7:>
             -preset ratings are no longer read in all at once; instead, they are scanned in
@@ -234,11 +234,11 @@ Order of Function Calls
             -
 
 
-        beta 2 thread: http://forums.winamp.com/showthread.php?threadid=142635
-        beta 3 thread: http://forums.winamp.com/showthread.php?threadid=142760
-        beta 4 thread: http://forums.winamp.com/showthread.php?threadid=143500
-        beta 6 thread: http://forums.winamp.com/showthread.php?threadid=143974
-        (+read about beat det: http://forums.winamp.com/showthread.php?threadid=102205)
+        beta 2 thread: http://forums.winlamp.com/showthread.php?threadid=142635
+        beta 3 thread: http://forums.winlamp.com/showthread.php?threadid=142760
+        beta 4 thread: http://forums.winlamp.com/showthread.php?threadid=143500
+        beta 6 thread: http://forums.winlamp.com/showthread.php?threadid=143974
+        (+read about beat det: http://forums.winlamp.com/showthread.php?threadid=102205)
 
 @       -code editing: when cursor is on 1st posn. in line, wrong line is highlighted!?
         -requests:
@@ -886,7 +886,7 @@ void CPlugin::OverrideDefaults()
        m_allow_page_tearing_w  = 0;       // 0 or 1
     // m_allow_page_tearing_fs = 0;       // 0 or 1
     // m_allow_page_tearing_dm = 1;       // 0 or 1
-    // m_minimize_winamp       = 1;       // 0 or 1
+    // m_minimize_winlamp       = 1;       // 0 or 1
     // m_desktop_textlabel_boxes = 1;     // 0 or 1
     // m_save_cpu              = 0;       // 0 or 1
 
@@ -924,7 +924,7 @@ void CPlugin::MyPreInitialize()
     //   the plugin shell (framework), do so from OverrideDefaults() above.)
 
     // seed the system's random number generator w/the current system time:
-    //srand((unsigned)time(NULL));  -don't - let winamp do it
+    //srand((unsigned)time(NULL));  -don't - let winlamp do it
 
 	// attempt to load a unicode F1 help message otherwise revert to the ansi version
 	g_szHelp = (wchar_t*)GetTextResource(IDR_TEXT2,1);
@@ -1840,7 +1840,7 @@ int CPlugin::AllocateMyDX9Stuff()
         // auto-guess texsize
 	    if (m_bTexSizeWasAutoExact)
 		{
-            // note: in windowed mode, the winamp window could be weird sizes, 
+            // note: in windowed mode, the winlamp window could be weird sizes, 
             //        so the plugin shell now gives us a slightly enlarged size,
             //        which pads it out to the nearest 32x32 block size,
             //        and then on display, it intelligently crops the image.
@@ -3912,7 +3912,7 @@ void CPlugin::MyRenderFn(int redraw)
     //   call to MyRenderFn().  Otherwise, the redraw flag will
     //   be zero, and you can draw a new frame.  The flag is
     //   used to force the desktop to repaint itself when 
-    //   running in desktop mode and Winamp is paused or stopped.
+    //   running in desktop mode and WinLAMP is paused or stopped.
 
     //   1. take care of timing/other paperwork/etc. for new frame
     if (!redraw)
@@ -3948,13 +3948,13 @@ void CPlugin::MyRenderFn(int redraw)
         // make sure the 'random' button on the skin shows the right thing:
         // NEVERMIND - if it's a fancy skin, it'll send us WM_COMMAND/ID_VIS_RANDOM
         //   and we'll match the skin's Random button state.
-        //SendMessage(GetWinampWindow(),WM_WA_IPC,m_bMilkdropScrollLockState, IPC_CB_VISRANDOM);
+        //SendMessage(GetWinLAMPWindow(),WM_WA_IPC,m_bMilkdropScrollLockState, IPC_CB_VISRANDOM);
     }
     else
     {
         m_bHadFocus = m_bHasFocus;
 
-        HWND winamp = GetWinampWindow();
+        HWND winlamp = GetWinLAMPWindow();
         HWND plugin = GetPluginWindow();
         HWND focus = GetFocus();
         HWND cur = plugin;
@@ -3967,7 +3967,7 @@ void CPlugin::MyRenderFn(int redraw)
                 break;
             cur = GetParent(cur);
         }
-        while (cur != NULL && cur != winamp);
+        while (cur != NULL && cur != winlamp);
 
         if (m_hTextWnd && focus==m_hTextWnd)
             m_bHasFocus = 1;
@@ -3993,7 +3993,7 @@ void CPlugin::MyRenderFn(int redraw)
 
     if (!redraw)
     {
-        GetWinampSongTitle(GetWinampWindow(), m_szSongTitle, sizeof(m_szSongTitle)-1);
+        GetWinLAMPSongTitle(GetWinLAMPWindow(), m_szSongTitle, sizeof(m_szSongTitle)-1);
         if (wcscmp(m_szSongTitle, m_szSongTitlePrev))
         {
             lstrcpynW(m_szSongTitlePrev, m_szSongTitle, 512);
@@ -4271,15 +4271,15 @@ void CPlugin::MyRenderUI(
         {
 			wchar_t buf4[512] = {0};
             SelectFont(DECORATIVE_FONT);
-            GetWinampSongTitle(GetWinampWindow(), buf4, sizeof(buf4)); // defined in utility.h/cpp
+            GetWinLAMPSongTitle(GetWinLAMPWindow(), buf4, sizeof(buf4)); // defined in utility.h/cpp
             MyTextOut_Shadow(buf4, MTO_LOWER_LEFT);
         }
 
         // render song time & len above that:
         if (m_bShowSongTime || m_bShowSongLen)
         {
-            GetWinampSongPosAsText(GetWinampWindow(), buf); // defined in utility.h/cpp
-            GetWinampSongLenAsText(GetWinampWindow(), buf2); // defined in utility.h/cpp
+            GetWinLAMPSongPosAsText(GetWinLAMPWindow(), buf); // defined in utility.h/cpp
+            GetWinLAMPSongLenAsText(GetWinLAMPWindow(), buf2); // defined in utility.h/cpp
             if (m_bShowSongTime && m_bShowSongLen)
 			{
 				// only show playing position and track length if it is playing (buffer is valid)
@@ -5184,13 +5184,13 @@ LRESULT CPlugin::MyWindowProc(HWND hWnd, unsigned uMsg, WPARAM wParam, LPARAM lP
     // You can handle Windows messages here while the plugin is running, 
     //   such as mouse events (WM_MOUSEMOVE/WM_LBUTTONDOWN), keypresses 
     //   (WK_KEYDOWN/WM_CHAR), and so on.
-    // This function is threadsafe (thanks to Winamp's architecture), 
+    // This function is threadsafe (thanks to WinLAMP's architecture), 
     //   so you don't have to worry about using semaphores or critical 
     //   sections to read/write your class member variables.
     // If you don't handle a message, let it continue on the usual path 
-    //   (to Winamp) by returning DefWindowProc(hWnd,uMsg,wParam,lParam).
+    //   (to WinLAMP) by returning DefWindowProc(hWnd,uMsg,wParam,lParam).
     // If you do handle a message, prevent it from being handled again
-    //   (by Winamp) by returning 0.
+    //   (by WinLAMP) by returning 0.
 
     // IMPORTANT: For the WM_KEYDOWN, WM_KEYUP, and WM_CHAR messages,
     //   you must return 0 if you process the message (key),
@@ -5225,8 +5225,8 @@ LRESULT CPlugin::MyWindowProc(HWND hWnd, unsigned uMsg, WPARAM wParam, LPARAM lP
                 if (v==0xFFFF)
                 {
                     // plugin just launched or changed modes - 
-                    // Winamp wants to know what our saved Random state is...
-                    SendMessage(GetWinampWindow(), WM_WA_IPC, (m_bPresetLockOnAtStartup ? 0 : 1) << 16, IPC_CB_VISRANDOM);
+                    // WinLAMP wants to know what our saved Random state is...
+                    SendMessage(GetWinLAMPWindow(), WM_WA_IPC, (m_bPresetLockOnAtStartup ? 0 : 1) << 16, IPC_CB_VISRANDOM);
 
                     return 0;
                 }
@@ -5565,9 +5565,9 @@ LRESULT CPlugin::MyWindowProc(HWND hWnd, unsigned uMsg, WPARAM wParam, LPARAM lP
         case VK_SCROLL:	
             m_bPresetLockedByUser = GetKeyState(VK_SCROLL) & 1;
             //SetScrollLock(m_bPresetLockedByUser);
-            SendMessage(GetWinampWindow(), WM_WA_IPC, (m_bPresetLockedByUser ? 0 : 1) << 16, IPC_CB_VISRANDOM);
+            SendMessage(GetWinLAMPWindow(), WM_WA_IPC, (m_bPresetLockedByUser ? 0 : 1) << 16, IPC_CB_VISRANDOM);
             //int set = m_bPresetLockedByUser ? 
-            //PostMessage(GetWinampWindow(), WM_COMMAND, ID_VIS_RANDOM | (set << 16), 0);
+            //PostMessage(GetWinLAMPWindow(), WM_COMMAND, ID_VIS_RANDOM | (set << 16), 0);
 
 			return 0; // we processed (or absorbed) the key
 		//case VK_F6:	break;
@@ -5578,7 +5578,7 @@ LRESULT CPlugin::MyWindowProc(HWND hWnd, unsigned uMsg, WPARAM wParam, LPARAM lP
 
 		// next handle the waitstring case (for string-editing),
 		//	then the menu navigation case,
-		//  then handle normal case (handle the message normally or pass on to winamp)
+		//  then handle normal case (handle the message normally or pass on to winlamp)
 
 		// case 1: waitstring mode
 		if (m_waitstring.bActive) 
@@ -5971,7 +5971,7 @@ LRESULT CPlugin::MyWindowProc(HWND hWnd, unsigned uMsg, WPARAM wParam, LPARAM lP
 
 		// case 3: handle non-character keys (virtual keys) and return 0.
         //         if we don't handle them, return 1, and the shell will
-        //         (passing some to the shell's key bindings, some to Winamp,
+        //         (passing some to the shell's key bindings, some to WinLAMP,
         //          and some to DefWindowProc)
 		//		note: regular hotkeys should be handled in HandleRegularKey.
 		switch(wParam)
@@ -6441,7 +6441,7 @@ int CPlugin::HandleRegularKey(WPARAM wParam)
 
 	case 'u':
 	case 'U':
-		if (SendMessage(GetWinampWindow(),WM_USER,0,250))
+		if (SendMessage(GetWinLAMPWindow(),WM_USER,0,250))
             AddError(WASABI_API_LNGSTRINGW(IDS_SHUFFLE_IS_NOW_OFF), 3.0f, ERR_NOTIFY, false);
 		else
             AddError(WASABI_API_LNGSTRINGW(IDS_SHUFFLE_IS_NOW_ON), 3.0f, ERR_NOTIFY, false);
@@ -6449,7 +6449,7 @@ int CPlugin::HandleRegularKey(WPARAM wParam)
 		//m_fShowUserMessageUntilThisTime = GetTime() + 4.0f;
 
 		// toggle shuffle
-		PostMessage(GetWinampWindow(),WM_COMMAND,40023,0);
+		PostMessage(GetWinLAMPWindow(),WM_COMMAND,40023,0);
 
 		return 0; // we processed (or absorbed) the key
 
@@ -6764,7 +6764,7 @@ BOOL CPlugin::MyConfigTabProc(int nPage, HWND hwnd,UINT msg,WPARAM wParam,LPARAM
     //  'Enabling Additional Tabs (pages) on the Config Panel' in DOCUMENTATION.TXT.
     // You should always return 0 for this function.
     // Note that you don't generally have to use critical sections or semaphores
-    //   here; Winamp controls the plugin's message queue, and only gives it message
+    //   here; WinLAMP controls the plugin's message queue, and only gives it message
     //   in between frames.
     // 
     // Incoming parameters:
@@ -8189,7 +8189,7 @@ void CPlugin::FindValidPresetDir()
     lstrcpyW(m_szPresetDir, GetPluginsDirPath());
     if (GetFileAttributesW(m_szPresetDir) != -1)
         return;
-    lstrcpyW(m_szPresetDir, L"c:\\program files\\winamp\\");  //getting desperate here
+    lstrcpyW(m_szPresetDir, L"c:\\program files\\winlamp\\");  //getting desperate here
     if (GetFileAttributesW(m_szPresetDir) != -1)
         return;
     lstrcpyW(m_szPresetDir, L"c:\\program files\\");  //getting desperate here
@@ -8237,7 +8237,7 @@ static unsigned int WINAPI __UpdatePresetList(void* lpVoid)
     EnterCriticalSection(&g_cs);
 retry:
 
-	// make sure the path exists; if not, go to winamp plugins dir
+	// make sure the path exists; if not, go to winlamp plugins dir
 	if (GetFileAttributesW(g_plugin.m_szPresetDir) == -1)
     {
         //FIXME...

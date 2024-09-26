@@ -71,6 +71,6 @@ typedef enum
 } 
 eScrMode;
 
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 
 #endif

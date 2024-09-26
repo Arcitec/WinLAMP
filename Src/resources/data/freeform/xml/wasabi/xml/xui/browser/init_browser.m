@@ -38,8 +38,8 @@ Global list SearchAttributeList;
 #endif
 
 Global ConfigAttribute browser_scr_show_attrib, browser_search_attrib;
-Global SearchAttribute browser_search_winamp_mskins_attrib, browser_search_winamp_cskins_attrib, browser_search_winamp_plugins_attrib,
-					   browser_search_winamp_web_attrib, browser_search_wiki_attrib, browser_c_pollstar_attrib, browser_c_bit_attrib,
+Global SearchAttribute browser_search_winlamp_mskins_attrib, browser_search_winlamp_cskins_attrib, browser_search_winlamp_plugins_attrib,
+					   browser_search_winlamp_web_attrib, browser_search_wiki_attrib, browser_c_pollstar_attrib, browser_c_bit_attrib,
 					   browser_c_jambase_attrib;
 
 initAttribs_browser()
@@ -53,8 +53,8 @@ initAttribs_browser()
 	SearchAttributeList = new List;
 	SearchAttributeList.addItem (custom_page_browser);
 
-	browser_search_winamp_web_attrib = custom_page_browser.newAttribute("Web Search", "1");
-	SearchAttributeList.addItem (browser_search_winamp_web_attrib);
+	browser_search_winlamp_web_attrib = custom_page_browser.newAttribute("Web Search", "1");
+	SearchAttributeList.addItem (browser_search_winlamp_web_attrib);
 
 	browser_search_wiki_attrib = custom_page_browser.newAttribute("Wikipedia Search", "0");
 	SearchAttributeList.addItem (browser_search_wiki_attrib);
@@ -70,13 +70,13 @@ initAttribs_browser()
 	browser_c_bit_attrib = custom_page_browser_concertsearch.newAttribute("Bandsintown", "0");
 	SearchAttributeList.addItem (browser_c_bit_attrib);
 
-	ConfigItem custom_page_browser_winampsearch = addConfigSubMenu(custom_page_browser, "Winamp Search", CUSTOM_PAGE_BROWSER_WASEARCH);
-	browser_search_winamp_mskins_attrib = custom_page_browser_winampsearch.newAttribute("Modern Skins", "0");
-	SearchAttributeList.addItem (browser_search_winamp_mskins_attrib);
-	browser_search_winamp_cskins_attrib = custom_page_browser_winampsearch.newAttribute("Classic Skins", "0");
-	SearchAttributeList.addItem (browser_search_winamp_cskins_attrib);
-	browser_search_winamp_plugins_attrib = custom_page_browser_winampsearch.newAttribute("Plug-ins", "0");
-	SearchAttributeList.addItem (browser_search_winamp_plugins_attrib);
+	ConfigItem custom_page_browser_winlampsearch = addConfigSubMenu(custom_page_browser, "WinLAMP Search", CUSTOM_PAGE_BROWSER_WASEARCH);
+	browser_search_winlamp_mskins_attrib = custom_page_browser_winlampsearch.newAttribute("Modern Skins", "0");
+	SearchAttributeList.addItem (browser_search_winlamp_mskins_attrib);
+	browser_search_winlamp_cskins_attrib = custom_page_browser_winlampsearch.newAttribute("Classic Skins", "0");
+	SearchAttributeList.addItem (browser_search_winlamp_cskins_attrib);
+	browser_search_winlamp_plugins_attrib = custom_page_browser_winlampsearch.newAttribute("Plug-ins", "0");
+	SearchAttributeList.addItem (browser_search_winlamp_plugins_attrib);
 
 	addMenuSeparator(custom_page_browser);
 
@@ -90,10 +90,10 @@ browser_search_attrib.onDataChanged ()
 {
 	if (attribs_mychange) return;
 	string dta = getData();
-	if (dta == "Modern Skins") browser_search_winamp_mskins_attrib.setData("1");
-	else if (dta == "Classic Skins") browser_search_winamp_plugins_attrib.setData("1");
-	else if (dta == "Plug-ins") browser_search_winamp_plugins_attrib.setData("1");
-	else if (dta == "Web Search with Google") browser_search_winamp_web_attrib.setData("1");
+	if (dta == "Modern Skins") browser_search_winlamp_mskins_attrib.setData("1");
+	else if (dta == "Classic Skins") browser_search_winlamp_plugins_attrib.setData("1");
+	else if (dta == "Plug-ins") browser_search_winlamp_plugins_attrib.setData("1");
+	else if (dta == "Web Search with Google") browser_search_winlamp_web_attrib.setData("1");
 	else if (dta == "Pollstar") browser_c_pollstar_attrib.setData("1");
 	else if (dta == "Bands in Town") browser_c_bit_attrib.setData("1");
 	else if (dta == "JamBase") browser_c_jambase_attrib.setData("1");
@@ -106,10 +106,10 @@ SearchAttribute.onDataChanged()
 	NOOFF
 	attribs_mychange = 1;
 	String s = SearchAttribute.getAttributeName();
-	check (s, browser_search_winamp_mskins_attrib);
-	check (s, browser_search_winamp_cskins_attrib);
-	check (s, browser_search_winamp_plugins_attrib);
-	check (s, browser_search_winamp_web_attrib);
+	check (s, browser_search_winlamp_mskins_attrib);
+	check (s, browser_search_winlamp_cskins_attrib);
+	check (s, browser_search_winlamp_plugins_attrib);
+	check (s, browser_search_winlamp_web_attrib);
 	check (s, browser_c_jambase_attrib);
 	check (s, browser_c_bit_attrib);
 	check (s, browser_c_pollstar_attrib);

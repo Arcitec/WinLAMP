@@ -2,7 +2,7 @@
 #define NULLSOFT_ML_PLAYLISTS_CURRENTPLAYLIST_H
 
 bool currentPlaylist_ImportFromDisk(HWND hwnd);
-bool currentPlaylist_ImportFromWinamp(HWND hwnd);
+bool currentPlaylist_ImportFromWinLAMP(HWND hwnd);
 bool CurrentPlaylist_DeleteMissing();
 void CurrentPlaylist_Export(HWND dlgparent);
 bool CurrentPlaylist_AddLocation(HWND hwndDlg);

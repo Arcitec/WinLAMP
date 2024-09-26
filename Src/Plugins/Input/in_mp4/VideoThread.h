@@ -1,6 +1,6 @@
 #pragma once
 #include "AudioSample.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 void Video_Init();
 void Video_Close();
 

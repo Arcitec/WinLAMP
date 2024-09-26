@@ -7,7 +7,7 @@
 #include "../nu/ChildSizer.h"
 
 #include "config.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 #include "..\..\General\gen_ml/gaystring.h"
 
@@ -47,7 +47,7 @@ int updateFileInfo(char *filename, char *metadata, char *data)
 	                                  data ? data : "",
 	                                  data ? strlen(data) : 0,
 	                              };
-	return (INT)(INT_PTR)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&efis, IPC_SET_EXTENDED_FILE_INFO);
+	return (INT)(INT_PTR)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&efis, IPC_SET_EXTENDED_FILE_INFO);
 }
 
 //physically update metadata in a given file
@@ -59,7 +59,7 @@ int updateFileInfoW(wchar_t *filename, const wchar_t *metadata, const wchar_t *d
 	                                   data ? data : L"",
 	                                   data ? lstrlenW(data) : 0,
 	                               };
-	return (INT)(INT_PTR)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&efis, IPC_SET_EXTENDED_FILE_INFOW);
+	return (INT)(INT_PTR)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&efis, IPC_SET_EXTENDED_FILE_INFOW);
 }
 
 
@@ -349,7 +349,7 @@ INT_PTR WINAPI DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 						                             &m_fcs,
 						                             prio,
 						                         };
-						SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&csp, IPC_CONVERT_SET_PRIORITYW);
+						SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&csp, IPC_CONVERT_SET_PRIORITYW);
 					}
 					break;
 				}
@@ -527,7 +527,7 @@ static BOOL CALLBACK extract_dialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, 
 					if (cchDest && cchDest < (int)lstrlenW(ptr)) ptr += (cchDest + 1);
 					SetDlgItemText(hwndDlg, IDC_CURTRACK, ptr);
 
-					if (SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&m_fcs, IPC_CONVERTFILEW) != 1)
+					if (SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&m_fcs, IPC_CONVERTFILEW) != 1)
 					{
 						wchar_t tmp[512] = {0};
 						StringCchPrintf(tmp, 512, WASABI_API_LNGSTRINGW(IDS_ERROR_RIPPING_TRACK), i + 1, m_fcs.error ? m_fcs.error : L"");
@@ -539,7 +539,7 @@ static BOOL CALLBACK extract_dialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, 
 					                             &m_fcs,
 					                             g_config->ReadInt(L"extractprio", THREAD_PRIORITY_NORMAL),
 					                         };
-					SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&csp, IPC_CONVERT_SET_PRIORITYW);
+					SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&csp, IPC_CONVERT_SET_PRIORITYW);
 					m_extracting = 1;
 					done = 0;
 					PostMessage(hwndDlg, WM_WA_IPC , 0, IPC_CB_CONVERT_STATUS);
@@ -560,7 +560,7 @@ static BOOL CALLBACK extract_dialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, 
 
 				if (g_config->ReadInt(L"cdripautoplay", 0) && done > 0)
 				{
-					SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_DELETE);
+					SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_DELETE);
 					for (int i = 0;i < m_rip_params->ntracks;i++)
 					{
 						if (m_rip_params->tracks[i])
@@ -569,10 +569,10 @@ static BOOL CALLBACK extract_dialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, 
 							cds.dwData = IPC_PLAYFILEW;
 							cds.lpData = (void *) m_rip_params->filenames[i];
 							cds.cbData = sizeof(wchar_t) * (lstrlenW(m_rip_params->filenames[i]) + 1); // include space for null char
-							SendMessage(plugin.hwndWinampParent, WM_COPYDATA, (WPARAM)NULL, (LPARAM)&cds);
+							SendMessage(plugin.hwndWinLAMPParent, WM_COPYDATA, (WPARAM)NULL, (LPARAM)&cds);
 						}
 					}
-					SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_STARTPLAY);
+					SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_STARTPLAY);
 				}
 
 
@@ -860,7 +860,7 @@ static BOOL CALLBACK extract_dialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, 
 			break;
 		case IPC_CB_CONVERT_DONE:
 
-			SendMessage(plugin.hwndWinampParent , WM_WA_IPC, (WPARAM)&m_fcs, IPC_CONVERTFILEW_END);
+			SendMessage(plugin.hwndWinLAMPParent , WM_WA_IPC, (WPARAM)&m_fcs, IPC_CONVERTFILEW_END);
 			free(m_fcs.destfile);
 			m_pstat_bytesdone += m_fcs.bytes_done;
 			m_pstat_bytesout += m_fcs.bytes_out;
@@ -914,7 +914,7 @@ static BOOL CALLBACK extract_dialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, 
 
 					if (WASABI_API_APP)
 						updateFileInfoW(lastfn, L"tool", WASABI_API_APP->main_getVersionString());
-					SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_WRITE_EXTENDED_FILE_INFO);
+					SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_WRITE_EXTENDED_FILE_INFO);
 				}
 			}
 
@@ -970,7 +970,7 @@ static BOOL CALLBACK extract_dialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, 
 	case WM_DESTROY:
 		if (m_extracting)
 		{
-			SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&m_fcs, IPC_CONVERTFILEW_END);
+			SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&m_fcs, IPC_CONVERTFILEW_END);
 			// make sure we clean up on cancel!
 			m_extracting = 0;
 			DeleteFileW(m_rip_params->tempFilenames[m_extract_curtrack]);
@@ -1057,5 +1057,5 @@ void cdrip_extractFiles(cdrip_params *parms)
 	WASABI_API_LNGSTRINGW_BUF(IDS_INITIALIZING,m_last_total_status,512);
 	m_last_item_status[0] = 0;
 	m_rip_params = parms;
-	WASABI_API_CREATEDIALOGW(IDD_VIEW_CDROM_EXTRACT, plugin.hwndWinampParent, extract_dialogProc);
+	WASABI_API_CREATEDIALOGW(IDD_VIEW_CDROM_EXTRACT, plugin.hwndWinLAMPParent, extract_dialogProc);
 }

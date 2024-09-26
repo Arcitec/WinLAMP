@@ -1,7 +1,7 @@
 #include "main.h"
 #include "../Agave/Language/api_language.h"
 #include "../nu/ListView.h"
-#include "../Winamp/strutil.h"
+#include "../WinLAMP/strutil.h"
 #include "resource.h"
 #include <time.h>
 #define MAKESAFE(x) ((x)?(x):L"")
@@ -44,7 +44,7 @@ int updateFileInfo(const wchar_t *filename, const wchar_t *metadata, wchar_t *da
 	                                 data ? data : L"",
 	                                 data ? wcslen(data) : 0,
 	                               };
-	return SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&efis, IPC_SET_EXTENDED_FILE_INFOW);
+	return SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&efis, IPC_SET_EXTENDED_FILE_INFOW);
 }
 
 static int m_upd_nb, m_stopped, m_upd_nb_all, m_upd_nb_cur;
@@ -78,8 +78,8 @@ static INT_PTR CALLBACK updateFiles_dialogProc(HWND hwndDlg, UINT uMsg, WPARAM w
 	{
 		case WM_INITDIALOG:
 		{
-			SetWindowTextW(hwndDlg, WASABI_API_LNG->GetStringW(WASABI_API_LNG->FindDllHandleByGUID(WinampLangGUID),
-						   GetModuleHandleW(L"winamp.exe"), IDS_UPDATING_FILES));
+			SetWindowTextW(hwndDlg, WASABI_API_LNG->GetStringW(WASABI_API_LNG->FindDllHandleByGUID(WinLAMPLangGUID),
+						   GetModuleHandleW(L"winlamp.exe"), IDS_UPDATING_FILES));
 			SetWindowLong(GetDlgItem(hwndDlg, IDC_STATUS), GWL_STYLE, (GetWindowLong(GetDlgItem(hwndDlg, IDC_STATUS), GWL_STYLE)&~SS_CENTER) | SS_LEFTNOWORDWRAP);
 			SetTimer(hwndDlg, 0x123, 30, NULL);
 			m_upd_nb = 0;
@@ -121,8 +121,8 @@ again:
 
 					wchar_t stattmp[512] = {0};
 					wchar_t *p = scanstr_backW(song->filename, L"\\", song->filename - 1) + 1;
-					wsprintfW(stattmp, WASABI_API_LNG->GetStringW(WASABI_API_LNG->FindDllHandleByGUID(WinampLangGUID),
-																   GetModuleHandleW(L"winamp.exe"), IDS_UPDATING_X), p);
+					wsprintfW(stattmp, WASABI_API_LNG->GetStringW(WASABI_API_LNG->FindDllHandleByGUID(WinLAMPLangGUID),
+																   GetModuleHandleW(L"winlamp.exe"), IDS_UPDATING_X), p);
 					SetDlgItemTextW(hwndDlg, IDC_STATUS, stattmp);
 
 					SendDlgItemMessage(hwndDlg, IDC_PROGRESS1, PBM_SETPOS, m_upd_nb_cur, 0);
@@ -316,13 +316,13 @@ retry:
 							updateFileInfo(song->filename, DB_FIELDNAME_director,    getRecordExtendedItem_fast(song, extended_fields.director));
 							updateFileInfo(song->filename, DB_FIELDNAME_producer,    getRecordExtendedItem_fast(song, extended_fields.producer));
 
-							if (!SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_WRITE_EXTENDED_FILE_INFO))
+							if (!SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_WRITE_EXTENDED_FILE_INFO))
 							{
 								wchar_t tmp[1024] = {0};
-								wsprintfW(tmp, WASABI_API_LNG->GetStringW(WASABI_API_LNG->FindDllHandleByGUID(WinampLangGUID),
-										  GetModuleHandleW(L"winamp.exe"), IDS_ERROR_UPDATING_FILE), song->filename);
-								int ret = MessageBoxW(hwndDlg, tmp, WASABI_API_LNG->GetStringW(WASABI_API_LNG->FindDllHandleByGUID(WinampLangGUID),
-													  GetModuleHandleW(L"winamp.exe"), IDS_INFO_UPDATING_ERROR), MB_RETRYCANCEL);
+								wsprintfW(tmp, WASABI_API_LNG->GetStringW(WASABI_API_LNG->FindDllHandleByGUID(WinLAMPLangGUID),
+										  GetModuleHandleW(L"winlamp.exe"), IDS_ERROR_UPDATING_FILE), song->filename);
+								int ret = MessageBoxW(hwndDlg, tmp, WASABI_API_LNG->GetStringW(WASABI_API_LNG->FindDllHandleByGUID(WinLAMPLangGUID),
+													  GetModuleHandleW(L"winlamp.exe"), IDS_INFO_UPDATING_ERROR), MB_RETRYCANCEL);
 								if (ret == IDRETRY) goto retry;
 								if (ret == IDCANCEL)
 								{
@@ -467,8 +467,8 @@ static INT_PTR CALLBACK editInfo_dialogProc(HWND hwndDlg, UINT uMsg, WPARAM wPar
 			SendDlgItemMessageW(hwndDlg, IDC_COMBO_RATING, CB_ADDSTRING, 0, (LPARAM)L"\u2605\u2605");
 			SendDlgItemMessageW(hwndDlg, IDC_COMBO_RATING, CB_ADDSTRING, 0, (LPARAM)L"\u2605");
 			SendDlgItemMessageW(hwndDlg, IDC_COMBO_RATING, CB_ADDSTRING, 0,
-								(LPARAM)WASABI_API_LNG->GetStringW(WASABI_API_LNG->FindDllHandleByGUID(WinampLangGUID),
-																   GetModuleHandleW(L"winamp.exe"), IDS_NO_RATING));
+								(LPARAM)WASABI_API_LNG->GetStringW(WASABI_API_LNG->FindDllHandleByGUID(WinLAMPLangGUID),
+																   GetModuleHandleW(L"winlamp.exe"), IDS_NO_RATING));
 
 			for (int i = 0; i < resultlist.GetCount(); i++)
 			{
@@ -563,8 +563,8 @@ static INT_PTR CALLBACK editInfo_dialogProc(HWND hwndDlg, UINT uMsg, WPARAM wPar
 				SetDlgItemTextW(hwndDlg, IDC_EDIT_DISC, tmp);
 			}
 			wchar_t tmp[512] = {0};
-			wsprintfW(tmp, WASABI_API_LNG->GetStringW(WASABI_API_LNG->FindDllHandleByGUID(WinampLangGUID),
-					  GetModuleHandleW(L"winamp.exe"), (nb==1?IDS_X_ITEM_SELECTED:IDS_X_ITEMS_SELECTED)), nb);
+			wsprintfW(tmp, WASABI_API_LNG->GetStringW(WASABI_API_LNG->FindDllHandleByGUID(WinLAMPLangGUID),
+					  GetModuleHandleW(L"winlamp.exe"), (nb==1?IDS_X_ITEM_SELECTED:IDS_X_ITEMS_SELECTED)), nb);
 			SetDlgItemTextW(hwndDlg, IDC_HEADER, tmp);
 			m_upd_nb_all = nb;
 
@@ -599,8 +599,8 @@ static INT_PTR CALLBACK editInfo_dialogProc(HWND hwndDlg, UINT uMsg, WPARAM wPar
 				{
 					int updtagz = !!IsDlgButtonChecked(hwndDlg, IDC_CHECK1);
 					g_config->WriteInt(L"upd_tagz", updtagz);
-					int ret = WASABI_API_LNG->LDialogBoxParamW(WASABI_API_LNG->FindDllHandleByGUID(WinampLangGUID),
-															   GetModuleHandleW(L"winamp.exe"), IDD_ADDSTUFF,
+					int ret = WASABI_API_LNG->LDialogBoxParamW(WASABI_API_LNG->FindDllHandleByGUID(WinLAMPLangGUID),
+															   GetModuleHandleW(L"winlamp.exe"), IDD_ADDSTUFF,
 															   hwndDlg, (DLGPROC)updateFiles_dialogProc, 0);
 					ListView_RedrawItems(resultlist.getwnd(), 0, resultlist.GetCount() - 1);
 					if (!ret) break;
@@ -646,8 +646,8 @@ void editInfo(HWND hwndParent)
 	no_lv_update++;
 	bgQuery_Stop();
 
-	WASABI_API_LNG->LDialogBoxParamW(WASABI_API_LNG->FindDllHandleByGUID(WinampLangGUID),
-									 GetModuleHandleW(L"winamp.exe"), IDD_EDIT_INFO,
+	WASABI_API_LNG->LDialogBoxParamW(WASABI_API_LNG->FindDllHandleByGUID(WinLAMPLangGUID),
+									 GetModuleHandleW(L"winlamp.exe"), IDD_EDIT_INFO,
 									 hwndParent, (DLGPROC)editInfo_dialogProc, 0);
 
 	EatKeyboard();
@@ -805,7 +805,7 @@ void fileInfoDialogs(HWND hwndParent)
 		infoBoxParamW p;
 		p.filename = song->filename;
 		p.parent = hwndParent;
-		if (SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&p, IPC_INFOBOXW)) break;
+		if (SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&p, IPC_INFOBOXW)) break;
 
 		needref = 1;
 		UpdateItemRecordFromDB(song);

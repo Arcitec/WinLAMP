@@ -3,7 +3,7 @@
 #include "../resource.h"
 #include "../api__ml_online.h"
 
-#include "../../winamp/commandLink.h"
+#include "../../winlamp/commandLink.h"
 #include "./setupGroup.h"
 
 #include <commctrl.h>
@@ -97,7 +97,7 @@ static void GroupDetails_SetDescription(HWND hwnd, SetupGroup *group)
 static BOOL GroupDetails_ShowHelp(HWND hwnd)
 {
 	INT result = (INT)(INT_PTR)ShellExecuteW(hwnd, L"open", 
-								L"https://help.winamp.com/hc/articles/8112753225364-Online-Services-Security", 
+								L"https://help.winlamp.com/hc/articles/8112753225364-Online-Services-Security", 
 								NULL, NULL, SW_SHOWNORMAL);
 	return (result > 32);
 }
@@ -187,14 +187,14 @@ static INT_PTR GroupDetails_OnInitDialog(HWND hwnd, HWND hFocus, LPARAM lParam)
 		details->name = Plugin_CopyString(param->name);
 	}
 
-	HINSTANCE winampInstance = (NULL != WASABI_API_APP) ? WASABI_API_APP->main_gethInstance() : NULL;
-	if (NULL != winampInstance)
+	HINSTANCE winlampInstance = (NULL != WASABI_API_APP) ? WASABI_API_APP->main_gethInstance() : NULL;
+	if (NULL != winlampInstance)
 	{
 		WCHAR szBuffer[256] = {0};
 		WASABI_API_LNGSTRINGW_BUF(IDS_CLICKHERE, szBuffer, ARRAYSIZE(szBuffer));
 		HWND hLink = CreateWindowExW(WS_EX_NOPARENTNOTIFY | WS_EX_TRANSPARENT, NWC_COMMANDLINKW, szBuffer, 
 						WS_VISIBLE | WS_CHILD | WS_TABSTOP | CLS_ALWAYSUNDERLINE | CLS_DEFAULTCOLORS /* | CLS_HOTTRACK */, 
-						0, 0, 0, 0, hwnd, (HMENU)IDC_HELPLINK, winampInstance, NULL);
+						0, 0, 0, 0, hwnd, (HMENU)IDC_HELPLINK, winlampInstance, NULL);
 
 		if (NULL != hLink)
 		{

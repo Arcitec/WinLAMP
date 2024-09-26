@@ -1,6 +1,6 @@
 ; WA_SDK.nsi
 
-; This script will collect the files in Winamp SDK and create an installer for them
+; This script will collect the files in WinLAMP SDK and create an installer for them
 
 ;------------------------
 
@@ -8,7 +8,7 @@
   !define VERSION "5.9"
 !endif
 
-!define PRODUCT_NAME "Winamp ${VERSION} SDK"
+!define PRODUCT_NAME "WinLAMP ${VERSION} SDK"
 
 ; This is where all projects live.  Ensure this is the correct relative path.  
 !ifndef PROJECTS
@@ -67,7 +67,7 @@
 
 !define old_stuff_for_reference
 
-!define WINAMP "Winamp"
+!define WINLAMP "WinLAMP"
 !define UNINSTALLER "WA${VERSION}_SDK_Uninstaller.exe"
 
 ;Set Compression
@@ -86,18 +86,18 @@ RequestExecutionLevel user
 ;Version information for Windows Explorer
 VIProductVersion "5.9.0.0"
 VIAddVersionKey "ProductName" "${PRODUCT_NAME}"
-VIAddVersionKey "Comments" "Winamp SDK Installer"
-VIAddVersionKey "LegalCopyright" "Copyright © 1997-2022 Winamp SA"
-VIAddVersionKey "CompanyName" "Winamp SA"
+VIAddVersionKey "Comments" "WinLAMP SDK Installer"
+VIAddVersionKey "LegalCopyright" "Copyright © 1997-2022 WinLAMP SA"
+VIAddVersionKey "CompanyName" "WinLAMP SA"
 VIAddVersionKey "FileDescription" "${PRODUCT_NAME} Installer"
 VIAddVersionKey "FileVersion" "5.9.0.0"
 VIAddVersionKey "ProductVersion" "5.9.0.0"
 
 ;------------------------
 
-Name "Winamp ${VERSION} SDK"
+Name "WinLAMP ${VERSION} SDK"
 OutFile "WA${VERSION}_SDK.exe"
-InstallDir "$PROGRAMFILES\Winamp SDK"
+InstallDir "$PROGRAMFILES\WinLAMP SDK"
 
 Page Directory
 Page instfiles
@@ -105,7 +105,7 @@ Page instfiles
 Section ""
 
 ; APIs
-!include "winamp_api.nsh"
+!include "winlamp_api.nsh"
 !include "ml_api.nsh"
 !include "wasabi.nsh"
 !include "bfc.nsh"
@@ -177,11 +177,11 @@ File /x CVS ${PROJECTS}\ns-eel2\*.*
 SetOutPath $INSTDIR\vis\vis_test
 File ${Hinterland}\vis_milkdrop\svis.mak
 
-SetOutPath $INSTDIR\Winamp
+SetOutPath $INSTDIR\WinLAMP
 File ${GenPlugins}\gen_hotkeys\wa_hotkeys.h
-File ${PROJECTS}\Winamp\api_random.h
-File ${PROJECTS}\Winamp\api_decodefile.h
-File ${PROJECTS}\Winamp\api_audiostream.h
+File ${PROJECTS}\WinLAMP\api_random.h
+File ${PROJECTS}\WinLAMP\api_decodefile.h
+File ${PROJECTS}\WinLAMP\api_audiostream.h
 
 SetOutPath $INSTDIR\tagz
 File ${PROJECTS}\tagz\api_tagz.h

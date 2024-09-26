@@ -1004,7 +1004,7 @@ BEGIN
                             "This plug-in has no configuration implemented"
     IDS_DEVICE_PLUGINS      "Device Plug-ins"
     IDS_PERMANENTLY_UNINSTALL_THIS_PLUGIN 
-                            "Permanently uninstall this plug-in?\n(This may require a restart of Winamp)"
+                            "Permanently uninstall this plug-in?\n(This may require a restart of WinLAMP)"
     IDS_CONFIRMATION        "Confirmation"
     IDS_CLICK_OK_TO_CONTINUE "Click Ok to continue"
     IDS_RELOADING_PLUGIN    "Reloading plug-in"

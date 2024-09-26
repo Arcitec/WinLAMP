@@ -12,7 +12,7 @@
 
 api_service *WASABI_API_SVC=0;
 api_memmgr *WASABI_API_MEMMGR=0;
-api_winamp *AGAVE_API_WINAMP=0;
+api_winlamp *AGAVE_API_WINLAMP=0;
 
 class H264Component : public ifc_wa5component
 {
@@ -59,8 +59,8 @@ static SingletonServiceFactory<svc_nsvFactory, NSVFactory> nsvFactory;
 void H264Component::RegisterServices(api_service *service)
 {
 	WASABI_API_SVC = service;
-	ServiceBuild(AGAVE_API_WINAMP, winampApiGuid);
-	if (!AGAVE_API_WINAMP || AGAVE_API_WINAMP->GetRegVer() >= 1)
+	ServiceBuild(AGAVE_API_WINLAMP, winlampApiGuid);
+	if (!AGAVE_API_WINLAMP || AGAVE_API_WINLAMP->GetRegVer() >= 1)
 	{
 		ServiceBuild(WASABI_API_MEMMGR, memMgrApiServiceGuid);
 		mp4Factory.Register(WASABI_API_SVC);
@@ -79,11 +79,11 @@ void H264Component::DeregisterServices(api_service *service)
 	aviFactory.Deregister(WASABI_API_SVC);	
 	nsvFactory.Deregister(WASABI_API_SVC);
 	ServiceRelease(WASABI_API_MEMMGR, memMgrApiServiceGuid);
-	ServiceRelease(AGAVE_API_WINAMP, winampApiGuid);
+	ServiceRelease(AGAVE_API_WINLAMP, winlampApiGuid);
 }
 
 static H264Component component;
-extern "C" DLLEXPORT ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" DLLEXPORT ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &component;
 }

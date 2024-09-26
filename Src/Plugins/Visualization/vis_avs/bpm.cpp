@@ -90,8 +90,8 @@ int TCUsed;							// Remembers how many beats in the history were actually used 
 int predictionBpm;					// Contains BPM actually used to prediction (eliminates Bpm driftings)
 int oldDisplayBpm, oldDisplayConfidence; // Detects stuff to redraw
 int bestConfidence;					// Best confidence we had so far
-char lastSongName[256];				// Last song name, used to detect song changes in winamp
-HWND winampWnd;						// Winamp window
+char lastSongName[256];				// Last song name, used to detect song changes in winlamp
+HWND winlampWnd;						// WinLAMP window
 int forceNewBeat;					// Force new bpm adoption
 int betterConfidenceCount;			// Used to decide when to adpot new beat
 int topConfidenceCount;				// Used to decide when to adpot new beat
@@ -247,7 +247,7 @@ void initBpm(void)
   memset(Smoother, 0, smSize*sizeof(int));
   memset(halfDiscriminated, 0, TCHistSize*sizeof(int));
   memset(halfDiscriminated2, 0, TCHistSize*sizeof(int));
-  winampWnd = FindWindow("Winamp v1.x", NULL);
+  winlampWnd = FindWindow("WinLAMP v1.x", NULL);
   *lastSongName=0;
   sticked=0;
   oldsticked=-1;
@@ -260,7 +260,7 @@ if (TCNow > lastCheck+1000)
 	{
 	char songName[256];
 	lastCheck=TCNow;
-	GetWindowText(winampWnd, songName, 255);
+	GetWindowText(winlampWnd, songName, 255);
 	if (strcmp(songName, lastSongName))
 		{
 		strcpy(lastSongName, songName);

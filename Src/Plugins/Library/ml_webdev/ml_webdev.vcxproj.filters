@@ -40,7 +40,7 @@
     <ClCompile Include="serviceHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Winamp\JSAPI_CallbackParameters.cpp">
+    <ClCompile Include="..\..\..\WinLAMP\JSAPI_CallbackParameters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\General\gen_ml\menu.cpp">

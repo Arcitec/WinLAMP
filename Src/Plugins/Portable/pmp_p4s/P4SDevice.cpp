@@ -582,7 +582,7 @@ void P4SDevice::Load() {
 	if(!store) error=1;
 	if(error) {delete this; return;}
 	if(!playlistsDir) playlistsDir = GetOrCreateFolder(store,L"Playlists");
-	if(!playlistsDir) {delete this; return;}//MessageBox(plugin.hwndWinampParent,L"An error has occured whilst trying to initialise the playlists on your device.\nPlaylists will not work correctly.",L"Playlists Error",0);
+	if(!playlistsDir) {delete this; return;}//MessageBox(plugin.hwndWinLAMPParent,L"An error has occured whilst trying to initialise the playlists on your device.\nPlaylists will not work correctly.",L"Playlists Error",0);
   
 	sortDev = this;
 	qsort(mpl->songs.GetAll(),mpl->songs.GetSize(),sizeof(void*),song_sortfunc);
@@ -941,7 +941,7 @@ void P4SDevice::doTransfer(TransferItem * t) {
 				else if(_wcsicmp(point,L".mp4")==0) {
 					wchar_t buf[10]=L"0";
 					extendedFileInfoStructW m = {t->file,L"type",buf,10};
-					SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&m,IPC_GET_EXTENDED_FILE_INFOW);
+					SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&m,IPC_GET_EXTENDED_FILE_INFOW);
 					formatCode = WMDM_FORMATCODE_MP4;
 					video = (buf[0]==L'1');
 				}

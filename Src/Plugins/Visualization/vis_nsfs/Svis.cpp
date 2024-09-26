@@ -5,8 +5,8 @@
 #include <commctrl.h>
 #include <ddraw.h>
 #include "resource.h"
-#include "../winamp/vis.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/vis.h"
+#include "../winlamp/wa_ipc.h"
 #include "../Agave/Language/api_language.h"
 #include <api/service/waServiceFactory.h>
 
@@ -30,18 +30,18 @@ HINSTANCE WASABI_API_LNG_HINST = 0, WASABI_API_ORIG_HINST = 0;
 static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 static INT_PTR CALLBACK dlgProc1(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM lParam);
 
-/* winamp vis module functions */
-static winampVisModule *getModule(int which);
-static void config_write(struct winampVisModule *this_mod);
-static void config_read(struct winampVisModule *this_mod);
-static void config(struct winampVisModule *this_mod);
-static int init(struct winampVisModule *this_mod);
-static int render_sa_vp_mono(struct winampVisModule *this_mod);
-static int render_sa(struct winampVisModule *this_mod);
-static int render_osc(struct winampVisModule *this_mod);
-static int render_osc_sa_mono(struct winampVisModule *this_mod);
-static int render_super_vp(struct winampVisModule *this_mod);
-static void quit(struct winampVisModule *this_mod);
+/* winlamp vis module functions */
+static winlampVisModule *getModule(int which);
+static void config_write(struct winlampVisModule *this_mod);
+static void config_read(struct winlampVisModule *this_mod);
+static void config(struct winlampVisModule *this_mod);
+static int init(struct winlampVisModule *this_mod);
+static int render_sa_vp_mono(struct winlampVisModule *this_mod);
+static int render_sa(struct winlampVisModule *this_mod);
+static int render_osc(struct winlampVisModule *this_mod);
+static int render_osc_sa_mono(struct winlampVisModule *this_mod);
+static int render_super_vp(struct winlampVisModule *this_mod);
+static void quit(struct winlampVisModule *this_mod);
 
 /* uninitialized data (zeroed) */
 DDBLTFX ddbfx;
@@ -56,13 +56,13 @@ unsigned char last[4][4096];
 int lpos;
 int rpos;
 unsigned char colpoints[2][6][3];
-winampVisModule mod[4];
+winlampVisModule mod[4];
 int hadjusted;
 COLORREF custcolors[16];
 
 /* initialized data */
 wchar_t szAppName[] = L"NSFSVis";
-winampVisHeader hdr = { VIS_HDRVER, 0, getModule };
+winlampVisHeader hdr = { VIS_HDRVER, 0, getModule };
 unsigned char orig_colpoints[2][6][3] =
 {
 	{
@@ -91,10 +91,10 @@ struct
 
 
 /* function implimentations */
-void sd_config(struct winampVisModule *this_mod);
-int sd_init(struct winampVisModule *this_mod);
-int sd_render(struct winampVisModule *this_mod);
-void sd_quit(struct winampVisModule *this_mod);
+void sd_config(struct winlampVisModule *this_mod);
+int sd_init(struct winlampVisModule *this_mod);
+int sd_render(struct winlampVisModule *this_mod);
+void sd_quit(struct winlampVisModule *this_mod);
 
 extern "C" {
 
@@ -117,7 +117,7 @@ extern "C" {
 	}
 
 	/* this is the only exported symbol. returns our main header. */
-	__declspec( dllexport ) winampVisHeader* winampVisGetHeader(HWND hwndParent)
+	__declspec( dllexport ) winlampVisHeader* winlampVisGetHeader(HWND hwndParent)
 	{
 		static char module1[96], module2[96], module3[96], module4[96];
 
@@ -179,7 +179,7 @@ extern "C" {
 	}
 };
 
-winampVisModule *getModule(int which)
+winlampVisModule *getModule(int which)
 {
 	OSVERSIONINFO version = {0};
 	version.dwOSVersionInfoSize = sizeof(version);
@@ -196,7 +196,7 @@ winampVisModule *getModule(int which)
 function that shares code for all your modules (you don't HAVE to use it though, you can make
 config1(), config2(), etc...)
 */
-void config(struct winampVisModule *this_mod)
+void config(struct winlampVisModule *this_mod)
 {
 	config_read(this_mod);
 	if (WASABI_API_DIALOGBOXW(IDD_DIALOG1,this_mod->hwndParent,dlgProc1) == IDOK)
@@ -249,7 +249,7 @@ int DD_Init(int this_w, int this_h, PALETTEENTRY *palette)
 	return 0;
 }
 
-void initwindow(struct winampVisModule *this_mod, int w, int h)
+void initwindow(struct winlampVisModule *this_mod, int w, int h)
 {
 	if (SendMessage(this_mod->hwndParent,WM_WA_IPC,0,IPC_IS_PLAYING_VIDEO)>1)
 	{
@@ -270,7 +270,7 @@ void initwindow(struct winampVisModule *this_mod, int w, int h)
 	SendMessage(this_mod->hwndParent, WM_WA_IPC, (WPARAM)g_hwnd, IPC_SETVISWND);
 }
 
-int init(struct winampVisModule *this_mod)
+int init(struct winlampVisModule *this_mod)
 {
 	PALETTEENTRY palette[256];
 	int x,e,a;
@@ -433,7 +433,7 @@ void DD_Unlock(int w, int transparent)
 	}
 }
 
-void _render_analyzer(struct winampVisModule *this_mod, int hdiv)
+void _render_analyzer(struct winlampVisModule *this_mod, int hdiv)
 {
 	int x;
 	int pos;
@@ -487,7 +487,7 @@ void _render_analyzer(struct winampVisModule *this_mod, int hdiv)
 	}
 }
 
-void _render_scope(struct winampVisModule *this_mod, int hr)
+void _render_scope(struct winlampVisModule *this_mod, int hr)
 {
 	int x;
 	unsigned char *wd=this_mod->waveformData[0];
@@ -517,7 +517,7 @@ void _render_scope(struct winampVisModule *this_mod, int hr)
 	}
 }
 
-int render_super_vp(struct winampVisModule *this_mod)
+int render_super_vp(struct winlampVisModule *this_mod)
 {
 	int tb=min(configst.nbands,511);
 	int sy=((configst.h-hadjusted)/2);
@@ -563,7 +563,7 @@ int render_super_vp(struct winampVisModule *this_mod)
 	return 0;
 }
 
-int render_sa_vp_mono(struct winampVisModule *this_mod)
+int render_sa_vp_mono(struct winlampVisModule *this_mod)
 {
 	int x;
 	unsigned char *sd=this_mod->spectrumData[0];
@@ -611,7 +611,7 @@ int render_sa_vp_mono(struct winampVisModule *this_mod)
 	return 0;
 }
 
-int render_osc_sa_mono(struct winampVisModule *this_mod)
+int render_osc_sa_mono(struct winlampVisModule *this_mod)
 {
 	if (!DD_Enter(0,0,configst.w,configst.h)) return 0;
 
@@ -625,7 +625,7 @@ int render_osc_sa_mono(struct winampVisModule *this_mod)
 /*
 cleanup (opposite of init()). Destroys the window, unregisters the window class
 */
-void quit(struct winampVisModule *this_mod)
+void quit(struct winlampVisModule *this_mod)
 {
 	IDirectDrawSurface_Release(lpDDSPrim);
 	IDirectDraw_Release(lpDD);
@@ -735,12 +735,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-void init_inifile(struct winampVisModule *this_mod)
+void init_inifile(struct winlampVisModule *this_mod)
 {
 	ini_file = (wchar_t*)SendMessage(this_mod->hwndParent,WM_WA_IPC,0,IPC_GETINIFILEW);
 }
 
-static void config_read(struct winampVisModule *this_mod)
+static void config_read(struct winlampVisModule *this_mod)
 {
 	init_inifile(this_mod);
 	if (!GetPrivateProfileStructW(szAppName,L"colors",colpoints,sizeof(colpoints),ini_file))
@@ -753,7 +753,7 @@ static void config_read(struct winampVisModule *this_mod)
 	GetPrivateProfileStructW(szAppName,L"config",&configst,sizeof(configst),ini_file);
 }
 
-void config_write(struct winampVisModule *this_mod)
+void config_write(struct winlampVisModule *this_mod)
 {
 	init_inifile(this_mod);
 	WritePrivateProfileStructW(szAppName,L"colors",colpoints,sizeof(colpoints),ini_file);

@@ -4,13 +4,13 @@
 //#include "./browserPopup.h"
 #include "./graphics.h"
 
-//#include "../winamp/wa_dlg.h"
+//#include "../winlamp/wa_dlg.h"
 #include "../Plugins/General/gen_ml/colors.h"
 
 #include "./browserThread.h"
 
-#include "../winamp/IWasabiDispatchable.h"
-#include "../winamp/JSAPI_Info.h"
+#include "../winlamp/IWasabiDispatchable.h"
+#include "../winlamp/JSAPI_Info.h"
 
 #include "./service.h"
 //#include "./menu.h"
@@ -152,12 +152,12 @@ HWND BrowserHost_CreateWindow(obj_ombrowser *browserManager, HWND hParent, UINT 
 	param.hAccel = hAccel;
 	param.browserManager = browserManager;
 
-	HWND hWinamp = NULL;
-	if (FAILED(Plugin_GetWinampWnd(&hWinamp)))
-		hWinamp = NULL;
+	HWND hWinLAMP = NULL;
+	if (FAILED(Plugin_GetWinLAMPWnd(&hWinLAMP)))
+		hWinLAMP = NULL;
 
 	HWND hHost = NULL;
-	HANDLE hThread = BrowserThread_Create(hWinamp, BrowserHost_CreateHostWindow, (ULONG_PTR)&param, BrowserHost_KeyFilter, &hHost, NULL);
+	HANDLE hThread = BrowserThread_Create(hWinLAMP, BrowserHost_CreateHostWindow, (ULONG_PTR)&param, BrowserHost_KeyFilter, &hHost, NULL);
 	if (NULL != hThread)
 		CloseHandle(hThread);
 	
@@ -350,7 +350,7 @@ static HRESULT BrowserHost_AssociateDispatch(HWND hwnd, IDispatch *pDispatch)
 	return hr;
 }
 
-static void BrowserHost_OnContainerInit(HWND winampWindow, HWND hwnd)
+static void BrowserHost_OnContainerInit(HWND winlampWindow, HWND hwnd)
 {
 	BROWSERHOST *host = GetHost(hwnd);
 	if (NULL == host) return;
@@ -361,7 +361,7 @@ static void BrowserHost_OnContainerInit(HWND winampWindow, HWND hwnd)
 
 	HTMLContainer2_Initialize();
 
-	Browser *container = Browser::CreateInstance(host->browserManager, winampWindow, hwnd);
+	Browser *container = Browser::CreateInstance(host->browserManager, winlampWindow, hwnd);
 	host->container = container;
 	if (NULL != container)
 	{
@@ -518,14 +518,14 @@ static LRESULT BrowserHost_OnNiceDestroy(HWND hwnd, BOOL fImmediate)
 	BROWSERHOST *host = GetHost(hwnd);
 	if (NULL != host && NULL != host->container && FALSE == fImmediate) 
 	{
-		HWND hWinamp = NULL;
-		if (FAILED(Plugin_GetWinampWnd(&hWinamp)))
-			hWinamp = NULL;
+		HWND hWinLAMP = NULL;
+		if (FAILED(Plugin_GetWinLAMPWnd(&hWinLAMP)))
+			hWinLAMP = NULL;
 
-		if (hWinamp != GetParent(hwnd))
+		if (hWinLAMP != GetParent(hwnd))
 		{
-			SetParent(hwnd, hWinamp);
-			SetWindowLongPtr(hwnd, GWLP_HWNDPARENT, (LONGX86)(LONG_PTR)hWinamp);
+			SetParent(hwnd, hWinLAMP);
+			SetWindowLongPtr(hwnd, GWLP_HWNDPARENT, (LONGX86)(LONG_PTR)hWinLAMP);
 		}
 
 		SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_LOWEST);
@@ -555,11 +555,11 @@ static void BrowserHost_OnUpdateSkin(HWND hwnd)
 
 	if (NULL != host->container)
 	{
-		//HWND hWinamp;
-		//if (NULL == host->browserManager || FAILED(host->browserManager->GetWinampWindow(&hWinamp)))
-		//	hWinamp = NULL;
+		//HWND hWinLAMP;
+		//if (NULL == host->browserManager || FAILED(host->browserManager->GetWinLAMPWindow(&hWinLAMP)))
+		//	hWinLAMP = NULL;
 
-		//HCURSOR cursor = (HCURSOR)SENDWAIPC(hWinamp, IPC_GETSKINCURSORS, WACURSOR_NORMAL);
+		//HCURSOR cursor = (HCURSOR)SENDWAIPC(hWinLAMP, IPC_GETSKINCURSORS, WACURSOR_NORMAL);
 		//if (NULL != cursor)
 		//{
 		//	host->container->RegisterBrowserCursor(/*OCR_NORMAL*/32512, CopyCursor(cursor));
@@ -1224,7 +1224,7 @@ static LRESULT CALLBACK BrowserHost_RedirectKey(Browser *browser, MSG *pMsg)
 	{
 		BROWSERHOST *host = GetHost(hHost);
 
-		if (NULL != host && FAILED(Plugin_GetWinampWnd(&hParent)))
+		if (NULL != host && FAILED(Plugin_GetWinLAMPWnd(&hParent)))
 			hParent = NULL;
 	}
 

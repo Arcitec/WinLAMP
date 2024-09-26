@@ -30,7 +30,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-ICON_XP                 ICON                    "..\\..\\..\\..\\Winamp\\resource\\WinampIcon.ico"
+ICON_XP                 ICON                    "..\\..\\..\\..\\WinLAMP\\resource\\WinLAMPIcon.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -40,7 +40,7 @@ ICON_XP                 ICON                    "..\\..\\..\\..\\Winamp\\resourc
 IDD_DLG_SILENT DIALOGEX 0, 0, 187, 42
 STYLE DS_SYSMODAL | DS_SETFONT | DS_SETFOREGROUND | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "Winamp Error Reporter"
+CAPTION "WinLAMP Error Reporter"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     ICON            ICON_XP,IDC_STATIC,8,6,21,20,SS_REALSIZEIMAGE

@@ -1,5 +1,5 @@
 #define GUID_DEFINE
-#include "../../winamp/setup/svc_setup.h"
+#include "../../winlamp/setup/svc_setup.h"
 #undef GUID_DEFINE
 
 #include "./setupPage.h"

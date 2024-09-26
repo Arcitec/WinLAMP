@@ -1,7 +1,7 @@
 #include "main.h"
 #include <windowsx.h>
 #include "resource.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../nu/DialogSkinner.h"
 #include "../nu/menushortcuts.h"
 #include "./commandbar.h"

@@ -56,12 +56,12 @@ public:
 	void WriteErrorTS(const wchar_t *time);
 	void WriteLogCollectResult(BOOL result);
 	void WriteDmpCollectResult(BOOL result);
-	void WriteWinamp(const wchar_t *winamp);
+	void WriteWinLAMP(const wchar_t *winlamp);
 	void WriteBody(const wchar_t *body);
 
 	const wchar_t* ReadErrorTS(void);
 	BOOL ReadLogCollectResult(void);
 	BOOL ReadDmpCollectResult(void);
-	const wchar_t* ReadWinamp(void);
+	const wchar_t* ReadWinLAMP(void);
 	const wchar_t* ReadBody(void);
 };

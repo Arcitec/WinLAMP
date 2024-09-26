@@ -13,7 +13,7 @@
 static int  Init();
 static void Quit();
 
-extern "C" winampMediaLibraryPlugin plugin =
+extern "C" winlampMediaLibraryPlugin plugin =
 {
 	MLHDR_VER,
 	"nullsoft(ml_nft.dll)",
@@ -48,10 +48,10 @@ static DWORD WINAPI wa_newWndProc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lP
 
 int Init()
 {
-	waProc = (WNDPROC)SetWindowLongPtrW( plugin.hwndWinampParent, GWLP_WNDPROC, (LONG_PTR)wa_newWndProc );
+	waProc = (WNDPROC)SetWindowLongPtrW( plugin.hwndWinLAMPParent, GWLP_WNDPROC, (LONG_PTR)wa_newWndProc );
 
 	mediaLibrary.library  = plugin.hwndLibraryParent;
-	mediaLibrary.winamp   = plugin.hwndWinampParent;
+	mediaLibrary.winlamp   = plugin.hwndWinLAMPParent;
 	mediaLibrary.instance = plugin.hDllInstance;
 
 	waServiceFactory *sf = plugin.service->service_getServiceByGuid( languageApiGUID );
@@ -105,7 +105,7 @@ void Quit()
 		delete g_config;
 }
 
-extern "C" __declspec(dllexport) winampMediaLibraryPlugin *winampGetMediaLibraryPlugin()
+extern "C" __declspec(dllexport) winlampMediaLibraryPlugin *winlampGetMediaLibraryPlugin()
 {
 	return &plugin;
 }

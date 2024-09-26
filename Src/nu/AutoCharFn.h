@@ -1,7 +1,7 @@
 #ifndef NULLSOFT_UTILITY_AUTOCHARFN_H
 #define NULLSOFT_UTILITY_AUTOCHARFN_H
 
-/* Winamp defines this, but this little block lets us use this thing outside of Winamp */
+/* WinLAMP defines this, but this little block lets us use this thing outside of WinLAMP */
 #ifndef FILENAME_SIZE
 #define FILENAME_SIZE (MAX_PATH*4)
 #define REMOVE_FILENAME_SIZE

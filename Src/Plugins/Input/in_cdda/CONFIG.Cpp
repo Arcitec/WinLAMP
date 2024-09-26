@@ -6,7 +6,7 @@ extern char config_use_cddb;
 //char config_use_cddb = 0;
 #endif
 #include "api__in_cdda.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 //int config_sample=1;
 //int config_use_veritas=1;
@@ -111,8 +111,8 @@ BOOL CALLBACK ripConfigProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,	LPARAM lPara
 					x=4;
 					config_maxextractspeed=x;
 					wchar_t title[64] = {0};
-					if (MessageBoxW(hwndDlg,WASABI_API_LNGSTRINGW(IDS_PURCHASE_WINAMP_PRO_PROMPT),
-					                WASABI_API_LNGSTRINGW_BUF(IDS_WINAMP_PRO_FEATURE,title,64),MB_YESNO) == IDYES)
+					if (MessageBoxW(hwndDlg,WASABI_API_LNGSTRINGW(IDS_PURCHASE_WINLAMP_PRO_PROMPT),
+					                WASABI_API_LNGSTRINGW_BUF(IDS_WINLAMP_PRO_FEATURE,title,64),MB_YESNO) == IDYES)
 					{
 						SendMessage(line.hMainWindow,WM_WA_IPC,0,IPC_GETREGISTEREDVERSION);
 					}

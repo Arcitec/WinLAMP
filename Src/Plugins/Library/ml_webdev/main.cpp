@@ -5,7 +5,7 @@
 #include "./external.h"
 #include "./serviceHost.h"
 #include "./import.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 
 #include <initguid.h>
@@ -21,7 +21,7 @@ static int Plugin_Init();
 static void Plugin_Quit();
 static INT_PTR Plugin_MessageProc(INT msg, INT_PTR param1, INT_PTR param2, INT_PTR param3);
 
-extern "C" winampMediaLibraryPlugin plugin =
+extern "C" winlampMediaLibraryPlugin plugin =
 {
 	MLHDR_VER,
 	"nullsoft(ml_webdev.dll)",
@@ -38,9 +38,9 @@ HINSTANCE Plugin_GetInstance(void)
 	return plugin.hDllInstance;
 }
 
-HWND Plugin_GetWinamp(void)
+HWND Plugin_GetWinLAMP(void)
 {
-	return plugin.hwndWinampParent;
+	return plugin.hwndWinLAMPParent;
 }
 
 HWND Plugin_GetLibrary(void)
@@ -84,7 +84,7 @@ static int Plugin_Init()
 		dispatchInfo.name =(LPWSTR)externalDispatch->GetName();
 		dispatchInfo.dispatch = externalDispatch;
 
-		if (0 == SENDWAIPC(Plugin_GetWinamp(), IPC_ADD_DISPATCH_OBJECT, (WPARAM)&dispatchInfo))
+		if (0 == SENDWAIPC(Plugin_GetWinLAMP(), IPC_ADD_DISPATCH_OBJECT, (WPARAM)&dispatchInfo))
 			externalCookie = dispatchInfo.id;
 
 		externalDispatch->Release();
@@ -98,8 +98,8 @@ static int Plugin_Init()
 
 			if (0 != externalCookie)
 			{
-				HWND hWinamp = Plugin_GetWinamp();
-				SENDWAIPC(hWinamp, IPC_REMOVE_DISPATCH_OBJECT, (WPARAM)externalCookie);
+				HWND hWinLAMP = Plugin_GetWinLAMP();
+				SENDWAIPC(hWinLAMP, IPC_REMOVE_DISPATCH_OBJECT, (WPARAM)externalCookie);
 				externalCookie = 0;
 			}
 
@@ -114,8 +114,8 @@ static void Plugin_Quit()
 {	
 	if (0 != externalCookie)
 	{
-		HWND hWinamp = Plugin_GetWinamp();
-		SENDWAIPC(hWinamp, IPC_REMOVE_DISPATCH_OBJECT, (WPARAM)externalCookie);
+		HWND hWinLAMP = Plugin_GetWinLAMP();
+		SENDWAIPC(hWinLAMP, IPC_REMOVE_DISPATCH_OBJECT, (WPARAM)externalCookie);
 		externalCookie = 0;
 	}
 
@@ -161,7 +161,7 @@ HRESULT Plugin_GetNavigation(Navigation **instance)
 	return S_OK;
 }
 
-EXTERN_C __declspec(dllexport) winampMediaLibraryPlugin *winampGetMediaLibraryPlugin()
+EXTERN_C __declspec(dllexport) winlampMediaLibraryPlugin *winlampGetMediaLibraryPlugin()
 {
 	return &plugin;
 }

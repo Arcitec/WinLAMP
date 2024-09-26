@@ -1,5 +1,5 @@
 //#define _WIN32_WINNT 0x0400
-#include "../Winamp/buildType.h"
+#include "../WinLAMP/buildType.h"
 #include "main.h"
 #include "DeviceView.h"
 
@@ -123,7 +123,7 @@ DeviceView::DeviceView(Device *dev)
 		// only add it when we're using our own root page, otherwise skip this
 		if (!prefsPageLoaded)
 		{
-			SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(intptr_t)&prefsPage,IPC_ADD_PREFS_DLGW);
+			SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(intptr_t)&prefsPage,IPC_ADD_PREFS_DLGW);
 		}
 		prefsPageLoaded+=1;
 	}
@@ -135,7 +135,7 @@ DeviceView::DeviceView(Device *dev)
 		devPrefsPage.dlgID=IDD_CONFIG;
 		devPrefsPage.name=_wcsdup(deviceName);
 		devPrefsPage.proc=config_dlgproc;
-		SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(intptr_t)&devPrefsPage,IPC_ADD_PREFS_DLGW);
+		SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(intptr_t)&devPrefsPage,IPC_ADD_PREFS_DLGW);
 	}
 	else
 	{
@@ -327,14 +327,14 @@ void DeviceView::RegisterViews(HNAVITEM parent)
 
 DeviceView::~DeviceView()
 {
-	if(configDevice == this) SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(intptr_t)&prefsPage,IPC_OPENPREFSTOPAGE);
+	if(configDevice == this) SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(intptr_t)&prefsPage,IPC_OPENPREFSTOPAGE);
 
 	// remove it when we're removed what we added
 	int lastPrefsPageLoaded = prefsPageLoaded;
 	prefsPageLoaded-=1;
 	if(lastPrefsPageLoaded == 1)
 	{
-		SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(intptr_t)&prefsPage,IPC_REMOVE_PREFS_DLG);
+		SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(intptr_t)&prefsPage,IPC_REMOVE_PREFS_DLG);
 	}
 
 	//OutputDebugString(L"device unloading started");
@@ -346,7 +346,7 @@ DeviceView::~DeviceView()
 		/*OutputDebugString(L"FUCKO");*/
 	}
 
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(intptr_t)&devPrefsPage,IPC_REMOVE_PREFS_DLG);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(intptr_t)&devPrefsPage,IPC_REMOVE_PREFS_DLG);
 	free(devPrefsPage.name);
 	//OutputDebugString(L"device unloading finished");
 	delete config;
@@ -859,7 +859,7 @@ intptr_t DeviceView::TransferFromDrop(HDROP hDrop, int playlist)
 	// benski> ugh. memory allocation hell.  oh well
 	C_ItemList fileList;
 	C_ItemList playlistList;
-	const wchar_t *extListW = (const wchar_t *)SendMessageW(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_EXTLISTW);
+	const wchar_t *extListW = (const wchar_t *)SendMessageW(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_EXTLISTW);
 	PlaylistDirectoryCallback dirCB(extListW);
 	wchar_t temp[2048] = {0};
 	int y = DragQueryFileW(hDrop, 0xffffffff, temp, 2048);
@@ -1705,21 +1705,21 @@ void DeviceView::TransferAddCloudPlaylist(wchar_t * file, wchar_t * name0)
 					AGAVE_API_PLAYLISTS->Flush();
 				}
 
-				if (!cloud_hinst) cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
+				if (!cloud_hinst) cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
 				if (cloud_hinst && cloud_hinst != (HINSTANCE)1)
 				{
-					winampMediaLibraryPlugin *(*gp)();
-					gp = (winampMediaLibraryPlugin * (__cdecl *)(void))GetProcAddress(cloud_hinst, "winampGetMediaLibraryPlugin");
+					winlampMediaLibraryPlugin *(*gp)();
+					gp = (winlampMediaLibraryPlugin * (__cdecl *)(void))GetProcAddress(cloud_hinst, "winlampGetMediaLibraryPlugin");
 					if (gp)
 					{
-						winampMediaLibraryPlugin *mlplugin = gp();
+						winlampMediaLibraryPlugin *mlplugin = gp();
 						if (mlplugin && (mlplugin->version >= MLHDR_VER_OLD && mlplugin->version <= MLHDR_VER))
 						{
 							mlplugin->MessageProc(0x406, index, 0, 0);
 						}
 					}
 				}
-				PostMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_LIBRARY_PLAYLISTS_REFRESH);
+				PostMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_LIBRARY_PLAYLISTS_REFRESH);
 			}
 			else
 			{
@@ -2404,14 +2404,14 @@ void DeviceView::CloudSync(bool silent)
 	C_ItemList *filenameMaps2 = new C_ItemList, synclist;
 	DeviceView * hss = 0, * local = 0;
 
-	if (!cloud_hinst) cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
+	if (!cloud_hinst) cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
 	if (cloud_hinst && cloud_hinst != (HINSTANCE)1)
 	{
-		winampMediaLibraryPlugin *(*gp)();
-		gp = (winampMediaLibraryPlugin * (__cdecl *)(void))GetProcAddress(cloud_hinst, "winampGetMediaLibraryPlugin");
+		winlampMediaLibraryPlugin *(*gp)();
+		gp = (winlampMediaLibraryPlugin * (__cdecl *)(void))GetProcAddress(cloud_hinst, "winlampGetMediaLibraryPlugin");
 		if (gp)
 		{
-			winampMediaLibraryPlugin *mlplugin = gp();
+			winlampMediaLibraryPlugin *mlplugin = gp();
 			if (mlplugin && (mlplugin->version >= MLHDR_VER_OLD && mlplugin->version <= MLHDR_VER))
 			{
 				// determine the cloud device and alter the device
@@ -2543,7 +2543,7 @@ bool DeviceView::PlayTracks(C_ItemList * tracks, int startPlaybackAt, bool enque
 		if(!enqueue)
 		{
 			//clear playlist
-			SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_DELETE);
+			SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_DELETE);
 		}
 
 		wchar_t buf[2048] = {0};
@@ -2573,13 +2573,13 @@ bool DeviceView::PlayTracks(C_ItemList * tracks, int startPlaybackAt, bool enque
 			getTitle(dev,s,wideUrl,buf2,4096);
 			// enqueue file
 			enqueueFileWithMetaStructW ef = { wideUrl, buf2, NULL, dev->getTrackLength( s ) / 1000 };
-			SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&ef, IPC_PLAYFILEW);
+			SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&ef, IPC_PLAYFILEW);
 		}
 		if(!enqueue)   //play item startPlaybackAt
 		{
-			SendMessage(plugin.hwndWinampParent,WM_WA_IPC,startPlaybackAt,IPC_SETPLAYLISTPOS);
-			SendMessage(plugin.hwndWinampParent,WM_COMMAND,40047,0); //stop
-			SendMessage(plugin.hwndWinampParent,WM_COMMAND,40045,0); //play
+			SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,startPlaybackAt,IPC_SETPLAYLISTPOS);
+			SendMessage(plugin.hwndWinLAMPParent,WM_COMMAND,40047,0); //stop
+			SendMessage(plugin.hwndWinLAMPParent,WM_COMMAND,40045,0); //play
 		}
 		return true;
 	}
@@ -2612,7 +2612,7 @@ static void getReverseCopyFilenameFormat(wchar_t* filepath, wchar_t* format, int
 	wchar_t m_def_filename_fmt[MAX_PATH] = L"<Artist> - <Album>\\## - <Trackartist> - <Title>";
 	GetDefaultSaveToFolder(m_def_extract_path);
 	bool cdrip = !!global_config->ReadInt(L"extractusecdrip", 1);
-	const wchar_t *mlinifile = (const wchar_t*)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETMLINIFILEW);
+	const wchar_t *mlinifile = (const wchar_t*)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETMLINIFILEW);
 
 	wchar_t buf[2048] = {0};
 	if(cdrip) GetPrivateProfileString(L"gen_ml_config",L"extractpath",m_def_extract_path,buf,2048,mlinifile);

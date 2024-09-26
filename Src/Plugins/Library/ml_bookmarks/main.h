@@ -11,16 +11,16 @@
 
 #include "resource.h"
 
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 //#include "../Plugins/General/gen_ml/ml.h"
 #include "../Plugins/General/gen_ml/config.h"
 
 
-#define WINAMP_EDIT_BOOKMARKS           40320
+#define WINLAMP_EDIT_BOOKMARKS           40320
 
 INT_PTR bm_pluginMessageProc( int message_type, INT_PTR param1, INT_PTR param2, INT_PTR param3 );
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 extern int bookmark_treeItem;
 
 void bookmark_notifyAdd( wchar_t *filenametitle );

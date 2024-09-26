@@ -31,7 +31,7 @@ int APEv2::Tag::Parse(const APEv2::Header *header, const void *_data, size_t len
 
 	if (header->IsFooter())
 	{
-		flags &= ~FLAG_HEADER_NO_FOOTER; // winamp 5.54 had this flag reversed, so let's correct it
+		flags &= ~FLAG_HEADER_NO_FOOTER; // winlamp 5.54 had this flag reversed, so let's correct it
 		if (header->HasHeader())
 		{
 			// TODO: validate header

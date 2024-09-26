@@ -57,7 +57,7 @@ typedef struct
     float    avg[2][3];               // bass, mids, treble, some damping, for each channel (long-term average is 1)
     float     med_avg[2][3];          // bass, mids, treble, more damping, for each channel (long-term average is 1)
     float      long_avg[2][3];        // bass, mids, treble, heavy damping, for each channel (long-term average is 1)
-    float       infinite_avg[2][3];   // bass, mids, treble: winamp's average output levels. (1)
+    float       infinite_avg[2][3];   // bass, mids, treble: winlamp's average output levels. (1)
     float   fWaveform[2][576];             // Not all 576 are valid! - only NUM_WAVEFORM_SAMPLES samples are valid for each channel (note: NUM_WAVEFORM_SAMPLES is declared in shell_defines.h)
     float   fSpectrum[2][NUM_FREQUENCIES]; // NUM_FREQUENCIES samples for each channel (note: NUM_FREQUENCIES is declared in shell_defines.h)
 } td_soundinfo;                    // ...range is 0 Hz to 22050 Hz, evenly spaced.
@@ -71,10 +71,10 @@ public:
     float     GetTime();           // returns current animation time (in seconds) (starts at zero) (updated once per frame)
     float     GetFps();            // returns current estimate of framerate (frames per second)
     eScrMode  GetScreenMode();     // returns WINDOWED, FULLSCREEN, FAKE_FULLSCREEN, DESKTOP, or NOT_YET_KNOWN (if called before or during OverrideDefaults()).
-    HWND      GetWinampWindow();   // returns handle to Winamp main window
+    HWND      GetWinLAMPWindow();   // returns handle to WinLAMP main window
     HINSTANCE GetInstance();       // returns handle to the plugin DLL module; used for things like loading resources (dialogs, bitmaps, icons...) that are built into the plugin.
-    wchar_t*  GetPluginsDirPath(); // usually returns 'c:\\program files\\winamp\\plugins\\'
-    wchar_t*  GetConfigIniFile();  // usually returns 'c:\\program files\\winamp\\plugins\\something.ini' - filename is determined from identifiers in 'defines.h'
+    wchar_t*  GetPluginsDirPath(); // usually returns 'c:\\program files\\winlamp\\plugins\\'
+    wchar_t*  GetConfigIniFile();  // usually returns 'c:\\program files\\winlamp\\plugins\\something.ini' - filename is determined from identifiers in 'defines.h'
 	char*     GetConfigIniFileA();
 protected:
 
@@ -121,7 +121,7 @@ protected:
     int          m_allow_page_tearing_w;    // 0 or 1
     int          m_allow_page_tearing_fs;   // 0 or 1
     int          m_allow_page_tearing_dm;   // 0 or 1
-    int          m_minimize_winamp;         // 0 or 1
+    int          m_minimize_winlamp;         // 0 or 1
     int          m_desktop_show_icons;      // 0 or 1
     int          m_desktop_textlabel_boxes; // 0 or 1
     int          m_desktop_manual_icon_scoot; // 0 or 1
@@ -158,12 +158,12 @@ private:
     int          m_frame;           // current frame #, starting at zero
     float        m_time;            // current animation time in seconds; starts at zero.
     float        m_fps;             // current estimate of frames per second
-    HWND         m_hWndWinamp;      // handle to Winamp window 
+    HWND         m_hWndWinLAMP;      // handle to WinLAMP window 
     HINSTANCE    m_hInstance;       // handle to application instance
     DXContext*   m_lpDX;            // pointer to DXContext object
-    wchar_t      m_szPluginsDirPath[MAX_PATH];  // usually 'c:\\program files\\winamp\\plugins\\'
-    wchar_t      m_szConfigIniFile[MAX_PATH];   // usually 'c:\\program files\\winamp\\plugins\\something.ini' - filename is determined from identifiers in 'defines.h'
-	char         m_szConfigIniFileA[MAX_PATH];   // usually 'c:\\program files\\winamp\\plugins\\something.ini' - filename is determined from identifiers in 'defines.h'
+    wchar_t      m_szPluginsDirPath[MAX_PATH];  // usually 'c:\\program files\\winlamp\\plugins\\'
+    wchar_t      m_szConfigIniFile[MAX_PATH];   // usually 'c:\\program files\\winlamp\\plugins\\something.ini' - filename is determined from identifiers in 'defines.h'
+	char         m_szConfigIniFileA[MAX_PATH];   // usually 'c:\\program files\\winlamp\\plugins\\something.ini' - filename is determined from identifiers in 'defines.h'
     
     // FONTS
 	IDirect3DTexture9* m_lpDDSText;
@@ -256,8 +256,8 @@ public:
     CPluginShell();
     ~CPluginShell();
     
-    // called by vis.cpp, on behalf of Winamp:
-    int  PluginPreInitialize(HWND hWinampWnd, HINSTANCE hWinampInstance);    
+    // called by vis.cpp, on behalf of WinLAMP:
+    int  PluginPreInitialize(HWND hWinLAMPWnd, HINSTANCE hWinLAMPInstance);    
     int  PluginInitialize();                                                
     int  PluginRender(unsigned char *pWaveL, unsigned char *pWaveR);
     void PluginQuit();

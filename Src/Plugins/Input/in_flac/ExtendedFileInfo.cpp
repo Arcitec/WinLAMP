@@ -14,7 +14,7 @@
 **
 **   3. This notice may not be removed or altered from any source distribution.
 **
-** Author: Ben Allison benski@winamp.com
+** Author: Ben Allison benski@winlamp.com
 ** Created: March 1, 2007
 **
 */
@@ -23,7 +23,7 @@
 #include "Metadata.h"
 #include "../nu/ns_wc.h"
 #include "../nu/AutoChar.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <shlwapi.h>
 #include "resource.h"
 #include "../Agave/Language/api_language.h"
@@ -102,7 +102,7 @@ void ResetMetadataCache()
 
 #define START_TAG_ALIAS(name, alias) if (KeywordMatch(data, name)) lookup=alias
 #define TAG_ALIAS(name, alias) else if (KeywordMatch(data, name)) lookup=alias
-extern "C" __declspec( dllexport ) int winampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, int destlen)
+extern "C" __declspec( dllexport ) int winlampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, int destlen)
 {
 	if (KeywordMatch(data, "type"))
 	{
@@ -288,7 +288,7 @@ extern "C" __declspec( dllexport ) int winampGetExtendedFileInfoW(const wchar_t 
 
 FLACMetadata *setMetadata=0;
 wchar_t *setFn=0;
-extern "C" __declspec( dllexport ) int winampSetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *val)
+extern "C" __declspec( dllexport ) int winlampSetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *val)
 {
 	if (!setMetadata || !setFn || lstrcmpiW(fn, setFn))
 	{
@@ -394,7 +394,7 @@ extern "C" __declspec( dllexport ) int winampSetExtendedFileInfoW(const wchar_t 
 	return 1;
 }
 
-extern "C" __declspec(dllexport) int winampWriteExtendedFileInfo()
+extern "C" __declspec(dllexport) int winlampWriteExtendedFileInfo()
 {
 	if (setFn && setMetadata)
 	{
@@ -418,7 +418,7 @@ extern "C" __declspec(dllexport) int winampWriteExtendedFileInfo()
 	return 1;
 }
 
-extern "C" __declspec(dllexport) const wchar_t *winampWriteExtendedGetLastError()
+extern "C" __declspec(dllexport) const wchar_t *winlampWriteExtendedGetLastError()
 {
 	return 0;
 }

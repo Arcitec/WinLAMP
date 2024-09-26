@@ -14,11 +14,11 @@ static const GUID internetConfigGroupGUID =
 };
 
 
-#define USER_AGENT_SIZE (10 /*User-Agent*/ + 2 /*: */ + 6 /*Winamp*/ + 1 /*/*/ + 1 /*5*/ + 3/*.55*/ + 1 /*Null*/)
+#define USER_AGENT_SIZE (10 /*User-Agent*/ + 2 /*: */ + 6 /*WinLAMP*/ + 1 /*/*/ + 1 /*5*/ + 3/*.55*/ + 1 /*Null*/)
 static void SetUserAgent(api_httpreceiver *http)
 {
 	char user_agent[USER_AGENT_SIZE] = {0};
-	StringCchPrintfA(user_agent, USER_AGENT_SIZE, "User-Agent: Winamp/%S", WASABI_API_APP->main_getVersionNumString());
+	StringCchPrintfA(user_agent, USER_AGENT_SIZE, "User-Agent: WinLAMP/%S", WASABI_API_APP->main_getVersionNumString());
 	http->addheader(user_agent);
 }
 

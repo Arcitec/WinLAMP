@@ -106,12 +106,12 @@ BOOL CALLBACK SilentDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 				}
 				if (settings.autoRestart)
 				{
-					SetDlgItemText(hwndDlg, IDC_LBL_STEP, L"Restarting Winamp...");		
+					SetDlgItemText(hwndDlg, IDC_LBL_STEP, L"Restarting WinLAMP...");		
 					SendMessage(hwndPrg, PBM_SETPOS, 80, 0);
 					UpdateWindow(hwndDlg);
 					if(!Restart())
 					{
-						SetDlgItemText(hwndDlg, IDC_LBL_STEP, L"Error. Unable to restart Winamp.");
+						SetDlgItemText(hwndDlg, IDC_LBL_STEP, L"Error. Unable to restart WinLAMP.");
 						SendMessage(hwndPrg, PBM_SETPOS, 100, 0);
 						UpdateWindow(hwndDlg);
 						SetTimer(hwndDlg, 126, 2000, NULL);

@@ -573,7 +573,7 @@ const wchar_t *Container::getDescriptor()
 {
 	static wchar_t d[256];
 	// if we've tweaked the container names then when saving out we can see and attempt to 'untweak'
-	// so that things like Winamp Modern's ML will be correctly positioned irrespective of language
+	// so that things like WinLAMP Modern's ML will be correctly positioned irrespective of language
 	int untweak = 0;
 	wchar_t tweaked[96] = {0};
 	// Martin> We need to check the containerName against null - dunno why some skins cause this string to be null

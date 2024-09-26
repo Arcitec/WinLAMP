@@ -1,6 +1,6 @@
 #include "main.h"
 #include "./welcomeWidget.h"
-#include "../winamp/commandLink.h"
+#include "../winlamp/commandLink.h"
 
 #include <strsafe.h>
 
@@ -200,7 +200,7 @@ WelcomeWidget_FillContext(HDC targetDC, long width, long height, HDC sourceDC,
 
 		textMode = TRUE;
 
-		if (CSTR_EQUAL == CompareString(CSTR_INVARIANT, NORM_IGNORECASE, buffer, -1, L"WINAMP DEVICE MANAGER", -1))
+		if (CSTR_EQUAL == CompareString(CSTR_INVARIANT, NORM_IGNORECASE, buffer, -1, L"WINLAMP DEVICE MANAGER", -1))
 		{
 			HBITMAP titleBitmap;
 			titleBitmap = Image_LoadEx(Plugin_GetInstance(), MAKEINTRESOURCE(IDR_WELCOME_WIDGET_TITLE_IMAGE), 

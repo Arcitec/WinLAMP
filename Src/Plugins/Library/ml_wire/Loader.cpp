@@ -1,6 +1,6 @@
 #include "main.h"
 #include "api.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "DownloadStatus.h"
 using namespace Nullsoft::Utility;
 static WNDPROC wa_oldWndProc=0;
@@ -84,17 +84,17 @@ LRESULT CALLBACK LoaderProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		return 0;
 }
 
-void BuildLoader(HWND winampWindow)
+void BuildLoader(HWND winlampWindow)
 {
-	if (IsWindowUnicode(winampWindow))
-		wa_oldWndProc=(WNDPROC) SetWindowLongPtrW(winampWindow,GWLP_WNDPROC,(LONG_PTR)LoaderProc);
+	if (IsWindowUnicode(winlampWindow))
+		wa_oldWndProc=(WNDPROC) SetWindowLongPtrW(winlampWindow,GWLP_WNDPROC,(LONG_PTR)LoaderProc);
 	else
-		wa_oldWndProc=(WNDPROC) SetWindowLongPtrA(winampWindow,GWLP_WNDPROC,(LONG_PTR)LoaderProc);
+		wa_oldWndProc=(WNDPROC) SetWindowLongPtrA(winlampWindow,GWLP_WNDPROC,(LONG_PTR)LoaderProc);
 }
 
-void DestroyLoader(HWND winampWindow)
+void DestroyLoader(HWND winlampWindow)
 {
 	//if (wa_oldWndProc)
-	//	SetWindowLong(winampWindow,GWL_WNDPROC,(LONG)wa_oldWndProc);
+	//	SetWindowLong(winlampWindow,GWL_WNDPROC,(LONG)wa_oldWndProc);
 	//wa_oldWndProc=0;
 }

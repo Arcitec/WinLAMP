@@ -21,7 +21,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="winamp.h">
+    <ClInclude Include="winlamp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WACommands.h">

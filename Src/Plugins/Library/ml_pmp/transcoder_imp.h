@@ -4,7 +4,7 @@
 #include <windows.h>
 #include <windowsx.h>
 #include "..\..\General\gen_ml/itemlist.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "..\..\General\gen_ml/ml.h"
 #include "DeviceView.h"
 #include "nu/AutoWide.h"
@@ -52,7 +52,7 @@ protected:
 	wchar_t inifile[MAX_PATH];
 	char inifileA[MAX_PATH];
 	HINSTANCE hInst;
-	HWND winampParent;
+	HWND winlampParent;
 	HWND callbackhwnd;
 	std::vector<unsigned int> outformats;
 	FormatList formats;
@@ -74,7 +74,7 @@ protected:
 	void ReloadConfig();
 
 public:
-	TranscoderImp(HWND winampParent, HINSTANCE hInst, C_Config * config, Device *device);
+	TranscoderImp(HWND winlampParent, HINSTANCE hInst, C_Config * config, Device *device);
 	virtual ~TranscoderImp();
 
 	virtual void LoadConfigProfile(wchar_t *profile);
@@ -111,7 +111,7 @@ public:
        ShowWindow(transcoderConfig,SW_SHOWNA);
      where IDC_PLACEHOLDER is an invisible group box of size 259x176 (in dialog units)
   */
-	static void* ConfigureTranscoder(wchar_t * configProfile, HWND winampParent, C_Config * config, Device *dev);
+	static void* ConfigureTranscoder(wchar_t * configProfile, HWND winlampParent, C_Config * config, Device *dev);
 	static BOOL transcodeconfig_dlgproc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM lParam);
 	static void init();
 	static void quit();

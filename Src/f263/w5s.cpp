@@ -44,7 +44,7 @@ void WA5_F263::DeregisterServices(api_service *service)
 	mkvFactory.Deregister(WASABI_API_SVC);
 }
 
-extern "C" __declspec(dllexport) ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" __declspec(dllexport) ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &wa5_f263;
 }

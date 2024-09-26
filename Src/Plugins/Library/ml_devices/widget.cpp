@@ -52,7 +52,7 @@ typedef struct WidgetCreateParam
 #define WIDGETOBJECT(_widget) (((Widget*)(_widget))->object)
 #define WIDGETCALLBACKS(_widget) (((Widget*)(_widget))->callbacks)
 
-static UINT WINAMP_WM_DIRECT_MOUSE_WHEEL = WM_NULL;
+static UINT WINLAMP_WM_DIRECT_MOUSE_WHEEL = WM_NULL;
 
 static LRESULT CALLBACK 
 Widget_WindowProc(HWND hwnd, unsigned int uMsg, WPARAM wParam, LPARAM lParam);
@@ -575,8 +575,8 @@ Widget_OnCreate(HWND hwnd, CREATESTRUCT *createStruct)
 
 	memset(self, 0, sizeof(Widget));
 
-	if (WM_NULL == WINAMP_WM_DIRECT_MOUSE_WHEEL)
-		WINAMP_WM_DIRECT_MOUSE_WHEEL = RegisterWindowMessageW(L"WINAMP_WM_DIRECT_MOUSE_WHEEL");
+	if (WM_NULL == WINLAMP_WM_DIRECT_MOUSE_WHEEL)
+		WINLAMP_WM_DIRECT_MOUSE_WHEEL = RegisterWindowMessageW(L"WINLAMP_WM_DIRECT_MOUSE_WHEEL");
 
 	self->type = createParam->type;
 	self->callbacks = createParam->callbacks;
@@ -1272,8 +1272,8 @@ Widget_WindowProc(HWND hwnd, unsigned int uMsg, WPARAM wParam, LPARAM lParam)
 		case WIDGET_WM_GET_CHILDREN_SCROLL_ENABLED:	return Widget_OnGetChildrenScrollEnabled(hwnd);
 	}
 
-	if (WINAMP_WM_DIRECT_MOUSE_WHEEL == uMsg && 
-		WM_NULL != WINAMP_WM_DIRECT_MOUSE_WHEEL)
+	if (WINLAMP_WM_DIRECT_MOUSE_WHEEL == uMsg && 
+		WM_NULL != WINLAMP_WM_DIRECT_MOUSE_WHEEL)
 	{
 		Widget_OnMouseWheel(hwnd, LOWORD(wParam), (SHORT)HIWORD(wParam), (LONG)lParam);
 		return TRUE;

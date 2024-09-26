@@ -48,7 +48,7 @@ extern unsigned char eq_preamp;
 extern unsigned char eq_enabled;
 extern unsigned char eq_tab[10];
 extern unsigned char config_eqmode;
-extern unsigned int winampVersion;
+extern unsigned int winlampVersion;
 extern int g_eq_ok;
 
 extern CRITICAL_SECTION g_lfnscs;

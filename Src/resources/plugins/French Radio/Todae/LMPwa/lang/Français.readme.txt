@@ -1,4 +1,4 @@
-RADIOS FRANCAISES POUR WINAMP : QUESTIONS (Q) & RÉPONSES (R)
+RADIOS FRANCAISES POUR WINLAMP : QUESTIONS (Q) & RÉPONSES (R)
 
 Q : LE PLUGIN NE S'AFFICHE PAS CORRECTEMENT
 ===========================================
@@ -6,7 +6,7 @@ R : Certaines fois à la première utilisation le plugin radio françaises est enro
 
 Q : IL Y A TROP PEU DE RADIOS AU LANCEMENT
 ==========================================
-R : Il s'agit d'une sécurité mis en place par Winamp. Fermez Winamp et redémarrez le, il va proposer de mettre à jour la liste des radios
+R : Il s'agit d'une sécurité mis en place par WinLAMP. Fermez WinLAMP et redémarrez le, il va proposer de mettre à jour la liste des radios
 
 Q : LE LOGICIEL FONCTIONNE-T-IL AVEC WINDOWS 7 ?
 ================================================
@@ -14,7 +14,7 @@ R : RADIOS FRANCAISES  fonctionne correctement avec Windows 7 et Windows 8.
 
 Q : MESSAGE D'ERREUR A L'OUVERTURE DU SITE WEB ?
 ================================================
-R : C'est un problème connu mais insoluble : à la fois le moteur WEB de Winamp n'est pas aussi parfait que celui de Internet Explorer (il est capricieux sur du code des sites internet). Et les sites sur lequels le problème existe... n'optimisent pas le code... 
+R : C'est un problème connu mais insoluble : à la fois le moteur WEB de WinLAMP n'est pas aussi parfait que celui de Internet Explorer (il est capricieux sur du code des sites internet). Et les sites sur lequels le problème existe... n'optimisent pas le code... 
 
 Q : LE SON DES RADIOS EST MAUVAIS !
 ===================================
@@ -30,7 +30,7 @@ R : Allez dans les options et cliquez simplement sur "Ajouter" ou "Supprimer". N
 Un pas à pas pour trouver l'adresse du flux est disponible ici
 http://www.01men.com/editorial/323251/dossiers-pratiques/
 et
-http://forum.telecharger.01net.com/microhebdo/logiciels/audio/tuto_winamp_comment_trouver_une_adresse_ip_dune_radio-333189/messages-1.html
+http://forum.telecharger.01net.com/microhebdo/logiciels/audio/tuto_winlamp_comment_trouver_une_adresse_ip_dune_radio-333189/messages-1.html
 Sinon avec le bouton dédié, contactez nous !
 
 Q : POURRIEZ VOUS AJOUTER LA RADIO/TV XYZ ?

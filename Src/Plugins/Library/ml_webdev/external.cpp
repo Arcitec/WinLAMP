@@ -4,8 +4,8 @@
 #include "./navigation.h"
 #include "./commands.h"
 
-#include "../winamp/jsapi.h"
-#include "../winamp/jsapi_CallbackParameters.h"
+#include "../winlamp/jsapi.h"
+#include "../winlamp/jsapi_CallbackParameters.h"
 
 #include "./serviceHelper.h"
 

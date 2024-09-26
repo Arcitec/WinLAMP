@@ -1,12 +1,12 @@
 #include "./skinnedwnd.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 #include "../nu/trace.h"
 #include "./mldwm.h"
 #include "../nu/CGlobalAtom.h"
 
 static CGlobalAtom WNDDATAPROPW(L"SWDATA");
 
-static UINT WINAMP_WM_DIRECT_MOUSE_WHEEL = WM_NULL;
+static UINT WINLAMP_WM_DIRECT_MOUSE_WHEEL = WM_NULL;
 
 
 #ifndef LONGX86
@@ -68,8 +68,8 @@ SkinnedWnd::SkinnedWnd(BOOL bIsDialog)
 	maxSize.cx = 0;
 	maxSize.cy = 0;
 
-	if (WM_NULL == WINAMP_WM_DIRECT_MOUSE_WHEEL)
-		WINAMP_WM_DIRECT_MOUSE_WHEEL = RegisterWindowMessageW(L"WINAMP_WM_DIRECT_MOUSE_WHEEL");
+	if (WM_NULL == WINLAMP_WM_DIRECT_MOUSE_WHEEL)
+		WINLAMP_WM_DIRECT_MOUSE_WHEEL = RegisterWindowMessageW(L"WINLAMP_WM_DIRECT_MOUSE_WHEEL");
 }
 
 SkinnedWnd::~SkinnedWnd(void)
@@ -536,8 +536,8 @@ LRESULT SkinnedWnd::WindowProc(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	}
 
 	if ( 0 == (SWS_NO_DIRECT_MOUSE_WHEEL & style) && 
-		 WINAMP_WM_DIRECT_MOUSE_WHEEL == uMsg && 
-		 WM_NULL != WINAMP_WM_DIRECT_MOUSE_WHEEL && 
+		 WINLAMP_WM_DIRECT_MOUSE_WHEEL == uMsg && 
+		 WM_NULL != WINLAMP_WM_DIRECT_MOUSE_WHEEL && 
 		 FALSE != OnDirectMouseWheel(GET_WHEEL_DELTA_WPARAM(wParam), GET_KEYSTATE_WPARAM(wParam), MAKEPOINTS(lParam)))
 	{
 		if (0 != (SWS_DIALOG & wnddata))

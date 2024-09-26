@@ -3886,7 +3886,7 @@ ListWidget_FocusChangedCb(ListWidget *self, HWND hwnd, HWND focusWindow, BOOL fo
 					{
 						wchar_t buffer[64] = {0};
 						if (0 != GetClassName(focusWindow, buffer, ARRAYSIZE(buffer)) &&
-							CSTR_EQUAL == CompareString(CSTR_INVARIANT, NORM_IGNORECASE, buffer, -1, L"Winamp Gen", -1))
+							CSTR_EQUAL == CompareString(CSTR_INVARIANT, NORM_IGNORECASE, buffer, -1, L"WinLAMP Gen", -1))
 						{
 							disableSelect = TRUE;
 						}

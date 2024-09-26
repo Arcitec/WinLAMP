@@ -5,7 +5,7 @@
 #include "resource.h"
 
 // LGIVEN Mods 4-25-05
-// Config info saved in Winamp.ini [enc_wma]---conf=xxxxxxxxxxx
+// Config info saved in WinLAMP.ini [enc_wma]---conf=xxxxxxxxxxx
 typedef struct
 {
 	int config_nch;			// Number of channels of encoder/fmt selected
@@ -21,7 +21,7 @@ configtype;
 typedef struct
 {
 	configtype cfg;         // config type struct
-	char *configfile;       // Name of config file (...\Winamp.ini)
+	char *configfile;       // Name of config file (...\WinLAMP.ini)
 }
 configwndrec;
 

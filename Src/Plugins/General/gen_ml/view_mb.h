@@ -6,7 +6,7 @@
 #include "evntsink.h"
 #include "childwnd.h"
 #include "resource.h"
-#include "..\winamp\wa_dlg.h"
+#include "..\winlamp\wa_dlg.h"
 #include <shlobj.h>
 #include "mbutil.h"
 #include "config.h"

@@ -3,7 +3,7 @@
 #include "../nu/ns_wc.h"
 #include "../nu/AutoChar.h"
 #include <vector>
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "api__in_mp4.h"
 #include "Stopper.h"
 #include <shlwapi.h>
@@ -206,7 +206,7 @@ void UpdateFileTimeChanged(const wchar_t *fn)
 
 extern "C"
 {
-	__declspec( dllexport ) int winampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, size_t destlen)
+	__declspec( dllexport ) int winlampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, size_t destlen)
 	{
 		if (KeywordMatch(data, "type"))
 		{
@@ -599,7 +599,7 @@ extern "C"
 		}
 		else if (KeywordMatch(data, "publisher"))
 		{
-			GetCustomMetadata(getFileInfoMP4, "publisher", dest, destlen, "com.nullsoft.winamp");
+			GetCustomMetadata(getFileInfoMP4, "publisher", dest, destlen, "com.nullsoft.winlamp");
 			success = true;
 		}
 		else if (KeywordMatch(data, "pregap"))
@@ -923,11 +923,11 @@ static int SetExtendedInfoMP4(const char *data, const wchar_t *val)
 			if (val && *val)
 			{
 				AutoChar utf8(val, CP_UTF8);
-				MP4SetMetadataFreeForm(setFileInfoMP4, "publisher", (u_int8_t *)(char *)utf8, lstrlenA(utf8), "com.nullsoft.winamp");
+				MP4SetMetadataFreeForm(setFileInfoMP4, "publisher", (u_int8_t *)(char *)utf8, lstrlenA(utf8), "com.nullsoft.winlamp");
 			}
 			else
 			{
-				MP4DeleteMetadataFreeForm(setFileInfoMP4, "publisher", "com.nullsoft.winamp");
+				MP4DeleteMetadataFreeForm(setFileInfoMP4, "publisher", "com.nullsoft.winlamp");
 			}
 		}
 		else if (KeywordMatch(data, "category"))
@@ -944,7 +944,7 @@ static int SetExtendedInfoMP4(const char *data, const wchar_t *val)
 
 	static Stopper stopper;
 
-	__declspec( dllexport ) int winampSetExtendedFileInfoW(const wchar_t *fn, const char *data, const wchar_t *val)
+	__declspec( dllexport ) int winlampSetExtendedFileInfoW(const wchar_t *fn, const char *data, const wchar_t *val)
 	{
 		if (!setFileInfoMP4 || lstrcmpi(m_last_ext_fn, fn)) // different file than last time?
 		{
@@ -991,7 +991,7 @@ static int SetExtendedInfoMP4(const char *data, const wchar_t *val)
 
 	}
 
-	__declspec(dllexport) int winampWriteExtendedFileInfo()
+	__declspec(dllexport) int winlampWriteExtendedFileInfo()
 	{
 		int err = m_last_err;
 		m_last_err = 0;

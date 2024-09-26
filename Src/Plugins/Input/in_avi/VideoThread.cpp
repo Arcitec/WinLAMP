@@ -2,7 +2,7 @@
 #include "api__in_avi.h"
 #include "../nu/AutoLock.h"
 #include "../nu/SampleQueue.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "interfaces.h"
 #include "../nsavi/nsavi.h"
 #include "../nu/ThreadName.h"

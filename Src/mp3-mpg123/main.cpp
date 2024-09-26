@@ -75,7 +75,7 @@ int MP3DecoderComponent::RegisterServicesSafeModeOk()
 }
 
 MP3DecoderComponent mp3_decoder_component;
-extern "C" DLLEXPORT ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" DLLEXPORT ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &mp3_decoder_component;
 }

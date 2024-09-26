@@ -1,5 +1,5 @@
 #include "avi_rle_decoder.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <limits.h>
 #include "rle.h"
 #include <intsafe.h>

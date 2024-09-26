@@ -1,6 +1,6 @@
 #include "main.h"
 #include "VideoThread.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 
 VideoSample *video_sample=0;
 IVideoOutput *videoOutput=0;

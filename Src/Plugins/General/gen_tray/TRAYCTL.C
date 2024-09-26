@@ -1,17 +1,17 @@
 #define PLUGIN_NAME		L"Nullsoft Tray Control"
 #define PLUGIN_VERSION	L"2.49"
 
-// Winamp general purpose plug-in mini-SDK
+// WinLAMP general purpose plug-in mini-SDK
 // Copyright (C) 1997, Justin Frankel/Nullsoft
 // Modifications and useability enhancements by DrO aka Darren Owen 2006-2014
 #include <windows.h>
 #include <commctrl.h>
 #include <shlwapi.h>
-#include "../winamp/gen.h"
-#include "../winamp/wa_ipc.h"
-#include "../winamp/ipc_pe.h"
+#include "../winlamp/gen.h"
+#include "../winlamp/wa_ipc.h"
+#include "../winlamp/ipc_pe.h"
 #include "resource.h"
-#include "winampcmd.h"
+#include "winlampcmd.h"
 #include "api__gen_tray.h"
 #include <strsafe.h>
 
@@ -100,7 +100,7 @@ int init(void);
 void config_write();
 void config_read();
 
-extern "C" winampGeneralPurposePlugin plugin =
+extern "C" winlampGeneralPurposePlugin plugin =
 {
 	GPPHDR_VER_U,
 	"nullsoft(gen_tray.dll)",
@@ -109,21 +109,21 @@ extern "C" winampGeneralPurposePlugin plugin =
 	quit,
 };
 
-extern "C" __declspec(dllexport) winampGeneralPurposePlugin * winampGetGeneralPurposePlugin() { return &plugin; }
+extern "C" __declspec(dllexport) winlampGeneralPurposePlugin * winlampGetGeneralPurposePlugin() { return &plugin; }
 
 
-HWND GetPlaylistWnd(HWND winamp){
+HWND GetPlaylistWnd(HWND winlamp){
 HWND pl_wnd = 0;
 
 	// get the playlist editor window (either v2.9x method or the older
 	// for compatibility incase < 2.9x are used
-	if(SendMessage(winamp,WM_WA_IPC,0,IPC_GETVERSION) >= 0x2900)
+	if(SendMessage(winlamp,WM_WA_IPC,0,IPC_GETVERSION) >= 0x2900)
 	{
-		pl_wnd = (HWND)SendMessage(winamp,WM_WA_IPC,IPC_GETWND_PE,IPC_GETWND);
+		pl_wnd = (HWND)SendMessage(winlamp,WM_WA_IPC,IPC_GETWND_PE,IPC_GETWND);
 	}
 	if(!pl_wnd)
 	{
-		pl_wnd = FindWindow(L"Winamp PE",0);
+		pl_wnd = FindWindow(L"WinLAMP PE",0);
 	}
 	return pl_wnd;
 }
@@ -131,7 +131,7 @@ HWND pl_wnd = 0;
 void FormCompactText(wchar_t* szTip, int szTipLength){
 int got = 0;
 
-	// only update if we really have to (to better mimick Winamp's title behaviour, etc)
+	// only update if we really have to (to better mimick WinLAMP's title behaviour, etc)
 	// otherwise we query in all cases which can often reflect what appears to be the wrong information since
 	// the current playlist entry is altered, etc on playlist modification hence an incorrect observation
 	if(!update_file){
@@ -203,11 +203,11 @@ int got = 0;
 		}
 	}
 
-	// fall back to the Winamp version just incase
+	// fall back to the WinLAMP version just incase
 	else{
 		wchar_t temp[16] = {0};
 		StringCchPrintf(temp,16,L"%X",SendMessage(plugin.hwndParent,WM_WA_IPC,0,IPC_GETVERSION));
-		StringCchPrintf(szTip,szTipLength,L"Winamp %c.%s",temp[0],&temp[2]);
+		StringCchPrintf(szTip,szTipLength,L"WinLAMP %c.%s",temp[0],&temp[2]);
 	}
 }
 
@@ -314,7 +314,7 @@ void do_icons(int force)
 				tnid.uCallbackMessage=WM_USER + 2707;
 				tnid.hIcon=Icons[i];
 				if(i != 5)
-					StringCchPrintf(tnid.szTip,sizeof(tnid.szTip)/sizeof(wchar_t),L"%s - Winamp",WASABI_API_LNGSTRINGW(tips[i]));
+					StringCchPrintf(tnid.szTip,sizeof(tnid.szTip)/sizeof(wchar_t),L"%s - WinLAMP",WASABI_API_LNGSTRINGW(tips[i]));
 				else
 					FormCompactText(tnid.szTip,(sizeof(tnid.szTip)/sizeof(wchar_t)));
 
@@ -735,22 +735,22 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 						int a;
 						if ((a= (int)SendMessage(hwnd,WM_USER,0,IPC_ISPLAYING)) == 0) // not playing, let's hit prev
 						{
-							SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON1,0);
+							SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON1,0);
 						}
 						else if (a != 3) // restart or full previous action
 						{
 							if ((GetKeyState(VK_CONTROL)&0x1000) && SendMessage(hwnd,WM_USER,0,IPC_GETOUTPUTTIME) > 2000 )
 							{
-								SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON2,0);	// restart (only on a ctrl+click)
+								SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON2,0);	// restart (only on a ctrl+click)
 							}
 							else
 							{
-								SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON1,0);	// move to the previous track and then start
+								SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON1,0);	// move to the previous track and then start
 							}
 						}
 						else 
 						{ // prev
-							SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON1,0);
+							SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON1,0);
 						}
 					}
 					return 0;
@@ -759,35 +759,35 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 					case 1025:
 						if ((GetKeyState(VK_CONTROL)&0x1000) )	// restart the current track
 						{
-							SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON4,0);
-							SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON2,0);
+							SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON4,0);
+							SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON2,0);
 						}
 						else
 						{
 							// do play/pause switching to maintain current usability of the plugin
-							SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON2+(SendMessage(hwnd,WM_USER,0,IPC_ISPLAYING) == 1),0);
+							SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON2+(SendMessage(hwnd,WM_USER,0,IPC_ISPLAYING) == 1),0);
 						}
 					return 0;
 
 					// stop icon
 					case 1026:
-						SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON4 + ((GetKeyState(VK_SHIFT) & 0x1000)?100:0) ,0);
+						SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON4 + ((GetKeyState(VK_SHIFT) & 0x1000)?100:0) ,0);
 					return 0;
 
 					// next icon
 					case 1027:
-						SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON5,0);
+						SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON5,0);
 					return 0;
 
 					// open file(s) icon
 					case 1028:
 						SetForegroundWindow(hwnd);
 						if (GetKeyState(VK_CONTROL) & (1<<15))
-							SendMessage(hwnd,WM_COMMAND,WINAMP_FILE_LOC,0);
+							SendMessage(hwnd,WM_COMMAND,WINLAMP_FILE_LOC,0);
 						else if (GetKeyState(VK_SHIFT) & (1<<15))
-							SendMessage(hwnd,WM_COMMAND,WINAMP_FILE_DIR,0);
+							SendMessage(hwnd,WM_COMMAND,WINLAMP_FILE_DIR,0);
 						else
-							SendMessage(hwnd,WM_COMMAND,WINAMP_FILE_PLAY,0);
+							SendMessage(hwnd,WM_COMMAND,WINLAMP_FILE_PLAY,0);
 					return 0;
 
 					// 4way mode handling, etc
@@ -822,13 +822,13 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 										case 0:
 											if ((GetKeyState(VK_CONTROL)&0x1000) )	// restart the current track
 											{
-												SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON4,0);
-												SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON2,0);
+												SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON4,0);
+												SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON2,0);
 											}
 											else
 											{
 												// do play/pause switching to maintain current usability of the plugin
-												SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON2+(SendMessage(hwnd,WM_USER,0,IPC_ISPLAYING) == 1),0);
+												SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON2+(SendMessage(hwnd,WM_USER,0,IPC_ISPLAYING) == 1),0);
 											}
 										break;
 
@@ -837,14 +837,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 											if(!SendMessage(hwnd,WM_USER,0,IPC_ISPLAYING)){
 												SetForegroundWindow(hwnd);
 												if (GetKeyState(VK_CONTROL) & (1<<15))
-													SendMessage(hwnd,WM_COMMAND,WINAMP_FILE_LOC,0);
+													SendMessage(hwnd,WM_COMMAND,WINLAMP_FILE_LOC,0);
 												else if (GetKeyState(VK_SHIFT) & (1<<15))
-													SendMessage(hwnd,WM_COMMAND,WINAMP_FILE_DIR,0);
+													SendMessage(hwnd,WM_COMMAND,WINLAMP_FILE_DIR,0);
 												else
-													SendMessage(hwnd,WM_COMMAND,WINAMP_FILE_PLAY,0);
+													SendMessage(hwnd,WM_COMMAND,WINLAMP_FILE_PLAY,0);
 											}
 											else{
-												SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON4 + ((GetKeyState(VK_SHIFT) & 0x1000)?100:0) ,0);
+												SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON4 + ((GetKeyState(VK_SHIFT) & 0x1000)?100:0) ,0);
 											}
 										break;
 
@@ -854,29 +854,29 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 										int a;
 											if ((a= (int)SendMessage(hwnd,WM_USER,0,IPC_ISPLAYING)) == 0) // not playing, let's hit prev
 											{
-												SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON1,0);
+												SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON1,0);
 											}
 											else if (a != 3) // restart or full previous action
 											{
 												if ((GetKeyState(VK_CONTROL)&0x1000) && SendMessage(hwnd,WM_USER,0,IPC_GETOUTPUTTIME) > 2000 )
 												{
-													SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON2,0);	// restart (only on a ctrl+click)
+													SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON2,0);	// restart (only on a ctrl+click)
 												}
 												else
 												{
-													SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON1,0);	// move to the previous track and then start
+													SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON1,0);	// move to the previous track and then start
 												}
 											}
 											else 
 											{ // prev
-												SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON1,0);
+												SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON1,0);
 											}
 										}
 										break;
 
 										// next icon
 										case 3:
-											SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON5,0);
+											SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON5,0);
 										break;
 									}
 									break;
@@ -912,7 +912,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 					// previousicon
 					case 1024:
 					{
-						SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON5,0);
+						SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON5,0);
 					}
 					break;
 
@@ -922,23 +922,23 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 						int a;
 						if ((a= (int)SendMessage(hwnd,WM_USER,0,IPC_ISPLAYING)) == 0) // not playing, let's hit prev
 						{
-							SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON1,0);
+							SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON1,0);
 						}
 						else if (a != 3) // restart or full previous action
 						{
 							if ((GetKeyState(VK_CONTROL)&0x1000) && SendMessage(hwnd,WM_USER,0,IPC_GETOUTPUTTIME) > 2000 )
 							{
-								SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON2,0);	// restart (only on a ctrl+click)
+								SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON2,0);	// restart (only on a ctrl+click)
 							}
 							else
 							{
-								SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON1,0);	// move to the previous track and then start
-								SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON2,0);
+								SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON1,0);	// move to the previous track and then start
+								SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON2,0);
 							}
 						}
 						else 
 						{ // prev
-							SendMessage(hwnd,WM_COMMAND,WINAMP_BUTTON1,0);
+							SendMessage(hwnd,WM_COMMAND,WINLAMP_BUTTON1,0);
 						}
 					}
 					break;
@@ -968,8 +968,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	int ret = (int)CallWindowProc(lpWndProcOld,hwnd,message,wParam,lParam);
 
-		// do this after passing the main batch of messages onto Winamp/rest of the subclass chain so
-		// that Winamp will restore its tray icon first and then we do ours (otherwise it looks silly)
+		// do this after passing the main batch of messages onto WinLAMP/rest of the subclass chain so
+		// that WinLAMP will restore its tray icon first and then we do ours (otherwise it looks silly)
 		if(message == s_uTaskbarRestart)
 		{
 			// have to force the icons to be displayed since there are none in the tray at this point
@@ -1105,7 +1105,7 @@ int GetWindowsVersionRunningOnCompact(DWORD* version)
 	return ver_detect;
 }
 
-void GetWinampPath(void)
+void GetWinLAMPPath(void)
 {
 	wchar_t* p = wa_path;
 	p += GetModuleFileName(0,wa_path,ARRAYSIZE(wa_path)) - 1;
@@ -1136,7 +1136,7 @@ int init(void)
 					WASABI_API_LNGSTRINGW(IDS_NULLSOFT_TRAY_CONTROL), PLUGIN_VERSION);
 	plugin.description = (char*)szDescription;
 
-	GetWinampPath();
+	GetWinLAMPPath();
 	config_read();
 
 	if (IsWindowUnicode(plugin.hwndParent))
@@ -1316,7 +1316,7 @@ BOOL CALLBACK ConfigProc(HWND hwndDlg,UINT uMsg,WPARAM wParam,LPARAM lParam)
 		}
 		break;
 
-		// mimicks the get... links in the winamp preferences
+		// mimicks the get... links in the winlamp preferences
 		case WM_DRAWITEM:
 		{
 			DRAWITEMSTRUCT* lpdis = (DRAWITEMSTRUCT*)lParam;
@@ -1395,7 +1395,7 @@ BOOL CALLBACK ConfigProc(HWND hwndDlg,UINT uMsg,WPARAM wParam,LPARAM lParam)
 
 			else if (LOWORD(wParam) == IDC_LINK && HIWORD(wParam) == BN_CLICKED)
 			{
-				SendMessage(plugin.hwndParent,WM_WA_IPC,(WPARAM)"https://winampheritage.com/plugin/nullsoft-tray-control-plug-in-icon-pack/222396",IPC_OPEN_URL);
+				SendMessage(plugin.hwndParent,WM_WA_IPC,(WPARAM)"https://winlampheritage.com/plugin/nullsoft-tray-control-plug-in-icon-pack/222396",IPC_OPEN_URL);
 			}
 
 			else if (LOWORD(wParam) == IDC_BUTTON1)
@@ -1476,9 +1476,9 @@ BOOL CALLBACK ConfigProc(HWND hwndDlg,UINT uMsg,WPARAM wParam,LPARAM lParam)
 
 void config_read(void)
 {
-	// this will only correctly work with Winamp 2.9+/5.x+
-	// see IPC_GETINIFILE for a way to query the location of Winamp.ini correctly
-	// whatever version of Winamp is being run on
+	// this will only correctly work with WinLAMP 2.9+/5.x+
+	// see IPC_GETINIFILE for a way to query the location of WinLAMP.ini correctly
+	// whatever version of WinLAMP is being run on
 	// as of v2.41 this now uses IPC_GETINIFILEW though it's trivial to use
 	// IPC_GETINIFILE as a fallback on older clients (built for 5.58+)
 	ini_file=(wchar_t*)SendMessage(plugin.hwndParent,WM_USER,0,IPC_GETINIFILEW);
@@ -1508,7 +1508,7 @@ void config_write(void)
 extern "C" {
 #endif
 
-	__declspec(dllexport) int winampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param){
+	__declspec(dllexport) int winlampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param){
 		// prompt to remove our settings with default as no (just incase)
 		if(MessageBoxW(hwndDlg,WASABI_API_LNGSTRINGW(IDS_DO_YOU_ALSO_WANT_TO_REMOVE_SETTINGS),
 					   szDescription,MB_YESNO|MB_DEFBUTTON2) == IDYES)

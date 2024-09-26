@@ -41,7 +41,7 @@ void WA5_Burner::DeregisterServices(api_service *service)
 }
 
 static WA5_Burner wa5_burner;
-extern "C" DLLEXPORT ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" DLLEXPORT ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &wa5_burner;
 }

@@ -154,7 +154,7 @@ int OnlineServicesURIHandler::ProcessFilename(const wchar_t *filename)
 
 int OnlineServicesURIHandler::IsMine(const wchar_t *filename)
 {
-	if (!_wcsnicmp(filename, L"winamp://Online Services", 24) || !_wcsnicmp(filename, L"winamp://Online%20Services", 26))
+	if (!_wcsnicmp(filename, L"winlamp://Online Services", 24) || !_wcsnicmp(filename, L"winlamp://Online%20Services", 26))
 		return HANDLED;
 	else
 		return NOT_HANDLED;

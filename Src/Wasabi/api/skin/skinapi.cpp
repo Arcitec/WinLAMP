@@ -28,7 +28,7 @@ SkinApi::SkinApi()
 	GammaMgr::init();
 
 	// fixed this for 5.58+ so it'll use the correct skins directory
-	// and not the winamp.exe folder + "skins" - fixes @SKINSPATH@
+	// and not the winlamp.exe folder + "skins" - fixes @SKINSPATH@
 	// when the skins directory has been altered - from Bento notifier.xml
 	skinspath = WASABI_API_APP->path_getSkinSettingsPath();
 }
@@ -308,11 +308,11 @@ int SkinApi::loadGroupDefData(const wchar_t *groupdef, SkinItem **lastgroupdef)
 	s = L"buf:";
   
 	s += L"<?xml version=\"1.0\" encoding=\"UTF-16\" standalone=\"yes\"?>"
-	     L"<WinampAbstractionLayer version=\"0.8\">";
+	     L"<WinLAMPAbstractionLayer version=\"0.8\">";
 
 	s += groupdef;
 
-	s += L"</WinampAbstractionLayer>";
+	s += L"</WinLAMPAbstractionLayer>";
 
 	int r = Skin::loadSkinPart(s);
 	if (lastgroupdef != NULL)

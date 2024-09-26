@@ -1,5 +1,5 @@
-#ifndef NULLSOFT_WINAMP_OMBROWSER_OBJECT_HEADER
-#define NULLSOFT_WINAMP_OMBROWSER_OBJECT_HEADER
+#ifndef NULLSOFT_WINLAMP_OMBROWSER_OBJECT_HEADER
+#define NULLSOFT_WINLAMP_OMBROWSER_OBJECT_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -40,10 +40,10 @@ public:
 	int QueryInterface(GUID interface_guid, void **object);
 
 	/* obj_ombrowser */
-	HRESULT Initialize(LPCWSTR pszName, HWND hwndWinamp);
+	HRESULT Initialize(LPCWSTR pszName, HWND hwndWinLAMP);
 	HRESULT Finish(void);
-	HRESULT RegisterWinampHook(ifc_winamphook *hook, UINT *cookieOut);
-	HRESULT UnregisterWinampHook(UINT cookie);
+	HRESULT RegisterWinLAMPHook(ifc_winlamphook *hook, UINT *cookieOut);
+	HRESULT UnregisterWinLAMPHook(UINT cookie);
 	HRESULT GetConfig(const GUID *configIfc, void **configOut);
 	HRESULT GetSessionId(LPWSTR pszBuffer, INT cchBufferMax);
 	HRESULT GetClientId(LPWSTR pszBuffer, INT cchBufferMax);
@@ -92,4 +92,4 @@ protected:
 	RECVS_MULTIPATCH;
 };
 
-#endif //NULLSOFT_WINAMP_OMBROWSER_OBJECT_HEADER
+#endif //NULLSOFT_WINLAMP_OMBROWSER_OBJECT_HEADER

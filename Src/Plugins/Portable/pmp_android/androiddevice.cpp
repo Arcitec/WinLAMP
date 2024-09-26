@@ -3,7 +3,7 @@
 #include "androidplaylist.h"
 #include "androidplaylistsaver.h"
 #include "api.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include <tataki/bitmap/bitmap.h>
 #include <tataki/canvas/bltcanvas.h>
 #include <shlobj.h>
@@ -769,7 +769,7 @@ bool AndroidDevice::playTracks(songid_t * songidList, int listLength, int startP
 	// return false if unsupported
 	if (!enqueue) //clear playlist
 	{
-		SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_DELETE);
+		SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_DELETE);
 	}
 
 	for (int i=0; i<listLength; i++)
@@ -784,12 +784,12 @@ bool AndroidDevice::playTracks(songid_t * songidList, int listLength, int startP
 			s.ext      = NULL;
 			s.length   = curSong->length/1000;
 
-			SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
+			SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
 		}
 		else
 		{
 			char titleStr[32] = {0};
-			MessageBoxA(plugin.hwndWinampParent,WASABI_API_LNGSTRING(IDS_CANNOT_OPEN_FILE),
+			MessageBoxA(plugin.hwndWinLAMPParent,WASABI_API_LNGSTRING(IDS_CANNOT_OPEN_FILE),
 			            WASABI_API_LNGSTRING_BUF(IDS_ERROR,titleStr,32),0);
 		}
 	}
@@ -797,9 +797,9 @@ bool AndroidDevice::playTracks(songid_t * songidList, int listLength, int startP
 	if (!enqueue)
 	{
 		//play item startPlaybackAt
-		SendMessage(plugin.hwndWinampParent,WM_WA_IPC,startPlaybackAt,IPC_SETPLAYLISTPOS);
-		SendMessage(plugin.hwndWinampParent,WM_COMMAND,40047,0); //stop
-		SendMessage(plugin.hwndWinampParent,WM_COMMAND,40045,0); //play
+		SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,startPlaybackAt,IPC_SETPLAYLISTPOS);
+		SendMessage(plugin.hwndWinLAMPParent,WM_COMMAND,40047,0); //stop
+		SendMessage(plugin.hwndWinLAMPParent,WM_COMMAND,40045,0); //play
 	}
 	return true;
 }
@@ -1018,8 +1018,8 @@ AndroidDevice::AndroidDevice(wchar_t drive, pmpDeviceLoading * load): transcoder
 {
 	deviceTable = 0;
 
-	StringCchPrintf(ndeDataFile, 100, L"%c:\\Winamp\\winamp_metadata.dat", drive);
-	StringCchPrintf(ndeIndexFile, 100, L"%c:\\Winamp\\winamp_metadata.idx", drive);
+	StringCchPrintf(ndeDataFile, 100, L"%c:\\WinLAMP\\winlamp_metadata.dat", drive);
+	StringCchPrintf(ndeIndexFile, 100, L"%c:\\WinLAMP\\winlamp_metadata.idx", drive);
 
 	load->dev = this;
 	load->UpdateCaption = NULL;
@@ -1037,7 +1037,7 @@ AndroidDevice::AndroidDevice(wchar_t drive, pmpDeviceLoading * load): transcoder
 	}
 
 	// load settings
-	StringCchCopy(iniFile, MAX_PATH, L"x:\\Winamp\\");
+	StringCchCopy(iniFile, MAX_PATH, L"x:\\WinLAMP\\");
 	iniFile[0]=drive;
 
 	CreateDirectory(iniFile, NULL);

@@ -60,7 +60,7 @@ void WA5_Gracenote::DeregisterServices(api_service *service)
 }
 
 static WA5_Gracenote wa5_gracenote;
-extern "C" DLLEXPORT ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" DLLEXPORT ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &wa5_gracenote;
 }

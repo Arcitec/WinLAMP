@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wsock32.lib /nologo /dll /machine:I386 /out:"c:\progra~1\winamp\plugins\ml_ex.dll" /opt:nowin98
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wsock32.lib /nologo /dll /machine:I386 /out:"c:\progra~1\winlamp\plugins\ml_ex.dll" /opt:nowin98
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "ml_ex - Win32 Debug"
@@ -80,7 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wsock32.lib /nologo /dll /debug /machine:I386 /out:"c:\progra~1\winamp\plugins\ml_ex.dll" /pdbtype:sept
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wsock32.lib /nologo /dll /debug /machine:I386 /out:"c:\progra~1\winlamp\plugins\ml_ex.dll" /pdbtype:sept
 
 !ENDIF 
 
@@ -117,7 +117,7 @@ SOURCE=..\childwnd.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\winamp\ipc_pe.h
+SOURCE=..\..\winlamp\ipc_pe.h
 # End Source File
 # Begin Source File
 
@@ -133,11 +133,11 @@ SOURCE=..\ml.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\winamp\wa_dlg.h
+SOURCE=..\..\winlamp\wa_dlg.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\winamp\wa_ipc.h
+SOURCE=..\..\winlamp\wa_ipc.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"

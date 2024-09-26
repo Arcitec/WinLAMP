@@ -34,7 +34,7 @@ int APE::GetString(const char *metadata, wchar_t *data, int dataLen)
 	}
 	else
 	{
-		const char *ape_key = MapWinampKeyToApeKey(metadata);
+		const char *ape_key = MapWinLAMPKeyToApeKey(metadata);
 		if (ape_key)
 		{
 			if (APEv2::Tag::GetString(ape_key, data, dataLen) == APEv2::APEV2_SUCCESS)
@@ -60,7 +60,7 @@ int APE::SetString(const char *metadata, const wchar_t *data)
 	}
 	else
 	{
-		const char *ape_key = MapWinampKeyToApeKey(metadata);
+		const char *ape_key = MapWinLAMPKeyToApeKey(metadata);
 		if (ape_key)
 		{
 			APEv2::Tag::SetString(ape_key, data);
@@ -108,8 +108,8 @@ int APE::AddItem()
 struct ApeKeyMapping
 {
 	const char *ape_key;
-	const char *winamp_key;
-	const wchar_t *winamp_keyW;
+	const char *winlamp_key;
+	const wchar_t *winlamp_keyW;
 };
 
 static ApeKeyMapping apeKeyMapping[] =
@@ -126,34 +126,34 @@ static ApeKeyMapping apeKeyMapping[] =
 	{"Album artist", "albumartist", L"albumartist"},
 };
 
-const wchar_t *APE::MapApeKeyToWinampKeyW(const char *ape_key)
+const wchar_t *APE::MapApeKeyToWinLAMPKeyW(const char *ape_key)
 {
 	size_t num_mappings = sizeof(apeKeyMapping)/sizeof(apeKeyMapping[0]);
 	for (size_t i=0;i!=num_mappings;i++)
 	{
 		if (!_stricmp(ape_key, apeKeyMapping[i].ape_key))
-			return apeKeyMapping[i].winamp_keyW;
+			return apeKeyMapping[i].winlamp_keyW;
 	}
 	return NULL;
 }
 
-const char *APE::MapApeKeyToWinampKey(const char *ape_key)
+const char *APE::MapApeKeyToWinLAMPKey(const char *ape_key)
 {
 	size_t num_mappings = sizeof(apeKeyMapping)/sizeof(apeKeyMapping[0]);
 	for (size_t i=0;i!=num_mappings;i++)
 	{
 		if (!_stricmp(ape_key, apeKeyMapping[i].ape_key))
-			return apeKeyMapping[i].winamp_key;
+			return apeKeyMapping[i].winlamp_key;
 	}
 	return NULL;
 }
 
-const char *APE::MapWinampKeyToApeKey(const char *winamp_key)
+const char *APE::MapWinLAMPKeyToApeKey(const char *winlamp_key)
 {
 	size_t num_mappings = sizeof(apeKeyMapping)/sizeof(apeKeyMapping[0]);
 	for (size_t i=0;i!=num_mappings;i++)
 	{
-		if (!_stricmp(winamp_key, apeKeyMapping[i].winamp_key))
+		if (!_stricmp(winlamp_key, apeKeyMapping[i].winlamp_key))
 			return apeKeyMapping[i].ape_key;
 	}
 	return NULL;

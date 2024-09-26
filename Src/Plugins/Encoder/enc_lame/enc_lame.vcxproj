@@ -147,10 +147,10 @@
       <AdditionalLibraryDirectories>..\..\..\external_dependencies\vcpkg\$(PlatformShortName)-windows-static\debug\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\ 
-xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\ 
-if exist ..\..\..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resources\libraries\lame_enc.dll ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\</Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\ and if exist ..\..\..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resources\libraries\lame_enc.dll ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Shared\'</Message>
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\ 
+xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\ 
+if exist ..\..\..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resources\libraries\lame_enc.dll ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\</Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\ and if exist ..\..\..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resources\libraries\lame_enc.dll ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Shared\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -181,10 +181,10 @@ if exist ..\..\..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resource
       <AdditionalLibraryDirectories>..\..\..\external_dependencies\vcpkg\$(PlatformShortName)-windows-static\debug\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\ 
-xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\ 
-if exist ..\..\..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resources\libraries\lame_enc.dll ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\</Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\ and if exist ..\..\..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resources\libraries\lame_enc.dll ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Shared\'</Message>
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\ 
+xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\ 
+if exist ..\..\..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resources\libraries\lame_enc.dll ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\</Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\ and if exist ..\..\..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resources\libraries\lame_enc.dll ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Shared\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -221,9 +221,9 @@ if exist ..\..\..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resource
       <AdditionalLibraryDirectories>..\..\..\external_dependencies\vcpkg\$(PlatformShortName)-windows-static\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\ 
-if exist ..\..\..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resources\libraries\lame_enc.dll ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\</Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\ and if exist ..\..\..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resources\libraries\lame_enc.dll ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Shared\'</Message>
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\ 
+if exist ..\..\..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resources\libraries\lame_enc.dll ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\</Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\ and if exist ..\..\..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resources\libraries\lame_enc.dll ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Shared\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -258,9 +258,9 @@ if exist ..\..\..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resource
       <AdditionalLibraryDirectories>..\..\..\external_dependencies\vcpkg\$(PlatformShortName)-windows-static\debug\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\ 
-if exist ..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resources\libraries\lame_enc.dll ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\</Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\ and if exist ..\..\..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resources\libraries\lame_enc.dll ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Shared\'</Message>
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\ 
+if exist ..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resources\libraries\lame_enc.dll ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\</Command>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\ and if exist ..\..\..\resources\libraries\lame_enc.dll xcopy /Y /D ..\..\..\resources\libraries\lame_enc.dll ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Shared\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

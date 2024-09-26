@@ -63,7 +63,7 @@ void plstring_init()
 		wchar_t        path[ MAX_PATH ] = { 0 };
 		const wchar_t *PROGDIR          = WASABI_API_APP->path_getAppPath();
 
-		PathCombineW( path, PROGDIR, L"winamp.exe" );
+		PathCombineW( path, PROGDIR, L"winlamp.exe" );
 		HMODULE ndelib = LoadLibraryW( path );
 		if ( ndelib )
 		{

@@ -254,8 +254,8 @@ BEGIN
     IDS_RECEIVING_DATA      "Receiving Data"
     IDS_COMPLETED           "Completed"
     IDS_INSTALLING          "Installing"
-    IDS_FILE_PROTECTED_CANNOT_PLAY_IN_WINAMP 
-                            "This file is protected, but cannot be played in Winamp."
+    IDS_FILE_PROTECTED_CANNOT_PLAY_IN_WINLAMP 
+                            "This file is protected, but cannot be played in WinLAMP."
     IDS_LICENSE_ACQUIRED    "License Acquired"
     IDS_WINDOWS_MEDIA_PROTECTED_CONTENT_UNTRUSTED_SOURCE 
                             "Windows Media Protected Content\n\nThe license for this license is from an untrusted source.\n\nProceed?"
@@ -272,12 +272,12 @@ BEGIN
     IDS_SECURITY_UPDATE_REQUIRED "Security Update Required"
     IDS_UPDATING            "Updating"
     IDS_ENCRYPTED_IN_OP_LEVEL_HIGHER_THAN_SUPPORTED 
-                            "This file is encrypted with an Output Protection Level higher than supported in Winamp."
+                            "This file is encrypted with an Output Protection Level higher than supported in WinLAMP."
     IDS_WINDOWS_MEDIA_PLAYBACK_FAILURE "Windows Media Playback Failure"
     IDS_UPDATE_REQUIRED     "Update required"
     IDS_ACQUIRING_LICENSE   "Acquiring License"
-    IDS_DRM_LICENSE_EXPIRED_VISIT_WINAMP_COM 
-                            "DRM License has expired! Please visit Winamp.com"
+    IDS_DRM_LICENSE_EXPIRED_VISIT_WINLAMP_COM 
+                            "DRM License has expired! Please visit WinLAMP.com"
     IDS_ERROR               "Error"
     IDS_BUFFERING           "Buffering"
     IDS_UNKNOWN_ERROR_WAV   "Unknown Error."
@@ -300,7 +300,7 @@ BEGIN
     IDS_CONTAINS            "Contains"
     IDS_NAME                "Name"
     IDS_KBPS                "kbps"
-    IDS_ABOUT_TEXT          "%s\n© 2005-2023 Winamp SA\nWritten by: Ben Allison\nBuild date: %s\n\nWindows Media is a trademark\nof Microsoft Corporation."
+    IDS_ABOUT_TEXT          "%s\n© 2005-2023 WinLAMP SA\nWritten by: Ben Allison\nBuild date: %s\n\nWindows Media is a trademark\nof Microsoft Corporation."
 END
 
 STRINGTABLE 

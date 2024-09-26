@@ -14,13 +14,13 @@
 **
 **   3. This notice may not be removed or altered from any source distribution.
 **
-** Author: Ben Allison benski@winamp.com
+** Author: Ben Allison benski@winlamp.com
 ** Created: January 31, 2008
 **
 */
 #include "Stopper.h"
 #include "main.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 
 Stopper::Stopper() : isplaying(0), timems(0)
 {

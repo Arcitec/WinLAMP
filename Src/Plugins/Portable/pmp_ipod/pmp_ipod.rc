@@ -83,7 +83,7 @@ STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_VISIBLE | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     GROUPBOX        "Gapless Playback",IDC_STATIC,4,3,255,44
-    LTEXT           "Some iPods support the gapless playback of files.\nTo enable this, Winamp needs to scan the files on your iPod. Click ""Scan"" to begin this process.",IDC_STATIC,12,14,179,24
+    LTEXT           "Some iPods support the gapless playback of files.\nTo enable this, WinLAMP needs to scan the files on your iPod. Click ""Scan"" to begin this process.",IDC_STATIC,12,14,179,24
     PUSHBUTTON      "Scan",IDC_SCAN,201,19,50,14
     GROUPBOX        "Album Art",IDC_STATIC_ARTGROUP,4,54,255,30,NOT WS_VISIBLE
     CONTROL         "Add album art to tracks during transfer",IDC_CHECK_USEART,

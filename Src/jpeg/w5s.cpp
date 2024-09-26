@@ -79,7 +79,7 @@ void WA5_JPEG::DeregisterServices(api_service *service)
 	if (sf) sf->releaseInterface(memoryManager);
 }
 
-extern "C" __declspec(dllexport) ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" __declspec(dllexport) ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &wa5_jpeg;
 }

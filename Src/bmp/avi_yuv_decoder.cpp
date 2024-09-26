@@ -1,5 +1,5 @@
 #include "avi_yuv_decoder.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <limits.h>
 #include <bfc/error.h>
 #include <intsafe.h>

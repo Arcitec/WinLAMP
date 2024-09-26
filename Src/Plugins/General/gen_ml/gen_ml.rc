@@ -59,7 +59,7 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_VDELIM,"Static",SS_BLACKFRAME,86,1,6,278
     PUSHBUTTON      "Library",IDC_BTN_LIB,0,268,83,11
-    CTEXT           "\n\n\n\nUnable to display an appropriate library view.\n\nPlease select a view from one to the left or re-install Winamp with library plug-ins as applicable.",IDC_NO_VIEW,157,64,150,47,NOT WS_VISIBLE
+    CTEXT           "\n\n\n\nUnable to display an appropriate library view.\n\nPlease select a view from one to the left or re-install WinLAMP with library plug-ins as applicable.",IDC_NO_VIEW,157,64,150,47,NOT WS_VISIBLE
 END
 
 IDD_PREFS1 DIALOGEX 0, 0, 260, 226
@@ -111,7 +111,7 @@ EXSTYLE WS_EX_CONTROLPARENT
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Internet Media Rating Preferences",IDC_STATIC,4,3,256,144
-    LTEXT           "Winamp can be configured to hide listings of the specified ratings below when accessing Internet Media.",IDC_STATIC,9,15,244,16
+    LTEXT           "WinLAMP can be configured to hide listings of the specified ratings below when accessing Internet Media.",IDC_STATIC,9,15,244,16
     LTEXT           "Specify which content ratings you wish to include in your listings:",IDC_STATIC,9,36,212,8
     CONTROL         "Everyone - Suitable for general audiences",IDC_CHECK_RATING0,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,49,147,10
@@ -504,7 +504,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_ENQUEUE_IN_WINAMP   "Enqueue in Winamp"
+    IDS_ENQUEUE_IN_WINLAMP   "Enqueue in WinLAMP"
     IDS_LIBRARY_OPTIONS     "Options"
     IDS_ONLINE_MEDIA        "Online Media"
     IDS_RATINGS_PASSWORD_MISSING 
@@ -532,7 +532,7 @@ STRINGTABLE
 BEGIN
     IDS_MEDIA_LIBRARY       "Media Library"
     IDS_ML_ALT_L_SHORTCUT   "Media Library\tAlt+L"
-    IDS_WINAMP_LIBRARY      "Winamp Library"
+    IDS_WINLAMP_LIBRARY      "WinLAMP Library"
     IDS_ONLINE_SERVICES_NOT_PRESENT "Online Services module not found.  "
     IDS_ERROR_SWITCHING_TO_VIEW "Error switching to view"
     IDS_CDDB_CONNECTING     "Connecting"
@@ -540,11 +540,11 @@ BEGIN
     IDS_CDDB_RECEIVING      "Receiving"
     IDS_CDDB_COMPLETE       "Complete"
     IDS_TOGGLE_LIBRARY      "Toggle Library"
-    IDS_UNINSTALL_PROMPT    "Permanently uninstall this plug-in?\n(This may require a restart of Winamp)"
+    IDS_UNINSTALL_PROMPT    "Permanently uninstall this plug-in?\n(This may require a restart of WinLAMP)"
     IDS_UINSTALL_CONFIRMATION "Confirmation"
     IDS_DOWNLOADING         "Downloading..."
     IDS_WEBINFO_NAVIGATE_ERROR "Unable to get information."
-    IDS_WEBINFO_MESSAGEBOX_TITLE "Winamp Browser"
+    IDS_WEBINFO_MESSAGEBOX_TITLE "WinLAMP Browser"
 END
 
 STRINGTABLE 
@@ -617,8 +617,8 @@ BEGIN
     IDS_FILEVIEW_EMPTYFOLDER "Empty Folder"
     IDS_FILEVIEWSTATUS_GROUPTEMPLATE "%d files, %s"
     IDS_FILEVIEWSTATUS_SELECTEDGROUPTEMPLATE "%d files selected, %s"
-    IDS_RESTART             "Restart Winamp?"
-    IDS_RESTART_MESSAGE     "Would you like to restart Winamp now to apply this settings change?\nChoose 'No' to apply this setting the next time Winamp is restarted."
+    IDS_RESTART             "Restart WinLAMP?"
+    IDS_RESTART_MESSAGE     "Would you like to restart WinLAMP now to apply this settings change?\nChoose 'No' to apply this setting the next time WinLAMP is restarted."
     IDS_COL_NORMAL          "Resize only the selected column (default Windows behavior)"
     IDS_COL_SELONLY         "Resize column and adjust adjacent column"
     IDS_COL_PROP            "Resize column and adjust all columns proportionately"

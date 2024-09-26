@@ -1,7 +1,7 @@
 /**
  * glowobject.m
  *
- * @package	com.winamp.maki.lib.community.glowobject
+ * @package	com.winlamp.maki.lib.community.glowobject
  * @author	mpdeimos
  * @date	18/10/01
  * @version	1.0

@@ -1,6 +1,6 @@
 #include "main.h"
 #include "Metadata.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "../nu/ns_wc.h"
 #include "uvox_3901.h"
 #include "uvox_3902.h"
@@ -40,7 +40,7 @@ void UpdateFileTimeChanged(const wchar_t *fn)
 Metadata *m_ext_set_mp3info = NULL;
 Metadata *m_ext_get_mp3info = NULL;
 extern "C" __declspec(dllexport)
-int winampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, size_t destlen)
+int winlampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, size_t destlen)
 {
 	if (!_stricmp(data, "type"))
 	{
@@ -255,7 +255,7 @@ int winampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *des
 }
 
 extern "C"
-	__declspec(dllexport) int winampSetExtendedFileInfoW(const wchar_t *fn, const char *data, const wchar_t *val)
+	__declspec(dllexport) int winlampSetExtendedFileInfoW(const wchar_t *fn, const char *data, const wchar_t *val)
 {
 	if (!m_ext_set_mp3info || (m_ext_set_mp3info && !m_ext_set_mp3info->IsMe(fn)))
 	{
@@ -267,7 +267,7 @@ extern "C"
 }
 
 extern "C"
-	__declspec(dllexport) int winampWriteExtendedFileInfo()
+	__declspec(dllexport) int winlampWriteExtendedFileInfo()
 {
 	// flush our read cache too :)
 	if(m_ext_get_mp3info) m_ext_get_mp3info->Release();
@@ -294,7 +294,7 @@ extern "C"
 }
 
 extern "C" __declspec(dllexport)
-	int winampClearExtendedFileInfoW(const wchar_t *fn)
+	int winlampClearExtendedFileInfoW(const wchar_t *fn)
 {
 	Metadata meta;
 	if (meta.Open(fn)==METADATA_SUCCESS)

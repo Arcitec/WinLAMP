@@ -76,10 +76,10 @@ static void enumProc(intptr_t user_data, const char *desc, int fourcc)
 	((FormatList *)user_data)->push_back(new EncodableFormat((unsigned int)fourcc,AutoWide(desc)));
 }
 
-static void BuildEncodableFormatsList(FormatList &list, HWND winampWindow, Device *device) 
+static void BuildEncodableFormatsList(FormatList &list, HWND winlampWindow, Device *device) 
 {
 	converterEnumFmtStruct e = {enumProc,(intptr_t)&list};
-	SendMessage(winampWindow,WM_WA_IPC,(WPARAM)&e,IPC_CONVERT_CONFIG_ENUMFMTS);
+	SendMessage(winlampWindow,WM_WA_IPC,(WPARAM)&e,IPC_CONVERT_CONFIG_ENUMFMTS);
 
 	// filter out unacceptable formats
 	int i = list.size();
@@ -102,8 +102,8 @@ void TranscoderImp::quit() {
 	DeleteCriticalSection(&csTranscoder);
 }
 
-TranscoderImp::TranscoderImp(HWND winampParent, HINSTANCE hInst, C_Config * config, Device *device)
-: device(device), config(config), winampParent(winampParent), hInst(hInst)
+TranscoderImp::TranscoderImp(HWND winlampParent, HINSTANCE hInst, C_Config * config, Device *device)
+: device(device), config(config), winlampParent(winlampParent), hInst(hInst)
 {
 	EnterCriticalSection(&csTranscoder);
 
@@ -126,7 +126,7 @@ TranscoderImp::TranscoderImp(HWND winampParent, HINSTANCE hInst, C_Config * conf
 	callbackhwnd = CreateDummyWindow();
 	StringCchCopy(inifile, ARRAYSIZE(inifile), config->GetIniFile());
 	WideCharToMultiByteSZ(CP_ACP, 0, inifile, -1, inifileA, MAX_PATH, 0, 0);
-	BuildEncodableFormatsList(formats, winampParent,  device);
+	BuildEncodableFormatsList(formats, winlampParent,  device);
 	LeaveCriticalSection(&csTranscoder);
 }
 
@@ -164,7 +164,7 @@ void TranscoderImp::ReloadConfig()
 	}
 	formats.clear();
 
-	BuildEncodableFormatsList(formats, winampParent, device);
+	BuildEncodableFormatsList(formats, winlampParent, device);
 
 	transratethresh = config->ReadInt(L"forcetranscodingbitrate",250);
 	transrate = !!config->ReadInt(L"transrate",0);
@@ -187,10 +187,10 @@ static bool FileExists(const wchar_t *file)
 	return GetFileAttributesW(file) != INVALID_FILE_ATTRIBUTES;
 }
 
-static int getFileLength(const wchar_t * file, HWND winampParent) { // returns length in seconds
+static int getFileLength(const wchar_t * file, HWND winlampParent) { // returns length in seconds
 	basicFileInfoStructW b={0};
 	b.filename=file;
-	SendMessage(winampParent,WM_WA_IPC,(WPARAM)&b,IPC_GET_BASIC_FILE_INFOW);
+	SendMessage(winlampParent,WM_WA_IPC,(WPARAM)&b,IPC_GET_BASIC_FILE_INFOW);
 	return b.length;
 }
 
@@ -201,8 +201,8 @@ static bool isFileLossless(const wchar_t * file) {
 	return false;
 }
 
-static int getFileBitrate(const wchar_t * file, HWND winampParent) { // returns bitrate in bits per second.
-	int secs = getFileLength(file,winampParent);
+static int getFileBitrate(const wchar_t * file, HWND winlampParent) { // returns bitrate in bits per second.
+	int secs = getFileLength(file,winlampParent);
 	if(!secs) return 0;
 	FILE * f = _wfopen(file,L"rb");
 	int len = 0;
@@ -238,7 +238,7 @@ bool TranscoderImp::StartTranscode(unsigned int destformat, wchar_t *inputFile, 
 	cfs.destformat[6] = mmioFOURCC('I','N','I',' ');
 	cfs.destformat[7] = (intptr_t)inifileA;
 	cfs.error = L"";
-	if(!SendMessage(winampParent,WM_WA_IPC,(WPARAM)&cfs,IPC_CONVERTFILEW)) 
+	if(!SendMessage(winlampParent,WM_WA_IPC,(WPARAM)&cfs,IPC_CONVERTFILEW)) 
 	{
 		if(cfs.error && callback) 
 			callback(callbackContext,cfs.error);
@@ -247,7 +247,7 @@ bool TranscoderImp::StartTranscode(unsigned int destformat, wchar_t *inputFile, 
 	if(!test)
 	{
 		convertSetPriorityW csp = {&cfs,THREAD_PRIORITY_NORMAL};
-		SendMessage(winampParent, WM_WA_IPC, (WPARAM)&csp, IPC_CONVERT_SET_PRIORITYW);
+		SendMessage(winlampParent, WM_WA_IPC, (WPARAM)&csp, IPC_CONVERT_SET_PRIORITYW);
 		TranscodeProgress(0,false);
 	}
 	return true;
@@ -256,7 +256,7 @@ bool TranscoderImp::StartTranscode(unsigned int destformat, wchar_t *inputFile, 
 void TranscoderImp::EndTranscode()
 {
 	cfs.callbackhwnd = NULL;
-	SendMessage(winampParent,WM_WA_IPC,(WPARAM)&cfs,IPC_CONVERTFILE_END);
+	SendMessage(winlampParent,WM_WA_IPC,(WPARAM)&cfs,IPC_CONVERTFILE_END);
 	free(cfs.sourcefile);
 	free(cfs.destfile);
 	ZeroMemory(&cfs,sizeof(convertFileStruct));
@@ -277,7 +277,7 @@ bool TranscoderImp::TestTranscode(wchar_t * file, unsigned int destformat)
 	cfs.destformat[7] = (intptr_t)inifileA;
 	cfs.error = L"";
 
-	int v = SendMessage(winampParent,WM_WA_IPC,(WPARAM)&cfs,IPC_CONVERT_TEST);
+	int v = SendMessage(winlampParent,WM_WA_IPC,(WPARAM)&cfs,IPC_CONVERT_TEST);
 	_wunlink(tempfn);
 	return !!v;
 }
@@ -308,7 +308,7 @@ int TranscoderImp::GetOutputFormat(wchar_t * file, int *bitrate)
 	{
         char buf[100]="128";
         convertConfigItem ccs={fourcc,"bitrate",buf,100, inifileA};
-        SendMessage(winampParent,WM_WA_IPC,(WPARAM)&ccs,IPC_CONVERT_CONFIG_GET_ITEM);
+        SendMessage(winlampParent,WM_WA_IPC,(WPARAM)&ccs,IPC_CONVERT_CONFIG_GET_ITEM);
         int br = atoi(buf)*1000;
         if(bitrate) *bitrate = br;
         return fourcc;
@@ -321,7 +321,7 @@ bool TranscoderImp::ShouldTranscode(wchar_t * file)
 	if(TranscoderDisabled) return false;
 	wchar_t * ext = wcsrchr(file,L'.');
 	if(ext && FormatAcceptable(&ext[1])) {
-		if(transrate && getFileBitrate(file,winampParent) > 1000*transratethresh) 
+		if(transrate && getFileBitrate(file,winlampParent) > 1000*transratethresh) 
 			return true;
 		else if (translossless && isFileLossless(file)) 
 			return true;
@@ -340,13 +340,13 @@ int TranscoderImp::CanTranscode(wchar_t * file, wchar_t * ext, int length)
 			ext[0]=L'.'; ext[1]=0;
 			char extA[8]=".";
 			convertConfigItem c = {fmt,"extension",&extA[1],6,AutoCharDup(config->GetIniFile())};
-			SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&c,IPC_CONVERT_CONFIG_GET_ITEM);
+			SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&c,IPC_CONVERT_CONFIG_GET_ITEM);
 			if(extA[1]) wcsncpy(ext,AutoWide(extA), 10);
 			else fourccToString(fmt,&ext[1]);
 			free(c.configfile);
 		}
 		if (length <= 0)
-			length = getFileLength(file,winampParent);
+			length = getFileLength(file,winlampParent);
 		return (bitrate/8) * length;  // should transcode
 	}
 	return -1; // transcoding impossible
@@ -397,7 +397,7 @@ struct ConfigTranscoderParam
 {
 	ConfigTranscoderParam()
 	{
-		winampParent=0;
+		winlampParent=0;
 		configfile=0;
 		memset(&ccs, 0, sizeof(ccs));
 		config=0;
@@ -417,7 +417,7 @@ struct ConfigTranscoderParam
 		free((char*)ccs.extra_data[7]);
 		free(configfile);
 	}
-	HWND winampParent;
+	HWND winlampParent;
 	wchar_t *configfile;
 	FormatList list;
 	convertConfigStruct ccs;
@@ -464,7 +464,7 @@ BOOL TranscoderImp::transcodeconfig_dlgproc(HWND hwndDlg, UINT uMsg, WPARAM wPar
 			p = (ConfigTranscoderParam *)lParam;
 			if(p->config->ReadInt(L"enableTranscoder",1)) CheckDlgButton(hwndDlg,IDC_ENABLETRANSCODER,BST_CHECKED);
 
-			BuildEncodableFormatsList(p->list, p->winampParent,  p->dev);
+			BuildEncodableFormatsList(p->list, p->winlampParent,  p->dev);
 			p->ccs.hwndParent = hwndDlg;
 
 			int encdef = p->config->ReadInt(L"lastusedencoder",0);
@@ -482,7 +482,7 @@ BOOL TranscoderImp::transcodeconfig_dlgproc(HWND hwndDlg, UINT uMsg, WPARAM wPar
 			}
 
 			p->ccs.hwndParent = hwndDlg;
-			HWND h = (HWND)SendMessage(p->winampParent, WM_WA_IPC, (WPARAM)&p->ccs, IPC_CONVERT_CONFIG);
+			HWND h = (HWND)SendMessage(p->winlampParent, WM_WA_IPC, (WPARAM)&p->ccs, IPC_CONVERT_CONFIG);
 			doConfigResizeChild(hwndDlg, h);
 		}
 		break;
@@ -500,11 +500,11 @@ BOOL TranscoderImp::transcodeconfig_dlgproc(HWND hwndDlg, UINT uMsg, WPARAM wPar
 						int sel = SendDlgItemMessage(hwndDlg, IDC_ENCFORMAT, CB_GETCURSEL, 0, 0);
 						if (sel != CB_ERR) 
 						{
-							SendMessage(p->winampParent, WM_WA_IPC, (WPARAM)&p->ccs, IPC_CONVERT_CONFIG_END);
+							SendMessage(p->winlampParent, WM_WA_IPC, (WPARAM)&p->ccs, IPC_CONVERT_CONFIG_END);
 							EncodableFormat * f = (EncodableFormat *)SendDlgItemMessage(hwndDlg, IDC_ENCFORMAT, CB_GETITEMDATA, sel, 0);
 							p->ccs.format = f->fourcc;
 
-							HWND h = (HWND)SendMessage(p->winampParent, WM_WA_IPC, (WPARAM)&p->ccs, IPC_CONVERT_CONFIG);
+							HWND h = (HWND)SendMessage(p->winlampParent, WM_WA_IPC, (WPARAM)&p->ccs, IPC_CONVERT_CONFIG);
 							doConfigResizeChild(hwndDlg, h);
 							p->config->WriteInt(L"lastusedencoder",p->ccs.format);
 						}
@@ -515,7 +515,7 @@ BOOL TranscoderImp::transcodeconfig_dlgproc(HWND hwndDlg, UINT uMsg, WPARAM wPar
 		case WM_DESTROY:
 		{
 			p->config->WriteInt(L"lastusedencoder",p->ccs.format);
-			SendMessage(p->winampParent, WM_WA_IPC, (WPARAM)&p->ccs, IPC_CONVERT_CONFIG_END);
+			SendMessage(p->winlampParent, WM_WA_IPC, (WPARAM)&p->ccs, IPC_CONVERT_CONFIG_END);
 			delete p;
 
 			for( TranscoderImp *l_transcoder : transcoders )
@@ -526,11 +526,11 @@ BOOL TranscoderImp::transcodeconfig_dlgproc(HWND hwndDlg, UINT uMsg, WPARAM wPar
 	return 0;
 }
 
-void* TranscoderImp::ConfigureTranscoder(wchar_t * configProfile, HWND winampParent, C_Config * config, Device *dev)
+void* TranscoderImp::ConfigureTranscoder(wchar_t * configProfile, HWND winlampParent, C_Config * config, Device *dev)
 {
 	ConfigTranscoderParam * p = new ConfigTranscoderParam;
 	p->config = config;
-	p->winampParent=winampParent;
+	p->winlampParent=winlampParent;
 	p->configfile=_wcsdup(config->GetIniFile());
 	p->ccs.extra_data[6] = mmioFOURCC('I','N','I',' ');
 	p->ccs.extra_data[7] = (int)AutoCharDup(p->configfile);

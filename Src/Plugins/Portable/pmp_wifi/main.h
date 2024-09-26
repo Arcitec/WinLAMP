@@ -1,13 +1,13 @@
 #pragma once
 #include "../../Library/ml_pmp/pmp.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <bfc/platform/types.h>
 #include "modelInfo.h"
 extern PMPDevicePlugin plugin;
-extern int winampVersion;
-extern GUID winamp_id;
-extern char winamp_id_str[40];
-extern char winamp_name[260];
+extern int winlampVersion;
+extern GUID winlamp_id;
+extern char winlamp_id_str[40];
+extern char winlamp_name[260];
 extern wchar_t inifile[MAX_PATH];
 void StopListenServer();
 BOOL FormatResProtocol(const wchar_t *resourceName, const wchar_t *resourceType, wchar_t *buffer, size_t bufferMax);

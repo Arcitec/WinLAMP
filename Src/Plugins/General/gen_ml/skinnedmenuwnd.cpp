@@ -8,7 +8,7 @@
 #include "./colors.h"
 #include "./resource.h"
 
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 
 
 #define MENU_BORDER_WIDTH	3

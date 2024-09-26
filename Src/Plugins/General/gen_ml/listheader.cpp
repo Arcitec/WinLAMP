@@ -1,7 +1,7 @@
 #include "main.h"
 #include <windowsx.h>
 #include "config.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 
 static int m_column_resize=0; //0=normal, 1=selected item only, 2=proportional
 

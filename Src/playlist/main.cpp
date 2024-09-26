@@ -4,7 +4,7 @@
 #include "factory_Handler.h"
 #include "factory_playlistmanager.h"
 #include "factory_playlists.h"
-#include "../Winamp/api_random.h"
+#include "../WinLAMP/api_random.h"
 #include "Playlists.h"
 #include "plstring.h"
 #include "ScriptObjectFactory.h"
@@ -120,7 +120,7 @@ void PlaylistComponent::DeregisterServices( api_service *service )
 	ReleaseService( AnonymousStatsGUID,        AGAVE_API_STATS );
 }
 
-extern "C" __declspec(dllexport) ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" __declspec(dllexport) ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &playlistComponent;
 }

@@ -27,7 +27,7 @@ static char *fire_texts[]={
   "Nullsoft 2003-8",
   "",
   "greets to",
-  "winamp forums",
+  "winlamp forums",
   "#nullsoft",
   "britney spears",
   "p.s.",

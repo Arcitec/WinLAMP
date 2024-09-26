@@ -231,7 +231,7 @@ extern "C"
 {
 	//returns handle!=0 if successful, 0 if error
 	//size will return the final nb of bytes written to the output, -1 if unknown
-	__declspec(dllexport) intptr_t winampGetExtendedRead_openW(const wchar_t *fn, int *size, int *bps, int *nch, int *srate)
+	__declspec(dllexport) intptr_t winlampGetExtendedRead_openW(const wchar_t *fn, int *size, int *bps, int *nch, int *srate)
 	{
 		ExtendedRead *ext = new ExtendedRead;
 		if (ext)
@@ -243,7 +243,7 @@ extern "C"
 		return 0;
 	}
 
-	__declspec(dllexport) intptr_t winampGetExtendedRead_openW_float(const wchar_t *fn, int *size, int *bps, int *nch, int *srate)
+	__declspec(dllexport) intptr_t winlampGetExtendedRead_openW_float(const wchar_t *fn, int *size, int *bps, int *nch, int *srate)
 	{
 		ExtendedRead *ext = new ExtendedRead;
 		if (ext)
@@ -256,7 +256,7 @@ extern "C"
 	}
 
 	//returns nb of bytes read. -1 if read error (like CD ejected). if (ret==0), EOF is assumed
-	__declspec(dllexport) size_t winampGetExtendedRead_getData(intptr_t handle, char *dest, size_t len, int *killswitch)
+	__declspec(dllexport) size_t winlampGetExtendedRead_getData(intptr_t handle, char *dest, size_t len, int *killswitch)
 	{
 		ExtendedRead *ext = (ExtendedRead *)handle;
 		int copied = 0;
@@ -295,7 +295,7 @@ extern "C"
 	}
 
 	// return nonzero on success, zero on failure.
-	__declspec(dllexport) int winampGetExtendedRead_setTime(intptr_t handle, int millisecs)
+	__declspec(dllexport) int winlampGetExtendedRead_setTime(intptr_t handle, int millisecs)
 	{
 		ExtendedRead *ext = (ExtendedRead *)handle;
 		if (ext)
@@ -315,7 +315,7 @@ extern "C"
 		return 0;
 	}
 
-	__declspec(dllexport) void winampGetExtendedRead_close(intptr_t handle)
+	__declspec(dllexport) void winlampGetExtendedRead_close(intptr_t handle)
 	{
 		ExtendedRead *ext = (ExtendedRead *)handle;
 		if (ext) delete ext;

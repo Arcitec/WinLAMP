@@ -18,7 +18,7 @@ CFG=in_dshow - Win32 Release
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
 !MESSAGE "in_dshow - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "in_dshow - Win32 Debug Winamp" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "in_dshow - Win32 Debug WinLAMP" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
@@ -53,25 +53,25 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ../dshow/strmbase.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib winmm.lib wsock32.lib ../dshow/strmiids.lib /nologo /dll /machine:I386 /out:"$(ProgramFiles)\winamp\plugins\in_dshow.dll" /opt:nowin98
+# ADD LINK32 ../dshow/strmbase.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib winmm.lib wsock32.lib ../dshow/strmiids.lib /nologo /dll /machine:I386 /out:"$(ProgramFiles)\winlamp\plugins\in_dshow.dll" /opt:nowin98
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "in_dshow - Win32 Debug Winamp"
+!ELSEIF  "$(CFG)" == "in_dshow - Win32 Debug WinLAMP"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "in_dshow___Win32_Debug_Winamp"
-# PROP BASE Intermediate_Dir "in_dshow___Win32_Debug_Winamp"
+# PROP BASE Output_Dir "in_dshow___Win32_Debug_WinLAMP"
+# PROP BASE Intermediate_Dir "in_dshow___Win32_Debug_WinLAMP"
 # PROP BASE Ignore_Export_Lib 0
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "in_dshow___Win32_Debug_Winamp"
-# PROP Intermediate_Dir "in_dshow___Win32_Debug_Winamp"
+# PROP Output_Dir "in_dshow___Win32_Debug_WinLAMP"
+# PROP Intermediate_Dir "in_dshow___Win32_Debug_WinLAMP"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /I "../dshow/dshow" /I "../dshow/include" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "in_dshow_EXPORTS" /D "USE_ASM" /D "NO_LAYER12" /D "DLL_DECODER_SUPPORT" /D "BUILTIN_MP3_SUPPORT" /D "BUILTIN_VP3_SUPPORT" /YX /FD /GZ /c
-# ADD CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /I "../dshow/dshow" /I "../dshow/include" /I "../WinAmpX" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "in_dshow_EXPORTS" /D "USE_ASM" /D "NO_LAYER12" /D "DLL_DECODER_SUPPORT" /D "BUILTIN_MP3_SUPPORT" /D "BUILTIN_VP3_SUPPORT" /YX /FD /GZ /c
+# ADD CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /I "../dshow/dshow" /I "../dshow/include" /I "../WinLAMPX" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "in_dshow_EXPORTS" /D "USE_ASM" /D "NO_LAYER12" /D "DLL_DECODER_SUPPORT" /D "BUILTIN_MP3_SUPPORT" /D "BUILTIN_VP3_SUPPORT" /YX /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -80,15 +80,15 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 ../dshow/strmbasd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib winmm.lib wsock32.lib ../dshow/strmiids.lib /nologo /dll /debug /machine:I386 /out:"c:\progra~1\winamp\plugins\in_dshow.dll" /pdbtype:sept
-# ADD LINK32 ../dshow/strmbasd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib winmm.lib wsock32.lib ../dshow/strmiids.lib /nologo /dll /debug /machine:I386 /out:"C:/Program Files/Winamp/Plugins/in_dshow.dll" /pdbtype:sept
+# ADD BASE LINK32 ../dshow/strmbasd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib winmm.lib wsock32.lib ../dshow/strmiids.lib /nologo /dll /debug /machine:I386 /out:"c:\progra~1\winlamp\plugins\in_dshow.dll" /pdbtype:sept
+# ADD LINK32 ../dshow/strmbasd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib winmm.lib wsock32.lib ../dshow/strmiids.lib /nologo /dll /debug /machine:I386 /out:"C:/Program Files/WinLAMP/Plugins/in_dshow.dll" /pdbtype:sept
 
 !ENDIF 
 
 # Begin Target
 
 # Name "in_dshow - Win32 Release"
-# Name "in_dshow - Win32 Debug Winamp"
+# Name "in_dshow - Win32 Debug WinLAMP"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"

@@ -24,7 +24,7 @@ protected:
     AudioCoder* (*CreateAudio3)(int nch, int srate, int bps, unsigned int srct, unsigned int *outt, char *configfile);
     int (*GetAudioTypes3)(int idx, char *desc);
     HWND (*ConfigAudio3)(HWND hwndParent, HINSTANCE hinst, unsigned int outt, char *configfile);
-	void (*SetWinampHWND)(HWND hwnd);
+	void (*SetWinLAMPHWND)(HWND hwnd);
 	int (*SetConfigItem)(unsigned int outt, char *item, char *data, char *configfile);
 	int (*GetConfigItem)(unsigned int outt, char *item, char *data, int len, char *configfile);
     /* We don't need the rest of the exports
@@ -44,13 +44,13 @@ protected:
     // child classes MUST call this in their constructor
 	// note: encoderNum defaults to 0 which resolves to the first encoder
 	//       in most enc_* but make sure to set this correctly for others
-    virtual void SetEncoder(void * CreateAudio3, void * GetAudioTypes3, void * ConfigAudio3, void * SetWinampHWND, int encoderNum=0);
+    virtual void SetEncoder(void * CreateAudio3, void * GetAudioTypes3, void * ConfigAudio3, void * SetWinLAMPHWND, int encoderNum=0);
 
     // this is used in Configure()
     virtual HINSTANCE GetEncoderInstance()=0;
 
 	// this is used for esternal encoders so they can be correctly localised
-	HWND winampWnd;
+	HWND winlampWnd;
 
 public:
 	C_ENCODER_NSV(int ExtInfoSize = sizeof(T_ENCODER_NSV_INFO));

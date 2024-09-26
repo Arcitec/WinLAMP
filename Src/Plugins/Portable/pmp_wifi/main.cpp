@@ -1,5 +1,5 @@
 #include "../../Library/ml_pmp/pmp.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "device.h"
 #include "api.h"
 #include "main.h"
@@ -9,14 +9,14 @@
 #include <strsafe.h>
 
 #define PLUGIN_VERSION L"1.56"
-int winampVersion = 0;
+int winlampVersion = 0;
 ifc_devicesupportedcommandenum *command_enum=0;
 ifc_devicesupportedcommandstore *command_store=0;
 ifc_deviceeventmanager *device_event_manager;
-char winamp_name[260] = {0};
-char winamp_id_str[40] = {0};
+char winlamp_name[260] = {0};
+char winlamp_id_str[40] = {0};
 wchar_t inifile[MAX_PATH] = {0};
-GUID winamp_id = GUID_NULL;
+GUID winlamp_id = GUID_NULL;
 static int Init();
 static void Quit();
 static intptr_t MessageProc(int msg, intptr_t param1, intptr_t param2, intptr_t param3);
@@ -181,25 +181,25 @@ static AttachCommand attach_command;
 static WifiDeviceConnection wifi_connection;
 static int Init() 
 {
-	winampVersion = (int)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETVERSION);
+	winlampVersion = (int)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETVERSION);
 	WasabiInit();
 
 	if (!AGAVE_API_DEVICEMANAGER)
 		return 1;
-	WASABI_API_APP->GetUserID(&winamp_id);
-	StringCbPrintfA(winamp_id_str, sizeof(winamp_id_str), "%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X", (int)winamp_id.Data1, (int)winamp_id.Data2, (int)winamp_id.Data3, (int)winamp_id.Data4[0], (int)winamp_id.Data4[1], (int)winamp_id.Data4[2], (int)winamp_id.Data4[3], (int)winamp_id.Data4[4], (int)winamp_id.Data4[5], (int)winamp_id.Data4[6], (int)winamp_id.Data4[7] );
+	WASABI_API_APP->GetUserID(&winlamp_id);
+	StringCbPrintfA(winlamp_id_str, sizeof(winlamp_id_str), "%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X", (int)winlamp_id.Data1, (int)winlamp_id.Data2, (int)winlamp_id.Data3, (int)winlamp_id.Data4[0], (int)winlamp_id.Data4[1], (int)winlamp_id.Data4[2], (int)winlamp_id.Data4[3], (int)winlamp_id.Data4[4], (int)winlamp_id.Data4[5], (int)winlamp_id.Data4[6], (int)winlamp_id.Data4[7] );
 	 
 	wchar_t user_name[128] = {0};
 	wchar_t computer_name[128] = {0};
 	DWORD buffer_size_user = 128, buffer_size_computer=128;
 	if (GetUserNameW(user_name, &buffer_size_user) && GetComputerNameW(computer_name, &buffer_size_computer))
 	{
-		wchar_t winamp_name_utf16[260] = {0};
-		StringCbPrintfW(winamp_name_utf16, sizeof(winamp_name_utf16), L"%s (%s)", user_name, computer_name);
-		WideCharToMultiByteSZ(CP_UTF8, 0, winamp_name_utf16, -1, winamp_name, sizeof(winamp_name), 0, 0);
+		wchar_t winlamp_name_utf16[260] = {0};
+		StringCbPrintfW(winlamp_name_utf16, sizeof(winlamp_name_utf16), L"%s (%s)", user_name, computer_name);
+		WideCharToMultiByteSZ(CP_UTF8, 0, winlamp_name_utf16, -1, winlamp_name, sizeof(winlamp_name), 0, 0);
 	}
 	else
-		StringCbCopyA(winamp_name, sizeof(winamp_name), "Winamp");
+		StringCbCopyA(winlamp_name, sizeof(winlamp_name), "WinLAMP");
 
 	const wchar_t *settings_path = WASABI_API_APP->path_getUserSettingsPath();
 	PathCombineW(inifile, settings_path, L"Plugins\\ml\\pmp_wifi.ini");
@@ -257,7 +257,7 @@ static intptr_t MessageProc(int msg, intptr_t param1, intptr_t param2, intptr_t 
 	return 0;
 }
 
-extern "C" 	__declspec(dllexport) PMPDevicePlugin *winampGetPMPDevicePlugin()
+extern "C" 	__declspec(dllexport) PMPDevicePlugin *winlampGetPMPDevicePlugin()
 {
 	return &plugin;
 }

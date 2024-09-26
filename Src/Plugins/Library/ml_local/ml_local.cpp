@@ -166,7 +166,7 @@ void TAG_FMT_EXT(const wchar_t *filename, void *f, void *ff, void *p, wchar_t *o
 
 	int oldCallingGetFileInfo = m_calling_getfileinfo;
 	m_calling_getfileinfo = 1;
-	SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&fmt, IPC_FORMAT_TITLE_EXTENDED);
+	SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&fmt, IPC_FORMAT_TITLE_EXTENDED);
 	m_calling_getfileinfo = oldCallingGetFileInfo;
 }
 
@@ -174,7 +174,7 @@ void main_playItemRecordList(itemRecordListW *obj, int enqueue, int startplaying
 {
 	assert(enqueue != -1); // benski> i'm pretty sure this isn't used anymore
 	if (obj->Size && !enqueue)
-		SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_DELETE);
+		SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_DELETE);
 
 	int x;
 	for (x = 0; x < obj->Size; x ++)
@@ -191,14 +191,14 @@ void main_playItemRecordList(itemRecordListW *obj, int enqueue, int startplaying
 			s.length   = obj->Items[x].length;
 #ifndef _DEBUG
 			ndestring_retain(obj->Items[x].filename);
-			SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW_NDE);
+			SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW_NDE);
 #else
-			SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
+			SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
 #endif
 		}
 	}
 
-	if (obj->Size && !enqueue && startplaying) SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_STARTPLAY);
+	if (obj->Size && !enqueue && startplaying) SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_STARTPLAY);
 }
 
 void main_playQuery(C_Config *viewconf, const wchar_t *query, int enqueue, int startplaying)
@@ -717,10 +717,10 @@ HWND onTreeViewSelectChange(HWND hwnd)
 
 void add_pledit_to_library()
 {
-	SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_WRITEPLAYLIST);
-	wchar_t *m3udir = (wchar_t *) SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETM3UDIRECTORYW);
+	SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_WRITEPLAYLIST);
+	wchar_t *m3udir = (wchar_t *) SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETM3UDIRECTORYW);
 	wchar_t filename[MAX_PATH] = {0};
-	PathCombineW(filename, m3udir, L"winamp.m3u8");
+	PathCombineW(filename, m3udir, L"winlamp.m3u8");
 
 	PLCallBackW plCB;
 	if (AGAVE_API_PLAYLISTMANAGER && PLAYLISTMANAGER_SUCCESS != AGAVE_API_PLAYLISTMANAGER->Load(filename, &plCB))
@@ -1199,7 +1199,7 @@ int openDb()
 
 		g_config->WriteInt(REINDEX_KEY, 2);
 
-		PostMessage(plugin.hwndWinampParent, WM_WA_IPC, NDE_Table_GetRecordsCount(g_table), IPC_STATS_LIBRARY_ITEMCNT);
+		PostMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, NDE_Table_GetRecordsCount(g_table), IPC_STATS_LIBRARY_ITEMCNT);
 	}
 
 	LeaveCriticalSection(&g_db_cs);
@@ -1233,7 +1233,7 @@ void closeDb()
 	g_table = NULL;
 }
 
-LPCWSTR       WINAMP_INI    = NULL;
+LPCWSTR       WINLAMP_INI    = NULL;
 WNDPROC       ml_oldWndProc = NULL;
 LARGE_INTEGER freq;
 
@@ -1245,14 +1245,14 @@ int init()
 	g_db                 = NULL;
 	g_bgscan_last_rescan = time( NULL );
 
-	LPCWSTR dir = (LPCWSTR )SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETINIDIRECTORYW);
+	LPCWSTR dir = (LPCWSTR )SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETINIDIRECTORYW);
 	if ( (INT_PTR)( dir ) < 65536 )
 		return 1;
 
 	PathCombineW(g_path, dir, L"Plugins");
 	CreateDirectoryW(g_path, NULL);
 
-	WINAMP_INI = (LPCWSTR)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETINIFILEW);
+	WINLAMP_INI = (LPCWSTR)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETINIFILEW);
 
 	wchar_t configName[MAX_PATH] = {0};
 	PathCombineW(configName, g_path, L"gen_ml.ini");
@@ -1280,19 +1280,19 @@ int init()
 		g_config->WriteInt(L"artdbmig", 1);
 	}
 
-	wa_oldWndProc = (WNDPROC) SetWindowLongPtrW(plugin.hwndWinampParent, GWLP_WNDPROC, (LONG_PTR)wa_newWndProc);
+	wa_oldWndProc = (WNDPROC) SetWindowLongPtrW(plugin.hwndWinLAMPParent, GWLP_WNDPROC, (LONG_PTR)wa_newWndProc);
 
 	if ( g_bgrescan_force || g_config->ReadInt( L"dbloadatstart", 1 ) )
 		openDb();
 
-	HMENU wa_plcontext_menu = GetSubMenu((HMENU)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)-1, IPC_GET_HMENU), 2);
+	HMENU wa_plcontext_menu = GetSubMenu((HMENU)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)-1, IPC_GET_HMENU), 2);
 	if ( wa_plcontext_menu )
 		wa_playlists_cmdmenu = GetSubMenu( wa_plcontext_menu, 4 );
 
-	wa_play_menu = GetSubMenu((HMENU)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)0, IPC_GET_HMENU), 2);
+	wa_play_menu = GetSubMenu((HMENU)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)0, IPC_GET_HMENU), 2);
 
 	// lets extend menu that called on button press
-	IPC_GET_ML_HMENU = (int)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"LibraryGetHmenu", IPC_REGISTER_WINAMP_IPCMESSAGE);
+	IPC_GET_ML_HMENU = (int)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"LibraryGetHmenu", IPC_REGISTER_WINLAMP_IPCMESSAGE);
 	g_context_menus  = WASABI_API_LOADMENU(IDR_CONTEXTMENUS);
 	g_context_menus2 = WASABI_API_LOADMENU(IDR_CONTEXTMENUS);
 
@@ -1303,7 +1303,7 @@ int init()
 	ConvertRatingMenuStar(rate_hmenu, ID_RATE_2);
 	ConvertRatingMenuStar(rate_hmenu, ID_RATE_1);
 
-	HMENU context_menu = (HMENU) SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_ML_HMENU);
+	HMENU context_menu = (HMENU) SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_ML_HMENU);
 
 	if (context_menu)
 	{
@@ -1347,8 +1347,8 @@ int init()
 		}
 	}
 
-	IPC_GET_CLOUD_HINST  = (INT)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"WinampCloud", IPC_REGISTER_WINAMP_IPCMESSAGE);
-	IPC_GET_CLOUD_ACTIVE = (INT)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"WinampCloudActive", IPC_REGISTER_WINAMP_IPCMESSAGE);
+	IPC_GET_CLOUD_HINST  = (INT)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"WinLAMPCloud", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	IPC_GET_CLOUD_ACTIVE = (INT)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"WinLAMPCloudActive", IPC_REGISTER_WINLAMP_IPCMESSAGE);
 
 	ml_oldWndProc = (WNDPROC) SetWindowLongPtrW(plugin.hwndLibraryParent, GWLP_WNDPROC, (LONG_PTR)ml_newWndProc);
 

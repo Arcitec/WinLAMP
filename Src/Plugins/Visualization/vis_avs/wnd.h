@@ -27,10 +27,10 @@ IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISI
 OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
-int Wnd_Init(struct winampVisModule *this_mod);
+int Wnd_Init(struct winlampVisModule *this_mod);
 void Wnd_Quit(void);
 void SetTransparency(HWND hWnd, int enable, int amount);
-HWND GetWinampHwnd(void);
+HWND GetWinLAMPHwnd(void);
 void about(HWND hwndParent);
 
 extern HWND g_hwnd;

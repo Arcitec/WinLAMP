@@ -5,8 +5,8 @@
 #include "../../General/gen_ml/ml.h"
 #include "resource.h"
 #include "main.h"
-#include "../winamp/wa_ipc.h"
-#include "../winamp/ipc_pe.h"
+#include "../winlamp/wa_ipc.h"
+#include "../winlamp/ipc_pe.h"
 #include "../nu/MediaLibraryInterface.h"
 #include "../nu/AutoChar.h"
 #include "../nu/ns_wc.h"
@@ -55,7 +55,7 @@ public:
 
 static MLDBWatcher mldbWatcher;
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 
 template <class api_T>
 void ServiceBuild(api_T *&api_t, GUID factoryGUID_t)
@@ -80,7 +80,7 @@ void ServiceRelease(api_T *&api_t, GUID factoryGUID_t)
 	api_t = NULL;
 }
 
-static HWND winampPlaylist;
+static HWND winlampPlaylist;
 
 static int ML_IPC_MENUFUCKER_BUILD;
 static int ML_IPC_MENUFUCKER_RESULT;
@@ -109,7 +109,7 @@ void WriteIntToIni(const char *key, const int value)
 {
 	char buf[32] = {0};
 	_itoa(value, buf, 10);
-	WritePrivateProfileStringA("ml_plg", key, buf, mediaLibrary.GetWinampIni());
+	WritePrivateProfileStringA("ml_plg", key, buf, mediaLibrary.GetWinLAMPIni());
 }
 
 // BE CAREFULL! Using this could potentially internationalize floats on some versions of windows eg. '1,6' instead of '1.6'
@@ -117,13 +117,13 @@ void WriteFloatToIni(const char *key, const float value)
 {
 	char buf[32] = {0};
 	StringCchPrintfA(buf, 32, "%.2f", value);
-	WritePrivateProfileStringA("ml_plg", key, buf, mediaLibrary.GetWinampIni());
+	WritePrivateProfileStringA("ml_plg", key, buf, mediaLibrary.GetWinLAMPIni());
 }
 
 int Init()
 {
 	mediaLibrary.library = plugin.hwndLibraryParent;
-	mediaLibrary.winamp = plugin.hwndWinampParent;
+	mediaLibrary.winlamp = plugin.hwndWinLAMPParent;
 	mediaLibrary.instance = plugin.hDllInstance;
 
 	ServiceBuild(WASABI_API_SYSCB, syscbApiServiceGuid);
@@ -154,35 +154,35 @@ int Init()
 	// need to have this initialised before we try to do anything with localisation features
 	WASABI_API_START_LANG(plugin.hDllInstance,MlPlgLangGUID);
 
-	ML_IPC_MENUFUCKER_BUILD = (int)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"menufucker_build", IPC_REGISTER_WINAMP_IPCMESSAGE);
-	ML_IPC_MENUFUCKER_RESULT = (int)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"menufucker_result", IPC_REGISTER_WINAMP_IPCMESSAGE);
+	ML_IPC_MENUFUCKER_BUILD = (int)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"menufucker_build", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	ML_IPC_MENUFUCKER_RESULT = (int)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"menufucker_result", IPC_REGISTER_WINLAMP_IPCMESSAGE);
 
-	winampPlaylist = (HWND)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,IPC_GETWND_PE,IPC_GETWND);
+	winlampPlaylist = (HWND)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,IPC_GETWND_PE,IPC_GETWND);
 
 	static wchar_t szDescription[256];
 	StringCchPrintf(szDescription, ARRAYSIZE(szDescription),
 					WASABI_API_LNGSTRINGW(IDS_NULLSOFT_PLAYLIST_GENERATOR), PLUGIN_VER);
 	plugin.description = (char*)szDescription;
 
-	// Load variables from winamp.ini
-	scanMode = GetPrivateProfileInt(L"ml_plg", L"scanmode", 0, mediaLibrary.GetWinampIniW());
-	pluginEnabled = GetPrivateProfileInt(L"ml_plg", L"enable", 1, mediaLibrary.GetWinampIniW())!=0;
-	multipleArtists = GetPrivateProfileInt(L"ml_plg", L"multipleArtists", multipleArtists, mediaLibrary.GetWinampIniW());
-	multipleAlbums = GetPrivateProfileInt(L"ml_plg", L"multipleAlbums", multipleAlbums, mediaLibrary.GetWinampIniW());
+	// Load variables from winlamp.ini
+	scanMode = GetPrivateProfileInt(L"ml_plg", L"scanmode", 0, mediaLibrary.GetWinLAMPIniW());
+	pluginEnabled = GetPrivateProfileInt(L"ml_plg", L"enable", 1, mediaLibrary.GetWinLAMPIniW())!=0;
+	multipleArtists = GetPrivateProfileInt(L"ml_plg", L"multipleArtists", multipleArtists, mediaLibrary.GetWinLAMPIniW());
+	multipleAlbums = GetPrivateProfileInt(L"ml_plg", L"multipleAlbums", multipleAlbums, mediaLibrary.GetWinLAMPIniW());
 	
-	plLengthType = GetPrivateProfileInt(L"ml_plg", L"plLengthType", plLengthType, mediaLibrary.GetWinampIniW());
-	plItems = GetPrivateProfileInt(L"ml_plg", L"plItems", plItems, mediaLibrary.GetWinampIniW());
-	plMinutes = GetPrivateProfileInt(L"ml_plg", L"plMinutes", plMinutes, mediaLibrary.GetWinampIniW());
-	plMegabytes = GetPrivateProfileInt(L"ml_plg", L"plMegabytes", plMegabytes, mediaLibrary.GetWinampIniW());
-	useSeed = GetPrivateProfileInt(L"ml_plg", L"useSeed", useSeed, mediaLibrary.GetWinampIniW());
-	useMLQuery = GetPrivateProfileInt(L"ml_plg", L"useMLQuery", useMLQuery, mediaLibrary.GetWinampIniW());
+	plLengthType = GetPrivateProfileInt(L"ml_plg", L"plLengthType", plLengthType, mediaLibrary.GetWinLAMPIniW());
+	plItems = GetPrivateProfileInt(L"ml_plg", L"plItems", plItems, mediaLibrary.GetWinLAMPIniW());
+	plMinutes = GetPrivateProfileInt(L"ml_plg", L"plMinutes", plMinutes, mediaLibrary.GetWinLAMPIniW());
+	plMegabytes = GetPrivateProfileInt(L"ml_plg", L"plMegabytes", plMegabytes, mediaLibrary.GetWinLAMPIniW());
+	useSeed = GetPrivateProfileInt(L"ml_plg", L"useSeed", useSeed, mediaLibrary.GetWinLAMPIniW());
+	useMLQuery = GetPrivateProfileInt(L"ml_plg", L"useMLQuery", useMLQuery, mediaLibrary.GetWinLAMPIniW());
 		
 	char temp[MAX_ML_QUERY_SIZE] = {0};
-	GetPrivateProfileStringA("ml_plg", "mlQuery", DEFAULT_ML_QUERY, temp, sizeof(temp), mediaLibrary.GetWinampIni());
+	GetPrivateProfileStringA("ml_plg", "mlQuery", DEFAULT_ML_QUERY, temp, sizeof(temp), mediaLibrary.GetWinLAMPIni());
 	MultiByteToWideCharSZ(CP_UTF8, 0, temp, -1, mlQuery, sizeof(mlQuery)/sizeof(mlQuery[0]));
-	//GetPrivateProfileStringA("ml_plg", "forcedRebuildVersion", "", temp, sizeof(temp), mediaLibrary.GetWinampIni());
+	//GetPrivateProfileStringA("ml_plg", "forcedRebuildVersion", "", temp, sizeof(temp), mediaLibrary.GetWinLAMPIni());
 	//forcedRebuildVersion = (float)atof(temp);
-	forcedRebuildVersion = GetPrivateProfileIntA("ml_plg","forcedRebuildVersion", forcedRebuildVersion, mediaLibrary.GetWinampIni());
+	forcedRebuildVersion = GetPrivateProfileIntA("ml_plg","forcedRebuildVersion", forcedRebuildVersion, mediaLibrary.GetWinLAMPIni());
 	
 	// Here we check if the person is upgrading from the old ml_plg, if that value is less than our current version then we need to force a rebuild
 	if (forcedRebuildVersion < FORCED_REBUILD_VERSION/*atof(PLUGIN_VER)*/)		// NOTE: Hard code this to a version if no breaking changes were made
@@ -192,8 +192,8 @@ int Init()
 	}
 	forcedRebuildVersion = FORCED_REBUILD_VERSION;								//(float)atof(PLUGIN_VER);
 
-	if(scanMode == 1)									// If scanmode is set to rescan on winamp launch
-		WASABI_API_CREATEDIALOGPARAMW(IDD_NAG, plugin.hwndWinampParent, BGScanProcedure, 1); // 1 means silent!
+	if(scanMode == 1)									// If scanmode is set to rescan on winlamp launch
+		WASABI_API_CREATEDIALOGPARAMW(IDD_NAG, plugin.hwndWinLAMPParent, BGScanProcedure, 1); // 1 means silent!
 
 	return ML_INIT_SUCCESS;
 }
@@ -283,12 +283,12 @@ int AddSeedTracks(menufucker_t *mf)
 
 	while (position >= 0 && position < count)
 	{
-		wchar_t winamp_title[MAX_TITLE_SIZE] = {0};
+		wchar_t winlamp_title[MAX_TITLE_SIZE] = {0};
 		itemRecordW *item = &mf->extinf.mediaview.items->Items[position];
 		if (item)
 		{
-			GetTitleFormattingML(item->filename, item, winamp_title, MAX_TITLE_SIZE);
-			seedPlaylist.AppendWithInfo(item->filename, winamp_title, item->length * 1000, item->filesize * 1024);
+			GetTitleFormattingML(item->filename, item, winlamp_title, MAX_TITLE_SIZE);
+			seedPlaylist.AppendWithInfo(item->filename, winlamp_title, item->length * 1000, item->filesize * 1024);
 			AGAVE_API_MLDB->FreeRecord(item);
 		}
 		position = ListView_GetNextItem(mf->extinf.mediaview.list, position, LVNI_SELECTED);
@@ -309,9 +309,9 @@ int AddSeedTracksMlPlaylist(menufucker_t *mf)
 		itemRecordW *item = AGAVE_API_MLDB->GetFile(filename);
 		if (item)
 		{
-			wchar_t winamp_title[MAX_TITLE_SIZE] = {0};
-			GetTitleFormattingML(item->filename, item, winamp_title, MAX_TITLE_SIZE);
-			seedPlaylist.AppendWithInfo(item->filename, winamp_title, item->length * 1000, item->filesize * 1024);
+			wchar_t winlamp_title[MAX_TITLE_SIZE] = {0};
+			GetTitleFormattingML(item->filename, item, winlamp_title, MAX_TITLE_SIZE);
+			seedPlaylist.AppendWithInfo(item->filename, winlamp_title, item->length * 1000, item->filesize * 1024);
 			AGAVE_API_MLDB->FreeRecord(item);
 		}
 		position = ListView_GetNextItem(mf->extinf.mlplaylist.list, position, LVNI_SELECTED);
@@ -320,7 +320,7 @@ int AddSeedTracksMlPlaylist(menufucker_t *mf)
 	return true;
 }
 
-// Add tracks from the winamp playlist
+// Add tracks from the winlamp playlist
 int AddSeedTracksPlaylist(menufucker_t *mf, int first_selection)
 {
 	bool isSuccess = true;
@@ -328,17 +328,17 @@ int AddSeedTracksPlaylist(menufucker_t *mf, int first_selection)
 	int position = first_selection;
 	while (position >= 0)
 	{
-		wchar_t winamp_title[MAX_TITLE_SIZE] = {0};
+		wchar_t winlamp_title[MAX_TITLE_SIZE] = {0};
 		fileinfoW inf={0};
 		inf.index = position;
 
-		SendMessage(winampPlaylist,WM_WA_IPC,IPC_PE_GETINDEXINFOW_INPROC,(LPARAM)&inf);
+		SendMessage(winlampPlaylist,WM_WA_IPC,IPC_PE_GETINDEXINFOW_INPROC,(LPARAM)&inf);
 		itemRecordW *item = AGAVE_API_MLDB->GetFile(inf.file);
 
 		if (item)
 		{
-			GetTitleFormattingML(inf.file, item, winamp_title, MAX_TITLE_SIZE);
-			seedPlaylist.AppendWithInfo(item->filename, winamp_title, item->length * 1000, item->filesize * 1024);
+			GetTitleFormattingML(inf.file, item, winlamp_title, MAX_TITLE_SIZE);
+			seedPlaylist.AppendWithInfo(item->filename, winlamp_title, item->length * 1000, item->filesize * 1024);
 			AGAVE_API_MLDB->FreeRecord(item);
 		}
 		else
@@ -346,7 +346,7 @@ int AddSeedTracksPlaylist(menufucker_t *mf, int first_selection)
 			NotInMLWarning(inf.file);			// Popup to warn that its not in the ML
 		}
 
-		position = (int)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, position, IPC_PLAYLIST_GET_NEXT_SELECTED);
+		position = (int)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, position, IPC_PLAYLIST_GET_NEXT_SELECTED);
 	}
 
 	if (seedPlaylist.GetNumItems() == 0)
@@ -362,12 +362,12 @@ int AddSeedTrack(const wchar_t *filename)
 
 	if (filename)
 	{
-		wchar_t winamp_title[MAX_TITLE_SIZE] = {0};
+		wchar_t winlamp_title[MAX_TITLE_SIZE] = {0};
 		itemRecordW *item = AGAVE_API_MLDB->GetFile(filename);
 		if (item)
 		{
-			GetTitleFormattingML(filename, item, winamp_title, MAX_TITLE_SIZE);
-			seedPlaylist.AppendWithInfo(filename, winamp_title, item->length * 1000, item->filesize * 1024);
+			GetTitleFormattingML(filename, item, winlamp_title, MAX_TITLE_SIZE);
+			seedPlaylist.AppendWithInfo(filename, winlamp_title, item->length * 1000, item->filesize * 1024);
 			AGAVE_API_MLDB->FreeRecord(item);
 		}
 		else
@@ -391,7 +391,7 @@ void WriteSettingsToIni(HWND hwndDlg)
 	/*char buf[32] = {0};
 	
 	StringCchPrintfA(buf, 32, "%d", plLengthType);
-	WritePrivateProfileStringA("ml_plg","plLengthType",buf,mediaLibrary.GetWinampIni());*/
+	WritePrivateProfileStringA("ml_plg","plLengthType",buf,mediaLibrary.GetWinLAMPIni());*/
 
 	WriteIntToIni("plLengthType", plLengthType);
 	WriteIntToIni("plItems", plItems);
@@ -406,24 +406,24 @@ void WriteSettingsToIni(HWND hwndDlg)
 	WriteIntToIni("useMLQuery", useMLQuery);
 	
 	/*multipleArtists = IsDlgButtonChecked(hwndDlg,IDC_CHECK_MULTIPLE_ARTISTS);
-	WritePrivateProfileStringA("ml_plg","multipleArtists",multipleArtists?"1":"0",mediaLibrary.GetWinampIni());
+	WritePrivateProfileStringA("ml_plg","multipleArtists",multipleArtists?"1":"0",mediaLibrary.GetWinLAMPIni());
 
 	multipleAlbums = IsDlgButtonChecked(hwndDlg,IDC_CHECK_MULTIPLE_ALBUMS);
-	WritePrivateProfileStringA("ml_plg","multipleAlbums",multipleAlbums?"1":"0",mediaLibrary.GetWinampIni());
+	WritePrivateProfileStringA("ml_plg","multipleAlbums",multipleAlbums?"1":"0",mediaLibrary.GetWinLAMPIni());
 
 	useSeed = IsDlgButtonChecked(hwndDlg,IDC_CHECK_USE_SEED);
-	WritePrivateProfileStringA("ml_plg","useSeed",useSeed?"1":"0",mediaLibrary.GetWinampIni());
+	WritePrivateProfileStringA("ml_plg","useSeed",useSeed?"1":"0",mediaLibrary.GetWinLAMPIni());
 
 	useMLQuery = IsDlgButtonChecked(hwndDlg,IDC_CHECK_ML_QUERY);
-	WritePrivateProfileStringA("ml_plg","useMLQuery", useMLQuery ? "1" : "0",mediaLibrary.GetWinampIni());*/
+	WritePrivateProfileStringA("ml_plg","useMLQuery", useMLQuery ? "1" : "0",mediaLibrary.GetWinLAMPIni());*/
 
-	//WritePrivateProfileStringW(L"ml_plg",L"mlQuery", mlQuery ,mediaLibrary.GetWinampIniW());
-	WritePrivateProfileStringA("ml_plg", "mlQuery", AutoChar(mlQuery, CP_UTF8), mediaLibrary.GetWinampIni());
+	//WritePrivateProfileStringW(L"ml_plg",L"mlQuery", mlQuery ,mediaLibrary.GetWinLAMPIniW());
+	WritePrivateProfileStringA("ml_plg", "mlQuery", AutoChar(mlQuery, CP_UTF8), mediaLibrary.GetWinLAMPIni());
 }
 
 static bool IsInternetAvailable()
 {
-	return !!SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_INETAVAILABLE);
+	return !!SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_INETAVAILABLE);
 }
 
 INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR param3)
@@ -524,7 +524,7 @@ INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR pa
 		}
 		else if(mf->type == MENU_PLAYLIST)
 		{
-			int n = (int)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,-1,IPC_PLAYLIST_GET_NEXT_SELECTED);
+			int n = (int)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,-1,IPC_PLAYLIST_GET_NEXT_SELECTED);
 			if(n == -1) {
 				mymenuid=0;
 				return 0;
@@ -532,7 +532,7 @@ INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR pa
 
 			fileinfoW inf={0};
 			inf.index = n;
-			SendMessage(winampPlaylist,WM_WA_IPC,IPC_PE_GETINDEXINFOW_INPROC,(LPARAM)&inf);
+			SendMessage(winlampPlaylist,WM_WA_IPC,IPC_PE_GETINDEXINFOW_INPROC,(LPARAM)&inf);
 			wchar_t title[75] = {0};
 			AGAVE_API_METADATA->GetExtendedFileInfo(inf.file, L"title", title, 75);
 			if(!title[0])
@@ -564,7 +564,7 @@ INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR pa
 		}
 		else if (mf->type == MENU_SONGTICKER)
 		{
-			wchar_t * file = (wchar_t*)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_GET_PLAYING_FILENAME);
+			wchar_t * file = (wchar_t*)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_GET_PLAYING_FILENAME);
 			wchar_t title[75] = {0};
 			AGAVE_API_METADATA->GetExtendedFileInfo(file, L"title", title, 75);
 			if(!title[0])
@@ -637,7 +637,7 @@ INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR pa
 			else if(mf->type == MENU_PLAYLIST)		// Main window playlist
 			{
 				// Check to see if anything is selected
-				int n = (int)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,-1,IPC_PLAYLIST_GET_NEXT_SELECTED);
+				int n = (int)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,-1,IPC_PLAYLIST_GET_NEXT_SELECTED);
 				if(n == -1)
 				{
 					mymenuid=0;
@@ -654,7 +654,7 @@ INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR pa
 			}
 			else if(mf->type == MENU_SONGTICKER)	// Current playing track in the song ticker
 			{
-				wchar_t * file = (wchar_t*)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_GET_PLAYING_FILENAME);
+				wchar_t * file = (wchar_t*)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_GET_PLAYING_FILENAME);
 				if (file)
 				{
 					if (hwndDlgCurrent)				// Warn if trying to open two seperate playlist generators
@@ -682,7 +682,7 @@ INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR pa
 	return 0;
 }
 
-extern "C" winampMediaLibraryPlugin plugin =
+extern "C" winlampMediaLibraryPlugin plugin =
 {
 	MLHDR_VER,
 	"nullsoft(ml_plg.dll)", // name filled in later
@@ -696,12 +696,12 @@ extern "C" winampMediaLibraryPlugin plugin =
 
 extern "C"
 {
-	__declspec(dllexport) winampMediaLibraryPlugin *winampGetMediaLibraryPlugin()
+	__declspec(dllexport) winlampMediaLibraryPlugin *winlampGetMediaLibraryPlugin()
 	{
 		return &plugin;
 	}
 
-	__declspec( dllexport ) int winampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
+	__declspec( dllexport ) int winlampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
 		// prompt to remove our settings with default as no (just incase)
 		static wchar_t title[256];
 		StringCchPrintf(title, ARRAYSIZE(title),
@@ -710,7 +710,7 @@ extern "C"
 		if(MessageBoxW(hwndDlg,WASABI_API_LNGSTRINGW(IDS_DO_YOU_ALSO_WANT_TO_REMOVE_SETTINGS),
 					   title,MB_YESNO|MB_DEFBUTTON2) == IDYES)
 		{
-			WritePrivateProfileStringW(L"ml_plg",0,0,mediaLibrary.GetWinampIniW());
+			WritePrivateProfileStringW(L"ml_plg",0,0,mediaLibrary.GetWinLAMPIniW());
 		}
 
 		// allow an on-the-fly removal (since we've got to be with a compatible client build)

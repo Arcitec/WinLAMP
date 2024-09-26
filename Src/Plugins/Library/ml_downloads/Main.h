@@ -6,7 +6,7 @@
 #define PLUGIN_VERSION_MAJOR		1
 #define PLUGIN_VERSION_MINOR		33
 
-extern int winampVersion, podcast_parent, dirty;
+extern int winlampVersion, podcast_parent, dirty;
 
 #define NAVITEM_UNIQUESTR	L"download_svc"
 BOOL Navigation_Update(void);
@@ -24,7 +24,7 @@ void CloseDatabase();
 #include <shlwapi.h>
 
 extern ATOM VIEWPROP;
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 extern int downloads_treeItem;
 
 #include "../Components/wac_downloadManager/wac_downloadManager_api.h"

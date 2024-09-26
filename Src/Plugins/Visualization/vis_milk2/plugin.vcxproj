@@ -152,14 +152,14 @@
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\ 
-xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\ 
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\ 
+xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\ 
 
-xcopy /Y /D /S ..\..\..\resources\data\Milkdrop2 ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
-xcopy /Y /D /S ..\..\..\resources\data\milk2_msg.ini ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
-xcopy /Y /D /S ..\..\..\resources\data\milk2_img.ini ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
+xcopy /Y /D /S ..\..\..\resources\data\Milkdrop2 ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
+xcopy /Y /D /S ..\..\..\resources\data\milk2_msg.ini ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
+xcopy /Y /D /S ..\..\..\resources\data\milk2_img.ini ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
 </Command>
-      <Message>Copy resources: Milkdrop2, milk2_msg.ini, milk2_img.ini to ..\..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\</Message>
+      <Message>Copy resources: Milkdrop2, milk2_msg.ini, milk2_img.ini to ..\..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\</Message>
     </PostBuildEvent>
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
@@ -198,14 +198,14 @@ xcopy /Y /D /S ..\..\..\resources\data\milk2_img.ini ..\..\..\..\Build\Winamp_$(
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\ 
-xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\ 
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\ 
+xcopy /Y /D $(IntDir)$(TargetName).pdb ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\ 
 
-xcopy /Y /D /S ..\..\..\..\resources\data\Milkdrop2 ..\..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
-xcopy /Y /D /S ..\..\..\..\resources\data\milk2_msg.ini ..\..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
-xcopy /Y /D /S ..\..\..\..\resources\data\milk2_img.ini ..\..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
+xcopy /Y /D /S ..\..\..\..\resources\data\Milkdrop2 ..\..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
+xcopy /Y /D /S ..\..\..\..\resources\data\milk2_msg.ini ..\..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
+xcopy /Y /D /S ..\..\..\..\resources\data\milk2_img.ini ..\..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
 </Command>
-      <Message>Copy resources: Milkdrop2, milk2_msg.ini, milk2_img.ini to ..\..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\</Message>
+      <Message>Copy resources: Milkdrop2, milk2_msg.ini, milk2_img.ini to ..\..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -247,12 +247,12 @@ xcopy /Y /D /S ..\..\..\..\resources\data\milk2_img.ini ..\..\..\..\..\Build\Win
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\ 
-xcopy /Y /D /S ..\..\..\resources\data\Milkdrop2 ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
-xcopy /Y /D /S ..\..\..\resources\data\milk2_msg.ini ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
-xcopy /Y /D /S ..\..\..\resources\data\milk2_img.ini ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\ 
+xcopy /Y /D /S ..\..\..\resources\data\Milkdrop2 ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
+xcopy /Y /D /S ..\..\..\resources\data\milk2_msg.ini ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
+xcopy /Y /D /S ..\..\..\resources\data\milk2_img.ini ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
 </Command>
-      <Message>Copy resources: Milkdrop2, milk2_msg.ini, milk2_img.ini to ..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\</Message>
+      <Message>Copy resources: Milkdrop2, milk2_msg.ini, milk2_img.ini to ..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -293,12 +293,12 @@ xcopy /Y /D /S ..\..\..\resources\data\milk2_img.ini ..\..\..\..\Build\Winamp_$(
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\ 
-xcopy /Y /D /S ..\..\..\resources\data\Milkdrop2 ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
-xcopy /Y /D /S ..\..\..\resources\data\milk2_msg.ini ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
-xcopy /Y /D /S ..\..\..\resources\data\milk2_img.ini ..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\ 
+xcopy /Y /D /S ..\..\..\resources\data\Milkdrop2 ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
+xcopy /Y /D /S ..\..\..\resources\data\milk2_msg.ini ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
+xcopy /Y /D /S ..\..\..\resources\data\milk2_img.ini ..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\Milkdrop2\
 </Command>
-      <Message>Copy resources: Milkdrop2, milk2_msg.ini, milk2_img.ini to ..\..\..\..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\Plugins\</Message>
+      <Message>Copy resources: Milkdrop2, milk2_msg.ini, milk2_img.ini to ..\..\..\..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\Plugins\</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

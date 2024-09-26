@@ -11,12 +11,12 @@ Internet:	www.skinconsortium.com
 		www.martin.deimos.de.vu
 
 Note:		This script is based on drawer.m
-		from Winamp Modern, but extended to
+		from WinLAMP Modern, but extended to
 		5 components presets!
 		Like in drawer.m I warn everybody not 
 		to modify this script, cause it can be
 		harmed very fast! And you don't want
-		a buggy winamp skin, want you?
+		a buggy winlamp skin, want you?
 
 		Since script version 3.1
 		(onesie build #022)

@@ -2,19 +2,19 @@
 #define PLUGIN_VERSION L"1.76"
 
 #include <windows.h>
-#include "../Winamp/in2.h"
+#include "../WinLAMP/in2.h"
 #include "../nsv/nsvplay/main.h"
 #include "resource.h"
 #include "../nu/AutoWide.h"
 #include "../nu/AutoCharFn.h"
 #define NO_IVIDEO_DECLARE
-#include "../winamp/wa_ipc.h"
-#include "../Winamp/strutil.h"
+#include "../winlamp/wa_ipc.h"
+#include "../WinLAMP/strutil.h"
 #include "api.h"
 extern In_Module mod;			// the output module (filled in near the bottom of this file)
 
 #define g_hInstance mod.hDllInstance
-#define WNDMENU_CAPTION L"Winamp in_nsv"
+#define WNDMENU_CAPTION L"WinLAMP in_nsv"
 #define MODAL_ABOUT
 #define LOC_MODAL_ABOUT
 #include "../nsv/nsvplay/about.h"
@@ -420,8 +420,8 @@ void stop()
 			nTimes++;
 			if (nTimes == maxTimes)
 			{
-#ifdef WINAMPX
-				SendStatus( WINAMPX_STATUS_ERROR_KILLING_THREAD, 0 );
+#ifdef WINLAMPX
+				SendStatus( WINLAMPX_STATUS_ERROR_KILLING_THREAD, 0 );
 #else
 				/*MessageBox(mod.hMainWindow, "error asking thread to die!\n",
 						   "error killing decode thread", 0);*/
@@ -786,8 +786,8 @@ In_Module mod =
     {
         IN_VER_RET,	// defined in IN2.H
         "nullsoft(in_nsv.dll)",
-        0,  	// hMainWindow (filled in by winamp)
-        0,		// hDllInstance (filled in by winamp)
+        0,  	// hMainWindow (filled in by winlamp)
+        0,		// hDllInstance (filled in by winlamp)
         0,		// this is a double-null limited list. "EXT\0Description\0EXT\0Description\0" etc.
         1,  	// is_seekable
         1,  	// uses output plug-in system
@@ -811,15 +811,15 @@ In_Module mod =
         setvolume,
         setpan,
 
-        0, 0, 0, 0, 0, 0, 0, 0, 0,   // visualization calls filled in by winamp
+        0, 0, 0, 0, 0, 0, 0, 0, 0,   // visualization calls filled in by winlamp
 
-        0, 0,   // dsp calls filled in by winamp
+        0, 0,   // dsp calls filled in by winlamp
 
         eq_set,
 
-        NULL,  		// setinfo call filled in by winamp
+        NULL,  		// setinfo call filled in by winlamp
 
-        0 // out_mod filled in by winamp
+        0 // out_mod filled in by winlamp
     };
 
 static FILETIME ftLastWriteTime;
@@ -842,7 +842,7 @@ BOOL HasFileTimeChanged(const wchar_t *fn)
 
 extern "C"
 {
-	__declspec( dllexport ) In_Module * winampGetInModule2()
+	__declspec( dllexport ) In_Module * winlampGetInModule2()
 	{
 		return &mod;
 	}
@@ -871,7 +871,7 @@ extern "C"
 		return true;
 	}
 
-	__declspec( dllexport ) int winampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, int destlen)
+	__declspec( dllexport ) int winlampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, int destlen)
 	{
 		if (!_stricmp(data, "type"))
 		{

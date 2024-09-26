@@ -2,13 +2,13 @@
 #include <windowsx.h>
 #include <time.h>
 #include <rpc.h>
-#include "../winamp/gen.h"
+#include "../winlamp/gen.h"
 #include "resource.h"
 #include "childwnd.h"
 #include "config.h"
-#include "../winamp/ipc_pe.h"
-#include "../winamp/wa_dlg.h"
-#include "../winamp/strutil.h"
+#include "../winlamp/ipc_pe.h"
+#include "../winlamp/wa_dlg.h"
+#include "../winlamp/strutil.h"
 #include "ml.h"
 #include "ml_ipc.h"
 #include "./folderbrowser.h"
@@ -37,7 +37,7 @@
 #include "MusicID.h"
 #include <tataki/export.h>
 #include <strsafe.h>
-#include "../Winamp/wasabicfg.h"
+#include "../WinLAMP/wasabicfg.h"
 
 // {6B0EDF80-C9A5-11d3-9F26-00C04F39FFC6}
 static const GUID library_guid = 
@@ -89,7 +89,7 @@ extern "C"
 {
 	HWND g_hwnd, g_ownerwnd;
 
-	extern winampGeneralPurposePlugin plugin =
+	extern winlampGeneralPurposePlugin plugin =
 	    {
 			GPPHDR_VER_U,
 	        "nullsoft(gen_ml.dll)",
@@ -200,7 +200,7 @@ void toggleVisible(int closecb)
 			HWND hwndFocus = GetFocus();
 
 			if (hwndFocus == g_ownerwnd || IsChild(g_ownerwnd, hwndFocus))
-				SendMessageW(plugin.hwndParent, WM_COMMAND, WINAMP_NEXT_WINDOW, 0);
+				SendMessageW(plugin.hwndParent, WM_COMMAND, WINLAMP_NEXT_WINDOW, 0);
 
 			ShowWindow(g_ownerwnd, SW_HIDE);
 		}
@@ -247,7 +247,7 @@ void toggleVisible(int closecb)
 
 static WNDPROC wa_oldWndProc;
 
-static BOOL Winamp_OnIPC(HWND hwnd, UINT uMsg, INT_PTR param, LRESULT *pResult)
+static BOOL WinLAMP_OnIPC(HWND hwnd, UINT uMsg, INT_PTR param, LRESULT *pResult)
 {
 	if (IPC_GETMLWINDOW == uMsg && IPC_GETMLWINDOW > 65536)
 	{	
@@ -408,7 +408,7 @@ static BOOL Winamp_OnIPC(HWND hwnd, UINT uMsg, INT_PTR param, LRESULT *pResult)
 					int i = m_plugins.GetSize();
 					while (i-- > 0)
 					{
-						winampMediaLibraryPlugin *mlplugin = (winampMediaLibraryPlugin *)m_plugins.Get(i);
+						winlampMediaLibraryPlugin *mlplugin = (winlampMediaLibraryPlugin *)m_plugins.Get(i);
 						if (mlplugin->hDllInstance == (HINSTANCE)mbi.AllocationBase)
 						{
 							p->where = (intptr_t)(INT_PTR)&myPrefsItem;
@@ -456,7 +456,7 @@ static LRESULT WINAPI wa_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 		case WM_WA_IPC:
 		{
 			LRESULT result = 0;
-			if (Winamp_OnIPC(hwndDlg, (UINT)lParam, (INT_PTR)wParam, &result)) return result;
+			if (WinLAMP_OnIPC(hwndDlg, (UINT)lParam, (INT_PTR)wParam, &result)) return result;
 			break;
 		}
 		case WM_SIZE:
@@ -474,16 +474,16 @@ static LRESULT WINAPI wa_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 		case WM_SYSCOMMAND:
 			{
 				WORD lowP = LOWORD(wParam);
-				if (lowP == WA_MENUITEM_ID || lowP == WINAMP_LIGHTNING_CLICK)
+				if (lowP == WA_MENUITEM_ID || lowP == WINLAMP_LIGHTNING_CLICK)
 				{
-					if (lowP != WINAMP_LIGHTNING_CLICK || g_config->ReadInt(L"attachlbolt", 0))
+					if (lowP != WINLAMP_LIGHTNING_CLICK || g_config->ReadInt(L"attachlbolt", 0))
 					{
 						toggleVisible();
 						return 0;
 					}
 				}
 		#if 0 // no radio - don't delete yet - tag will need to do this in ml_online
-				else if (lowP == WINAMP_VIDEO_TVBUTTON) // && g_config->ReadInt("attachtv",1))
+				else if (lowP == WINLAMP_VIDEO_TVBUTTON) // && g_config->ReadInt("attachtv",1))
 				{
 					if (!g_hwnd || !IsWindowVisible(g_ownerwnd)) toggleVisible();
 					PostMessage(g_ownerwnd, WM_NEXTDLGCTL, (WPARAM)g_hwnd, TRUE);
@@ -496,8 +496,8 @@ static LRESULT WINAPI wa_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 					}
 				}
 		#endif
-				// done like this since ml_online can't really subclass winamp to get the notification
-				else if (lowP == WINAMP_VIDEO_TVBUTTON)
+				// done like this since ml_online can't really subclass winlamp to get the notification
+				else if (lowP == WINLAMP_VIDEO_TVBUTTON)
 				{
 					if (!g_hwnd || !IsWindowVisible(g_ownerwnd)) toggleVisible();
 					HNAVITEM hDefItem = NavCtrlI_FindItemByName(hNavigation, LOCALE_USER_DEFAULT, NICF_INVARIANT_I | NICF_DISPLAY_I | NICF_IGNORECASE_I, L"Shoutcast TV", -1);
@@ -527,12 +527,12 @@ static LRESULT WINAPI wa_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 					}
 					return 0;
 				}
-				if (lowP == WINAMP_SHOWLIBRARY)
+				if (lowP == WINLAMP_SHOWLIBRARY)
 				{
 					if (!g_hwnd || !IsWindowVisible(g_hwnd)) 
 						toggleVisible((2 == HIWORD(wParam) ? 2 : 0));
 				}
-				else if (lowP == WINAMP_CLOSELIBRARY)
+				else if (lowP == WINLAMP_CLOSELIBRARY)
 				{
 					if (g_hwnd && IsWindowVisible(g_ownerwnd)) toggleVisible();
 				}
@@ -583,7 +583,7 @@ BOOL init2(void)
 
 		if (NULL != WASABI_API_APP) WASABI_API_APP->app_registerGlobalWindow(g_ownerwnd);
 
-		SetWindowTextW(g_ownerwnd, WASABI_API_LNGSTRINGW(IDS_WINAMP_LIBRARY));
+		SetWindowTextW(g_ownerwnd, WASABI_API_LNGSTRINGW(IDS_WINLAMP_LIBRARY));
 		g_hwnd = WASABI_API_CREATEDIALOGW(IDD_MAIN, g_ownerwnd, dialogProc);
 		if (!g_hwnd)
 		{
@@ -595,9 +595,9 @@ BOOL init2(void)
 	return TRUE;
 }
 
-wchar_t WINAMP_INI[MAX_PATH] = {0}, WINAMP_INI_DIR[MAX_PATH] = {0};
+wchar_t WINLAMP_INI[MAX_PATH] = {0}, WINLAMP_INI_DIR[MAX_PATH] = {0};
 MediaLibraryCOM mediaLibraryCOM;
-IDispatch *winampExternal = 0;
+IDispatch *winlampExternal = 0;
 
 void TAG_FMT_EXT(const wchar_t *filename, void *f, void *ff, void *p, wchar_t *out, int out_len, int extended)
 {
@@ -863,14 +863,14 @@ int init()
 	SendMessage(plugin.hwndParent, WM_WA_IPC, (WPARAM)&dispatchInfo, IPC_ADD_DISPATCH_OBJECT);
 	#endif
 
-	IPC_LIBRARY_SENDTOMENU = (INT)SendMessage(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINAMP_IPCMESSAGE);
-	IPC_GETMLWINDOW = (INT)SendMessage(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"LibraryGetWnd", IPC_REGISTER_WINAMP_IPCMESSAGE);
-	IPC_GET_ML_HMENU = (INT)SendMessage(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"LibraryGetHmenu", IPC_REGISTER_WINAMP_IPCMESSAGE);
+	IPC_LIBRARY_SENDTOMENU = (INT)SendMessage(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	IPC_GETMLWINDOW = (INT)SendMessage(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"LibraryGetWnd", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	IPC_GET_ML_HMENU = (INT)SendMessage(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"LibraryGetHmenu", IPC_REGISTER_WINLAMP_IPCMESSAGE);
 
-	lstrcpynW(WINAMP_INI, (wchar_t*)SendMessage(plugin.hwndParent, WM_WA_IPC, 0, IPC_GETINIFILEW), MAX_PATH);
-	lstrcpynW(WINAMP_INI_DIR, (wchar_t*)SendMessage(plugin.hwndParent, WM_WA_IPC, 0, IPC_GETINIDIRECTORYW), MAX_PATH);
+	lstrcpynW(WINLAMP_INI, (wchar_t*)SendMessage(plugin.hwndParent, WM_WA_IPC, 0, IPC_GETINIFILEW), MAX_PATH);
+	lstrcpynW(WINLAMP_INI_DIR, (wchar_t*)SendMessage(plugin.hwndParent, WM_WA_IPC, 0, IPC_GETINIDIRECTORYW), MAX_PATH);
 
-	PathCombineW(g_path, WINAMP_INI_DIR, L"Plugins");
+	PathCombineW(g_path, WINLAMP_INI_DIR, L"Plugins");
 	CreateDirectoryW(g_path, NULL);
 
 	wchar_t *dir = (wchar_t*)SendMessage(plugin.hwndParent, WM_WA_IPC, 0, IPC_GETPLUGINDIRECTORYW);
@@ -880,7 +880,7 @@ int init()
 		lstrcpynW(pluginPath, dir, MAX_PATH);
 
 	hDragNDropCursor = LoadCursor(plugin.hDllInstance, MAKEINTRESOURCE(ML_IDC_DRAGDROP));
-	profile = GetPrivateProfileIntW(L"winamp", L"profile", 0, WINAMP_INI);
+	profile = GetPrivateProfileIntW(L"winlamp", L"profile", 0, WINLAMP_INI);
 
 	wchar_t configName[1024 + 32] = {0};
 	StringCchPrintfW(configName, 1024 + 32, L"%s\\gen_ml.ini", g_path);
@@ -917,7 +917,7 @@ int init()
 		}
 	}
 
-	// subclass the winamp window to get our leet menu item to work
+	// subclass the winlamp window to get our leet menu item to work
 	wa_oldWndProc = (WNDPROC)(LONG_PTR)SetWindowLongPtrW(plugin.hwndParent, GWLP_WNDPROC, (LONGX86)(LONG_PTR)wa_newWndProc);
 
 	myPrefsItem.dlgID = IDD_PREFSFR;
@@ -946,7 +946,7 @@ int init()
 	CreateDirectoryW(mldir, NULL);
 
 	//add general hotkey
-	int m_genhotkeys_add_ipc = (INT)SendMessage(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"GenHotkeysAdd", IPC_REGISTER_WINAMP_IPCMESSAGE);
+	int m_genhotkeys_add_ipc = (INT)SendMessage(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"GenHotkeysAdd", IPC_REGISTER_WINLAMP_IPCMESSAGE);
 
 	static genHotkeysAddStruct ghas = {
 		(char*)_wcsdup(WASABI_API_LNGSTRINGW(IDS_ML_GHK_STR)),
@@ -978,13 +978,13 @@ int init()
 	#define BETA
 	#endif
 	#ifdef BETA
-	sneak = GetPrivateProfileIntW(L"winamp", L"sneak", 0, WINAMP_INI);
+	sneak = GetPrivateProfileIntW(L"winlamp", L"sneak", 0, WINLAMP_INI);
 	if (!(sneak & 1))
 	{
 		NAVINSERTSTRUCT nis = {0};
 		nis.item.cbSize = sizeof(NAVITEM);
-		nis.item.pszText = L"Winamp Labs";
-		nis.item.pszInvariant = L"winamp_labs";
+		nis.item.pszText = L"WinLAMP Labs";
+		nis.item.pszInvariant = L"winlamp_labs";
 		nis.item.mask = NIMF_TEXT | NIMF_TEXTINVARIANT | NIMF_IMAGE | NIMF_IMAGESEL | NIMF_STYLE;
 		nis.item.iImage = nis.item.iSelectedImage = AddTreeImageBmp(IDB_TREEITEM_LABS);
 		nis.item.style = NIS_BOLD;
@@ -1003,7 +1003,7 @@ int init()
 	}
 	else if (0 != vis)
 	{
-		PostMessageW(plugin.hwndParent, WM_COMMAND, MAKEWPARAM(WINAMP_SHOWLIBRARY, 2), 0L); 
+		PostMessageW(plugin.hwndParent, WM_COMMAND, MAKEWPARAM(WINLAMP_SHOWLIBRARY, 2), 0L); 
 	}
 
 	return GEN_INIT_SUCCESS;
@@ -1164,7 +1164,7 @@ extern "C"
 		return r;
 	}
 
-	__declspec(dllexport) winampGeneralPurposePlugin *winampGetGeneralPurposePlugin()
+	__declspec(dllexport) winlampGeneralPurposePlugin *winlampGetGeneralPurposePlugin()
 	{
 		return &plugin;
 	}

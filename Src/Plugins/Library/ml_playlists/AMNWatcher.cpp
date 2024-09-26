@@ -16,7 +16,7 @@ BOOL IsMusicNowWantUs(void)
 	DWORD value = 0, length = sizeof(DWORD);
 	if (ERROR_SUCCESS == RegOpenKeyExW( HKEY_CURRENT_USER, L"Software\\AOL Music Now\\UserPreferences", 0, KEY_QUERY_VALUE, &key ))
 	{
-		long retCode = RegQueryValueExW(key, L"IntegrateWithWinamp", NULL, NULL, (LPBYTE) & value, &length);
+		long retCode = RegQueryValueExW(key, L"IntegrateWithWinLAMP", NULL, NULL, (LPBYTE) & value, &length);
 		if (ERROR_SUCCESS != retCode) value = TRUE;
 		RegCloseKey(key);
 	}

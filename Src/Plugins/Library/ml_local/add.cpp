@@ -9,8 +9,8 @@
 #include "..\..\General\gen_ml/config.h"
 #include "..\..\General\gen_ml/gaystring.h"
 #include "time.h"
-#include "../winamp/in2.h"
-#include "../Winamp/strutil.h"
+#include "../winlamp/in2.h"
+#include "../WinLAMP/strutil.h"
 #include <shlwapi.h>
 #include <strsafe.h>
 
@@ -396,7 +396,7 @@ int addFileToDb(const wchar_t *filename, int onlyupdate, int use_metadata, int g
 		bi.titlelen=1024;
 		skipTitleInfo=true;
 		LeaveCriticalSection(&g_db_cs); // benski> not actually sure if this is safe, but it prevents a deadlock
-		SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&bi,IPC_GET_BASIC_FILE_INFOW);
+		SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&bi,IPC_GET_BASIC_FILE_INFOW);
 		EnterCriticalSection(&g_db_cs);
 		skipTitleInfo=false;
 		if (!hastlength && bi.length >= 0)

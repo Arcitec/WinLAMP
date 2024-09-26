@@ -1,6 +1,6 @@
 #include <windows.h>
 #include <shlobj.h>
-#include "../winamp/out.h"
+#include "../winlamp/out.h"
 
 #define PI_VER2 "v1.2"
 
@@ -153,7 +153,7 @@ Out_Module out = {
 	getwrittentime
 };
 
-__declspec( dllexport ) Out_Module * winampGetOutModule()
+__declspec( dllexport ) Out_Module * winlampGetOutModule()
 {
 	return &out;
 }

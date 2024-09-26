@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------
 //
 // iTunes XML Import/Export Plugin
-// Copyright © 2003-2014 Winamp SA
+// Copyright © 2003-2014 WinLAMP SA
 //
 //------------------------------------------------------------------------
 //#define PLUGIN_NAME "Nullsoft Database Import/Export"
@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include "api__ml_impex.h"
 #include "../../General/gen_ml/ml.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "resource.h"
 #include <bfc/string/url.h>
 #include "itunesxmlwrite.h"
@@ -36,7 +36,7 @@ static SingletonServiceFactory<api_itunes_importer, ImporterAPI> importerFactory
 #define ID_DOSHITMENU_ADDNEWVIEW        40030
 #define IDM_LIBRARY_CONFIG              40050
 #define ID_DOSHITMENU_ADDNEWPLAYLIST    40031
-#define WINAMP_MANAGEPLAYLISTS          40385
+#define WINLAMP_MANAGEPLAYLISTS          40385
 
 // -----------------------------------------------------------------------
 
@@ -63,8 +63,8 @@ static LRESULT WINAPI ml_newMlWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPA
 
 static WNDPROC ml_oldParentWndProc;
 static WNDPROC ml_oldMlWndProc;
-static HWND export_wnd, hwnd_winamp, mlWnd;
-extern winampMediaLibraryPlugin plugin;
+static HWND export_wnd, hwnd_winlamp, mlWnd;
+extern winlampMediaLibraryPlugin plugin;
 HMENU mlMenu=NULL;
 void exportDatabase();
 void importDatabase();
@@ -86,7 +86,7 @@ static INT_PTR PluginMessageProc(int message_type, INT_PTR param1, INT_PTR param
 static int init();
 static void quit();
 
-extern "C" winampMediaLibraryPlugin plugin =
+extern "C" winlampMediaLibraryPlugin plugin =
 {
 	MLHDR_VER,
 	"nullsoft(ml_impex.dll)",
@@ -102,7 +102,7 @@ extern "C" winampMediaLibraryPlugin plugin =
 // export
 // -----------------------------------------------------------------------
 extern "C" {
-	__declspec( dllexport ) winampMediaLibraryPlugin * winampGetMediaLibraryPlugin()
+	__declspec( dllexport ) winlampMediaLibraryPlugin * winlampGetMediaLibraryPlugin()
 	{
 		return &plugin;
 	}
@@ -147,15 +147,15 @@ int init()
 					WASABI_API_LNGSTRINGW(IDS_ML_IMPEX_DESC), PLUGIN_VERSION);
 	plugin.description = (char*)szDescription;
 
-	HWND w = plugin.hwndWinampParent;
+	HWND w = plugin.hwndWinLAMPParent;
 	while (GetParent(w) != NULL) w = GetParent(w);
-	hwnd_winamp = w;
+	hwnd_winlamp = w;
 
-	ml_oldParentWndProc = (WNDPROC)SetWindowLongPtrW(plugin.hwndWinampParent, GWLP_WNDPROC, (LONG_PTR)ml_newParentWndProc);
+	ml_oldParentWndProc = (WNDPROC)SetWindowLongPtrW(plugin.hwndWinLAMPParent, GWLP_WNDPROC, (LONG_PTR)ml_newParentWndProc);
 
-	mlMenu = (HMENU)SendMessage(hwnd_winamp, WM_WA_IPC, 9, IPC_GET_HMENU);
-	int IPC_GETMLWINDOW=(int)SendMessage(hwnd_winamp,WM_WA_IPC,(WPARAM)&"LibraryGetWnd",IPC_REGISTER_WINAMP_IPCMESSAGE);
-	mlWnd = (HWND)SendMessage(hwnd_winamp, WM_WA_IPC, -1, IPC_GETMLWINDOW);
+	mlMenu = (HMENU)SendMessage(hwnd_winlamp, WM_WA_IPC, 9, IPC_GET_HMENU);
+	int IPC_GETMLWINDOW=(int)SendMessage(hwnd_winlamp,WM_WA_IPC,(WPARAM)&"LibraryGetWnd",IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	mlWnd = (HWND)SendMessage(hwnd_winlamp, WM_WA_IPC, -1, IPC_GETMLWINDOW);
 
 	ml_oldMlWndProc = (WNDPROC)SetWindowLongPtrW(mlWnd, GWLP_WNDPROC, (LONG_PTR)ml_newMlWndProc);
 
@@ -175,14 +175,14 @@ int init()
 	MENUITEMINFO mii4={sizeof(mii),MIIM_ID|MIIM_STATE|MIIM_TYPE, MFT_STRING, MFS_ENABLED, ID_EXPORT, NULL, NULL, NULL, NULL, WASABI_API_LNGSTRINGW(IDS_EXPORT_DATABASE), 0};
 	InsertMenuItem(mlMenu, ++p, TRUE, &mii4);
 
-	int IPC_GET_ML_HMENU = (int)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"LibraryGetHmenu", IPC_REGISTER_WINAMP_IPCMESSAGE);
-	HMENU context_menu = (HMENU) SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_ML_HMENU);
+	int IPC_GET_ML_HMENU = (int)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"LibraryGetHmenu", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	HMENU context_menu = (HMENU) SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_ML_HMENU);
 	if (context_menu)
 	{
 		HMENU hmenuPopup = GetSubMenu(context_menu, 0);
 		if (hmenuPopup)
 		{
-			int p = getMenuItemPos(hmenuPopup, WINAMP_MANAGEPLAYLISTS);
+			int p = getMenuItemPos(hmenuPopup, WINLAMP_MANAGEPLAYLISTS);
 			if (getMenuItemPos(hmenuPopup, IDM_LIBRARY_CONFIG) != -1) // sanity check
 			{
 				bool end_separator=true;
@@ -219,7 +219,7 @@ int init()
 // entry point, gen_ml is shutting down and we are being unloaded
 // -----------------------------------------------------------------------
 void quit() {
-	if (IsWindow(plugin.hwndWinampParent)) SetWindowLongPtrW(plugin.hwndWinampParent, GWLP_WNDPROC, (LONG_PTR)ml_oldParentWndProc);
+	if (IsWindow(plugin.hwndWinLAMPParent)) SetWindowLongPtrW(plugin.hwndWinLAMPParent, GWLP_WNDPROC, (LONG_PTR)ml_oldParentWndProc);
 	if (IsWindow(mlWnd)) SetWindowLongPtrW(mlWnd, GWLP_WNDPROC, (LONG_PTR)ml_oldMlWndProc);
 	importerFactory.Deregister(plugin.service);
 }
@@ -250,7 +250,7 @@ void setDialogIcon(HWND hwndDlg)
 	static HICON wa_icy;
 	if (wa_icy)
 	{
-		wa_icy = (HICON)LoadImage(GetModuleHandle(L"winamp.exe"),
+		wa_icy = (HICON)LoadImage(GetModuleHandle(L"winlamp.exe"),
 								  MAKEINTRESOURCE(102), IMAGE_ICON,
 								  GetSystemMetrics(SM_CXSMICON),
 								  GetSystemMetrics(SM_CYSMICON),

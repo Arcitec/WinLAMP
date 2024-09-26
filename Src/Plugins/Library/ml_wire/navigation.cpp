@@ -9,7 +9,7 @@
 #include "./subscriptionView.h"
 #include "./downloadsDialog.h"
 #include "../omBrowser/browserView.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "..\..\General\gen_ml/ml_ipc_0313.h"
 #include "./Defaults.h"
 
@@ -174,7 +174,7 @@ static HRESULT Navigation_CreateView( HNAVITEM hItem, HWND hParent, HWND *hView 
 	if ( SUCCEEDED( hr ) )
 	{
 		if ( service->GetId() == SERVICE_PODCAST )
-			service->SetUrl( serviceUrl[ 0 ] ? serviceUrl : L"https://client.winamp.com/podcasts" );
+			service->SetUrl( serviceUrl[ 0 ] ? serviceUrl : L"https://client.winlamp.com/podcasts" );
 
 		hr = service->CreateView( hParent, hView );
 		service->Release();
@@ -343,7 +343,7 @@ BOOL Navigation_Initialize( void )
 
 	if ( SUCCEEDED( OmService::CreateRemote( SERVICE_PODCAST, MAKEINTRESOURCE( IDS_PODCAST_DIRECTORY ),
 		 MAKEINTRESOURCE( IDR_DISCOVER_ICON ),
-		 ( serviceUrl[ 0 ] ? serviceUrl : L"https://client.winamp.com/podcasts" ), &service ) ) )
+		 ( serviceUrl[ 0 ] ? serviceUrl : L"https://client.winlamp.com/podcasts" ), &service ) ) )
 	{
 		service->SetFlags( OmService::flagRoot, OmService::flagRoot );
 		hParent = Navigation_CreateItem( hLibrary, hParent, service );

@@ -1,8 +1,8 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by winamp.rc
+// Used by winlamp.rc
 //
-#define IDS_WINAMP                      101
+#define IDS_WINLAMP                      101
 
 // Next default values for new objects
 // 

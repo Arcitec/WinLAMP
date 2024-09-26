@@ -11,7 +11,7 @@ Internet:	www.skinconsortium.com
 		www.martin.deimos.de.vu
 
 Note:		This script is based on mute.m
-		from Winamp Modern
+		from WinLAMP Modern
 -----------------------------------------------------
 ---------------------------------------------------*/
 
@@ -51,8 +51,8 @@ System.onScriptLoaded()
 	if (!isShade) _MuteButton_GlowInit (MuteBtn, frameGroup.findObject("mute.glow"), 0.3);
 	if (!isShade) _MuteButton_addTrigger (DeMuteBtn);
 
-	Muted = getPrivateInt("winamp5", "muted", 0);
-	VolumeLevel = getPrivateInt("winamp5", "old_volume", 0);
+	Muted = getPrivateInt("winlamp5", "muted", 0);
+	VolumeLevel = getPrivateInt("winlamp5", "old_volume", 0);
 
 	VOLUME_FILL_MAX_W = stringToInteger(getParam());
 
@@ -78,8 +78,8 @@ System.onScriptLoaded()
 
 System.onScriptUnloading()
 {
-	setPrivateInt("winamp5", "muted", Muted);
-	setPrivateInt("winamp5", "old_volume", VolumeLevel);
+	setPrivateInt("winlamp5", "muted", Muted);
+	setPrivateInt("winlamp5", "old_volume", VolumeLevel);
 }
 
 MuteBtn.onLeftClick()

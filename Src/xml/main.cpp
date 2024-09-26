@@ -35,7 +35,7 @@ void WA5_XML::DeregisterServices(api_service *service)
 	xmlFactory=0;
 }
 
-extern "C" DLLEXPORT ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" DLLEXPORT ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &wa5_xml;
 }

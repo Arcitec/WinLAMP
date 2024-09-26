@@ -97,7 +97,7 @@ BEGIN
     COMBOBOX        IDC_WAVEIN_CH,69,77,37,40,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     COMBOBOX        IDC_WAVEIN_BPS,117,77,38,60,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "Advanced",IDC_STATIC,3,100,334,29
-    CONTROL         "Send to Winamp's output system",IDC_SAMPLING_OUTPUT,
+    CONTROL         "Send to WinLAMP's output system",IDC_SAMPLING_OUTPUT,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,113,140,10
 END
 
@@ -466,7 +466,7 @@ BEGIN
     IDS_PREFS_HARDWARE_SETUP "Hardware setup"
     IDS_UNABLE_TO_LOAD_FILE "Unable to load file."
     STRING_RETRIEVING_FILE  "Retrieving MIDI file"
-    STRING_URL_ERROR        "URLs only supported in Winamp 2.50+"
+    STRING_URL_ERROR        "URLs only supported in WinLAMP 2.50+"
     STRING_UNKNOWN_MMSYSTEM "Unknown MMSYSTEM error."
     STRING_MIDI_INFO_FMT2   "MIDI file info - %s"
     STRING_MIDI_INFO_FMT1   "MIDI file info - %s (%s)"
@@ -530,7 +530,7 @@ BEGIN
     IDS_RMI_FILES           "RMI files"
     IDS_COMPRESSED_RMI_FILES "Compressed RMI files"
     IDS_WITH_OUTPUT         " (with output)"
-    IDS_USES_WINAMPS_OUTPUT_PLUGINS "uses Winamp's Output plug-ins"
+    IDS_USES_WINLAMPS_OUTPUT_PLUGINS "uses WinLAMP's Output plug-ins"
     STRING_MS_FMT           "(%u ms)"
     STRING_BIT_FMT          "%u bit"
 END
@@ -548,7 +548,7 @@ BEGIN
     IDS_FAMILY_STRING_COMPRESSED_MIDI "Compressed MIDI File"
     IDS_FAMILY_STRING_COMPRESSED_HMI_MIDI 
                             "Compressed Human Machine Interfaces MIDI File"
-    IDS_ABOUT_TEXT          "%s\n© 2000-2023 Winamp SA\n\nBuild date: %hs"
+    IDS_ABOUT_TEXT          "%s\n© 2000-2023 WinLAMP SA\n\nBuild date: %hs"
 END
 
 #endif    // English (U.S.) resources

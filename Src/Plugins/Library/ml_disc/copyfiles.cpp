@@ -67,7 +67,7 @@ static void CopyFiles_MarkDrivesBusy(LPCTSTR *ppsz, INT count, BOOL bBusy)
 				else 
 				{
 					SendNotifyMessage(HWND_BROADCAST, uMsgCopyNotify, MAKEWPARAM(c, 0), (LPARAM)FALSE);
-					SendNotifyMessage(HWND_BROADCAST, uMsgCopyNotify, MAKEWPARAM(0, 0xffff), (LPARAM)plugin.hwndWinampParent);
+					SendNotifyMessage(HWND_BROADCAST, uMsgCopyNotify, MAKEWPARAM(0, 0xffff), (LPARAM)plugin.hwndWinLAMPParent);
 				}
 			}
 		}

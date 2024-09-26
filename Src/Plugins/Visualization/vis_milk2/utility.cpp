@@ -36,7 +36,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     #define D3D_DEBUG_INFO  // declare this before including d3d9.h
 #endif
 #include <d3d9.h>
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "resource.h"
 #include <shellapi.h>
 
@@ -1193,9 +1193,9 @@ D3DXCOMPILESHADER pCompileShader=0;
 D3DXMATRIXLOOKATLH pMatrixLookAtLH=0;
 D3DXCREATETEXTURE pCreateTexture=0;
 //----------------------------------------------------------------------
-HMODULE FindD3DX9(HWND winamp)
+HMODULE FindD3DX9(HWND winlamp)
 {
-	HMODULE d3dx9 = (HMODULE)SendMessage(winamp,WM_WA_IPC, 0, IPC_GET_D3DX9);
+	HMODULE d3dx9 = (HMODULE)SendMessage(winlamp,WM_WA_IPC, 0, IPC_GET_D3DX9);
 	if (!d3dx9 || d3dx9 == (HMODULE)1)
 	{
 		
@@ -1238,11 +1238,11 @@ HMODULE FindD3DX9(HWND winamp)
 	return d3dx9;
 }
 
-LRESULT GetWinampVersion(HWND winamp)
+LRESULT GetWinLAMPVersion(HWND winlamp)
 {
 	static LRESULT version=0;
 	if (!version)
-		version=SendMessage(winamp,WM_WA_IPC,0,0);
+		version=SendMessage(winlamp,WM_WA_IPC,0,0);
 	return version;
 }
 

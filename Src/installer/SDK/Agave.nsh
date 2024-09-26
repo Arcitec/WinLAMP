@@ -1,4 +1,4 @@
-; Agave (Winamp 5 Wasabi API)
+; Agave (WinLAMP 5 Wasabi API)
 
 ; Config API
 SetOutPath $INSTDIR\Agave\Config

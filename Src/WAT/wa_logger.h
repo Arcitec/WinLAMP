@@ -11,15 +11,15 @@
 
 #include "WAT.h"
 
-#include "..\Winamp\buildType.h"
+#include "..\WinLAMP\buildType.h"
 
 std::shared_ptr<spdlog::logger> init_log()
 {
-	std::string l_app_version( STR_WINAMP_FILEVER );
+	std::string l_app_version( STR_WINLAMP_FILEVER );
 	wa::strings::replaceAll( l_app_version, ",", "." );
 
 	std::string l_app_data_folder( getenv( "APPDATA" ) );
-	l_app_data_folder.append( "\\Winamp\\winamp.log" );
+	l_app_data_folder.append( "\\WinLAMP\\winlamp.log" );
 
 	auto my_wa_logger = spdlog::basic_logger_mt( l_app_version.c_str(), l_app_data_folder.c_str());
 

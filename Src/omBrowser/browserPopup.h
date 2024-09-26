@@ -1,5 +1,5 @@
-#ifndef NULLSOFT_WINAMP_OMBROWSER_POPUP_HEADER
-#define NULLSOFT_WINAMP_OMBROWSER_POPUP_HEADER
+#ifndef NULLSOFT_WINLAMP_OMBROWSER_POPUP_HEADER
+#define NULLSOFT_WINLAMP_OMBROWSER_POPUP_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -74,4 +74,4 @@ HWND BrowserPopup_Create(obj_ombrowser *browserManager, ifc_omservice *service, 
 #define BrowserPopup_RefreshTitle(/*HWND*/ __hwndPopup)\
 	((BOOL)SENDMSG((__hwndPopup), NBPM_REFRESHTITLE, 0, 0L))
 
-#endif //NULLSOFT_WINAMP_OMBROWSER_POPUP_HEADER
+#endif //NULLSOFT_WINLAMP_OMBROWSER_POPUP_HEADER

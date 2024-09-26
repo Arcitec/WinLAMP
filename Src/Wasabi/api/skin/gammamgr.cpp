@@ -9,8 +9,8 @@
 
 void GammaMgr::init()
 {
-	skinXML.registerCallback(L"WinampAbstractionLayer\fgammaset", &xmlreader); //back compat
-	skinXML.registerCallback(L"WinampAbstractionLayer\fgammaset\fgammagroup", &xmlreader); //back compat
+	skinXML.registerCallback(L"WinLAMPAbstractionLayer\fgammaset", &xmlreader); //back compat
+	skinXML.registerCallback(L"WinLAMPAbstractionLayer\fgammaset\fgammagroup", &xmlreader); //back compat
 	skinXML.registerCallback(L"WasabiXML\fgammaset", &xmlreader);
 	skinXML.registerCallback(L"WasabiXML\fgammaset\fgammagroup", &xmlreader);	
 	

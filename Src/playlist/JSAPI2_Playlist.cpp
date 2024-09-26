@@ -1,5 +1,5 @@
 #include "JSAPI2_Playlist.h"
-#include "../Winamp/JSAPI.h"
+#include "../WinLAMP/JSAPI.h"
 #include "api__playlist.h"
 #include "PlaylistManager.h"
 

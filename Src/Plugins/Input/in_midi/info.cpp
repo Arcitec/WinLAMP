@@ -357,7 +357,7 @@ static const int pExtDescList[] =
 };
 
 MIDI_file* wa2_open_file(const char* url);
-extern "C" __declspec(dllexport) int winampGetExtendedFileInfoW(const wchar_t* fn, const char* data, wchar_t* dest, int destlen)
+extern "C" __declspec(dllexport) int winlampGetExtendedFileInfoW(const wchar_t* fn, const char* data, wchar_t* dest, int destlen)
 {
 	MIDI_file* file = 0;
 

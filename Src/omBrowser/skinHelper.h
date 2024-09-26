@@ -1,5 +1,5 @@
-#ifndef NULLSOFT_WINAMP_SKIN_HELPER_HEADER
-#define NULLSOFT_WINAMP_SKIN_HELPER_HEADER
+#ifndef NULLSOFT_WINLAMP_SKIN_HELPER_HEADER
+#define NULLSOFT_WINLAMP_SKIN_HELPER_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -8,8 +8,8 @@
 #include <wtypes.h>
 #include "../Plugins/General/gen_ml/ml_ipc_0313.h"
 #include "../Plugins/General/gen_ml/colors.h"
-#include "../winamp/wa_ipc.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_ipc.h"
+#include "../winlamp/wa_dlg.h"
 
 #include "./ifc_skinhelper.h"
 #include "./ifc_skinnedmenu.h"
@@ -34,7 +34,7 @@ protected:
 	~SkinHelper();
 
 public:
-	static HRESULT CreateInstance(HWND hwndWinamp, SkinHelper **instance);
+	static HRESULT CreateInstance(HWND hwndWinLAMP, SkinHelper **instance);
 
 public:
 	/* Dispatchable */
@@ -106,7 +106,7 @@ protected:
 
 protected:
 	ULONG	ref;
-	HWND	hwndWinamp;
+	HWND	hwndWinLAMP;
 	HMODULE mlModule;
 	HRESULT mlLoadResult;
 	HFONT	playlistFont;
@@ -130,4 +130,4 @@ protected:
 };
 
 
-#endif // NULLSOFT_WINAMP_SKIN_HELPER_HEADER
+#endif // NULLSOFT_WINLAMP_SKIN_HELPER_HEADER

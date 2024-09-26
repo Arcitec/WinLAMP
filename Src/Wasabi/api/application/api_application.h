@@ -38,8 +38,8 @@ protected:
 	~api_application()                       {}
 
 public:
-	const wchar_t *main_getAppName();           // returns (e.g.) "Winamp"
-	const wchar_t *main_getVersionString();     // returns (e.g.) "Winamp 5.12"
+	const wchar_t *main_getAppName();           // returns (e.g.) "WinLAMP"
+	const wchar_t *main_getVersionString();     // returns (e.g.) "WinLAMP 5.12"
 	const wchar_t *main_getVersionNumString();  // returns (e.g.) "5.12"
 	unsigned int   main_getBuildNumber();       // returns (e.g.) 666
 	GUID           main_getGUID();
@@ -71,7 +71,7 @@ public:
 	bool           app_translateAccelerators( MSG *msg );
 	int            app_getAccelerators( HWND hwnd, HACCEL *phAccel, INT cchAccelMax, BOOL bGlobal ); // phAccel == NULL && cchAccelMax == 0 -> returns accels count
 
-	/* register window as part of winamp global group (5.54+) */
+	/* register window as part of winlamp global group (5.54+) */
 	void           app_registerGlobalWindow( HWND hwnd );
 	void           app_unregisterGlobalWindow( HWND hwnd );
 
@@ -99,7 +99,7 @@ public:
 #endif  // !_WIN32
 
 	/*
-	note: on windows, these two functions DON'T call Set/GetCurrentDirectory, Winamp maintains it's own path
+	note: on windows, these two functions DON'T call Set/GetCurrentDirectory, WinLAMP maintains it's own path
 	 because calling SetCurrentDirectory locks the folder
 	Added for 5.34
 	*/
@@ -117,8 +117,8 @@ public:
 	// returns an ID unique to this computer, but not unique to the logged in user (two windows accts would share this ID)
 	int            GetMachineID( GUID *id );
 	// returns an ID unique to this user.  Another user logged in to the computer will have a different ID
-	// note that if Winamp was installed with "shared settings", the IDs of multiple users will probably be identical
-	// as we're just storing it in winamp.ini for now
+	// note that if WinLAMP was installed with "shared settings", the IDs of multiple users will probably be identical
+	// as we're just storing it in winlamp.ini for now
 	int            GetUserID( GUID *id );
 	// returns a unique ID for this session.  Generated on the fly the first time someone calls this function
 	int            GetSessionID( GUID *id );

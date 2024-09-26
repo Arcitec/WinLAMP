@@ -448,7 +448,7 @@ void playFiles(int enqueue, int all)
 
 			if (!cnt)
 			{
-				if (!enqueue) SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_DELETE);
+				if (!enqueue) SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_DELETE);
 				cnt++;
 			}
 
@@ -462,9 +462,9 @@ void playFiles(int enqueue, int all)
 			s.length   = itemCache.Items[i].length;
 #ifndef _DEBUG
 			ndestring_retain(itemCache.Items[i].filename);
-			SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW_NDE);
+			SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW_NDE);
 #else
-			SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
+			SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
 #endif
 		}
 	}
@@ -472,11 +472,11 @@ void playFiles(int enqueue, int all)
 	{
 		if (foo_selected >= 0)
 		{
-			SendMessage(plugin.hwndWinampParent, WM_WA_IPC, foo_selected, IPC_SETPLAYLISTPOS);
-			SendMessage(plugin.hwndWinampParent, WM_COMMAND, 40047, 0); // stop button, literally
-			SendMessage(plugin.hwndWinampParent, WM_COMMAND, 40045, 0); // play button, literally
+			SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, foo_selected, IPC_SETPLAYLISTPOS);
+			SendMessage(plugin.hwndWinLAMPParent, WM_COMMAND, 40047, 0); // stop button, literally
+			SendMessage(plugin.hwndWinLAMPParent, WM_COMMAND, 40045, 0); // play button, literally
 		}
-		else if (!enqueue) SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_STARTPLAY);
+		else if (!enqueue) SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_STARTPLAY);
 	}
 }
 
@@ -640,7 +640,7 @@ static void RecycleSelectedItems()
 	fileOp.wFunc = FO_DELETE;
 	fileOp.pFrom = 0;
 	fileOp.pTo = 0;
-	fileOp.fFlags = SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_USES_RECYCLEBIN) ? FOF_ALLOWUNDO : 0;
+	fileOp.fFlags = SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_USES_RECYCLEBIN) ? FOF_ALLOWUNDO : 0;
 	fileOp.fAnyOperationsAborted = 0;
 	fileOp.hNameMappings = 0;
 	fileOp.lpszProgressTitle = 0;
@@ -1204,7 +1204,7 @@ static void initColumnsHeader(HWND hwndList)
 		if (columnOrder[index] == MEDIAVIEW_COL_CLOUD)
 		{
 			if (!cloud_hinst || cloud_hinst == (HINSTANCE)1 ||
-				!SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_CLOUD_ACTIVE))
+				!SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_CLOUD_ACTIVE))
 			{
 				MLSkinnedHeader_SetCloudColumn(ListView_GetHeader(hwndList), -1);
 				SetPropW(hwndList, L"pmp_list_info", (HANDLE)-1);
@@ -1277,7 +1277,7 @@ static INT_PTR CALLBACK needAddFilesProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,
 				}
 				break;
 			case IDC_BTN_LINK_PROMO:
-				if (BN_CLICKED == HIWORD(wParam)) ShellExecuteA(plugin.hwndWinampParent, "open", "https://help.winamp.com/hc/articles/8105244490772-Player-Overview", NULL, ".", 0);
+				if (BN_CLICKED == HIWORD(wParam)) ShellExecuteA(plugin.hwndWinLAMPParent, "open", "https://help.winlamp.com/hc/articles/8105244490772-Player-Overview", NULL, ".", 0);
 				break;
 		}
 		break;
@@ -1398,7 +1398,7 @@ static void SetRating(UINT iItem, INT newRating, HWND hwndList)
 					else
 						buf[0] = 0;
 					updateFileInfo(itemCache.Items[iItem].filename, DB_FIELDNAME_rating, buf);
-					SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_WRITE_EXTENDED_FILE_INFO);
+					SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_WRITE_EXTENDED_FILE_INFO);
 				}
 			}
 			NDE_Table_DestroyScanner(g_table, s);
@@ -1455,7 +1455,7 @@ static BOOL Header_OnItemChanging(HWND hwndDlg, NMHEADERW *phdr, LRESULT *pResul
 		else if (MEDIAVIEW_COL_CLOUD == columnOrder[phdr->iItem])
 		{
 			if (!cloud_hinst || cloud_hinst == (HINSTANCE)1 ||
-				!SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_CLOUD_ACTIVE))
+				!SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_CLOUD_ACTIVE))
 				phdr->pitem->cxy = 0;
 			else
 			{
@@ -1586,8 +1586,8 @@ static void Dialog_OnContextMenu(HWND hwndDlg, HWND hwndFrom, int x, int y)
 	s.hwnd = 0;
 	s.build_hMenu = 0;
 
-	IPC_LIBRARY_SENDTOMENU = SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINAMP_IPCMESSAGE);
-	if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)0, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
+	IPC_LIBRARY_SENDTOMENU = SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)0, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
 	{
 		s.mode = 1;
 		s.hwnd = hwndDlg;
@@ -1635,7 +1635,7 @@ static void Dialog_OnContextMenu(HWND hwndDlg, HWND hwndFrom, int x, int y)
 		};
 
 		if (!(!cloud_hinst || cloud_hinst == (HINSTANCE)1 ||
-			  !SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_CLOUD_ACTIVE)))
+			  !SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_CLOUD_ACTIVE)))
 		{
 			MENUITEMINFOW m = {sizeof(m), MIIM_TYPE | MIIM_ID | MIIM_SUBMENU, MFT_SEPARATOR, 0};
 			m.wID = CLOUD_SOURCE_MENUS - 1;
@@ -1808,7 +1808,7 @@ static void Dialog_OnContextMenu(HWND hwndDlg, HWND hwndFrom, int x, int y)
 							else
 								buf[0] = 0;
 							updateFileInfo(itemCache.Items[x].filename, DB_FIELDNAME_rating, buf);
-							SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_WRITE_EXTENDED_FILE_INFO);
+							SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_WRITE_EXTENDED_FILE_INFO);
 						}
 					}
 				}
@@ -1873,7 +1873,7 @@ static void Dialog_OnContextMenu(HWND hwndDlg, HWND hwndFrom, int x, int y)
 			if (s.mode == 2)
 			{
 				s.menu_id = r;
-				if (SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
+				if (SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
 				{
 					// build my data.
 					s.mode = 3;
@@ -1881,7 +1881,7 @@ static void Dialog_OnContextMenu(HWND hwndDlg, HWND hwndFrom, int x, int y)
 					itemRecordListW myObj = {0, };
 					copyFilesToItemCacheW(&myObj); // does not dupe strings
 					s.data = (void*) & myObj;
-					LRESULT result = SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM) & s, IPC_LIBRARY_SENDTOMENU);
+					LRESULT result = SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM) & s, IPC_LIBRARY_SENDTOMENU);
 					if (result != 1)
 					{
 						s.mode = 3;
@@ -1890,7 +1890,7 @@ static void Dialog_OnContextMenu(HWND hwndDlg, HWND hwndFrom, int x, int y)
 						convertRecordList(&objA, &myObj);
 						s.data = (void*) & objA;
 
-						SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU);
+						SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU);
 						freeRecordList(&objA);
 					}
 					_aligned_free(myObj.Items);
@@ -1903,7 +1903,7 @@ static void Dialog_OnContextMenu(HWND hwndDlg, HWND hwndFrom, int x, int y)
 	if (s.mode)
 	{
 		s.mode = 4;
-		SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU); // cleanup
+		SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU); // cleanup
 	}
 	sendto_hmenu = 0;
 	DestroyMenu(cloud_hmenu);
@@ -2625,14 +2625,14 @@ LRESULT pmp_listview(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 					}
 					else
 					{
-						if (!cloud_hinst) cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
+						if (!cloud_hinst) cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
 						if (cloud_hinst && cloud_hinst != (HINSTANCE)1)
 						{
-							winampMediaLibraryPlugin *(*gp)();
-							gp = (winampMediaLibraryPlugin * (__cdecl *)(void))GetProcAddress(cloud_hinst, "winampGetMediaLibraryPlugin");
+							winlampMediaLibraryPlugin *(*gp)();
+							gp = (winlampMediaLibraryPlugin * (__cdecl *)(void))GetProcAddress(cloud_hinst, "winlampGetMediaLibraryPlugin");
 							if (gp)
 							{
-								winampMediaLibraryPlugin *mlplugin = gp();
+								winlampMediaLibraryPlugin *mlplugin = gp();
 								if (mlplugin && (mlplugin->version >= MLHDR_VER_OLD && mlplugin->version <= MLHDR_VER))
 								{
 									WASABI_API_LNGSTRINGW_BUF(IDS_TRACK_AVAILABLE, tt_buf, ARRAYSIZE(tt_buf));
@@ -2784,14 +2784,14 @@ static INT_PTR Dialog_OnInit(HWND hwndDlg, HWND hwndFocus, LPARAM lParam)
 	last_item = -1;
 	tt_buf[0] = 0;
 
-	if (!cloud_hinst) cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
+	if (!cloud_hinst) cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
 	if (cloud_hinst && cloud_hinst != (HINSTANCE)1)
 	{
-		winampMediaLibraryPlugin *(*gp)();
-		gp = (winampMediaLibraryPlugin * (__cdecl *)(void))GetProcAddress(cloud_hinst, "winampGetMediaLibraryPlugin");
+		winlampMediaLibraryPlugin *(*gp)();
+		gp = (winlampMediaLibraryPlugin * (__cdecl *)(void))GetProcAddress(cloud_hinst, "winlampGetMediaLibraryPlugin");
 		if (gp)
 		{
-			winampMediaLibraryPlugin *mlplugin = gp();
+			winlampMediaLibraryPlugin *mlplugin = gp();
 			if (mlplugin && (mlplugin->version >= MLHDR_VER_OLD && mlplugin->version <= MLHDR_VER))
 			{
 				int64_t *out_ids = 0;
@@ -3022,7 +3022,7 @@ static void Dialog_OnInitMenuPopup(HWND hwndDlg, HMENU  hMenu, UINT nIndex, BOOL
 	if (hMenu && hMenu == s.build_hMenu && s.mode == 1)
 	{
 		myMenu = TRUE;
-		if (SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
+		if (SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU) == (LRESULT)-1)
 			s.mode = 2;
 		myMenu = FALSE;
 	}
@@ -3525,7 +3525,7 @@ static void Dialog_OnSyncHeaderOrder(HWND hwndDlg, HWND hwndHeader)
 				if (tempOrder[pOrder[order]] == MEDIAVIEW_COL_CLOUD)
 				{
 					if (!cloud_hinst || cloud_hinst == (HINSTANCE)1 ||
-						!SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_CLOUD_ACTIVE))
+						!SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_CLOUD_ACTIVE))
 					{
 						MLSkinnedHeader_SetCloudColumn(ListView_GetHeader(hwndList), -1);
 						SetPropW(hwndList, L"pmp_list_info", (HANDLE)-1);
@@ -3845,7 +3845,7 @@ static INT_PTR CALLBACK custColumns_dialogProc(HWND hwndDlg, UINT uMsg, WPARAM w
 				// if no cloud support at all then we hide everything
 				if (!cloud_hinst || cloud_hinst == (HINSTANCE)1) continue;
 				column_id = ((!cloud_hinst || cloud_hinst == (HINSTANCE)1 ||
-							 !SendMessageW(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_CLOUD_ACTIVE)) ? IDS_CLOUD_HIDDEN : IDS_CLOUD);
+							 !SendMessageW(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_CLOUD_ACTIVE)) ? IDS_CLOUD_HIDDEN : IDS_CLOUD);
 			}
 			int r = SendMessageW(m_curlistbox_hwnd, LB_ADDSTRING, 0, (LPARAM)WASABI_API_LNGSTRINGW(column_id));
 			SendMessageW(m_curlistbox_hwnd, LB_SETITEMDATA, r, c);
@@ -3864,7 +3864,7 @@ static INT_PTR CALLBACK custColumns_dialogProc(HWND hwndDlg, UINT uMsg, WPARAM w
 					// if no cloud support at all then we hide everything
 					if (!cloud_hinst || cloud_hinst == (HINSTANCE)1) continue;
 					column_id = ((!cloud_hinst || cloud_hinst == (HINSTANCE)1 ||
-								 !SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_CLOUD_ACTIVE)) ? IDS_CLOUD_HIDDEN : IDS_CLOUD);
+								 !SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_CLOUD_ACTIVE)) ? IDS_CLOUD_HIDDEN : IDS_CLOUD);
 				}
 				int r = SendMessageW(m_availlistbox_hwnd, LB_ADDSTRING, 0, (LPARAM)WASABI_API_LNGSTRINGW(column_id));
 				SendMessageW(m_availlistbox_hwnd, LB_SETITEMDATA, r, i);

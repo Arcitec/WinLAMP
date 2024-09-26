@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <testprovider>
-	<imageBase>c:\winamp\ml_devices\resources\food</imageBase>
+	<imageBase>c:\winlamp\ml_devices\resources\food</imageBase>
 	<connect>iconTest;apple;banana;grape;pear;pepper;eggplant;cucumber;carrot</connect>
 	<connections>
 		<connection name="usb">

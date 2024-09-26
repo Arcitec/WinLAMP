@@ -61,9 +61,9 @@ void VideoThread::VidThread()
 
 					buffer->buffer->GetBufferAndLength((BYTE **)&data, &size);
 					if (buffer->drmProtected)
-						winamp.EncryptedDrawFrame(converter->Convert(data));
+						winlamp.EncryptedDrawFrame(converter->Convert(data));
 					else
-						winamp.DrawFrame(converter->Convert(data));
+						winlamp.DrawFrame(converter->Convert(data));
 
 					try {
 						buffer->buffer->Release();
@@ -99,9 +99,9 @@ void VideoThread::AddAPC(MediaBuffer *buffer)
 			DWORD size;
 			buffer->buffer->GetBufferAndLength((BYTE **)&data, &size);
 			if (buffer->drmProtected)
-				winamp.EncryptedDrawFrame(converter->Convert(data));
+				winlamp.EncryptedDrawFrame(converter->Convert(data));
 			else
-				winamp.DrawFrame(converter->Convert(data));
+				winlamp.DrawFrame(converter->Convert(data));
 
 			buffer->buffer->Release();
 			if (buffers.size() >= config_video_cache_frames)
@@ -131,11 +131,11 @@ VOID CALLBACK VideoThread::VideoThread_VideoOpenAPC(ULONG_PTR params)
 	VideoOpenParameters *p = (VideoOpenParameters *)params;
 	if (p->drm)
 	{
-		winamp.OpenEncryptedVideo(p->width, p->height, !!p->flip, p->aspect, p->color_format);
+		winlamp.OpenEncryptedVideo(p->width, p->height, !!p->flip, p->aspect, p->color_format);
 	}
 	else
 	{
-		winamp.OpenVideo(p->width, p->height, !!p->flip, p->aspect, p->color_format);
+		winlamp.OpenVideo(p->width, p->height, !!p->flip, p->aspect, p->color_format);
 	}
 }
 
@@ -155,9 +155,9 @@ void VideoThread::OpenVideo(bool drm, int width, int height, bool flip, double a
 VOID CALLBACK VideoThread::VideoThread_VideoCloseAPC(ULONG_PTR params)
 {
 	if (params)
-		winamp.CloseEncryptedVideo();
+		winlamp.CloseEncryptedVideo();
 	else
-		winamp.CloseVideo();
+		winlamp.CloseVideo();
 }
 
 void VideoThread::CloseVideo(bool drm)

@@ -5,14 +5,14 @@
 #include <dbghelp.h>
 #include "resource.h"
 #define NO_IVIDEO_DECLARE
-#include "..\winamp\wa_ipc.h"
+#include "..\winlamp\wa_ipc.h"
 #include "settings.h"
-#include "../winamp/gen.h"
+#include "../winlamp/gen.h"
 
 extern Settings settings;
 extern prefsDlgRecW prefItem;
-extern char *winampVersion;
-extern "C" winampGeneralPurposePlugin plugin;
+extern char *winlampVersion;
+extern "C" winlampGeneralPurposePlugin plugin;
 
 extern "C" __declspec(dllexport) int StartHandler(wchar_t* iniPath);
 extern "C" LONG WINAPI FeedBackFilter( struct _EXCEPTION_POINTERS *pExceptionInfo );

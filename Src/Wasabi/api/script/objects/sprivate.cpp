@@ -9,7 +9,7 @@
 #include "../nu/AutoWide.h"
 #include "../nu/AutoChar.h"
 #include "../nu/ns_wc.h"
-#include "../Winamp/buildtype.h"
+#include "../WinLAMP/buildtype.h"
 #include "../nu/refcount.h"
 #include <shlobj.h>
 #include <shlwapi.h>
@@ -228,7 +228,7 @@ scriptVar SPrivate::vcpu_updateLinks(SCRIPT_FUNCTION_PARAMS, ScriptObject *objec
 	if (!langIdentifier)
 		langIdentifier = L"en-US";
 
-	url = StringPrintf("http://client.winamp.com/data/skins?o=links&sid=bento&version=%s&waversion=%s&build=%i&browserversion=%s&lang=%s", AutoChar(version.data.sdata), WASABI_API_APP->main_getVersionNumString(), WASABI_API_APP->main_getBuildNumber(),AutoChar(bversion.data.sdata), AutoChar(langIdentifier));
+	url = StringPrintf("http://client.winlamp.com/data/skins?o=links&sid=bento&version=%s&waversion=%s&build=%i&browserversion=%s&lang=%s", AutoChar(version.data.sdata), WASABI_API_APP->main_getVersionNumString(), WASABI_API_APP->main_getBuildNumber(),AutoChar(bversion.data.sdata), AutoChar(langIdentifier));
 	//url = StringPrintf("http://martin.skinconsortium.com/links.php?o=links&sid=bento&version=%s&waversion=%s&build=%i&browserversion=%s", AutoChar(version.data.sdata), WASABI_API_APP->main_getVersionNumString(), WASABI_API_APP->main_getBuildNumber(),AutoChar(bversion.data.sdata));
 
 	SPrivate *sp = static_cast<SPrivate *>(object->vcpu_getInterface(SPrivate_script_object_guid));

@@ -47,14 +47,14 @@ static INT_PTR CALLBACK findingMetadata2_dlgproc(HWND hwndDlg, UINT uMsg, WPARAM
 						}
 					} else {
 						filenameToItemRecord(map[i]->fn, map[i]->ice); // ugh. Disk intensive.
-						SendMessage(plugin.hwndWinampParent, WM_ML_IPC, (WPARAM)map[i]->ice, ML_IPC_DB_ADDORUPDATEITEMW);
+						SendMessage(plugin.hwndWinLAMPParent, WM_ML_IPC, (WPARAM)map[i]->ice, ML_IPC_DB_ADDORUPDATEITEMW);
 						added++;
 						i++;
 						PostMessage(hwndDlg, WM_TIMER, 1, 0);
 						return 0;
 					}
 				}
-				if (added) SendMessage(plugin.hwndWinampParent,WM_ML_IPC,0,ML_IPC_DB_SYNCDB);
+				if (added) SendMessage(plugin.hwndWinLAMPParent,WM_ML_IPC,0,ML_IPC_DB_SYNCDB);
 				EndDialog(hwndDlg,0);
 			}
 			break;
@@ -66,7 +66,7 @@ void mapFilesToItemRecords(filenameMap ** map0, int len, HWND centerWindow) {
 	filenameMapping = map0;
 	filenameMapLen = len;
 	if (filenameMapLen  > 0)
-		WASABI_API_DIALOGBOXPARAMW(IDD_GETTINGMETADATA,plugin.hwndWinampParent, findingMetadata2_dlgproc, (LPARAM)centerWindow);
+		WASABI_API_DIALOGBOXPARAMW(IDD_GETTINGMETADATA,plugin.hwndWinLAMPParent, findingMetadata2_dlgproc, (LPARAM)centerWindow);
 }
 
 C_ItemList * fileListToItemRecords(wchar_t** files,int l, HWND centerWindow) {
@@ -356,7 +356,7 @@ void getTitle(Device * dev, songid_t song, const wchar_t * filename,wchar_t * bu
 	buf[0]=0; buf[len-1]=0;
 	tagItem item = {song,dev,filename};
 	waFormatTitleExtended fmt={filename,0,NULL,&item,buf,len,tagFunc,tagFreeFunc};
-	SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&fmt, IPC_FORMAT_TITLE_EXTENDED);
+	SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&fmt, IPC_FORMAT_TITLE_EXTENDED);
 }
 
 #define atoi_NULLOK(s) ((s)?_wtoi(s):0)
@@ -374,63 +374,63 @@ void filenameToItemRecord(wchar_t * file, itemRecordW * ice)
 	extendedFileInfoStructW efs={file,NULL,buf,512};
 
 	efs.metadata=L"title"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	if(buf[0]) { ice->title=_wcsdup(buf); gartist=L""; galbum=L""; gtrack=-1;}
 	else ice->title=_wcsdup(gtitle);
 
 	efs.metadata=L"album";
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	if(buf[0]) ice->album=_wcsdup(buf);
 	else ice->album=_wcsdup(galbum);
 
 	efs.metadata=L"artist"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	if(buf[0]) ice->artist=_wcsdup(buf);
 	else ice->artist=_wcsdup(gartist);
 
 	efs.metadata=L"comment"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	ice->comment=_wcsdup(buf);
 
 	efs.metadata=L"genre"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	ice->genre=_wcsdup(buf);
 
 	efs.metadata=L"albumartist"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	ice->albumartist=_wcsdup(buf);
 
 	efs.metadata=L"replaygain_album_gain"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	ice->replaygain_album_gain=_wcsdup(buf);
 
 	efs.metadata=L"replaygain_track_gain"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	ice->replaygain_track_gain=_wcsdup(buf);
 
 	efs.metadata=L"publisher"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	ice->publisher=_wcsdup(buf);
 
 	efs.metadata=L"composer"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	ice->composer=_wcsdup(buf);
 
 	efs.metadata=L"year"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	ice->year=atoi_NULLOK(buf);
 
 	efs.metadata=L"track"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	if(buf[0]) ice->track=atoi_NULLOK(buf);
 	else ice->track=gtrack;
 
 	efs.metadata=L"tracks"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	ice->tracks=atoi_NULLOK(buf);
 
 	efs.metadata=L"rating"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	ice->rating=atoi_NULLOK(buf);
 
 	__int64 file_size=INVALID_FILE_SIZE;
@@ -449,53 +449,53 @@ void filenameToItemRecord(wchar_t * file, itemRecordW * ice)
 	ice->lastupd=time(NULL);
 
 	efs.metadata=L"bitrate"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	ice->bitrate=atoi_NULLOK(buf);
 
 	efs.metadata=L"type"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	ice->type=atoi_NULLOK(buf);
 
 	efs.metadata=L"disc"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	ice->disc=atoi_NULLOK(buf);
 
 	efs.metadata=L"discs"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	ice->discs=atoi_NULLOK(buf);
 
 	efs.metadata=L"bpm"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	ice->bpm=atoi_NULLOK(buf);
 
 	basicFileInfoStructW b={efs.filename,0};
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&b,IPC_GET_BASIC_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&b,IPC_GET_BASIC_FILE_INFOW);
 	ice->length=b.length;
 
 	// additional fields to match (if available) with a full library
 	// response this is mainly for improving the cloud compatibility
 	efs.metadata=L"lossless"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	if(buf[0]) setRecordExtendedItem(ice,L"lossless",buf);
 
 	efs.metadata=L"director"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	if(buf[0]) setRecordExtendedItem(ice,L"director",buf);
 
 	efs.metadata=L"producer"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	if(buf[0]) setRecordExtendedItem(ice,L"producer",buf);
 
 	efs.metadata=L"width"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	if(buf[0]) setRecordExtendedItem(ice,L"width",buf);
 
 	efs.metadata=L"height"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	if(buf[0]) setRecordExtendedItem(ice,L"height",buf);
 
 	efs.metadata=L"mime"; buf[0]=0;
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efs,IPC_GET_EXTENDED_FILE_INFOW);
 	if(buf[0]) setRecordExtendedItem(ice,L"mime",buf);
 
 	// Not filled in are: playcount, lastplay
@@ -504,13 +504,13 @@ void filenameToItemRecord(wchar_t * file, itemRecordW * ice)
 }
 
 void copyTags(itemRecordW * in, wchar_t * out) {
-	// check if the old file still exists - if it does, we will let Winamp copy metadata for us
+	// check if the old file still exists - if it does, we will let WinLAMP copy metadata for us
 	if (wcscmp(in->filename, out) && PathFileExists(in->filename))
 	{
 		copyFileInfoStructW copy;
 		copy.dest = out;
 		copy.source = in->filename;
-		if(SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&copy, IPC_COPY_EXTENDED_FILE_INFOW) == 0) // 0 means success
+		if(SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&copy, IPC_COPY_EXTENDED_FILE_INFOW) == 0) // 0 means success
 			return;
 	}
 }

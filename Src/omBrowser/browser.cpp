@@ -4,10 +4,10 @@
 #include "./graphics.h"
 #include "./resource.h"
 
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 #include "../Plugins/General/gen_ml/colors.h"
-#include "../winamp/IWasabiDispatchable.h"
-#include "../winamp/JSAPI_Info.h"
+#include "../winlamp/IWasabiDispatchable.h"
+#include "../winlamp/JSAPI_Info.h"
 
 #include "./obj_ombrowser.h"
 #include "./ifc_skinhelper.h"
@@ -74,8 +74,8 @@
 	BHBOOLCALLBACK EventSetFullscreen;
 	BHCALLBACK EventClosePopup;*/
 
-Browser::Browser(obj_ombrowser *browserMngr, HWND winampWindow, HWND hParent) 
-		: HTMLContainer2(winampWindow, hParent),
+Browser::Browser(obj_ombrowser *browserMngr, HWND winlampWindow, HWND hParent) 
+		: HTMLContainer2(winlampWindow, hParent),
 		EventDocumentReady(NULL),
 		EventNavigateComplete(NULL),
 		EventDownloadBegin(NULL), 
@@ -142,9 +142,9 @@ HRESULT Browser::SetExternal(IDispatch *pDispatch)
 	return S_OK;
 }
 
-Browser *Browser::CreateInstance(obj_ombrowser *browserManager, HWND winampWindow, HWND hParent)
+Browser *Browser::CreateInstance(obj_ombrowser *browserManager, HWND winlampWindow, HWND hParent)
 {
-	Browser *instance = new Browser(browserManager, winampWindow, hParent);
+	Browser *instance = new Browser(browserManager, winlampWindow, hParent);
 	return instance;
 }
 

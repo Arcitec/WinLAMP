@@ -141,7 +141,7 @@ extern "C"
 {
 	//returns handle!=0 if successful, 0 if error
 	//size will return the final nb of bytes written to the output, -1 if unknown
-	__declspec( dllexport ) intptr_t winampGetExtendedRead_openW(const wchar_t *fn, int *size, int *bps, int *nch, int *srate)
+	__declspec( dllexport ) intptr_t winlampGetExtendedRead_openW(const wchar_t *fn, int *size, int *bps, int *nch, int *srate)
 	{
 		ExtendedRead *ext = new ExtendedRead;
 		if (ext->Open(fn, size, bps, nch, srate, false))
@@ -153,7 +153,7 @@ extern "C"
 
 	//returns handle!=0 if successful, 0 if error
 	//size will return the final nb of bytes written to the output, -1 if unknown
-	__declspec( dllexport ) intptr_t winampGetExtendedRead_openW_float(const wchar_t *fn, int *size, int *bps, int *nch, int *srate)
+	__declspec( dllexport ) intptr_t winlampGetExtendedRead_openW_float(const wchar_t *fn, int *size, int *bps, int *nch, int *srate)
 	{
 		ExtendedRead *ext = new ExtendedRead;
 		if (ext->Open(fn, size, bps, nch, srate, true))
@@ -164,7 +164,7 @@ extern "C"
 	}
 
 	//returns nb of bytes read. -1 if read error (like CD ejected). if (ret == 0), EOF is assumed
-	__declspec( dllexport ) intptr_t winampGetExtendedRead_getData(intptr_t handle, char *dest, int len, volatile int *killswitch)
+	__declspec( dllexport ) intptr_t winlampGetExtendedRead_getData(intptr_t handle, char *dest, int len, volatile int *killswitch)
 	{
 		ExtendedRead *ext = (ExtendedRead *)handle;
 
@@ -214,7 +214,7 @@ extern "C"
 	}
 
 	// return nonzero on success, zero on failure.
-	__declspec( dllexport ) int winampGetExtendedRead_setTime(intptr_t handle, int millisecs)
+	__declspec( dllexport ) int winlampGetExtendedRead_setTime(intptr_t handle, int millisecs)
 	{
 		ExtendedRead *ext = (ExtendedRead *)handle;
 
@@ -231,7 +231,7 @@ extern "C"
 		return 1;
 	}
 
-	__declspec( dllexport ) void winampGetExtendedRead_close(intptr_t handle)
+	__declspec( dllexport ) void winlampGetExtendedRead_close(intptr_t handle)
 	{
 		ExtendedRead *ext = (ExtendedRead *)handle;
 		delete ext;

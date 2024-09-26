@@ -14,8 +14,8 @@
 #define IDS_INITIALIZING                8
 #define IDS_ABORTING                    9
 #define IDS_UNLIMITED                   10
-#define IDS_PURCHASE_WINAMP_PRO_PROMPT  11
-#define IDS_WINAMP_PRO_FEATURE          12
+#define IDS_PURCHASE_WINLAMP_PRO_PROMPT  11
+#define IDS_WINLAMP_PRO_FEATURE          12
 #define IDS_ARTIST                      13
 #define IDS_TITLE                       14
 #define IDS_ALBUM_ARTIST                15

@@ -1,5 +1,5 @@
-#ifndef NULLSOFT_WINAMP_OMBROWSER_VIEW_HEADER
-#define NULLSOFT_WINAMP_OMBROWSER_VIEW_HEADER
+#ifndef NULLSOFT_WINLAMP_OMBROWSER_VIEW_HEADER
+#define NULLSOFT_WINLAMP_OMBROWSER_VIEW_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -45,4 +45,4 @@ HWND BrowserView_Create(obj_ombrowser *browserManager, ifc_omservice *service, H
 #define BrowserView_ShowOperation(/*HWND*/ __hwndView, /*const OPERATIONINFO* */ __pOperationInfo)\
 	BrowserControl_ShowOperation(__hwndView, __pOperationInfo)
 
-#endif // NULLSOFT_WINAMP_OMBROWSER_VIEW_HEADER
+#endif // NULLSOFT_WINLAMP_OMBROWSER_VIEW_HEADER

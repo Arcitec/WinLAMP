@@ -145,9 +145,9 @@ BEGIN
     IDS_CHOOSE_FOLDER       "Choose folder to store downloaded media."
     IDS_FILE_NOT_FOUND      "Cannot connect to %s\nFile not Found."
     IDS_CONNECTION_TIMED_OUT "Cannot connect to %s\nConnection timed out."
-    IDS_NO_JNETLIB          "HTTP Downloader library is missing.\nPlease reinstall Winamp."
+    IDS_NO_JNETLIB          "HTTP Downloader library is missing.\nPlease reinstall WinLAMP."
     IDS_JNETLIB_MISSING     "JNetLib missing"
-    IDS_NO_EXPAT            "XML Parsing library is missing.\nPlease reinstall Winamp."
+    IDS_NO_EXPAT            "XML Parsing library is missing.\nPlease reinstall WinLAMP."
 END
 
 STRINGTABLE 

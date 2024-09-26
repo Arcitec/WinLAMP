@@ -18,7 +18,7 @@ public:
 
 private:
 
-  static void createWinampTypes();
+  static void createWinLAMPTypes();
   static void regmimetype(const char *mtype, const char *programname, const char *ext, int nsonly);
 
   // workaround for (damn) c++ type checking

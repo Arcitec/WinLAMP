@@ -2,7 +2,7 @@
 #include "resource.h"
 #include <shlwapi.h>
 #include <api/service/waServiceFactory.h>
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../Agave/language/api_language.h"
 #include "CompressionUtility.h"
 #include "minizip/unzip.h"
@@ -223,7 +223,7 @@ static int Download(char* url,UINT* f_size,BYTE** m_buf)
 	int t=SendMessage(mod.hMainWindow,WM_USER,0,IPC_GETHTTPGETTER);
 	if (!t || t==1)
 	{
-#ifndef WINAMPX
+#ifndef WINLAMPX
     MessageBoxA(mod.hMainWindow,WASABI_API_LNGSTRING(STRING_URL_ERROR),ERROR,MB_ICONERROR);
 #endif
 		return 0;
@@ -786,7 +786,7 @@ In_Module mod=
 
 extern "C"
 {
-	__declspec( dllexport ) In_Module * winampGetInModule2()
+	__declspec( dllexport ) In_Module * winlampGetInModule2()
 	{
 		return &mod;
 	}
@@ -798,7 +798,7 @@ HINSTANCE MIDI_callback::GetInstance() {return mod.hDllInstance;}
 
 void MIDI_callback::Error(const char * tx)
 {
-#ifndef WINAMPX
+#ifndef WINLAMPX
   MessageBoxA(mod.hMainWindow,tx,0,MB_ICONERROR);
 #endif
 }

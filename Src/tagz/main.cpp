@@ -53,7 +53,7 @@ int TagzComponent::RegisterServicesSafeModeOk()
 	return 1;
 }
 
-extern "C" __declspec(dllexport) ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" __declspec(dllexport) ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &tagzComponent;
 }

@@ -3,7 +3,7 @@
 #include <commctrl.h>
 #include "resource.h"
 #include <math.h>
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #pragma intrinsic(log)
 
 #ifndef _WIN64

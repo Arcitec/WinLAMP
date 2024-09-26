@@ -189,7 +189,7 @@ int Keyboard::forwardKbdMessage(ifc_window *from, int msg, int wp, int lp)
 {
   OSWINDOWHANDLE wnd_to = WASABI_API_WND->main_getRootWnd()->gethWnd();
   // note to self:
-  // this is necessary for winamp2's TranslateAccelerator call to work, it seems that this function will
+  // this is necessary for winlamp2's TranslateAccelerator call to work, it seems that this function will
   // use the mouse capture wnd to determine the keyboard focus, oh thank you microsoft, because of you
   // a script has to use "complete;" to be able to detect shift+ctrl+alt + click on a toggle button, 
   // otherwise pressing a key will throw the capture away, and the button will think the mouse is gone.

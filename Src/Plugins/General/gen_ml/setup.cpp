@@ -1,5 +1,5 @@
 #include "./main.h"
-#include "../winamp/setup/svc_setup.h"
+#include "../winlamp/setup/svc_setup.h"
 
 #include <shlwapi.h>
 

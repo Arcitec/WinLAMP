@@ -1,5 +1,5 @@
 #include "OutPlugin.h"
-#include "../Winamp/In2.h"
+#include "../WinLAMP/In2.h"
 
 #include "WMDRMModule.h"
 extern In_Module plugin;

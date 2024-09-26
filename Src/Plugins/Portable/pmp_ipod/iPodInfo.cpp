@@ -1025,7 +1025,7 @@ iPodInfo *GetiPodInfo(wchar_t drive)
 		}
 		if (!yy)
 		{
-			int d = WASABI_API_DIALOGBOXPARAM(IDD_SELECTIPODTYPE,plugin.hwndWinampParent,selectipodtype_dlgproc,(LPARAM)sysinfo);
+			int d = WASABI_API_DIALOGBOXPARAM(IDD_SELECTIPODTYPE,plugin.hwndWinLAMPParent,selectipodtype_dlgproc,(LPARAM)sysinfo);
 			if (d) return NULL;
 		}
 	}

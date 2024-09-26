@@ -31,7 +31,7 @@ extern int m_float, m_src_bps;
 extern int m_is_capture;
 extern HWND m_notif_hwnd;
 extern int m_bitrate;
-#include "../Winamp/in2.h"
+#include "../WinLAMP/in2.h"
 extern In_Module mod;			// the output module (filled in near the bottom of this file)
 
 void releaseObjects();

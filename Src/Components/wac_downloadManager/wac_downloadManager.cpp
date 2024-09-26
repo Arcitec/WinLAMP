@@ -26,7 +26,7 @@
 
 #include "..\WAT\WAT.h"
 
-#include "..\Winamp\buildType.h"
+#include "..\WinLAMP\buildType.h"
 
 static const GUID internetConfigGroupGUID =
 {
@@ -218,9 +218,9 @@ DownloadToken wa::Components::WAC_DownloadManager::DownloadEx( const char *p_url
  **********************************************************************************/
 void wa::Components::WAC_DownloadManager::init()
 {
-	QString l_winamp_user_agent = QString( "%1 Winamp/%2" ).arg( QWebEngineProfile::defaultProfile()->httpUserAgent(), STR_WINAMP_PRODUCTVER ).replace( ",", "." );
+	QString l_winlamp_user_agent = QString( "%1 WinLAMP/%2" ).arg( QWebEngineProfile::defaultProfile()->httpUserAgent(), STR_WINLAMP_PRODUCTVER ).replace( ",", "." );
 
-	QWebEngineProfile::defaultProfile()->setHttpUserAgent( l_winamp_user_agent );
+	QWebEngineProfile::defaultProfile()->setHttpUserAgent( l_winlamp_user_agent );
 
 
 	_connection_authentication_required = connect( this, &QNetworkAccessManager::authenticationRequired,   this, &wa::Components::WAC_DownloadManager::on_s_authentication_required );
@@ -405,9 +405,9 @@ static void SetUserAgent( api_httpreceiver *p_http )
 	StringCchPrintfA( agent, 256, "User-Agent: %S/%S", WASABI_API_APP->main_getAppName(), WASABI_API_APP->main_getVersionNumString() );
 	p_http->addheader( agent );
 
-	//QString l_winamp_user_agent = QString( "User-Agent: %1 Winamp/%2" ).arg( QWebEngineProfile::defaultProfile()->httpUserAgent(), STR_WINAMP_PRODUCTVER ).replace( ",", "." );
+	//QString l_winlamp_user_agent = QString( "User-Agent: %1 WinLAMP/%2" ).arg( QWebEngineProfile::defaultProfile()->httpUserAgent(), STR_WINLAMP_PRODUCTVER ).replace( ",", "." );
 
-	//http->addheader( l_winamp_user_agent.toStdString().c_str() );
+	//http->addheader( l_winlamp_user_agent.toStdString().c_str() );
 }
 
 

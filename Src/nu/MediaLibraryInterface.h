@@ -6,7 +6,7 @@
 #include <tchar.h>
 
 #include "..\Plugins\General\gen_ml/ml.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 #ifndef REPLICANT_COMPAT
 #include <vector>
@@ -44,8 +44,8 @@ public:
 
 	const char    *GetIniDirectory();
 	const wchar_t *GetIniDirectoryW();
-	const char    *GetWinampIni();
-	const wchar_t *GetWinampIniW();
+	const char    *GetWinLAMPIni();
+	const wchar_t *GetWinLAMPIniW();
 	void           BuildPath( const wchar_t *pathEnd, wchar_t *path, size_t numChars );
 
 
@@ -55,7 +55,7 @@ public:
 	void           ListViewSort( int token, int columnIndex, BOOL ascending );
 	void           ListSkinUpdateView( int listSkin );
 
-	void           OpenURL( const wchar_t *url )                     { SendMessage( winamp, WM_WA_IPC, (WPARAM)url, IPC_OPEN_URL ); }
+	void           OpenURL( const wchar_t *url )                     { SendMessage( winlamp, WM_WA_IPC, (WPARAM)url, IPC_OPEN_URL ); }
 
 	int            SkinComboBox( HWND comboBox );
 	void           UnskinComboBox( int token );
@@ -73,31 +73,31 @@ public:
 	void           GetFileInfo( const char *filename, char *title, int titleCch, int *length );
 	void           GetFileInfo( const wchar_t *filename, wchar_t *title, int titleCch, int *length );
 
-	void           ClearPlaylist()                                       { SendMessage( winamp, WM_WA_IPC, 0, IPC_DELETE ); }
+	void           ClearPlaylist()                                       { SendMessage( winlamp, WM_WA_IPC, 0, IPC_DELETE ); }
 	void           SwitchToPluginView( int itemId )                      { SendMessage( library, WM_ML_IPC, itemId, ML_IPC_SETCURTREEITEM ); }
-	int            GetWinampVersion()                                    { return (int)(INT_PTR)SendMessage( winamp, WM_WA_IPC, 0, IPC_GETVERSION ); }
+	int            GetWinLAMPVersion()                                    { return (int)(INT_PTR)SendMessage( winlamp, WM_WA_IPC, 0, IPC_GETVERSION ); }
 	
 	HWND           library         = 0;
-	HWND           winamp          = 0;
+	HWND           winlamp          = 0;
 	
 	HINSTANCE      instance        = 0;
 	
 	const char    *iniDirectory    = 0;
 	const wchar_t *iniDirectoryW   = 0;
 	
-	const char    *winampIni       = 0;
-	const wchar_t *winampIniW      = 0;
+	const char    *winlampIni       = 0;
+	const wchar_t *winlampIniW      = 0;
 	
 	const char    *pluginDirectory = 0;
 	
-	void           AddPreferences( prefsDlgRec &prefs )               { SendMessage( winamp, WM_WA_IPC, (WPARAM)&prefs, IPC_ADD_PREFS_DLG ); }
-	void           AddPreferences( prefsDlgRecW &prefs )              { SendMessage( winamp, WM_WA_IPC, (WPARAM)&prefs, IPC_ADD_PREFS_DLGW ); }
+	void           AddPreferences( prefsDlgRec &prefs )               { SendMessage( winlamp, WM_WA_IPC, (WPARAM)&prefs, IPC_ADD_PREFS_DLG ); }
+	void           AddPreferences( prefsDlgRecW &prefs )              { SendMessage( winlamp, WM_WA_IPC, (WPARAM)&prefs, IPC_ADD_PREFS_DLGW ); }
 	void           InsertTreeItem( MLTREEITEM &newItem );
 	void           InsertTreeItem( MLTREEITEMW &newItem );
 
 	char           *GetProxy()
 	{
-		char *proxy = (char *)SendMessage( winamp, WM_WA_IPC, 0, IPC_GET_PROXY_STRING );
+		char *proxy = (char *)SendMessage( winlamp, WM_WA_IPC, 0, IPC_GET_PROXY_STRING );
 		if ( proxy == (char *)1 || strlen(proxy) == 0 )
 			return 0;
 		else
@@ -115,12 +115,12 @@ public:
 	void           AddToMediaLibrary( const char *filename );
 	void           AddToMediaLibrary( const wchar_t *filename );
 
-	void           GoToPreferences( int id )                          { SendMessage( winamp, WM_WA_IPC, id, IPC_OPENPREFSTOPAGE ); }
-	void           GoToPreferences( prefsDlgRec &prefs )              { SendMessage( winamp, WM_WA_IPC, (WPARAM)&prefs, IPC_OPENPREFSTOPAGE ); }
-	void           GoToPreferences( prefsDlgRecW &prefs )             { SendMessage( winamp, WM_WA_IPC, (WPARAM)&prefs, IPC_OPENPREFSTOPAGE ); }
+	void           GoToPreferences( int id )                          { SendMessage( winlamp, WM_WA_IPC, id, IPC_OPENPREFSTOPAGE ); }
+	void           GoToPreferences( prefsDlgRec &prefs )              { SendMessage( winlamp, WM_WA_IPC, (WPARAM)&prefs, IPC_OPENPREFSTOPAGE ); }
+	void           GoToPreferences( prefsDlgRecW &prefs )             { SendMessage( winlamp, WM_WA_IPC, (WPARAM)&prefs, IPC_OPENPREFSTOPAGE ); }
 
-	const char    *GetFontName()                                      { return (const char *)SendMessage( winamp, WM_WA_IPC, 1, IPC_GET_GENSKINBITMAP ); }
-	int            GetFontSize()                                      { return (int)SendMessage( winamp, WM_WA_IPC, 3, IPC_GET_GENSKINBITMAP ); }
+	const char    *GetFontName()                                      { return (const char *)SendMessage( winlamp, WM_WA_IPC, 1, IPC_GET_GENSKINBITMAP ); }
+	int            GetFontSize()                                      { return (int)SendMessage( winlamp, WM_WA_IPC, 3, IPC_GET_GENSKINBITMAP ); }
 
 	void           AddBookmark( char *bookmark )
 	{
@@ -129,7 +129,7 @@ public:
 		cds.lpData = bookmark;
 		cds.cbData = (int)strlen( bookmark ) + 1;
 		
-		SendMessage( winamp, WM_COPYDATA, NULL, (LPARAM)&cds );
+		SendMessage( winlamp, WM_COPYDATA, NULL, (LPARAM)&cds );
 	}
 
 	void           AddBookmarkW( wchar_t *bookmark )
@@ -139,12 +139,12 @@ public:
 		cds.lpData = bookmark;
 		cds.cbData = (int)( sizeof( wchar_t ) * wcslen( bookmark ) + sizeof( wchar_t ) );
 		
-		SendMessage( winamp, WM_COPYDATA, NULL, (LPARAM)&cds );
+		SendMessage( winlamp, WM_COPYDATA, NULL, (LPARAM)&cds );
 	}
 
 	void           ShowMediaLibrary()                                 { SendMessage( library, WM_ML_IPC, 0, ML_IPC_ENSURE_VISIBLE ); }
 
-	const char    *GetExtensionList()                                 { return (const char *)SendMessage( winamp, WM_WA_IPC, 0, IPC_GET_EXTLIST ); }
+	const char    *GetExtensionList()                                 { return (const char *)SendMessage( winlamp, WM_WA_IPC, 0, IPC_GET_EXTLIST ); }
 	bool           IsShowing()                                        { return !!SendMessage( library, WM_ML_IPC, 0, ML_IPC_IS_VISIBLE ); }
 	void           RefreshPrefs( int prefs )                          { SendMessage( library, WM_ML_IPC, prefs, ML_IPC_REFRESH_PREFS ); }
 	void           GracenoteCancelRequest()                           { SendMessage( library, WM_ML_IPC, GRACENOTE_CANCEL_REQUEST, ML_IPC_GRACENOTE ); }// TODO: should we post this?

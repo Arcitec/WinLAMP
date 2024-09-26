@@ -1,11 +1,11 @@
-// Winamp test dsp library 0.9 for Winamp 2
+// WinLAMP test dsp library 0.9 for WinLAMP 2
 // Copyright (C) 1997, Justin Frankel/Nullsoft
 // Feel free to base any plugins on this "framework"...
 
 #include <windows.h>
 #include <commctrl.h>
 #include <math.h>
-#include "../Winamp/dsp.h"
+#include "../WinLAMP/dsp.h"
 #include "resource.h"
 
 // avoid stupid CRT silliness
@@ -27,18 +27,18 @@ int pitch_buffer_len=0;
 int quit_pitch=0;
 
 // module getter.
-winampDSPModule *getModule(int which);
+winlampDSPModule *getModule(int which);
 
-void config(struct winampDSPModule *this_mod);
-int init(struct winampDSPModule *this_mod);
-int initpitch(struct winampDSPModule *this_mod);
-void quit(struct winampDSPModule *this_mod);
-void quitpitch(struct winampDSPModule *this_mod);
-int modify_samples1(struct winampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate);
-int modify_samples2(struct winampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate);
-int modify_samples3(struct winampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate);
-int modify_samples_lopass(struct winampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate);
-int modify_samples_hipass(struct winampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate);
+void config(struct winlampDSPModule *this_mod);
+int init(struct winlampDSPModule *this_mod);
+int initpitch(struct winlampDSPModule *this_mod);
+void quit(struct winlampDSPModule *this_mod);
+void quitpitch(struct winlampDSPModule *this_mod);
+int modify_samples1(struct winlampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate);
+int modify_samples2(struct winlampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate);
+int modify_samples3(struct winlampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate);
+int modify_samples_lopass(struct winlampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate);
+int modify_samples_hipass(struct winlampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate);
 
 static INT_PTR CALLBACK pitchProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM lParam);
 
@@ -46,9 +46,9 @@ static INT_PTR CALLBACK pitchProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM 
 typedef struct {
   int version;       // DSP_HDRVER
   char *description; // description of library
-  winampDSPModule* (*getModule)(int);	// module retrieval function
+  winlampDSPModule* (*getModule)(int);	// module retrieval function
   int (*sf)(int);
-} winampDSPHeaderEx;
+} winlampDSPHeaderEx;
 
 int sf(int v)
 {
@@ -60,11 +60,11 @@ int sf(int v)
 	return res;
 }
 
-winampDSPHeaderEx hdr = { DSP_HDRVER+1, "Nullsoft DSP v0.35 for Winamp 2ARG", getModule, sf };
+winlampDSPHeaderEx hdr = { DSP_HDRVER+1, "Nullsoft DSP v0.35 for WinLAMP 2ARG", getModule, sf };
 
 
 // first module
-winampDSPModule mod =
+winlampDSPModule mod =
 {
 	"Nullsoft Echo v0.2",
 	NULL,	// hwndParent
@@ -77,7 +77,7 @@ winampDSPModule mod =
 
 
 // second module
-winampDSPModule mod2 =
+winlampDSPModule mod2 =
 {
 	"Nullsoft Stereo Voice Removal v0.2",
 	NULL,	// hwndParent
@@ -88,7 +88,7 @@ winampDSPModule mod2 =
 	quit
 };
 
-winampDSPModule mod3 =
+winlampDSPModule mod3 =
 {
 	"Nullsoft Pitch/Tempo Control v0.2",
 	NULL,	// hwndParent
@@ -99,7 +99,7 @@ winampDSPModule mod3 =
 	quitpitch
 };
 
-winampDSPModule mod4 =
+winlampDSPModule mod4 =
 {
 	"Nullsoft Lowpass Filter v1.0",
 	NULL,	// hwndParent
@@ -109,7 +109,7 @@ winampDSPModule mod4 =
 	modify_samples_lopass,
 	quit
 };
-winampDSPModule mod5 =
+winlampDSPModule mod5 =
 {
 	"Nullsoft Highpass Filter v1.0",
 	NULL,	// hwndParent
@@ -125,7 +125,7 @@ winampDSPModule mod5 =
 extern "C" {
 #endif
 // this is the only exported symbol. returns our main header.
-__declspec( dllexport ) winampDSPHeaderEx *winampDSPGetHeader2()
+__declspec( dllexport ) winlampDSPHeaderEx *winlampDSPGetHeader2()
 {
 	return &hdr;
 }
@@ -135,7 +135,7 @@ __declspec( dllexport ) winampDSPHeaderEx *winampDSPGetHeader2()
 
 // getmodule routine from the main header. Returns NULL if an invalid module was requested,
 // otherwise returns either mod1 or mod2 depending on 'which'.
-winampDSPModule *getModule(int which)
+winlampDSPModule *getModule(int which)
 {
 	switch (which)
 	{
@@ -151,7 +151,7 @@ winampDSPModule *getModule(int which)
 // configuration. Passed this_mod, as a "this" parameter. Allows you to make one configuration
 // function that shares code for all your modules (you don't HAVE to use it though, you can make
 // config1(), config2(), etc...)
-void config(struct winampDSPModule *this_mod)
+void config(struct winlampDSPModule *this_mod)
 {
 	MessageBox(this_mod->hwndParent,"This module is Copyright(C) 1997-1999, Nullsoft\n"
 									"Notes:\n"
@@ -164,11 +164,11 @@ void config(struct winampDSPModule *this_mod)
 									"Configuration",MB_OK);
 }
 
-int init(struct winampDSPModule *this_mod)
+int init(struct winlampDSPModule *this_mod)
 {
 	return 0;
 }
-int initpitch(struct winampDSPModule *this_mod)
+int initpitch(struct winlampDSPModule *this_mod)
 {
 	pitch_buffer_len=0;
 	pitch_buffer=NULL;
@@ -178,11 +178,11 @@ int initpitch(struct winampDSPModule *this_mod)
 }
 
 // cleanup (opposite of init()). Destroys the window, unregisters the window class
-void quit(struct winampDSPModule *this_mod)
+void quit(struct winlampDSPModule *this_mod)
 {
 }
 
-void quitpitch(struct winampDSPModule *this_mod)
+void quitpitch(struct winlampDSPModule *this_mod)
 {
 	if (this_mod == &mod3)
 	{
@@ -201,7 +201,7 @@ void quitpitch(struct winampDSPModule *this_mod)
 
 short echo_buf[65536], echo_buf2[65536];
 
-int modify_samples1(struct winampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate)
+int modify_samples1(struct winlampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate)
 {
 	// echo doesn't support 8 bit right now cause I'm lazy.
 	if (bps==16)
@@ -224,7 +224,7 @@ int modify_samples1(struct winampDSPModule *this_mod, short int *samples, int nu
 	return numsamples;
 }
 
-int modify_samples3(struct winampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate)
+int modify_samples3(struct winlampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate)
 {
 	int pitch=g_pitch;
 	int rlen =numsamples*bps/8*nch;
@@ -273,7 +273,7 @@ int modify_samples3(struct winampDSPModule *this_mod, short int *samples, int nu
 }
 
 
-int modify_samples2(struct winampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate)
+int modify_samples2(struct winlampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate)
 {
 	int x = numsamples;
 	if (bps == 16)
@@ -297,7 +297,7 @@ int modify_samples2(struct winampDSPModule *this_mod, short int *samples, int nu
 }
 
 /*
-int modify_samples_lopass(struct winampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate)
+int modify_samples_lopass(struct winlampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate)
 {
 	if (bps==16)
 	{
@@ -384,7 +384,7 @@ void makefilter( filter *f, int t , float sample_rate , float cutoff , float dam
 	f->m_b2 = 1.f;
 }
 
-int modify_samples_lopass(struct winampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate)
+int modify_samples_lopass(struct winlampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate)
 {
 	static int i;
 	static filter f1,f2;
@@ -419,7 +419,7 @@ int _mulspl(int a, int b)
 }
 
 
-int modify_samples_hipass(struct winampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate)
+int modify_samples_hipass(struct winlampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate)
 {
 	if (bps==16 && nch==2)
 	{

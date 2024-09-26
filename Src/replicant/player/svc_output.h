@@ -17,7 +17,7 @@ protected:
 public:
 	static GUID GetServiceType() { return output_service_guid; }
 	/* ----- Audio Output ----- */
-	// Opens winamp2-style Audio Output - good for audio-only streams (buffered, push, output-plugin-defined buffersize)
+	// Opens winlamp2-style Audio Output - good for audio-only streams (buffered, push, output-plugin-defined buffersize)
 	int AudioOpen(const ifc_audioout::Parameters *format, ifc_player *player, ifc_playback_parameters *secondary_parameters, ifc_audioout **out_output) { return OutputService_AudioOpen(format, player, secondary_parameters, out_output); }
 
 	/* ----- Video Output ----- */

@@ -2,7 +2,7 @@
 #define NULLSOFT_XSPF_XSPFHANDLER_H
 
 #include "../playlist/svc_playlisthandler.h"
-// the "Playlist Handler" is responsible for describing all the capabilities of the playlist format to Winamp
+// the "Playlist Handler" is responsible for describing all the capabilities of the playlist format to WinLAMP
 // It is a singleton class (for each playlist type) 
 // besides informational functions, it contains factory methods for creating playlist loaders and writers
 

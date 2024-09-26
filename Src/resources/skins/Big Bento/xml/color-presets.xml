@@ -359,7 +359,7 @@
 </gammaset>
 
 
-<gammaset id="Winamp Modern">
+<gammaset id="WinLAMP Modern">
   <gammagroup id="Titlebar" value="-1081,-825,-313" gray="0" boost="0" />
   <gammagroup id="TitlebarText" value="0,0,0" gray="0" boost="0" />
   <gammagroup id="TitlebarMenuText" value="1704,1704,1704" gray="0" boost="0" />
@@ -719,7 +719,7 @@
     <gammagroup id="Frame_Borders" value="-798,-1650,-2288" gray="0" boost="1" />
 </gammaset>
 
-<gammaset id="Winamp Classic">
+<gammaset id="WinLAMP Classic">
   <gammagroup id="Titlebar" value="-1792,-1792,-1195" gray="0" boost="0" />
   <gammagroup id="TitlebarText" value="0,0,0" gray="0" boost="0" />
   <gammagroup id="TitlebarMenuText" value="0,0,0" gray="2" boost="0" />
@@ -886,7 +886,7 @@
 
 <!-- Themes by J_Darnley -->
 
-<gammaset id="Winamp Modern | City Night">
+<gammaset id="WinLAMP Modern | City Night">
   <gammagroup id="Titlebar" value="-1024,-1024,-1024" gray="2" boost="0" />
   <gammagroup id="TitlebarText" value="0,0,0" gray="2" boost="1" />
   <gammagroup id="TitlebarMenuText" value="0,0,0" gray="2" boost="1" />
@@ -968,7 +968,7 @@
   <gammagroup id="Frame_Borders" value="-2586,-2174,-1282" gray="0" boost="1" /> 
 </gammaset>
 
-<gammaset id="Winamp Modern | Varsity"> 
+<gammaset id="WinLAMP Modern | Varsity"> 
   <gammagroup id="Titlebar" value="-653,-653,-1121" gray="1" boost="0" /> 
   <gammagroup id="TitlebarText" value="-653,-653,-1121" gray="1" boost="0" /> 
   <gammagroup id="TitlebarMenuText" value="-653,-653,-1121" gray="1" boost="0" /> 
@@ -1008,7 +1008,7 @@
   <gammagroup id="Frame_Borders" value="-962,-1030,-1488" gray="0" boost="1" /> 
 </gammaset>
 
-<gammaset id="Winamp Modern | City Night 2"> 
+<gammaset id="WinLAMP Modern | City Night 2"> 
   <gammagroup id="Titlebar" value="-1522,-1522,-1522" gray="1" boost="0" /> 
   <gammagroup id="TitlebarText" value="-1522,-1522,-1522" gray="1" boost="0" /> 
   <gammagroup id="TitlebarMenuText" value="-1522,-1522,-1522" gray="1" boost="0" /> 

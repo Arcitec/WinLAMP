@@ -186,7 +186,7 @@
     <ClInclude Include="resource1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Winamp\ipc_pe.h">
+    <ClInclude Include="..\..\..\WinLAMP\ipc_pe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\General\gen_ml\itemlist.h">
@@ -210,13 +210,13 @@
     <ClInclude Include="..\..\..\nu\ServiceWatcher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Winamp\wa_dlg.h">
+    <ClInclude Include="..\..\..\WinLAMP\wa_dlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\General\gen_hotkeys\wa_hotkeys.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Winamp\wa_ipc.h">
+    <ClInclude Include="..\..\..\WinLAMP\wa_ipc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

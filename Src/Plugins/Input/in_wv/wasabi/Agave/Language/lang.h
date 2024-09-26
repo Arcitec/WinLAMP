@@ -9,7 +9,7 @@ extern "C" {
 #define LANG_DLL_GUID_STRING_ID    65535
 #define LANG_DLL_GUID_BLOCK_ID     4096
 
-// this is the stringtable id in winamp.exe's lng file where
+// this is the stringtable id in winlamp.exe's lng file where
 // the language of the lang pack is declared.
 // the actual string is defined as language_code-country_code
 // e.g.
@@ -28,11 +28,11 @@ extern "C" {
 // between plugins / for 3rd party plugins for compatability support
 
 // {A0099AA7-F980-45cf-818D-64EAA9F4EF4B}
-static const GUID WinampLangGUID = 
+static const GUID WinLAMPLangGUID = 
 { 0xa0099aa7, 0xf980, 0x45cf, { 0x81, 0x8d, 0x64, 0xea, 0xa9, 0xf4, 0xef, 0x4b } };
 
 // {0E844B2A-70E8-4007-A73A-E9C05DB3F06D}
-static const GUID WinampALangGUID = 
+static const GUID WinLAMPALangGUID = 
 { 0xe844b2a, 0x70e8, 0x4007, { 0xa7, 0x3a, 0xe9, 0xc0, 0x5d, 0xb3, 0xf0, 0x6d } };
 
 // {250FAA3C-20CD-49db-A932-67B1C0191B0E}
@@ -300,12 +300,12 @@ static const GUID GenMudLangGUID =
 static const GUID omBrowserLangGUID = 
 { 0xdccf5a41, 0xd16b, 0x452b, { 0x8b, 0x7a, 0xcf, 0xca, 0x33, 0x60, 0xd8, 0xe8 } };
 
-// Winamp Android plugin (pmp_android.dll)
+// WinLAMP Android plugin (pmp_android.dll)
 // {EBFF6E00-39D8-45e6-B3EC-E3B07A45E6B0}
 static const GUID PmpAndroidLangGUID = 
 { 0xebff6e00, 0x39d8, 0x45e6, { 0xb3, 0xec, 0xe3, 0xb0, 0x7a, 0x45, 0xe6, 0xb0 } };
 
-// Winamp Wifi plugin (pmp_wifi.dll)
+// WinLAMP Wifi plugin (pmp_wifi.dll)
 // {3066887B-CA40-4683-897F-4416FE349D7E}
 static const GUID PmpWifiLangGUID = 
 { 0x3066887b, 0xca40, 0x4683, { 0x89, 0x7f, 0x44, 0x16, 0xfe, 0x34, 0x9d, 0x7e } };
@@ -394,7 +394,7 @@ static const GUID GenFFODLangGUID =
 static const GUID MlBkCatLangGUID = 
 { 0xc3bc5f81, 0xb400, 0x4c64, { 0xbc, 0xc5, 0x3b, 0x75, 0x8d, 0x6b, 0xe2, 0xe1 } };
 
-// Lite'n Winamp Preferences plugin (gen_nopro.dll)
+// Lite'n WinLAMP Preferences plugin (gen_nopro.dll)
 // {E6C98DDD-FC99-4ccc-B845-79A81B8C1959}
 static const GUID GenNoProLangGUID = 
 { 0xe6c98ddd, 0xfc99, 0x4ccc, { 0xb8, 0x45, 0x79, 0xa8, 0x1b, 0x8c, 0x19, 0x59 } };

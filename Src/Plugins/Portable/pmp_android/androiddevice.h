@@ -10,7 +10,7 @@
 
 #include <vector>
 
-#define WINAMP_ANDROID_MARKER_FILE L"\\.winamp\\winamp.info"
+#define WINLAMP_ANDROID_MARKER_FILE L"\\.winlamp\\winlamp.info"
 
 //Filename="E:\Howling Bells - Into The Chaos.MP3" 
 //Artist="Howling Bells" 
@@ -52,7 +52,7 @@ enum
 	DEVICEVIEW_COL_PLAY_COUNT=14,
 };
 
-#define TAG_CACHE L"winamp_metadata.dat"
+#define TAG_CACHE L"winlamp_metadata.dat"
 #define FIELD_LENGTH 1024
 
 class AndroidSong {

@@ -39,10 +39,10 @@ static bool PromptForFilename(wchar_t *filename, size_t filenameCch)
 	filename[0]=0;
 
 	// GetSaveFileName changes Window's working directory
-	// which locks that folder from being deleted until Winamp closes
+	// which locks that folder from being deleted until WinLAMP closes
 	// so we save the old working directory name
 	// and restore it on complete
-	// Winamp maintains its own concept of a working directory
+	// WinLAMP maintains its own concept of a working directory
 	// to help us avoid this problem
 	GetCurrentDirectoryW(MAX_PATH, oldCurPath);
 
@@ -59,12 +59,12 @@ static bool PromptForFilename(wchar_t *filename, size_t filenameCch)
 	openfilename.nMaxFile = filenameCch;
 	openfilename.lpstrFileTitle = 0;
 	openfilename.nMaxFileTitle = 0;
-	// we set the initial directory based on winamp's working path
+	// we set the initial directory based on winlamp's working path
 	openfilename.lpstrInitialDir = WASABI_API_APP->path_getWorkingPath();
 	openfilename.lpstrTitle = 0;
 	// despite the big note about working directory
 	// we don't want to use OFN_NOCHANGEDIR
-	// because we're going to manually sync Winamp's working path
+	// because we're going to manually sync WinLAMP's working path
 	openfilename.Flags = OFN_ENABLESIZING | OFN_EXPLORER | OFN_LONGNAMES;
 	openfilename.nFileOffset = 0;
 	openfilename.nFileExtension = 0;
@@ -75,7 +75,7 @@ static bool PromptForFilename(wchar_t *filename, size_t filenameCch)
 
 	if (GetSaveFileNameW(&openfilename))
 	{
-		// let's re-synch Winamp's working directory
+		// let's re-synch WinLAMP's working directory
 		GetCurrentDirectoryW(MAX_PATH, newCurPath);
 		WASABI_API_APP->path_setWorkingPath(newCurPath);
 
@@ -127,7 +127,7 @@ void ConvertItemRecordListToISO(const itemRecordList *list)
 		if (PromptForFilename(destination, MAX_PATH))
 		{
 			// these values are hardcoded for this example.
-			isocreator->Open(L"WinampISO", obj_isocreator::FORMAT_JOLIET, obj_isocreator::MEDIA_CD);
+			isocreator->Open(L"WinLAMPISO", obj_isocreator::FORMAT_JOLIET, obj_isocreator::MEDIA_CD);
 
 			char destinationPath[MAX_PATH];
 
@@ -168,7 +168,7 @@ void ConvertFilenamesToISO(const char *filenames)
 		if (PromptForFilename(destination, MAX_PATH))
 		{
 			// these values are hardcoded for this example.
-			isocreator->Open(L"WinampISO", obj_isocreator::FORMAT_JOLIET, obj_isocreator::MEDIA_CD);
+			isocreator->Open(L"WinLAMPISO", obj_isocreator::FORMAT_JOLIET, obj_isocreator::MEDIA_CD);
 
 			wchar_t destinationPath[MAX_PATH];
 
@@ -223,7 +223,7 @@ void ConvertPlaylistToISO(const mlPlaylist *playlist)
 		if (PromptForFilename(destination, MAX_PATH))
 		{
 			// these values are hardcoded for this example.
-			const wchar_t *title=L"WinampISO";
+			const wchar_t *title=L"WinLAMPISO";
 			if (playlist->title) // if there's a playlist title, use it as the volume name
 				title = playlist->title;
 
@@ -253,7 +253,7 @@ void ConvertPlaylistsToISO(const mlPlaylist **playlists)
 		if (PromptForFilename(destination, MAX_PATH))
 		{
 			// these values are hardcoded for this example.
-			isocreator->Open(L"WinampISO", obj_isocreator::FORMAT_JOLIET, obj_isocreator::MEDIA_CD);
+			isocreator->Open(L"WinLAMPISO", obj_isocreator::FORMAT_JOLIET, obj_isocreator::MEDIA_CD);
 			while (*playlists)
 			{
 				const mlPlaylist *playlist = *playlists;
@@ -277,7 +277,7 @@ void ConvertUnicodeItemRecordListToISO(const itemRecordListW *list)
 		if (PromptForFilename(destination, MAX_PATH))
 		{
 			// these values are hardcoded for this example.
-			isocreator->Open(L"WinampISO", obj_isocreator::FORMAT_JOLIET, obj_isocreator::MEDIA_CD);
+			isocreator->Open(L"WinLAMPISO", obj_isocreator::FORMAT_JOLIET, obj_isocreator::MEDIA_CD);
 
 			wchar_t destinationPath[MAX_PATH];
 
@@ -312,7 +312,7 @@ void ConvertUnicodeFilenamesToISO(const wchar_t *filenames)
 		if (PromptForFilename(destination, MAX_PATH))
 		{
 			// these values are hardcoded for this example.
-			isocreator->Open(L"WinampISO", obj_isocreator::FORMAT_JOLIET, obj_isocreator::MEDIA_CD);
+			isocreator->Open(L"WinLAMPISO", obj_isocreator::FORMAT_JOLIET, obj_isocreator::MEDIA_CD);
 
 			wchar_t destinationPath[MAX_PATH];
 

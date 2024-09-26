@@ -1039,8 +1039,8 @@ typedef struct _CLOUDBACKTEXT
 // styles listview
 #define SWLVS_FULLROWSELECT		0x00010000
 #define SWLVS_DOUBLEBUFFER		0x00020000
-#define SWLVS_ALTERNATEITEMS	0x00040000 // Since Winamp 5.55
-#define SWLVS_SELALWAYS			0x00080000 // Since Winamp 5.56
+#define SWLVS_ALTERNATEITEMS	0x00040000 // Since WinLAMP 5.55
+#define SWLVS_SELALWAYS			0x00080000 // Since WinLAMP 5.56
 
 // styles divider
 #define SWDIV_HORZ				0x00000000

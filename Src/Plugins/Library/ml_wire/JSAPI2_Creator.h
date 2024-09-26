@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Winamp/JSAPI2_svc_apicreator.h"
+#include "../WinLAMP/JSAPI2_svc_apicreator.h"
 
 #include <api/service/waservicefactory.h>
 #include <api/service/services.h>

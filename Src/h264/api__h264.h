@@ -7,7 +7,7 @@
 extern api_memmgr *memmgrApi;
 #define WASABI_API_MEMMGR memmgrApi
 
-#include "../winamp/api_winamp.h"
-extern api_winamp *winampApi;
-#define AGAVE_API_WINAMP winampApi
+#include "../winlamp/api_winlamp.h"
+extern api_winlamp *winlampApi;
+#define AGAVE_API_WINLAMP winlampApi
 #endif

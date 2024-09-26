@@ -5,8 +5,8 @@
 #include "resource.h"
 #include "../nu/DialogSkinner.h"
 #include "../nu/ChildSizer.h"
-#include "../winamp/wa_ipc.h"
-#include "../Winamp/strutil.h"
+#include "../winlamp/wa_ipc.h"
+#include "../WinLAMP/strutil.h"
 #include "../nu/AutoChar.h"
 #include "../nu/AutoWide.h"
 #include "../nu/listview.h"
@@ -36,7 +36,7 @@ void TAG_FMT(void *f, void *ff, void *p, char *out, int out_len)
 	*(void **)&fmt.TAGFUNC = f;
 	*(void **)&fmt.TAGFREEFUNC = ff;
 	*out = 0;
-	SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&fmt, IPC_FORMAT_TITLE);
+	SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&fmt, IPC_FORMAT_TITLE);
 }
 
 
@@ -283,7 +283,7 @@ static void playFiles(HWND hwndDlg, CHAR cLetter, int enqueue, int all)
 			{
 				if (!cnt)
 				{
-					if (!enqueue) SendMessageW(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_DELETE);
+					if (!enqueue) SendMessageW(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_DELETE);
 					cnt++;
 				}
 
@@ -299,7 +299,7 @@ static void playFiles(HWND hwndDlg, CHAR cLetter, int enqueue, int all)
 				s.filename = buf;
 				s.title    = titlebuf;
 				s.ext      = NULL;
-				SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILE);
+				SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILE);
 			}
 		}
 	}
@@ -307,11 +307,11 @@ static void playFiles(HWND hwndDlg, CHAR cLetter, int enqueue, int all)
 	{
 		if (firstsel >= 0)
 		{
-			SendMessage(plugin.hwndWinampParent, WM_WA_IPC, firstsel, IPC_SETPLAYLISTPOS);
-			SendMessage(plugin.hwndWinampParent, WM_COMMAND, 40047, 0); // stop button, literally
-			SendMessage(plugin.hwndWinampParent, WM_COMMAND, 40045, 0); // play button, literally
+			SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, firstsel, IPC_SETPLAYLISTPOS);
+			SendMessage(plugin.hwndWinLAMPParent, WM_COMMAND, 40047, 0); // stop button, literally
+			SendMessage(plugin.hwndWinLAMPParent, WM_COMMAND, 40045, 0); // play button, literally
 		}
-		else SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_STARTPLAY);
+		else SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_STARTPLAY);
 	}
 }
 
@@ -564,7 +564,7 @@ static LRESULT editCDInfo(HWND hwndDlg, CHAR cLetter, int trackNum)
 	infoBoxParamW p;
 	p.filename = name;
 	p.parent = hwndDlg;
-	return SendMessageW(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&p, IPC_INFOBOXW);
+	return SendMessageW(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&p, IPC_INFOBOXW);
 }
 
 static void NotifyInfoWindow(HWND hwnd, CHAR cLetter, INT nTrack, BOOL bForceRefresh)

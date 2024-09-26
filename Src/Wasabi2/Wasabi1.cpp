@@ -1,5 +1,5 @@
 #include "api__wasabi2.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 
 namespace Wasabi {
 #include <api/service/waservicefactory.h>

@@ -3,7 +3,7 @@
  *               (C) copyright Fraunhofer - IIS (1998)
  *                        All Rights Reserved
  *
- *   $Header: /cvs/root/winamp/aacdec/incs/mp4dec_helpers/err_code.h,v 1.3 2012/05/08 20:16:50 audiodsp Exp $
+ *   $Header: /cvs/root/winlamp/aacdec/incs/mp4dec_helpers/err_code.h,v 1.3 2012/05/08 20:16:50 audiodsp Exp $
  *   project : MPEG-4 Audio Decoder
  *   contents/description: exported error codes
  *

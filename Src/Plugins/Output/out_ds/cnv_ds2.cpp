@@ -57,7 +57,7 @@ _bool cfg_killsil("Kill silence",0);
 _int_limited cfg_sil_db("Cutoff (in -dB)",40,15,200);
 _bool cfg_hw_mix("Allow hardware mixing",1);
 _bool cfg_delayed("Delayed DirectSound shutdown",1);
-_bool cfg_wait("Full fadeout when exiting Winamp",1);
+_bool cfg_wait("Full fadeout when exiting WinLAMP",1);
 _bool cfg_fade_volume("Smooth volume changes",1);
 _bool cfg_create_primary("Create primary buffer",0);
 _bool cfg_override_primary("Override primary buffer format",0);

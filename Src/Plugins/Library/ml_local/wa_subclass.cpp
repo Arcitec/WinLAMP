@@ -3,9 +3,9 @@
 #include "resource.h"
 #include "../nu/listview.h"
 
-#define WINAMP_FILE_ADDTOLIBRARY        40344
-#define WINAMP_FILE_ADDCURRENTPLEDIT	40466
-#define WINAMP_SHOWLIBRARY              40379
+#define WINLAMP_FILE_ADDTOLIBRARY        40344
+#define WINLAMP_FILE_ADDCURRENTPLEDIT	40466
+#define WINLAMP_SHOWLIBRARY              40379
 wchar_t *recent_fn = 0;
 static HMENU last_viewmenu = 0;
 WORD waMenuID = 0;
@@ -41,7 +41,7 @@ static void onPlayFileTrack()
 				db_setFieldInt(s, MAINTABLE_ID_PLAYCOUNT, ++cnt);
 				db_setFieldInt(s, MAINTABLE_ID_LASTPLAY, (int)t);
 				if (asked_for_playcount)
-					PostMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_UPDTITLE);
+					PostMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_UPDTITLE);
 
 				// Issue a wasabi system callback after we have successfully added a file in the ml database
 				api_mldb::played_info info = {t, cnt};
@@ -86,7 +86,7 @@ void onStartPlayFileTrack(const wchar_t *filename, bool resume)
 	{
 		int timer = -1, timer1 = -1, timer2 = -1;
 
-		KillTimer(plugin.hwndWinampParent, 8081);
+		KillTimer(plugin.hwndWinLAMPParent, 8081);
 		if (!resume)
 		{
 			free(recent_fn);
@@ -104,7 +104,7 @@ void onStartPlayFileTrack(const wchar_t *filename, bool resume)
 		{
 			basicFileInfoStructW bfiW = {0};
 			bfiW.filename = recent_fn;
-			SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&bfiW, IPC_GET_BASIC_FILE_INFOW);
+			SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&bfiW, IPC_GET_BASIC_FILE_INFOW);
 			if(bfiW.length > 0)
 			{
 				bfiW.length=bfiW.length*1000;
@@ -134,7 +134,7 @@ void onStartPlayFileTrack(const wchar_t *filename, bool resume)
 		}
 
 		// if no match or something went wrong then try to ensure the default timer value is used
-		SetTimer(plugin.hwndWinampParent, 8081, ((timer > 0)? timer : 350), NULL);
+		SetTimer(plugin.hwndWinLAMPParent, 8081, ((timer > 0)? timer : 350), NULL);
 	}
 }
 
@@ -274,15 +274,15 @@ LRESULT APIENTRY wa_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 		case WM_COMMAND:
 		case WM_SYSCOMMAND:
 			WORD lowP = LOWORD(wParam);
-			if (lowP == WINAMP_FILE_ADDTOLIBRARY)
+			if (lowP == WINLAMP_FILE_ADDTOLIBRARY)
 			{
 				if (!plugin.hwndLibraryParent || !IsWindowVisible(plugin.hwndLibraryParent))
 				{
-					SendMessage(plugin.hwndWinampParent, WM_COMMAND, MAKEWPARAM(WINAMP_SHOWLIBRARY, 0), 0L); 
+					SendMessage(plugin.hwndWinLAMPParent, WM_COMMAND, MAKEWPARAM(WINLAMP_SHOWLIBRARY, 0), 0L); 
 				}
 				add_to_library(plugin.hwndLibraryParent);
 			}
-			else if (lowP == WINAMP_FILE_ADDCURRENTPLEDIT)
+			else if (lowP == WINLAMP_FILE_ADDCURRENTPLEDIT)
 			{
 				add_pledit_to_library();
 			}

@@ -6,8 +6,8 @@
 
 /*
 there are two IPC messages, both sent to your ml plugins messageproc. Get the message IDs by doing:
-ML_IPC_MENUFUCKER_BUILD = SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"menufucker_build", IPC_REGISTER_WINAMP_IPCMESSAGE);
-ML_IPC_MENUFUCKER_RESULT = SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"menufucker_result", IPC_REGISTER_WINAMP_IPCMESSAGE);
+ML_IPC_MENUFUCKER_BUILD = SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"menufucker_build", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+ML_IPC_MENUFUCKER_RESULT = SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"menufucker_result", IPC_REGISTER_WINLAMP_IPCMESSAGE);
 
 ML_IPC_MENUFUCKER_BUILD:
 This is sent just before the menu is shown. param1 is a pointer to a menufucker_t struct.

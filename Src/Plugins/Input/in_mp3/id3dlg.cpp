@@ -1,6 +1,6 @@
 #include "main.h"
 #include "Metadata.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 // ID3v2 stuff
 #include "../id3v2/id3_tag.h"
 #include "FactoryHelper.h"
@@ -829,11 +829,11 @@ static INT_PTR CALLBACK apev2_dlgproc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LP
 							meta->apev2.SetKeyValueByIndex(selected, key, value);
 						}
 
-						const wchar_t *winamp_key = APE::MapApeKeyToWinampKeyW(key);
-						if (winamp_key)
+						const wchar_t *winlamp_key = APE::MapApeKeyToWinLAMPKeyW(key);
+						if (winlamp_key)
 						{
 							our_change++;
-							SendMessage(GetParent(hwndDlg),WM_USER,(WPARAM)winamp_key,(WPARAM)value);
+							SendMessage(GetParent(hwndDlg),WM_USER,(WPARAM)winlamp_key,(WPARAM)value);
 							our_change--;
 						}
 						my_change_ape--;
@@ -1014,9 +1014,9 @@ static INT_PTR CALLBACK apev2_dlgproc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LP
 
 extern "C"
 {
-	// return 1 if you want winamp to show it's own file info dialogue, 0 if you want to show your own (via In_Module.InfoBox)
-	// if returning 1, remember to implement winampGetExtendedFileInfo("formatinformation")!
-	__declspec(dllexport) int winampUseUnifiedFileInfoDlg(const wchar_t * fn)
+	// return 1 if you want winlamp to show it's own file info dialogue, 0 if you want to show your own (via In_Module.InfoBox)
+	// if returning 1, remember to implement winlampGetExtendedFileInfo("formatinformation")!
+	__declspec(dllexport) int winlampUseUnifiedFileInfoDlg(const wchar_t * fn)
 	{
 		if (!_wcsnicmp(fn, L"file://", 7)) fn += 7;
 		if (PathIsURLW(fn)) return 2;
@@ -1030,7 +1030,7 @@ extern "C"
 	// The window you return will recieve WM_COMMAND, IDOK/IDCANCEL messages when the user clicks OK or Cancel.
 	// when the user edits a field which is duplicated in another pane, do a SendMessage(GetParent(hwnd),WM_USER,(WPARAM)L"fieldname",(LPARAM)L"newvalue");
 	// this will be broadcast to all panes (including yours) as a WM_USER.
-	__declspec(dllexport) HWND winampAddUnifiedFileInfoPane(int n, const wchar_t * filename, HWND parent, wchar_t *name, size_t namelen)
+	__declspec(dllexport) HWND winlampAddUnifiedFileInfoPane(int n, const wchar_t * filename, HWND parent, wchar_t *name, size_t namelen)
 	{
 		if (n == 0)
 		{

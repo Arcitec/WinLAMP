@@ -20,7 +20,7 @@
 #ifndef _NSV_DEC_IF_H_
 #define _NSV_DEC_IF_H_
 
-#ifndef _WA_IPC_H_ // these are also defined in Winamp/wa_ipc.h
+#ifndef _WA_IPC_H_ // these are also defined in WinLAMP/wa_ipc.h
 struct YV12_PLANE {
 	unsigned char*	baseAddr;
 	long			rowBytes;

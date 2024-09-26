@@ -46,7 +46,7 @@ BEGIN
     LTEXT           "(Note: be sure to set up your soundcard sampling input to the correct input source in order to have visualizations working)",IDC_STATIC,17,92,138,28
     GROUPBOX        "MusicID",IDC_STATIC,233,12,82,84,NOT WS_VISIBLE
     CONTROL         "Use MusicID",IDC_CDDB,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,241,23,57,10
-    LTEXT           "The MusicID components are not installed. Please get Winamp Full or Pro to enable MusicID support.",IDC_CDDBNOTE,241,36,65,50,NOT WS_VISIBLE
+    LTEXT           "The MusicID components are not installed. Please get WinLAMP Full or Pro to enable MusicID support.",IDC_CDDBNOTE,241,36,65,50,NOT WS_VISIBLE
     CONTROL         "",IDC_CDDBICON,"Static",SS_OWNERDRAW | SS_NOTIFY | SS_REALSIZEIMAGE | NOT WS_VISIBLE,247,39,15,13
     DEFPUSHBUTTON   "OK",IDOK,64,129,50,13
     PUSHBUTTON      "Cancel",IDCANCEL,118,129,50,13
@@ -81,14 +81,14 @@ EXSTYLE WS_EX_CONTROLPARENT
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Ripping Speed",IDC_STATIC,4,3,256,70
-    LTEXT           "As Winamp rips your CDs to files, it must read the audio data from the CD. The unit of speed used is 1x, which means that the audio is extracted at the ",IDC_STATIC,11,14,244,16
+    LTEXT           "As WinLAMP rips your CDs to files, it must read the audio data from the CD. The unit of speed used is 1x, which means that the audio is extracted at the ",IDC_STATIC,11,14,244,16
     LTEXT           "same rate as if you were listening to it. Choose what speed you would like to rip your CDs at (higher speeds require less time to rip):",IDC_STATIC,12,30,243,17
-    LTEXT           "Maximum speed at which Winamp should rip CDs:",IDC_STATIC,12,55,158,8
+    LTEXT           "Maximum speed at which WinLAMP should rip CDs:",IDC_STATIC,12,55,158,8
     COMBOBOX        IDC_COMBO1,171,53,59,84,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "Advanced Ripping Settings",IDC_STATIC,4,77,256,52
     CONTROL         "Read audio data from CDs using bundled Sonic extraction engine",IDC_VERITAS,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,90,221,10
-    LTEXT           "Disabling this option will instruct Winamp to attempt to rip via a third party ASPI driver or, if not available, using the native NT SCSI API.",IDC_STATIC,24,104,229,19
+    LTEXT           "Disabling this option will instruct WinLAMP to attempt to rip via a third party ASPI driver or, if not available, using the native NT SCSI API.",IDC_STATIC,24,104,229,19
 END
 #endif
 
@@ -185,7 +185,7 @@ BEGIN
     LTEXT           "(Note: be sure to set up your soundcard sampling input to the correct input source in order to have visualizations working)",IDC_STATIC,17,92,138,28
     GROUPBOX        "MusicID",IDC_STATIC,4,127,82,84
     CONTROL         "Use MusicID",IDC_CDDB,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,138,57,10
-    LTEXT           "The MusicID components are not installed. Please get Winamp Full or Pro to enable MusicID support.",IDC_CDDBNOTE,12,151,65,50,NOT WS_VISIBLE
+    LTEXT           "The MusicID components are not installed. Please get WinLAMP Full or Pro to enable MusicID support.",IDC_CDDBNOTE,12,151,65,50,NOT WS_VISIBLE
     CONTROL         "",IDC_CDDBICON,"Static",SS_OWNERDRAW | SS_NOTIFY | SS_REALSIZEIMAGE,17,153,15,13
     DEFPUSHBUTTON   "OK",IDOK,117,178,50,13
     PUSHBUTTON      "Cancel",IDCANCEL,117,197,50,13
@@ -286,9 +286,9 @@ BEGIN
     IDS_INITIALIZING        "initializing..."
     IDS_ABORTING            "Aborting..."
     IDS_UNLIMITED           "Unlimited"
-    IDS_PURCHASE_WINAMP_PRO_PROMPT 
-                            "In order to use more than 8x extraction, you must purchase Winamp Pro.\nWould you like information on purchasing Winamp Pro?"
-    IDS_WINAMP_PRO_FEATURE  "Winamp Pro Feature"
+    IDS_PURCHASE_WINLAMP_PRO_PROMPT 
+                            "In order to use more than 8x extraction, you must purchase WinLAMP Pro.\nWould you like information on purchasing WinLAMP Pro?"
+    IDS_WINLAMP_PRO_FEATURE  "WinLAMP Pro Feature"
     IDS_ARTIST              "Artist"
     IDS_TITLE               "Title"
     IDS_ALBUM_ARTIST        "Album Artist"
@@ -308,7 +308,7 @@ BEGIN
     IDS_UNKNOWN             "unknown"
     IDS_UNKNOWN_ARTIST      "Unknown Artist"
     IDS_FAMILY_STRING       "CD Audio Track shortcut"
-    IDS_ABOUT_TEXT          "%s\nCopyright © 1997-2023 Winamp SA\n\nBuild date: %s\n\nHow to use:\n   For CD audio, open cda://<cd drive letter>\n   (or use the command in winamp)\n\n   You can also play individual CD tracks using\n   cda://<letter>,<number>\n\n"
+    IDS_ABOUT_TEXT          "%s\nCopyright © 1997-2023 WinLAMP SA\n\nBuild date: %s\n\nHow to use:\n   For CD audio, open cda://<cd drive letter>\n   (or use the command in winlamp)\n\n   You can also play individual CD tracks using\n   cda://<letter>,<number>\n\n"
 END
 
 STRINGTABLE 

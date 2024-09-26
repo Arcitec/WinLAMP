@@ -54,30 +54,30 @@ WMDRM::~WMDRM()
 	delete [] vizBuffer;
 }
 
-static int winampVersion=0;
+static int winlampVersion=0;
 
-#define WINAMP_VERSION_MINOR1(winampVersion) ((winampVersion & 0x000000F0)>>4)  // returns, i.e. 0x01 for 5.12 and 0x02 for 5.2...
-#define WINAMP_VERSION_MINOR2(winampVersion) ((winampVersion & 0x0000000F))  // returns, i.e. 0x02 for 5.12 and 0x00 for 5.2...
+#define WINLAMP_VERSION_MINOR1(winlampVersion) ((winlampVersion & 0x000000F0)>>4)  // returns, i.e. 0x01 for 5.12 and 0x02 for 5.2...
+#define WINLAMP_VERSION_MINOR2(winlampVersion) ((winlampVersion & 0x0000000F))  // returns, i.e. 0x02 for 5.12 and 0x00 for 5.2...
 static void MakeVersionString(QWORD *ver)
 {
-	if (!winampVersion)
-		winampVersion = (int)SendMessage(plugin.hMainWindow, WM_WA_IPC, 0, IPC_GETVERSION);
+	if (!winlampVersion)
+		winlampVersion = (int)SendMessage(plugin.hMainWindow, WM_WA_IPC, 0, IPC_GETVERSION);
 
 	LARGE_INTEGER temp;
-	temp.HighPart = MAKELONG(WINAMP_VERSION_MINOR1(winampVersion), WINAMP_VERSION_MAJOR(winampVersion));
-	temp.LowPart = MAKELONG(WASABI_API_APP->main_getBuildNumber(), WINAMP_VERSION_MINOR2(winampVersion));
+	temp.HighPart = MAKELONG(WINLAMP_VERSION_MINOR1(winlampVersion), WINLAMP_VERSION_MAJOR(winlampVersion));
+	temp.LowPart = MAKELONG(WASABI_API_APP->main_getBuildNumber(), WINLAMP_VERSION_MINOR2(winlampVersion));
 
 	*ver = temp.QuadPart;
 }
 
 static void MakeUserAgentString(wchar_t str[256])
 {
-	if (!winampVersion)
-		winampVersion = (int)SendMessage(plugin.hMainWindow, WM_WA_IPC, 0, IPC_GETVERSION);
+	if (!winlampVersion)
+		winlampVersion = (int)SendMessage(plugin.hMainWindow, WM_WA_IPC, 0, IPC_GETVERSION);
 
-	StringCchPrintfW(str, 256, L"WinampASF/%01x.%02x",
-	                 WINAMP_VERSION_MAJOR(winampVersion),
-	                 WINAMP_VERSION_MINOR(winampVersion));
+	StringCchPrintfW(str, 256, L"WinLAMPASF/%01x.%02x",
+	                 WINLAMP_VERSION_MAJOR(winlampVersion),
+	                 WINLAMP_VERSION_MINOR(winlampVersion));
 }
 
 
@@ -110,10 +110,10 @@ void WMDRM::InitWM()
 			WM_READER_CLIENTINFO info;
 			ZeroMemory(&info, sizeof(WM_READER_CLIENTINFO));
 			info.cbSize = sizeof(WM_READER_CLIENTINFO);
-			info.wszHostExe = L"winamp.exe";
+			info.wszHostExe = L"winlamp.exe";
 			info.qwHostVersion = verStr;
 			info.wszPlayerUserAgent = userAgent;
-			info.wszBrowserWebPage = L"http://www.winamp.com";
+			info.wszBrowserWebPage = L"http://www.winlamp.com";
 
 			reader1->SetClientInfo(&info);
 		}
@@ -135,7 +135,7 @@ void WMDRM::InitWM()
 
 void WMDRM::Init()
 {
-	winampVersion = (int)SendMessage(plugin.hMainWindow, WM_WA_IPC, 0, IPC_GETVERSION);
+	winlampVersion = (int)SendMessage(plugin.hMainWindow, WM_WA_IPC, 0, IPC_GETVERSION);
 	InitOutputs(plugin.hMainWindow, plugin.hDllInstance);
 
 	//Hook(plugin.hMainWindow);
@@ -216,7 +216,7 @@ void WMDRM::GetFileInfo(const wchar_t *file, wchar_t *title, int *length_in_ms)
 			if (title)
 				StringCchCopy(title, GETFILEINFO_TITLE_LENGTH, file);
 		}
-		winamp.GetStatus(title, 256, file);
+		winlamp.GetStatus(title, 256, file);
 	}
 	else if (activePlaylist.GetFileName())
 	{
@@ -226,7 +226,7 @@ void WMDRM::GetFileInfo(const wchar_t *file, wchar_t *title, int *length_in_ms)
 			StringCchCopy(title, GETFILEINFO_TITLE_LENGTH, activePlaylist.GetOriginalFileName());
 			if (length_in_ms) *length_in_ms = -1000;
 			//if (isURL)
-				winamp.GetStatus(title, 256, activePlaylist.GetOriginalFileName());
+				winlamp.GetStatus(title, 256, activePlaylist.GetOriginalFileName());
 			return ;
 		}
 
@@ -240,7 +240,7 @@ void WMDRM::GetFileInfo(const wchar_t *file, wchar_t *title, int *length_in_ms)
 			if (length_in_ms) *length_in_ms = -1000;
 
 		//if (isURL)
-			winamp.GetStatus(title, 256, activePlaylist.GetOriginalFileName());
+			winlamp.GetStatus(title, 256, activePlaylist.GetOriginalFileName());
 	}
 }
 
@@ -282,13 +282,13 @@ int WMDRM::Play(const wchar_t * fn)
 	if (playlistManager->Load(fn, &activePlaylist) != PLAYLISTMANAGER_SUCCESS)
 		activePlaylist.OnFile(fn, 0, -1, 0); // add it manually (TODO: need a better way to do this)
 
-	winamp.GetVideoOutput();
+	winlamp.GetVideoOutput();
 	playing = true;
-	startTime = winamp.GetStart() * 1000;
+	startTime = winlamp.GetStart() * 1000;
 	if (!startAtMilliseconds)
 		startAtMilliseconds = startTime;
 
-	endTime = winamp.GetEnd() * 1000;
+	endTime = winlamp.GetEnd() * 1000;
 	clock->SetLastOutputTime(startAtMilliseconds); // normally 0, but set when metadata editor needs to stop / restart a file
 	AssignOutput();
 	clock->SetStartTimeMilliseconds(startAtMilliseconds); // normally 0, but set when metadata editor needs to stop / restart a file
@@ -354,8 +354,8 @@ int WMDRM::GetOutputTime()
 {
 	if (!opened)
 	{
-		//if (winamp.bufferCount)
-		return winamp.bufferCount;
+		//if (winlamp.bufferCount)
+		return winlamp.bufferCount;
 		//return 0;
 	}
 	return clock->GetOutputTime();
@@ -461,7 +461,7 @@ void WMDRM::QuantizedViz(void *data, long sizeBytes, DWORD timestamp)
 		ptrdiff_t stride = audio->BitSize() / 8;
 		size_t position = stride - 1;
 		unsigned char *origData = (unsigned char *)data;
-		for (int i = 0;i < SAMPLES_PER_BLOCK*audio->Channels();i++) // winamp hardcodes this ...
+		for (int i = 0;i < SAMPLES_PER_BLOCK*audio->Channels();i++) // winlamp hardcodes this ...
 		{
 			vizBuffer[position] = (origData[position] & 0xFC); // 6 bits of precision, enough for viz.
 			position += stride;
@@ -496,7 +496,7 @@ void WMDRM::OutputAudioSamples(void *data, long samples, DWORD &timestamp)
 	timestamp += audio->AudioSamplesToMilliseconds(samples);
 
 
-	//clock->SetLastOutputTime(winamp.GetWrittenTime());
+	//clock->SetLastOutputTime(winlamp.GetWrittenTime());
 
 	//in theory, we could check mod->dsp_isactive(), but that opens up a potential race condition ...
 	memcpy(dspBuffer, data, audio->AudioSamplesToBytes(samples));
@@ -520,17 +520,17 @@ void WMDRM::OutputAudioSamples(void *data, long samples, DWORD &timestamp)
 
 void WMDRM::Opened()
 {
-	//winamp.ResetBuffering();
+	//winlamp.ResetBuffering();
 	drmProtected = info->IsAttribute(g_wszWMProtected);
 	ResetEvent(killswitch);
 	if (!audio->IsOpen())
 	{
 		if (video->IsOpen())
 		{
-			winamp.SetStatus(WASABI_API_LNGSTRINGW(IDS_REALTIME));
+			winlamp.SetStatus(WASABI_API_LNGSTRINGW(IDS_REALTIME));
 			clock->GoRealTime();
 			plugin.is_seekable = info->IsSeekable() ? 1 : 0;
-			winamp.SetAudioInfo(info->GetBitrate() / 1000, 0, 0);
+			winlamp.SetAudioInfo(info->GetBitrate() / 1000, 0, 0);
 			//out->SetVolume( -666); // set default volume
 		}
 		else
@@ -545,13 +545,13 @@ void WMDRM::Opened()
 	{
 		BuildBuffers();
 		plugin.is_seekable = info->IsSeekable() ? 1 : 0;
-		winamp.SetAudioInfo(info->GetBitrate() / 1000, audio->SampleRate() / 1000, audio->Channels());
+		winlamp.SetAudioInfo(info->GetBitrate() / 1000, audio->SampleRate() / 1000, audio->Channels());
 		out->SetVolume(volume); // set default volume
 		out->SetPan(pan);
-		winamp.SetVizInfo(audio->SampleRate(), audio->Channels());
+		winlamp.SetVizInfo(audio->SampleRate(), audio->Channels());
 	}
 	opened = true;
-	winamp.ClearStatus();
+	winlamp.ClearStatus();
 	reader->Start(clock->GetStartTime(), 0, 1.0f, NULL);
 	WMHandler::Opened();
 
@@ -560,8 +560,8 @@ void WMDRM::Opened()
 void WMDRM::Started()
 {
 	ResetEvent(killswitch);
-	winamp.ResetBuffering();
-	winamp.ClearStatus();
+	winlamp.ResetBuffering();
+	winlamp.ClearStatus();
 	WMHandler::Started();
 }
 void WMDRM::EndOfFile()
@@ -586,15 +586,15 @@ void WMDRM::EndOfFile()
 		}
 	}
 
-	// TODO: if we have a playlist, start the next track instead of telling winamp to go to the next track
+	// TODO: if we have a playlist, start the next track instead of telling winlamp to go to the next track
 	if (playing)
-		winamp.EndOfFile();
+		winlamp.EndOfFile();
 	WMHandler::EndOfFile();
 }
 
 void WMDRM::NewMetadata()
 {
-	winamp.RefreshTitle();
+	winlamp.RefreshTitle();
 	WMHandler::NewMetadata();
 }
 
@@ -603,13 +603,13 @@ void WMDRM::Error()
 	// wait 200 ms for the killswitch (aka hitting stop)
 	// this allows the user to hit "stop" and not have to continue cycling through songs if there are a whole bunch of bad/missing WMAs in the playlist
 	if (playing && WaitForSingleObject(killswitch, 200) != WAIT_OBJECT_0)
-		winamp.EndOfFile();
+		winlamp.EndOfFile();
 }
 
 void WMDRM::OpenFailed()
 {
 	if (playing && WaitForSingleObject(killswitch, 200) != WAIT_OBJECT_0)  // wait 200 ms for the killswitch (see above notes)
-		winamp.EndOfFile();
+		winlamp.EndOfFile();
 }
 
 void WMDRM::Stopped()
@@ -631,19 +631,19 @@ void WMDRM::NewSourceFlags()
 
 void WMDRM::Connecting()
 {
-	winamp.SetStatus(WASABI_API_LNGSTRINGW(IDS_CONNECTING));
+	winlamp.SetStatus(WASABI_API_LNGSTRINGW(IDS_CONNECTING));
 	WMHandler::Connecting();
 }
 
 void WMDRM::Locating()
 {
-	winamp.SetStatus(WASABI_API_LNGSTRINGW(IDS_LOCATING));
+	winlamp.SetStatus(WASABI_API_LNGSTRINGW(IDS_LOCATING));
 	WMHandler::Locating();
 }
 
 void WMDRM::AccessDenied()
 {
-	winamp.SetStatus(WASABI_API_LNGSTRINGW(IDS_ACCESS_DENIED));
+	winlamp.SetStatus(WASABI_API_LNGSTRINGW(IDS_ACCESS_DENIED));
 	if (playing && WaitForSingleObject(killswitch, 200) != WAIT_OBJECT_0)  // wait 200 ms for the killswitch (see above notes)
-		winamp.PressStop();
+		winlamp.PressStop();
 }

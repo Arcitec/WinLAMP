@@ -29,7 +29,7 @@ static INT_PTR CALLBACK PE_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LP
 		{
 			if (!waCmdMenuID)
 			{
-				waCmdMenuID = (WORD)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_REGISTER_LOWORD_COMMAND);
+				waCmdMenuID = (WORD)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_REGISTER_LOWORD_COMMAND);
 			}
 			if (last_viewmenu)
 			{
@@ -64,7 +64,7 @@ static INT_PTR CALLBACK PE_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LP
 static HWND hwnd_pe = NULL;
 void HookPlaylistEditor()
 {
-	hwnd_pe = (HWND)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, IPC_GETWND_PE, IPC_GETWND);
+	hwnd_pe = (HWND)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, IPC_GETWND_PE, IPC_GETWND);
 
 	if (IsWindow(hwnd_pe))
 		PE_oldWndProc = (WNDPROC) SetWindowLongPtrW(hwnd_pe, GWLP_WNDPROC, (LONG_PTR)PE_newWndProc);

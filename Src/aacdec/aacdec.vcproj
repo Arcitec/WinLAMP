@@ -62,7 +62,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="../nsutil/nsutil.lib"
-				OutputFile="$(ProgramFiles)\winamp\system\aacdec.w5s"
+				OutputFile="$(ProgramFiles)\winlamp\system\aacdec.w5s"
 				LinkIncremental="2"
 				IgnoreDefaultLibraryNames="libmmd.lib"
 				GenerateDebugInformation="true"
@@ -144,7 +144,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="../nsutil/nsutil.lib msvcrt.lib"
-				OutputFile="$(ProgramFiles)\winamp\system\aacdec.w5s"
+				OutputFile="$(ProgramFiles)\winlamp\system\aacdec.w5s"
 				LinkIncremental="1"
 				GenerateManifest="false"
 				IgnoreAllDefaultLibraries="true"

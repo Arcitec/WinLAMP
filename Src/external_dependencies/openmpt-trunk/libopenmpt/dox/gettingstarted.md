@@ -59,7 +59,7 @@ How to compile
         <https://download.microsoft.com/download/B/0/C/B0C80BA3-8AD6-4958-810B-6882485230B5/standalonesdk/sdksetup.exe>
         .
 
-     -  You will need the Winamp 5 SDK and the XMPlay SDK if you want to
+     -  You will need the WinLAMP 5 SDK and the XMPlay SDK if you want to
         compile the plugins for these 2 players. They can be downloaded
         automatically on Windows 7 or later by just running the
         `build/download_externals.cmd` script.
@@ -67,13 +67,13 @@ How to compile
         If you do not want to or cannot use this script, you may follow these
         manual steps instead:
 
-         -  Winamp 5 SDK:
+         -  WinLAMP 5 SDK:
 
-            To build libopenmpt as a winamp input plugin, copy the contents of
-            `WA5.55_SDK.exe` to include/winamp/.
+            To build libopenmpt as a winlamp input plugin, copy the contents of
+            `WA5.55_SDK.exe` to include/winlamp/.
 
             Please visit
-            [winamp.com](http://wiki.winamp.com/wiki/Plug-in_Developer) to
+            [winlamp.com](http://wiki.winlamp.com/wiki/Plug-in_Developer) to
             download the SDK.
             You can disable in_openmpt in the solution configuration.
 

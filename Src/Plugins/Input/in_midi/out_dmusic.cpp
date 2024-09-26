@@ -914,7 +914,7 @@ class MIDI_driver_dmusic : MIDI_driver
 						if ((dmpc.dwFlags&DMUS_PC_DIRECTSOUND)&&(dmpc.dwFlags&DMUS_PC_SOFTWARESYNTH))
 						{
 							wcscat(name_mbs,WASABI_API_LNGSTRINGW(IDS_WITH_OUTPUT));
-							info+=WASABI_API_LNGSTRINGW(IDS_USES_WINAMPS_OUTPUT_PLUGINS);
+							info+=WASABI_API_LNGSTRINGW(IDS_USES_WINLAMPS_OUTPUT_PLUGINS);
 							add_device(new MIDI_device_dmusic(dmpc.guidPort,1,dmpc.dwFlags,name_mbs,info));
 						}
 					}

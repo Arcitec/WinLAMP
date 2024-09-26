@@ -2,7 +2,7 @@
 #include "genres.h"
 #include "decoder.h"
 #include "api__in_vorbis.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "../nu/Singleton.h"
 #include "mkv_vorbis_decoder.h"
 #include <shlwapi.h>
@@ -137,7 +137,7 @@ int Init()
 
 void Quit()
 {
-	winampGetExtendedFileInfoW_Cleanup();
+	winlampGetExtendedFileInfoW_Cleanup();
 	DeleteCriticalSection(&sync);
 	mkvFactory.Deregister(mod.service);
 	ServiceRelease(WASABI_API_MEMMGR, memMgrApiServiceGuid);
@@ -484,7 +484,7 @@ static bool mf_ret;
 static void do_movefile()
 {
 	mf_ret=1;
-	winampGetExtendedFileInfoW_Cleanup();
+	winlampGetExtendedFileInfoW_Cleanup();
 	if (!DeleteFileW(move_dst)) mf_ret=0;
 	else
 	{
@@ -671,7 +671,7 @@ void Stop()
 		out_close();
 	}
 	show_stat(0);
-	winampGetExtendedFileInfoW_Cleanup();
+	winlampGetExtendedFileInfoW_Cleanup();
 }
 
 void EQSet(int on, char data[10], int preamp)
@@ -744,7 +744,7 @@ In_Module mod=
 };
 
 extern "C" {
-	__declspec( dllexport ) In_Module * winampGetInModule2()
+	__declspec( dllexport ) In_Module * winlampGetInModule2()
 	{
 		return &mod;
 	}
@@ -918,7 +918,7 @@ extern "C"
 	#define START_TAG_ALIAS(name, alias) if (KeywordMatch(data, name)) lookup=alias
 	#define TAG_ALIAS(name, alias) else if (KeywordMatch(data, name)) lookup=alias
 
-	__declspec( dllexport ) int winampSetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *val)
+	__declspec( dllexport ) int winlampSetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *val)
 	{
 		if (!setMetadata || setMetadata && wcscmp(fn,m_lastfn))
 		{
@@ -1081,7 +1081,7 @@ extern "C"
 		return 1;
 	}
 
-	__declspec( dllexport ) int winampWriteExtendedFileInfo()
+	__declspec( dllexport ) int winlampWriteExtendedFileInfo()
 	{
 		if(!setMetadata) return 0;
 

@@ -223,7 +223,7 @@
     <ClCompile Include="wasabiHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="winampHook.cpp">
+    <ClCompile Include="winlampHook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="xmlResponseParser.cpp">
@@ -486,7 +486,7 @@
     <ClInclude Include="ifc_wasabihelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ifc_winamphook.h">
+    <ClInclude Include="ifc_winlamphook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="internetFeatures.h">
@@ -606,7 +606,7 @@
     <ClInclude Include="wasabiHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="winampHook.h">
+    <ClInclude Include="winlampHook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="xmlResponseParser.h">
@@ -643,7 +643,7 @@
     <None Include="resources\pages\navCancel.htm">
       <Filter>HTM Files</Filter>
     </None>
-    <None Include="resources\pages\winampError.css">
+    <None Include="resources\pages\winlampError.css">
       <Filter>HTM Files</Filter>
     </None>
   </ItemGroup>

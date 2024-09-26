@@ -97,11 +97,11 @@
     <ClCompile Include="..\Wasabi\bfc\foreach.cpp">
       <Filter>Source Files\Wasabi\bfc</Filter>
     </ClCompile>
-    <ClCompile Include="..\Winamp\JSAPI_CallbackParameters.cpp">
-      <Filter>Source Files\Winamp</Filter>
+    <ClCompile Include="..\WinLAMP\JSAPI_CallbackParameters.cpp">
+      <Filter>Source Files\WinLAMP</Filter>
     </ClCompile>
-    <ClCompile Include="..\Winamp\JSAPI_ObjectArray.cpp">
-      <Filter>Source Files\Winamp</Filter>
+    <ClCompile Include="..\WinLAMP\JSAPI_ObjectArray.cpp">
+      <Filter>Source Files\WinLAMP</Filter>
     </ClCompile>
     <ClCompile Include="..\Wasabi\bfc\memblock.cpp">
       <Filter>Source Files\Wasabi\bfc</Filter>
@@ -139,8 +139,8 @@
     <ClCompile Include="..\Wasabi\bfc\string\string.cpp">
       <Filter>Source Files\Wasabi\bfc</Filter>
     </ClCompile>
-    <ClCompile Include="..\Winamp\strutil.cpp">
-      <Filter>Source Files\Winamp</Filter>
+    <ClCompile Include="..\WinLAMP\strutil.cpp">
+      <Filter>Source Files\WinLAMP</Filter>
     </ClCompile>
     <ClCompile Include="..\Wasabi\bfc\wasabi_std.cpp">
       <Filter>Source Files\Wasabi\bfc</Filter>
@@ -180,7 +180,7 @@
     <ClInclude Include="ifc_playlistloader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Winamp\JSAPI_ObjectArray.h">
+    <ClInclude Include="..\WinLAMP\JSAPI_ObjectArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="JSAPI2_Creator.h">
@@ -258,8 +258,8 @@
     <ClInclude Include="XMLString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Winamp\strutil.h">
-      <Filter>Header Files\Winamp</Filter>
+    <ClInclude Include="..\WinLAMP\strutil.h">
+      <Filter>Header Files\WinLAMP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -278,7 +278,7 @@
     <Filter Include="Source Files\Wasabi\bfc">
       <UniqueIdentifier>{9b816713-5c43-4613-9a32-54c9413d76fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Winamp">
+    <Filter Include="Source Files\WinLAMP">
       <UniqueIdentifier>{95d29037-d9f4-4431-8b6d-9312dcbdc38e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Wasabi\api">
@@ -287,7 +287,7 @@
     <Filter Include="Source Files\nu">
       <UniqueIdentifier>{01f330ce-f18e-43d9-9b79-b8def37065b1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Winamp">
+    <Filter Include="Header Files\WinLAMP">
       <UniqueIdentifier>{31801414-58c9-4a09-bd1a-2a71d7255072}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

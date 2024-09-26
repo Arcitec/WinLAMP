@@ -30,7 +30,7 @@ static void EnableDisableRecentPlayingControls( HWND hwndDlg, int tracking )
 }
 
 // Recently Played
-// When 'Recently Played' is enabled, Winamp will keep track of\nwhen and how many times items in the Media Library are played.
+// When 'Recently Played' is enabled, WinLAMP will keep track of\nwhen and how many times items in the Media Library are played.
 static INT_PTR CALLBACK Prefs1Proc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	switch ( uMsg )
@@ -886,10 +886,10 @@ static void _dosetsel( HWND hwndDlg )
 			ShowWindow( subWnd, SW_SHOWNA );
 		}
 
-		if ( !SendMessage( plugin.hwndWinampParent, WM_WA_IPC, IPC_ISWINTHEMEPRESENT, IPC_USE_UXTHEME_FUNC ) )
+		if ( !SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, IPC_ISWINTHEMEPRESENT, IPC_USE_UXTHEME_FUNC ) )
 		{
-			SendMessage( plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)tabwnd, IPC_USE_UXTHEME_FUNC );
-			SendMessage( plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)subWnd, IPC_USE_UXTHEME_FUNC );
+			SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)tabwnd, IPC_USE_UXTHEME_FUNC );
+			SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)subWnd, IPC_USE_UXTHEME_FUNC );
 		}
 	}
 }

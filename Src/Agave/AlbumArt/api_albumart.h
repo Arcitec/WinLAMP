@@ -1,5 +1,5 @@
-#ifndef NULLSOFT_WINAMP_API_ALBUMART_H
-#define NULLSOFT_WINAMP_API_ALBUMART_H
+#ifndef NULLSOFT_WINLAMP_API_ALBUMART_H
+#define NULLSOFT_WINLAMP_API_ALBUMART_H
 
 #include <bfc/dispatch.h>
 #include <bfc/platform/types.h>

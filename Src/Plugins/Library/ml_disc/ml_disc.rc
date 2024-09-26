@@ -131,7 +131,7 @@ EXSTYLE WS_EX_CONTROLPARENT
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Playlist Creation Settings",IDC_STATIC,4,3,256,152
-    LTEXT           "When Winamp completes ripping an entire CD, it can automatically generate a playlist of the ripped tracks.",IDC_STATIC,10,15,243,18
+    LTEXT           "When WinLAMP completes ripping an entire CD, it can automatically generate a playlist of the ripped tracks.",IDC_STATIC,10,15,243,18
     LTEXT           "Create the following playlists:",IDC_STATIC,10,37,230,10
     CONTROL         "Library playlist",IDC_CHECK4,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,49,80,10
     CONTROL         ".M3U playlist",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,62,57,10
@@ -213,8 +213,8 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_SETFOREGROUND | DS_FIXEDSYS | WS_POPUP | W
 CAPTION "Rip CDs faster in MP3"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    LTEXT           "With Winamp Pro you can:\n\t- Rip in MP3\n\t- Burn and Rip Faster\n\t- Support Winamp",IDC_STATIC,7,7,209,33
-    LTEXT           "The free version of Winamp will only rip CDs at 8x speed in AAC.",IDC_STATIC,7,43,209,10
+    LTEXT           "With WinLAMP Pro you can:\n\t- Rip in MP3\n\t- Burn and Rip Faster\n\t- Support WinLAMP",IDC_STATIC,7,7,209,33
+    LTEXT           "The free version of WinLAMP will only rip CDs at 8x speed in AAC.",IDC_STATIC,7,43,209,10
     CONTROL         "Never show me this again",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,57,97,10
     PUSHBUTTON      "More Info",IDC_BUTTON1,7,73,60,13
     PUSHBUTTON      "Rip at 8x in AAC",IDOK,70,73,60,13
@@ -249,7 +249,7 @@ BEGIN
     LTEXT           "",IDC_LBL_DRIVE_TYPES_VAL,140,48,150,16,SS_ENDELLIPSIS | NOT WS_VISIBLE
     LTEXT           "Medium Info:",IDC_LBL_INFO_MEDIUM,70,77,222,146
 //  LTEXT           "Medium information is not available due to the Sonic Burning engine not being installed.\n\nPlease install the Sonic Burning engine if you want to see medium information.",IDC_LBL_MEDIUM_UPDATE,110,112,150,51
-    LTEXT           "This feature is not available in this Winamp build.\n\nDrive info and CD Burning will return for the next release.",IDC_LBL_MEDIUM_UPDATE,110,112,150,51
+    LTEXT           "This feature is not available in this WinLAMP build.\n\nDrive info and CD Burning will return for the next release.",IDC_LBL_MEDIUM_UPDATE,110,112,150,51
     LTEXT           "Type:",IDC_LBL_MEDIUM_TYPE,80,91,50,8,NOT WS_VISIBLE
     CONTROL         "",IDC_LBL_MEDIUM_DISC_VAL,"Static",SS_LEFTNOWORDWRAP | SS_ENDELLIPSIS | NOT WS_VISIBLE | WS_GROUP,140,91,150,8
     LTEXT           "Format:",IDC_LBL_MEDIUM_FORMAT,80,101,50,8,NOT WS_VISIBLE
@@ -295,7 +295,7 @@ EXSTYLE WS_EX_CONTROLPARENT
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     CONTROL         "Show Info",IDC_BTN_SHOWINFO,"Button",BS_OWNERDRAW | WS_TABSTOP,251,231,40,11
-    CTEXT           "\n\n\nAnother instance of Winamp has locked this drive.\nYou will need to wait or cancel the operation.",IDC_LBL_TEXT,0,19,290,209
+    CTEXT           "\n\n\nAnother instance of WinLAMP has locked this drive.\nYou will need to wait or cancel the operation.",IDC_LBL_TEXT,0,19,290,209
 END
 
 IDD_VIEW_CDROM_DATA DIALOGEX 0, 0, 478, 474
@@ -612,8 +612,8 @@ BEGIN
     IDS_BURN_X_TRACKX_ON_X  "Burn %d %s on %c:"
     IDS_X_OF_X_SECTORS_FREE "%d  of  %d  sectors free"
     IDS_GET_PRO_FOR_BURN_HIGHER_THAN_2X 
-                            "In order to use more than 2x burning, you must purchase Winamp Pro.\nWould you like information on purchasing Winamp Pro?"
-//  IDS_WINAMP_PRO_FEATURE  "Winamp Pro Feature"
+                            "In order to use more than 2x burning, you must purchase WinLAMP Pro.\nWould you like information on purchasing WinLAMP Pro?"
+//  IDS_WINLAMP_PRO_FEATURE  "WinLAMP Pro Feature"
     IDS_NEED_TO_ADD_SOME_TRACKS_TO_BURN 
                             "You need to add some tracks to burn first!"
     IDS_TOTAL_LENGTH_IS_BIGGER_THAN_MEDIA_CAPACITY 
@@ -633,7 +633,7 @@ BEGIN
     IDS_FILE_X_CANNOT_BE_BURNED_REASON_NOT_FOUND 
                             "The file\n%s\ncannot be burned.\nReason: File not found."
     IDS_FILE_X_CANNOT_BE_BURNED_REASON_FILETYPE_NOT_REGISTERED 
-                            "The file\n%s\ncannot be burned.\nReason: The file type (extension %s) is not registered with Winamp"
+                            "The file\n%s\ncannot be burned.\nReason: The file type (extension %s) is not registered with WinLAMP"
     IDS_FILE_X_CANNOT_BE_BURNED_REASON_X 
                             "The file\n%s\ncannot be burned.\nReason: %s"
     IDS_VIDEO_FILES_CANNOT_BE_BURNED "Video files cannot be burned"
@@ -786,8 +786,8 @@ BEGIN
     IDS_MEDIA_CD_OTHER_TYPE "CD (other type)"
     IDS_X_DRIVE_X           "%s Drive %c:"
     IDS_X_DRIVE_BRACKET_X   "%s Drive   (%c:)"
-    IDS_YOU_ARE_CURRENTLY_BURNING_AUDIO_CD_MUST_CANCEL_TO_CLOSE_WINAMP 
-                            "You are currently burning Audio CD in drive %c:\nYou must first cancel burning in order to close Winamp."
+    IDS_YOU_ARE_CURRENTLY_BURNING_AUDIO_CD_MUST_CANCEL_TO_CLOSE_WINLAMP 
+                            "You are currently burning Audio CD in drive %c:\nYou must first cancel burning in order to close WinLAMP."
     IDS_NOTIFICATION        "Notification"
     IDS_RIP_AND_BURN        "Rip & Burn"
     IDS_CD_RIPPING          "CD Ripping"
@@ -805,8 +805,8 @@ BEGIN
     IDS_RIPPED_FILENAME_FORMAT 
                             "<Album> - inserts the album (default capitalization)\r\n<ALBUM> - inserts the album (all uppercase)\r\n<album> - inserts the album (all lowercase)\r\n<Artist> - inserts the album artist (default capitalization)\r\n<ARTIST> - inserts the album artist (all uppercase)\r\n<artist> - inserts the album artist (all lowercase)\r\n<Genre> - inserts the album genre (default capitalization)\r\n<GENRE> - inserts the album genre (all uppercase)\r\n<genre> - inserts the album genre (all lowercase)\r\n<Title> - inserts the track title (default capitalization)\r\n<TITLE>  - inserts the track title (all uppercase)\r\n<title> - inserts the track title (all lowercase)\r\n<Trackartist> - inserts the track artist (default capitalization)\r\n<TRACKARTIST> - inserts the track artist (all uppercase)\r\n<trackartist> - inserts the track artist (all lowercase)\r\n<year> - inserts the album year\r\n#, ##, or ### - inserts the track number, with leading 0s if ## or ###\r\n<disc> - inserts the disc number\r\n<discs> - inserts the total discs number (e.g. CD<disc> of <discs>)"
     IDS_CHOOSE_A_FOLDER     "Choose a folder"
-    IDS_TO_EXTRACT_TO_MP3_NEED_TO_PURCHASE_WINAMP_PRO 
-                            "In order to extract to MP3, you must purchase Winamp Pro.\nWould you like information on purchasing Winamp Pro?"
+    IDS_TO_EXTRACT_TO_MP3_NEED_TO_PURCHASE_WINLAMP_PRO 
+                            "In order to extract to MP3, you must purchase WinLAMP Pro.\nWould you like information on purchasing WinLAMP Pro?"
     IDS_ENCODER             "Encoder"
     IDS_OUTPUT_FILE_SETTINGS "Output File Settings"
     IDS_PLAYLIST_GENERATION "Playlist Generation"
@@ -914,10 +914,10 @@ BEGIN
     IDS_CREATED             "Created"
     IDS_MODIFIED            "Modified"
     IDS_UNKNOWN_GENRE       "Unknown Genre"
-    IDS_YOU_ARE_CURRENTLY_COPYING_DATA_CD_MUST_CANCEL_TO_CLOSE_WINAMP 
-                            "You are currently copying files from drive %c:\nYou must first cancel copying in order to close Winamp."
-    IDS_YOU_ARE_CURRENTLY_RIPPING_AUDIO_CD_MUST_CANCEL_TO_CLOSE_WINAMP 
-                            "You are currently ripping Audio CD in drive %c:\nYou must first cancel ripping in order to close Winamp."
+    IDS_YOU_ARE_CURRENTLY_COPYING_DATA_CD_MUST_CANCEL_TO_CLOSE_WINLAMP 
+                            "You are currently copying files from drive %c:\nYou must first cancel copying in order to close WinLAMP."
+    IDS_YOU_ARE_CURRENTLY_RIPPING_AUDIO_CD_MUST_CANCEL_TO_CLOSE_WINLAMP 
+                            "You are currently ripping Audio CD in drive %c:\nYou must first cancel ripping in order to close WinLAMP."
     IDS_ERROR_RIPPING_TRACK "Error ripping track #%d: %s\n\nAborting."
     IDS_NO_INFO_AVAILABLE   "No information available"
 END

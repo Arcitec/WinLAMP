@@ -11,7 +11,7 @@ Internet:	www.skinconsortium.com
 		www.martin.deimos.de.vu
 
 Note:		This script is based on configtarget.m
-		from Winamp Modern
+		from WinLAMP Modern
 -----------------------------------------------------
 ---------------------------------------------------*/
 

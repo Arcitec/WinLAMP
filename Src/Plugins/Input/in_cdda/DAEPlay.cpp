@@ -233,7 +233,7 @@ void DAEPlay::stop()
 	line.outMod->Close();
 }
 
-int DAEPlay::open(wchar_t drive, int track) //called by winampGetExtendedRead
+int DAEPlay::open(wchar_t drive, int track) //called by winlampGetExtendedRead
 {
 	g_track = track-1;
 	if (g_track < 0)
@@ -272,7 +272,7 @@ int DAEPlay::open(wchar_t drive, int track) //called by winampGetExtendedRead
 	return 0;
 }
 
-int DAEPlay::play(wchar_t drive, int track) //called by winamp2's normal(old) play() interface
+int DAEPlay::play(wchar_t drive, int track) //called by winlamp2's normal(old) play() interface
 {
 	int old_drive = g_drive;
 
@@ -346,7 +346,7 @@ int DAEPlay::fillBuffer(int kill)
 	return 0;
 }
 
-int DAEPlay::read(char *dest, int len, int *killswitch) //called by winampGetExtendedRead_getData
+int DAEPlay::read(char *dest, int len, int *killswitch) //called by winlampGetExtendedRead_getData
 {
 	int l = 0;
 

@@ -47,7 +47,7 @@
 #  STATIC_LIB=1     Build static library
 #  EXAMPLES=1       Build examples
 #  OPENMPT123=1     Build openmpt123
-#  IN_OPENMPT=0     Build in_openmpt (WinAMP 2.x plugin)
+#  IN_OPENMPT=0     Build in_openmpt (WinLAMP 2.x plugin)
 #  XMP_OPENMPT=0    Build xmp-openmpt (XMPlay plugin)
 #  SHARED_SONAME=1  Set SONAME of shared library
 #  DEBUG=0          Build debug binaries without optimization and with symbols
@@ -1585,7 +1585,7 @@ bin/dist-zip/libopenmpt-$(DIST_LIBOPENMPT_VERSION).msvc.zip: bin/dist.mk bin/svn
 	svn export ./include/pugixml       bin/dist-zip/libopenmpt-$(DIST_LIBOPENMPT_VERSION)/include/pugixml       --native-eol CRLF
 	svn export ./include/stb_vorbis    bin/dist-zip/libopenmpt-$(DIST_LIBOPENMPT_VERSION)/include/stb_vorbis    --native-eol CRLF
 	svn export ./include/vorbis        bin/dist-zip/libopenmpt-$(DIST_LIBOPENMPT_VERSION)/include/vorbis        --native-eol CRLF
-	svn export ./include/winamp        bin/dist-zip/libopenmpt-$(DIST_LIBOPENMPT_VERSION)/include/winamp        --native-eol CRLF
+	svn export ./include/winlamp        bin/dist-zip/libopenmpt-$(DIST_LIBOPENMPT_VERSION)/include/winlamp        --native-eol CRLF
 	svn export ./include/xmplay        bin/dist-zip/libopenmpt-$(DIST_LIBOPENMPT_VERSION)/include/xmplay        --native-eol CRLF
 	svn export ./include/zlib          bin/dist-zip/libopenmpt-$(DIST_LIBOPENMPT_VERSION)/include/zlib          --native-eol CRLF
 	cp bin/dist.mk bin/dist-zip/libopenmpt-$(DIST_LIBOPENMPT_VERSION)/build/dist.mk
@@ -1685,9 +1685,9 @@ endif
 	mkdir -p                                     bin/dist-retro-win9x/libopenmpt-$(DIST_LIBOPENMPT_VERSION)/XMPlay
 	svn export ./libopenmpt/doc/xmp-openmpt.txt  bin/dist-retro-win9x/libopenmpt-$(DIST_LIBOPENMPT_VERSION)/XMPlay/xmp-openmpt.txt --native-eol CRLF
 	cp bin/xmp-openmpt.dll                       bin/dist-retro-win9x/libopenmpt-$(DIST_LIBOPENMPT_VERSION)/XMPlay/xmp-openmpt.dll
-	mkdir -p                                     bin/dist-retro-win9x/libopenmpt-$(DIST_LIBOPENMPT_VERSION)/Winamp
-	svn export ./libopenmpt/doc/in_openmpt.txt   bin/dist-retro-win9x/libopenmpt-$(DIST_LIBOPENMPT_VERSION)/Winamp/in_openmpt.txt --native-eol CRLF
-	cp bin/in_openmpt.dll                        bin/dist-retro-win9x/libopenmpt-$(DIST_LIBOPENMPT_VERSION)/Winamp/in_openmpt.dll
+	mkdir -p                                     bin/dist-retro-win9x/libopenmpt-$(DIST_LIBOPENMPT_VERSION)/WinLAMP
+	svn export ./libopenmpt/doc/in_openmpt.txt   bin/dist-retro-win9x/libopenmpt-$(DIST_LIBOPENMPT_VERSION)/WinLAMP/in_openmpt.txt --native-eol CRLF
+	cp bin/in_openmpt.dll                        bin/dist-retro-win9x/libopenmpt-$(DIST_LIBOPENMPT_VERSION)/WinLAMP/in_openmpt.dll
 	cd bin/dist-retro-win9x/libopenmpt-$(DIST_LIBOPENMPT_VERSION)/ && ../../../build/tools/7zip/7z a -tzip -mx=9 ../libopenmpt-$(DIST_LIBOPENMPT_VERSION).bin.retro.win9x.zip *
 
 bin/libopenmpt.a: $(LIBOPENMPT_OBJECTS)

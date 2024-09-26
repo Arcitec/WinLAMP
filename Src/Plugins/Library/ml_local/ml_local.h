@@ -47,7 +47,7 @@ BOOL IPC_HookExtInfo(INT_PTR param);
 BOOL IPC_HookExtInfoW(INT_PTR param);
 BOOL IPC_HookTitleInfo(INT_PTR param);
 
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 
 #define INT_ENTRY_MAX_NUM       20
@@ -175,7 +175,7 @@ extern CRITICAL_SECTION g_db_cs;
 extern nde_database_t g_db;
 extern nde_table_t g_table;
 extern int g_table_dirty;
-extern const wchar_t *WINAMP_INI;
+extern const wchar_t *WINLAMP_INI;
 
 extern HWND m_curview_hwnd;
 

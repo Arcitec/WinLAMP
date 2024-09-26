@@ -87,14 +87,14 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_WELCOMEWIDGET_TITLE "WINAMP DEVICE MANAGER"
-    IDS_WELCOMEWIDGET_TEXT  "Manage the media on your devices by connecting them to Winamp.  To get started, connect a device or click Discover to find already connected devices. To manage Android devices over Wi-Fi, ensure wireless sync is enabled in the Winamp App settings."
+    IDS_WELCOMEWIDGET_TITLE "WINLAMP DEVICE MANAGER"
+    IDS_WELCOMEWIDGET_TEXT  "Manage the media on your devices by connecting them to WinLAMP.  To get started, connect a device or click Discover to find already connected devices. To manage Android devices over Wi-Fi, ensure wireless sync is enabled in the WinLAMP App settings."
     IDS_DEVICES_NAVIGATION_NODE "Devices"
     IDS_CATEGORY_ATTACHED   "Attached"
     IDS_CATEGORY_DISCOVERED "Discovered"
-    IDS_INFOWIDGET_TITLE    "Winamp Device Manager"
+    IDS_INFOWIDGET_TITLE    "WinLAMP Device Manager"
     IDS_DEVICE_SERVICE_NOT_FOUND 
-                            "Winamp Device Manager unable to communicate with device service. Try reinstalling application."
+                            "WinLAMP Device Manager unable to communicate with device service. Try reinstalling application."
     IDS_CREATE_DEVICE_VIEW_FAILED 
                             "Error creating device view. Verify that you have latest version of portable media plug-in."
     IDS_SYNC_COMMAND_TITLE  "&Sync"
@@ -113,9 +113,9 @@ BEGIN
     IDS_CANCEL_SYNC_COMMAND_DESC "Cancel synchronization"
     IDS_CREATE_MANAGER_VIEW_FAILED "Unable to create device manager view."
     IDS_ATTACH_COMMAND_TITLE "&Attach"
-    IDS_ATTACH_COMMAND_DESC "Connect device to Winamp"
+    IDS_ATTACH_COMMAND_DESC "Connect device to WinLAMP"
     IDS_DETACH_COMMAND_TITLE "&Detach"
-    IDS_DETACH_COMMAND_DESC "Detach device from Winamp"
+    IDS_DETACH_COMMAND_DESC "Detach device from WinLAMP"
     IDS_EJECT_COMMAND_TITLE "&Eject"
     IDS_EJECT_COMMAND_DESC  "Eject device"
     IDS_DEVICE_TYPE_SHORT   "Type"
@@ -129,7 +129,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_DEVICE_ACTIVITY_SHORT "Status"
-    IDS_PLUGIN_HELP_URL     "https://help.winamp.com/hc/articles/8106455294612-Winamp-Portables-Guide"
+    IDS_PLUGIN_HELP_URL     "https://help.winlamp.com/hc/articles/8106455294612-WinLAMP-Portables-Guide"
     IDS_RENAME_COMMAND_TITLE "&Rename\tF2"
     IDS_RENAME_COMMAND_DESC "Change the name of this device."
     IDS_VIEW_OPEN_COMMAND_TITLE "&Open"
@@ -138,7 +138,7 @@ BEGIN
     IDS_PREFERENCES_COMMAND_DESC "Change settings for this device."
     IDS_PLAYLIST_CREATE_COMMAND_TITLE "&New Playlist"
     IDS_PLAYLIST_CREATE_COMMAND_DESC "Make a new playlist on this device."
-    IDS_MESSAGEBOX_TITLE    "Winamp Device Manager"
+    IDS_MESSAGEBOX_TITLE    "WinLAMP Device Manager"
     IDS_MESSAGE_UNABLE_TO_RENAME "Unable to change device name."
 END
 
@@ -151,7 +151,7 @@ BEGIN
     IDS_CATEGORY_ATTACHED_EMPTY_TEXT 
                             "No devices are attached, select a discovered device to attach."
     IDS_WELCOMEWIDGET_HELP_URL 
-                            "https://help.winamp.com/hc/articles/8106455294612-Winamp-Portables-Guide"
+                            "https://help.winlamp.com/hc/articles/8106455294612-WinLAMP-Portables-Guide"
     IDS_HELP_LINK           "Help"
 END
 

@@ -69,7 +69,7 @@ void VidBucketItem::onLeftPush(int x, int y) {
 
 //-------------------------------------------------------------------------------------------
 
-MlBucketItem::MlBucketItem() : Wa2BucketItem(INVALID_GUID, L"Winamp Library") {
+MlBucketItem::MlBucketItem() : Wa2BucketItem(INVALID_GUID, L"WinLAMP Library") {
 }
 
 MlBucketItem::~MlBucketItem() {

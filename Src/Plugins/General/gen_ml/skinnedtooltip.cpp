@@ -1,7 +1,7 @@
 #include "main.h"
 #include "./skinnedtooltip.h"
 #include "./skinning.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 #include "./colors.h"
 #include <strsafe.h>
 

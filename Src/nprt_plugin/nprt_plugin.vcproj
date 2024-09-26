@@ -62,7 +62,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="Version.lib"
-				OutputFile="$(ProgramFiles)\Winamp\browserplugins\mozilla\plugins\npwachk.dll"
+				OutputFile="$(ProgramFiles)\WinLAMP\browserplugins\mozilla\plugins\npwachk.dll"
 				LinkIncremental="2"
 				ModuleDefinitionFile=".\nprt.def"
 				GenerateDebugInformation="true"
@@ -138,7 +138,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="Version.lib"
-				OutputFile="$(ProgramFiles)\Winamp\browserplugins\mozilla\plugins\npwachk.dll"
+				OutputFile="$(ProgramFiles)\WinLAMP\browserplugins\mozilla\plugins\npwachk.dll"
 				LinkIncremental="1"
 				ModuleDefinitionFile=".\nprt.def"
 				GenerateDebugInformation="false"

@@ -14,7 +14,7 @@
 **
 **   3. This notice may not be removed or altered from any source distribution.
 **
-** Author: Ben Allison benski@winamp.com
+** Author: Ben Allison benski@winlamp.com
 ** Created: March 1, 2007
 **
 */
@@ -74,7 +74,7 @@ static FLAC__StreamDecoderWriteStatus OnAudio(const FLAC__StreamDecoder *decoder
 
 extern "C"
 {
-	__declspec( dllexport ) intptr_t winampGetExtendedRead_openW(const wchar_t *fn, int *size, int *bps, int *nch, int *srate)
+	__declspec( dllexport ) intptr_t winlampGetExtendedRead_openW(const wchar_t *fn, int *size, int *bps, int *nch, int *srate)
 	{
 		nx_file_t file;
 		ReferenceCountedNXString filename_nx;
@@ -126,7 +126,7 @@ extern "C"
 		return (intptr_t) e;
 	}
 
-	__declspec( dllexport ) intptr_t winampGetExtendedRead_getData(intptr_t handle, char *dest, size_t len, int *killswitch)
+	__declspec( dllexport ) intptr_t winlampGetExtendedRead_getData(intptr_t handle, char *dest, size_t len, int *killswitch)
 	{
 		ExtendedRead *ext = (ExtendedRead *)handle;
 
@@ -153,7 +153,7 @@ extern "C"
 		return 0;
 	}
 
-	__declspec( dllexport ) void winampGetExtendedRead_close(intptr_t handle)
+	__declspec( dllexport ) void winlampGetExtendedRead_close(intptr_t handle)
 	{
 		ExtendedRead *ext = (ExtendedRead *)handle;
 

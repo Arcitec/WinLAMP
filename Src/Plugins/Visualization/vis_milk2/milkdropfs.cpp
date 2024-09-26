@@ -1400,19 +1400,19 @@ void CPlugin::UpdateSongInfo()
 
 		if (::GetWindowText(m_hWndParent, m_szSongMessage, sizeof(m_szSongMessage)))
 		{
-			// remove ' - Winamp' at end
+			// remove ' - WinLAMP' at end
 			if (strlen(m_szSongMessage) > 9)
 			{
 				int check_pos = strlen(m_szSongMessage) - 9;
-				if (lstrcmp(" - Winamp", (char *)(m_szSongMessage + check_pos)) == 0)
+				if (lstrcmp(" - WinLAMP", (char *)(m_szSongMessage + check_pos)) == 0)
 					m_szSongMessage[check_pos] = 0;
 			}
 
-			// remove ' - Winamp [Paused]' at end
+			// remove ' - WinLAMP [Paused]' at end
 			if (strlen(m_szSongMessage) > 18)
 			{
 				int check_pos = strlen(m_szSongMessage) - 18;
-				if (lstrcmp(" - Winamp [Paused]", (char *)(m_szSongMessage + check_pos)) == 0)
+				if (lstrcmp(" - WinLAMP [Paused]", (char *)(m_szSongMessage + check_pos)) == 0)
 					m_szSongMessage[check_pos] = 0;
 			}
 

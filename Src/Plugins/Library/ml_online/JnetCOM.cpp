@@ -336,13 +336,13 @@ void JnetCOM::callBack()
 	}
 }
 
-#define USER_AGENT_SIZE (10 /*User-Agent*/ + 2 /*: */ + 6 /*Winamp*/ + 1 /*/*/ + 1 /*5*/ + 3/*.21*/ + 1 /*Null*/)
+#define USER_AGENT_SIZE (10 /*User-Agent*/ + 2 /*: */ + 6 /*WinLAMP*/ + 1 /*/*/ + 1 /*5*/ + 3/*.21*/ + 1 /*Null*/)
 void SetUserAgent(api_httpreceiver *http)
 {
 	char user_agent[USER_AGENT_SIZE] = {0};
-	int bigVer = ((winampVersion & 0x0000FF00) >> 12);
-	int smallVer = ((winampVersion & 0x000000FF));
-	StringCchPrintfA(user_agent, USER_AGENT_SIZE, "User-Agent: Winamp/%01x.%02x", bigVer, smallVer);
+	int bigVer = ((winlampVersion & 0x0000FF00) >> 12);
+	int smallVer = ((winlampVersion & 0x000000FF));
+	StringCchPrintfA(user_agent, USER_AGENT_SIZE, "User-Agent: WinLAMP/%01x.%02x", bigVer, smallVer);
 	http->addheader(user_agent);
 }
 
@@ -576,7 +576,7 @@ void JnetCOM::DownloadURL(DISPPARAMS FAR *pdispparams)
 				jnetbuf->expire_time = now + pdispparams->rgvarg[0].iVal;
 			}
 		}
-		else // Use winamp config cache time
+		else // Use winlamp config cache time
 		{
 			int when = 0, x = 0;
 

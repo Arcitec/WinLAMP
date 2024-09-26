@@ -34,7 +34,7 @@ static std::vector<PLUGINUNLOADCALLBACK> *unloadCallbacks = NULL;
 
 C_Config *g_config=NULL;
 
-extern "C"  winampMediaLibraryPlugin plugin =
+extern "C"  winlampMediaLibraryPlugin plugin =
 {
 	MLHDR_VER,
 	"nullsoft(ml_online.dll)",
@@ -52,9 +52,9 @@ HINSTANCE Plugin_GetInstance(void)
 	return plugin.hDllInstance;
 }
 
-HWND Plugin_GetWinamp(void)
+HWND Plugin_GetWinLAMP(void)
 {
-	return plugin.hwndWinampParent;
+	return plugin.hwndWinLAMPParent;
 }
 
 HWND Plugin_GetLibrary(void)
@@ -202,7 +202,7 @@ static void Plugin_UninitializeTimer()
 
 
 wchar_t g_w_cachedir[2048] = {0};
-int     winampVersion=0;
+int     winlampVersion=0;
 
 OMCOM omCOM;
 
@@ -420,10 +420,10 @@ static int Plugin_Init()
 	}
 
 	mediaLibrary.library  = plugin.hwndLibraryParent;
-	mediaLibrary.winamp   = plugin.hwndWinampParent;
+	mediaLibrary.winlamp   = plugin.hwndWinLAMPParent;
 	mediaLibrary.instance = plugin.hDllInstance;
 
-	winampVersion = mediaLibrary.GetWinampVersion();
+	winlampVersion = mediaLibrary.GetWinLAMPVersion();
 
 	omCOM.Publish();
 	
@@ -567,13 +567,13 @@ void Plugin_RegisterUnloadCallback(PLUGINUNLOADCALLBACK callback)
 }
 
 
-extern "C" __declspec(dllexport) winampMediaLibraryPlugin *winampGetMediaLibraryPlugin()
+extern "C" __declspec(dllexport) winlampMediaLibraryPlugin *winlampGetMediaLibraryPlugin()
 {
 	return &plugin;
 }
 
 #if 0
-extern "C" __declspec( dllexport ) int winampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
+extern "C" __declspec( dllexport ) int winlampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
 
 		// prompt to remove our settings with default as no (just incase)
 		/*if(MessageBoxA(hwndDlg,"Do you also want to remove the saved settings for this plugin?",

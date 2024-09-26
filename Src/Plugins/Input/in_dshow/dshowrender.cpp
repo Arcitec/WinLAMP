@@ -3,7 +3,7 @@
 // This will have dshow take control of rendering the data (audio or video).
 // Used for mms streams
 //
-#ifdef WINAMPX
+#ifdef WINLAMPX
 
 #include <windows.h>
 #include <math.h>
@@ -99,7 +99,7 @@ void dsr_stop();
 #define EndEnumFilters }}}
 
 static void SendStatus(int status, int arg ) {
-	mod.fire_winampstatus( status, arg );
+	mod.fire_winlampstatus( status, arg );
 }
 
 
@@ -261,7 +261,7 @@ int dsr_play(char *fn)
   if ((hr == VFW_S_PARTIAL_RENDER) || (hr == VFW_S_VIDEO_NOT_RENDERED))
   {
     if (!ReportMissingCodec(fn)) // Report the missing codec if we can determine it
-      mod.fire_winampstatus(WINAMPX_STATUS_MISSING_AVI_CODEC, 0); // If we can't report a null codec missing
+      mod.fire_winlampstatus(WINLAMPX_STATUS_MISSING_AVI_CODEC, 0); // If we can't report a null codec missing
   }
   
   if (FAILED(s_pGraphBuilder->QueryInterface(IID_IMediaControl, (void **)&s_pMediaControl)) ||
@@ -472,7 +472,7 @@ LRESULT CALLBACK dsr_TimerWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
             if (csa) mod.SAAdd(tempdata,++s_bufferstat,(csa==3)?0x80000003:csa);
             
             PostMessage(mod.hMainWindow,WM_USER,0,243);
-            SendStatus(WINAMPX_STATUS_PREBUFFERING_PCT, 255*BufferingProgress/100);
+            SendStatus(WINLAMPX_STATUS_PREBUFFERING_PCT, 255*BufferingProgress/100);
 
             break;
           }
@@ -556,7 +556,7 @@ LRESULT CALLBACK dsr_SubclassParentWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, 
 
   if ((uMsg == WM_PARENTNOTIFY) && (LOWORD(wParam)==WM_RBUTTONDOWN))
   { 
-    SendStatus(WINAMPX_STATUS_VIDEO_RIGHT_CLICK, lParam);
+    SendStatus(WINLAMPX_STATUS_VIDEO_RIGHT_CLICK, lParam);
   }
 
   if ((uMsg == WM_PARENTNOTIFY) && (LOWORD(wParam)==WM_LBUTTONDOWN))
@@ -580,4 +580,4 @@ LRESULT CALLBACK dsr_SubclassParentWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, 
   return retval;
 }
 
-#endif // WINAMPX
+#endif // WINLAMPX

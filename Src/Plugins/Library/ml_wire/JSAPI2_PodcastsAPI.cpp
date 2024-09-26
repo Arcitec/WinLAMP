@@ -1,5 +1,5 @@
 #include "JSAPI2_PodcastsAPI.h"
-#include "../Winamp/JSAPI.h"
+#include "../WinLAMP/JSAPI.h"
 #include "api__ml_wire.h"
 #include "./rssCOM.h"
 

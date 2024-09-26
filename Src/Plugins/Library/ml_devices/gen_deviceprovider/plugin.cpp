@@ -1,5 +1,5 @@
 #include "main.h"
-#include "../../winamp/gen.h"
+#include "../../winlamp/gen.h"
 #include <strsafe.h>
 
 static INT 
@@ -12,7 +12,7 @@ static void
 Plugin_Config(void);
 
  
-extern "C" winampGeneralPurposePlugin plugin =
+extern "C" winlampGeneralPurposePlugin plugin =
 {
 	GPPHDR_VER,
 	0,
@@ -30,7 +30,7 @@ Plugin_GetInstance(void)
 }
 
 HWND 
-Plugin_GetWinampWindow(void)
+Plugin_GetWinLAMPWindow(void)
 {
 	return plugin.hwndParent;
 }
@@ -59,7 +59,7 @@ static INT
 Plugin_Init(void)
 {	
 	
-	if (FALSE == Wasabi_InitializeFromWinamp(plugin.hDllInstance, plugin.hwndParent))
+	if (FALSE == Wasabi_InitializeFromWinLAMP(plugin.hDllInstance, plugin.hwndParent))
 		return 1;
 
 	Wasabi_LoadDefaultServices();
@@ -103,8 +103,8 @@ Plugin_Config(void)
 {	
 }
 
-EXTERN_C __declspec(dllexport) winampGeneralPurposePlugin *
-winampGetGeneralPurposePlugin()
+EXTERN_C __declspec(dllexport) winlampGeneralPurposePlugin *
+winlampGetGeneralPurposePlugin()
 {
 	if (0 == plugin.description)
 	{

@@ -2,7 +2,7 @@
 #include "./folderbrowser_internal.h"
 #include "./stringvector.h"
 #include <vector>
-#include "../Winamp/wa_dlg.h"
+#include "../WinLAMP/wa_dlg.h"
 #include "./skinnedlistbox.h"
 #include "./colors.h"
 

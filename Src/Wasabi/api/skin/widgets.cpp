@@ -411,8 +411,8 @@ int Widgets::skincb_onBeforeLoadingElements() {
 void Widgets::loadResources() 
 {
 	// TODO: benski> want to put this into gen_ff somewhere, instead.
-	WASABI_API_SKIN->loadSkinFile(StringPathCombine(g_resourcepath,L"xml\\winamp\\cover\\cover.xml"));
-	WASABI_API_SKIN->loadSkinFile(StringPathCombine(g_resourcepath,L"xml\\winamp\\thinger\\thinger.xml"));
+	WASABI_API_SKIN->loadSkinFile(StringPathCombine(g_resourcepath,L"xml\\winlamp\\cover\\cover.xml"));
+	WASABI_API_SKIN->loadSkinFile(StringPathCombine(g_resourcepath,L"xml\\winlamp\\thinger\\thinger.xml"));
 
   #ifndef WA3COMPATIBILITY // ifNdef
   WASABI_API_SKIN->loadSkinFile(StringPathCombine(g_resourcepath,L"xml\\wasabi\\wasabi.xml"));

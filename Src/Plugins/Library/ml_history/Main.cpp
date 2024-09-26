@@ -27,7 +27,7 @@ static INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT
 prefsDlgRecW preferences = {0};
 wchar_t g_tableDir[MAX_PATH] = {0};
 
-extern "C" winampMediaLibraryPlugin plugin =
+extern "C" winlampMediaLibraryPlugin plugin =
 {
     MLHDR_VER,
     "nullsoft(ml_history.dll)",
@@ -66,7 +66,7 @@ int Init()
 	g_table = NULL;
 	
 	mediaLibrary.library  = plugin.hwndLibraryParent;
-	mediaLibrary.winamp   = plugin.hwndWinampParent;
+	mediaLibrary.winlamp   = plugin.hwndWinLAMPParent;
 	mediaLibrary.instance = plugin.hDllInstance;
 
 	wchar_t configName[ MAX_PATH ] = { 0 };
@@ -124,7 +124,7 @@ int Init()
 	preferences.name   = WASABI_API_LNGSTRINGW_BUF( IDS_HISTORY, preferencesName, 64 );
 	preferences.where = 6; // media library
 
-	SENDWAIPC( plugin.hwndWinampParent, IPC_ADD_PREFS_DLGW, &preferences );
+	SENDWAIPC( plugin.hwndWinLAMPParent, IPC_ADD_PREFS_DLGW, &preferences );
 	
 	if ( !history_init() )
 		return ML_INIT_FAILURE;
@@ -182,10 +182,10 @@ static INT_PTR History_OnContextMenu(INT_PTR param1, HWND hHost, POINTS pts)
 		switch(r)
 		{
 			case ID_NAVIGATION_PREFERENCES:
-				SENDWAIPC(plugin.hwndWinampParent, IPC_OPENPREFSTOPAGE, &preferences);
+				SENDWAIPC(plugin.hwndWinLAMPParent, IPC_OPENPREFSTOPAGE, &preferences);
 				break;
 			case ID_NAVIGATION_HELP:
-				SENDWAIPC(plugin.hwndWinampParent, IPC_OPEN_URL, L"https://help.winamp.com/hc/articles/8105304048660-The-Winamp-Media-Library");
+				SENDWAIPC(plugin.hwndWinLAMPParent, IPC_OPEN_URL, L"https://help.winlamp.com/hc/articles/8105304048660-The-WinLAMP-Media-Library");
 				break;
 		}
 	}
@@ -198,7 +198,7 @@ static INT_PTR History_OnContextMenu(INT_PTR param1, HWND hHost, POINTS pts)
 
 void History_StartTracking(const wchar_t *filename, bool resume)
 {
-	KillTimer(plugin.hwndWinampParent, 8082);
+	KillTimer(plugin.hwndWinLAMPParent, 8082);
 	if (!resume)
 	{
 		free(history_fn);
@@ -224,7 +224,7 @@ void History_StartTracking(const wchar_t *filename, bool resume)
 	{
 		basicFileInfoStructW bfiW = {0};
 		bfiW.filename = history_fn;
-		SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&bfiW, IPC_GET_BASIC_FILE_INFOW);
+		SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&bfiW, IPC_GET_BASIC_FILE_INFOW);
 		if(bfiW.length > 0)
 		{
 			bfiW.length=bfiW.length*1000;
@@ -237,7 +237,7 @@ void History_StartTracking(const wchar_t *filename, bool resume)
 	{
 		basicFileInfoStructW bfiW = {0};
 		bfiW.filename = history_fn;
-		SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&bfiW, IPC_GET_BASIC_FILE_INFOW);
+		SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&bfiW, IPC_GET_BASIC_FILE_INFOW);
 		if(bfiW.length > 0)
 		{
 			timer3=(bfiW.length-1)*1000;
@@ -269,7 +269,7 @@ void History_StartTracking(const wchar_t *filename, bool resume)
 	if((timer <= 0) && (timer3 > 0)){ timer = timer3; }
 	
 	// if no match or something went wrong then try to ensure the default timer value is used
-	SetTimer(plugin.hwndWinampParent, 8082, ((timer > 0)? timer : 350), NULL);
+	SetTimer(plugin.hwndWinLAMPParent, 8082, ((timer > 0)? timer : 350), NULL);
 }
 
 INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR param3)
@@ -298,8 +298,8 @@ INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR pa
 				int resume = g_config->ReadInt(L"resumeplayback",0);
 				if(resume)
 				{
-					int is_playing = (int)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_ISPLAYING);
-					//int play_pos = SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_GETOUTPUTTIME);
+					int is_playing = (int)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_ISPLAYING);
+					//int play_pos = SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_GETOUTPUTTIME);
 					if(is_playing == 1/* && !(play_pos/1000 > 0)*/) //playing, look up last play offset and send seek message
 					{
 						wchar_t genre[256]={0};
@@ -309,7 +309,7 @@ INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR pa
 							genre,
 							ARRAYSIZE(genre),
 						};
-						SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efis,IPC_GET_EXTENDED_FILE_INFOW); 
+						SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efis,IPC_GET_EXTENDED_FILE_INFOW); 
 
 						wchar_t ispodcast[8]={0};
 						extendedFileInfoStructW efis1={
@@ -318,12 +318,12 @@ INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR pa
 							ispodcast,
 							ARRAYSIZE(ispodcast),
 						};
-						SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efis1,IPC_GET_EXTENDED_FILE_INFOW_HOOKABLE);
+						SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efis1,IPC_GET_EXTENDED_FILE_INFOW_HOOKABLE);
 
 						if (resume == 2 || (ispodcast[0] && _wtoi(ispodcast) > 0) || (genre[0] && !_wcsicmp(genre, L"podcast")))
 						{
 							int offset = retrieve_offset((wchar_t*)param1);
-							if (offset > 0 && (offset/1000 > 0)) PostMessage(plugin.hwndWinampParent,WM_WA_IPC,offset,IPC_JUMPTOTIME);
+							if (offset > 0 && (offset/1000 > 0)) PostMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,offset,IPC_JUMPTOTIME);
 						}
 					}
 				}
@@ -343,7 +343,7 @@ INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR pa
 	return 0;
 }
 
-extern "C" __declspec(dllexport) winampMediaLibraryPlugin *winampGetMediaLibraryPlugin()
+extern "C" __declspec(dllexport) winlampMediaLibraryPlugin *winlampGetMediaLibraryPlugin()
 {
 	return &plugin;
 }

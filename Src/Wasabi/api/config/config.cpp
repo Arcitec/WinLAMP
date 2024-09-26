@@ -120,7 +120,7 @@ void Reader::readem()
     if (parser)
     {
 
-      parser->xmlreader_registerCallback(L"WinampXML\fconfiguration\f*", this);
+      parser->xmlreader_registerCallback(L"WinLAMPXML\fconfiguration\f*", this);
       parser->xmlreader_registerCallback(L"WasabiXML\fconfiguration\f*", this);
       parser->xmlreader_open();
       LoadXmlFile(parser, iniFile);

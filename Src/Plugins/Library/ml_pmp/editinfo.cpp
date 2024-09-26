@@ -555,7 +555,7 @@ static INT_PTR CALLBACK editInfo_dialogProc(HWND hwndDlg, UINT uMsg, WPARAM wPar
 					case ID_ARTEDITMENU_DOWNLOAD:
 					{
 						artFetchData d = {sizeof(d),hwndDlg,artist,album,0};
-						int r = (int)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(LPARAM)&d,IPC_FETCH_ALBUMART);
+						int r = (int)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(LPARAM)&d,IPC_FETCH_ALBUMART);
 						if(r == 0 && d.imgData && d.imgDataLen) // success, save art in correct location
 						{
 							int w=0,h=0;

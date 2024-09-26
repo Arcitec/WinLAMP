@@ -1,5 +1,5 @@
-#ifndef _NULLSOFT_WINAMP_GEN_DEVICE_PROVIDER_WASABI_HEADER
-#define _NULLSOFT_WINAMP_GEN_DEVICE_PROVIDER_WASABI_HEADER
+#ifndef _NULLSOFT_WINLAMP_GEN_DEVICE_PROVIDER_WASABI_HEADER
+#define _NULLSOFT_WINLAMP_GEN_DEVICE_PROVIDER_WASABI_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -23,8 +23,8 @@ Wasabi_Initialize(HINSTANCE instance,
 				  api_service *serviceMngr);
 
 BOOL 
-Wasabi_InitializeFromWinamp(HINSTANCE instance, 
-							HWND winampWindow);
+Wasabi_InitializeFromWinLAMP(HINSTANCE instance, 
+							HWND winlampWindow);
 
 BOOL
 Wasabi_LoadDefaultServices(void);
@@ -54,4 +54,4 @@ Wasabi_ReleaseInterface0(const GUID &interfaceGuid,
 		{if (NULL != (_object)) {((Dispatchable*)(_object))->Release();}} 
 
 
-#endif // _NULLSOFT_WINAMP_GEN_DEVICE_PROVIDER_WASABI_HEADER
+#endif // _NULLSOFT_WINLAMP_GEN_DEVICE_PROVIDER_WASABI_HEADER

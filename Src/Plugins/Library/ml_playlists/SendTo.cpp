@@ -21,17 +21,17 @@ static std::vector<GUID> sendto_playlistGUIDs;
 
 int playlists_CloudAvailable()
 {
-	if (IPC_GET_CLOUD_HINST == -1) IPC_GET_CLOUD_HINST = (INT)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"WinampCloud", IPC_REGISTER_WINAMP_IPCMESSAGE);
-	if (IPC_GET_CLOUD_ACTIVE == -1) IPC_GET_CLOUD_ACTIVE = (INT)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"WinampCloudActive", IPC_REGISTER_WINAMP_IPCMESSAGE);
-	if (!cloud_hinst) cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
+	if (IPC_GET_CLOUD_HINST == -1) IPC_GET_CLOUD_HINST = (INT)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"WinLAMPCloud", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	if (IPC_GET_CLOUD_ACTIVE == -1) IPC_GET_CLOUD_ACTIVE = (INT)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"WinLAMPCloudActive", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	if (!cloud_hinst) cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
 
-	return (cloud_avail = /*0/*/!(!cloud_hinst || cloud_hinst == (HINSTANCE)1 || !SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_CLOUD_ACTIVE))/**/);
+	return (cloud_avail = /*0/*/!(!cloud_hinst || cloud_hinst == (HINSTANCE)1 || !SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_CLOUD_ACTIVE))/**/);
 }
 
 int playlists_CloudInstalled()
 {
-	if (IPC_GET_CLOUD_HINST == -1) IPC_GET_CLOUD_HINST = (INT)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"WinampCloud", IPC_REGISTER_WINAMP_IPCMESSAGE);
-	if (!cloud_hinst) cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
+	if (IPC_GET_CLOUD_HINST == -1) IPC_GET_CLOUD_HINST = (INT)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"WinLAMPCloud", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	if (!cloud_hinst) cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
 
 	return (!(!cloud_hinst || cloud_hinst == (HINSTANCE)1));
 }
@@ -298,7 +298,7 @@ static void BuildTitle(itemRecord *record, wchar_t *title, int lenCch)
 	*(void **)&fmt.TAGFREEFUNC = fieldTagFuncFree;
 	*title = 0;
 
-	SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&fmt, IPC_FORMAT_TITLE_EXTENDED);
+	SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&fmt, IPC_FORMAT_TITLE_EXTENDED);
 }
 
 static void BuildTitleW(itemRecordW *record, wchar_t *title, int lenCch)
@@ -314,7 +314,7 @@ static void BuildTitleW(itemRecordW *record, wchar_t *title, int lenCch)
 	*(void **)&fmt.TAGFREEFUNC = fieldTagFuncFree;
 	*title = 0;
 
-	SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&fmt, IPC_FORMAT_TITLE_EXTENDED);
+	SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&fmt, IPC_FORMAT_TITLE_EXTENDED);
 }
 
 void AddPlaylistFromItemRecordList(itemRecordList *obj, const wchar_t *playlistTitle, int makeTree, const wchar_t *filename)
@@ -347,7 +347,7 @@ static void AddToPlaylist(GUID playlist_guid, int sourceType, INT_PTR data)
 {
 	AutoLockT<api_playlists> lock (AGAVE_API_PLAYLISTS);
 
-	playlist_Save(plugin.hwndWinampParent);
+	playlist_Save(plugin.hwndWinLAMPParent);
 	PlaylistInfo p(playlist_guid);
 	if (p.Valid())
 	{

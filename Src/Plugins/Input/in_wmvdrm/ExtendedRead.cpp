@@ -203,7 +203,7 @@ bool ExtendedReadStruct::FindOutput(int bits, int channels)
 }
 
 extern "C"
-	__declspec(dllexport) intptr_t winampGetExtendedRead_openW(const wchar_t *fn, int *size, int *bps, int *nch, int *srate)
+	__declspec(dllexport) intptr_t winlampGetExtendedRead_openW(const wchar_t *fn, int *size, int *bps, int *nch, int *srate)
 {
 	ExtendedReadStruct *read = new ExtendedReadStruct;
 
@@ -226,14 +226,14 @@ extern "C"
 }
 
 extern "C"
-	__declspec(dllexport) intptr_t winampGetExtendedRead_getData(intptr_t handle, char *dest, int len, int *killswitch)
+	__declspec(dllexport) intptr_t winlampGetExtendedRead_getData(intptr_t handle, char *dest, int len, int *killswitch)
 {
 	ExtendedReadStruct *read = reinterpret_cast<ExtendedReadStruct *>(handle);
 	return read->ReadAudio(dest, len);
 }
 
 extern "C"
-	__declspec(dllexport) void winampGetExtendedRead_close(intptr_t handle)
+	__declspec(dllexport) void winlampGetExtendedRead_close(intptr_t handle)
 {
 	ExtendedReadStruct *read = reinterpret_cast<ExtendedReadStruct *>(handle);
 	delete read;

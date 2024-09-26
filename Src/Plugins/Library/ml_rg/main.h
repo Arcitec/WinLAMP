@@ -4,14 +4,14 @@
 #include <windows.h>
 #include "../../General/gen_ml/ml.h"
 #include <windowsx.h>
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../../General/gen_ml/ml.h"
 #include "resource.h"
 #include <string>
 #include <vector>
 #include <map>
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 extern char *iniFile;
 
 LRESULT SetFileInfo(const wchar_t *filename, const wchar_t *metadata, const wchar_t *data);

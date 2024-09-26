@@ -28,12 +28,12 @@
     <ClCompile Include="wasabi1_factory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Winamp5ArtworkManager.cpp">
+    <ClCompile Include="WinLAMP5ArtworkManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Winamp5ArtworkManager.h">
+    <ClInclude Include="WinLAMP5ArtworkManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="wasabi1_factory.h">

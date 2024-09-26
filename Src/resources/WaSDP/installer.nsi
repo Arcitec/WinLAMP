@@ -1,4 +1,4 @@
-; Winamp Skin Development Pack Installer
+; WinLAMP Skin Development Pack Installer
 
 ;--------------------------------
 ;Include Modern UI
@@ -8,16 +8,16 @@
 ;--------------------------------
 
 ; The name of the installer
-Name "Winamp Skin Development Pack v5.9"
+Name "WinLAMP Skin Development Pack v5.9"
 
 ; The file to write
-OutFile "WinampSDP_59.exe"
+OutFile "WinLAMPSDP_59.exe"
 
 ; The default installation directory
-InstallDir $PROFILE\WinampSDP
+InstallDir $PROFILE\WinLAMPSDP
 
 ; The text to prompt the user to enter a directory
-DirText "Select the installation folder for the Winamp Skin Development Pack:"
+DirText "Select the installation folder for the WinLAMP Skin Development Pack:"
 
 ; automatically close the installer when done.
 AutoCloseWindow false
@@ -95,9 +95,9 @@ Section "Maki Community Scripts" SecLibsCom
 
 SectionEnd
 
-Section "Winamp Bento Source" SecSkinBento
+Section "WinLAMP Bento Source" SecSkinBento
 
-  DetailPrint "Installing Winamp Bento Source Code..."
+  DetailPrint "Installing WinLAMP Bento Source Code..."
   SetOutPath "$INSTDIR\Skins\Big Bento"
   File /r /x "about.m" /x "nibbles.m" "..\skins\Big Bento\*.m"
   SetOutPath "$INSTDIR\Skins\Bento"
@@ -105,11 +105,11 @@ Section "Winamp Bento Source" SecSkinBento
 
 SectionEnd
 
-Section "Winamp Modern Source" SecSkinModern
+Section "WinLAMP Modern Source" SecSkinModern
 
-  DetailPrint "Installing Winamp Modern Source Code..."
-  SetOutPath "$INSTDIR\Skins\Winamp Modern"
-  File /r "..\skins\Winamp Modern\*.m"
+  DetailPrint "Installing WinLAMP Modern Source Code..."
+  SetOutPath "$INSTDIR\Skins\WinLAMP Modern"
+  File /r "..\skins\WinLAMP Modern\*.m"
 
 SectionEnd
 
@@ -151,9 +151,9 @@ SectionEnd
   !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${SecCompiler} "This tool (mc.exe) is needed to compile *.m files to *.maki files."
   !insertmacro MUI_DESCRIPTION_TEXT ${SecLibs} "Standard Maki Libraries."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecLibsCom} "Some maki scripts done by the Winamp community."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecSkinModern} "Install Winamp Modern Skin Maki source code."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecSkinBento} "Install Winamp Bento Maki source code."
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecLibsCom} "Some maki scripts done by the WinLAMP community."
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecSkinModern} "Install WinLAMP Modern Skin Maki source code."
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecSkinBento} "Install WinLAMP Bento Maki source code."
   ;!insertmacro MUI_DESCRIPTION_TEXT ${SecDebugger} "Wasabi Debugger will print debug strings to c:\wasabi.log"
   !insertmacro MUI_DESCRIPTION_TEXT ${SecEditplus} "This will install Edit Plus Syntax Libs. For more info see readme.txt"
   !insertmacro MUI_FUNCTION_DESCRIPTION_END
@@ -167,7 +167,7 @@ Section "Uninstall"
   Delete "$INSTDIR\Maki.*"
   Delete "$INSTDIR\wasdp_readme.txt"
   Delete "$INSTDIR\system\ConsoleFile.w5s"
-  Delete "$INSTDIR\Skins\Winamp Modern\scripts\*.m"
+  Delete "$INSTDIR\Skins\WinLAMP Modern\scripts\*.m"
   Delete "$INSTDIR\Skins\Big Bento\scripts\*.m"
   Delete "$INSTDIR\Skins\Bento\scripts\*.m"
   Delete "$INSTDIR\Skins\Big Bento\about\*.m"

@@ -1,5 +1,5 @@
 #include "h264_mkv_decoder.h"
-#include "../Winamp/wa_ipc.h" // for YV12_PLANES
+#include "../WinLAMP/wa_ipc.h" // for YV12_PLANES
 #include <winsock.h>
 #include <mmsystem.h>
 #include <Mferror.h>

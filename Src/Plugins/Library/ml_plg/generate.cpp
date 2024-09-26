@@ -3,7 +3,7 @@
 #include <windows.h>
 #include "resource.h"
 #include "../../General/gen_ml/ml.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../Agave/Language/api_language.h"
 #include "../nu/MediaLibraryInterface.h"
 #include "../nu/ComboBox.h"
@@ -486,8 +486,8 @@ INT_PTR CALLBACK GenerateProcedure(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM
 			ToggleOptions(true);
 
 			// Show the window since we are modeless
-			POINT pt = {(LONG)GetPrivateProfileInt(L"ml_plg", L"generate_x",-1, mediaLibrary.GetWinampIniW()),
-						(LONG)GetPrivateProfileInt(L"ml_plg", L"generate_y",-1, mediaLibrary.GetWinampIniW())};
+			POINT pt = {(LONG)GetPrivateProfileInt(L"ml_plg", L"generate_x",-1, mediaLibrary.GetWinLAMPIniW()),
+						(LONG)GetPrivateProfileInt(L"ml_plg", L"generate_y",-1, mediaLibrary.GetWinLAMPIniW())};
 			if (!windowOffScreen(hwndDlg, pt))
 				SetWindowPos(hwndDlg, HWND_TOP, pt.x, pt.y, 0, 0, SWP_NOSIZE | SWP_SHOWWINDOW | SWP_NOSENDCHANGING);
 			else
@@ -529,9 +529,9 @@ INT_PTR CALLBACK GenerateProcedure(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM
 					GetWindowRect(hwndDlg, &rect);
 					char buf[16] = {0};
 					StringCchPrintfA(buf, 16, "%d", rect.left);
-					WritePrivateProfileStringA("ml_plg", "generate_x", buf, mediaLibrary.GetWinampIni());
+					WritePrivateProfileStringA("ml_plg", "generate_x", buf, mediaLibrary.GetWinLAMPIni());
 					StringCchPrintfA(buf, 16, "%d", rect.top);
-					WritePrivateProfileStringA("ml_plg", "generate_y", buf, mediaLibrary.GetWinampIni());
+					WritePrivateProfileStringA("ml_plg", "generate_y", buf, mediaLibrary.GetWinLAMPIni());
 
 					EndDialog(hwndDlg, 0);
 					hwndDlgCurrent = 0;			// Set to null so new instance can be opened

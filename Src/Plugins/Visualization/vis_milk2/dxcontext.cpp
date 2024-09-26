@@ -38,15 +38,15 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // note: added WS_EX_CONTROLPARENT and WS_TABSTOP for embedwnd so window frame will pass on KB commands to us, if it has focus & receives them.
 //       however, it is still not working.  Maksim says he needs to use GetNextDlgTabItem() and then it will work.
-//       aha- had to remove WS_EX_CONTROLPARENT and WS_OVERLAPPED.  Should now work with winamp 5.5 build 1620.
+//       aha- had to remove WS_EX_CONTROLPARENT and WS_OVERLAPPED.  Should now work with winlamp 5.5 build 1620.
 #define MY_EXT_WINDOW_STYLE (m_current_mode.m_skin ? 0/*WS_EX_CONTROLPARENT*/ : ((m_current_mode.screenmode==DESKTOP) ? (WS_EX_TOOLWINDOW) : 0)) // note: changed from TOOLWINDOW to APPWINDOW b/c we wanted the plugin to appear in the taskbar.
 #define SKINNED_WS (WS_VISIBLE|WS_CHILDWINDOW/*|WS_OVERLAPPED*/|WS_CLIPCHILDREN|WS_CLIPSIBLINGS|WS_TABSTOP)
 #define MY_WINDOW_STYLE (m_current_mode.m_skin ? SKINNED_WS : ((m_current_mode.screenmode==FAKE_FULLSCREEN || m_current_mode.screenmode==DESKTOP) ? WS_POPUP : WS_OVERLAPPEDWINDOW))   // note: WS_POPUP (by itself) removes all borders, captions, etc.
 
 #include "vis.h"
-extern winampVisModule mod1;
+extern winlampVisModule mod1;
 
-DXContext::DXContext(HWND hWndWinamp,HINSTANCE hInstance,LPCWSTR szClassName,LPCSTR szWindowCaption,WNDPROC pProc,LONG_PTR uWindowLong, int minimize_winamp, wchar_t* szIniFile)
+DXContext::DXContext(HWND hWndWinLAMP,HINSTANCE hInstance,LPCWSTR szClassName,LPCSTR szWindowCaption,WNDPROC pProc,LONG_PTR uWindowLong, int minimize_winlamp, wchar_t* szIniFile)
 {
 	m_classAtom = 0;
 	m_szWindowCaption[0] = 0;
@@ -60,9 +60,9 @@ DXContext::DXContext(HWND hWndWinamp,HINSTANCE hInstance,LPCWSTR szClassName,LPC
 		m_orig_windowed_mode_format[i] = D3DFMT_UNKNOWN;
 	m_ordinal_adapter = D3DADAPTER_DEFAULT;
 	m_ignore_wm_destroy = 0;
-	m_hwnd_winamp = hWndWinamp;
-	m_minimize_winamp = minimize_winamp;
-	m_winamp_minimized = 0;
+	m_hwnd_winlamp = hWndWinLAMP;
+	m_minimize_winlamp = minimize_winlamp;
+	m_winlamp_minimized = 0;
 	m_truly_exiting = 0;
 	m_bpp = 0;
 	m_frame_delay = 0;
@@ -160,7 +160,7 @@ void DXContext::Internal_CleanUp()
 		m_classAtom = 0;
 	}
 
-	RestoreWinamp();
+	RestoreWinLAMP();
 }
 
 void DXContext::GetSnappedClientSize()
@@ -351,18 +351,18 @@ int DXContext::GetWindowedModeAutoSize(int iteration)
 
 	// if running in horz/vert-span multi-display mode, base the window size on
 	// an actual display size, not the giant double-sized monitor.  Also, position
-	// the window on the same monitor that Winamp is on.
+	// the window on the same monitor that WinLAMP is on.
 	if (x >= y*2)
 	{
 		x /= 2;
 
-		// move window to same display that Winamp is on:
+		// move window to same display that WinLAMP is on:
 		WINDOWPLACEMENT wp;
 		wp.length = sizeof(wp);
-		if (GetWindowPlacement(m_hwnd_winamp, &wp))
+		if (GetWindowPlacement(m_hwnd_winlamp, &wp))
 		{
-			int winamp_center_x = (wp.rcNormalPosition.right + wp.rcNormalPosition.left)/2;
-			if (winamp_center_x > x)
+			int winlamp_center_x = (wp.rcNormalPosition.right + wp.rcNormalPosition.left)/2;
+			if (winlamp_center_x > x)
 			{
 				m_monitor_rect.left += x;
 				m_monitor_rect.right += x;
@@ -373,13 +373,13 @@ int DXContext::GetWindowedModeAutoSize(int iteration)
 	{
 		y /= 2;
 
-		// move window to same display that Winamp is on:
+		// move window to same display that WinLAMP is on:
 		WINDOWPLACEMENT wp;
 		wp.length = sizeof(wp);
-		if (GetWindowPlacement(m_hwnd_winamp, &wp))
+		if (GetWindowPlacement(m_hwnd_winlamp, &wp))
 		{
-			int winamp_center_y = (wp.rcNormalPosition.top + wp.rcNormalPosition.bottom)/2;
-			if (winamp_center_y > y)
+			int winlamp_center_y = (wp.rcNormalPosition.top + wp.rcNormalPosition.bottom)/2;
+			if (winlamp_center_y > y)
 			{
 				m_monitor_rect.top += y;
 				m_monitor_rect.bottom += y;
@@ -453,7 +453,7 @@ BOOL DXContext::Internal_Init(DXCONTEXT_PARAMS *pParams, BOOL bFirstInit)
 		}
 
 		if (!m_hmod_d3dx9)
-			m_hmod_d3dx9 = FindD3DX9(m_hwnd_winamp);
+			m_hmod_d3dx9 = FindD3DX9(m_hwnd_winlamp);
 
 		if ((!m_hmod_d3dx9))
 		{
@@ -655,7 +655,7 @@ BOOL DXContext::Internal_Init(DXCONTEXT_PARAMS *pParams, BOOL bFirstInit)
 		}
 	}
 
-	// 6. embedded window stuff [where the plugin window is integrated w/winamp]
+	// 6. embedded window stuff [where the plugin window is integrated w/winlamp]
 	if (m_current_mode.m_skin)
 	{
 		// set up the window's position on screen
@@ -667,9 +667,9 @@ BOOL DXContext::Internal_Init(DXCONTEXT_PARAMS *pParams, BOOL bFirstInit)
 		myWindowState.r.right  = myWindowState.r.left + GetPrivateProfileIntW(L"settings",L"avs_ww",size+24,m_szIniFile);
 		myWindowState.r.bottom = myWindowState.r.top  + GetPrivateProfileIntW(L"settings",L"avs_wh",size+40,m_szIniFile);
 
-		// only works on winamp 2.90+!
+		// only works on winlamp 2.90+!
 		int success = 0;
-		if (GetWinampVersion(mod1.hwndParent) >= 0x2900)
+		if (GetWinLAMPVersion(mod1.hwndParent) >= 0x2900)
 		{
 			SET_EMBED_GUID((&myWindowState), avs_guid);
 			myWindowState.flags |= EMBED_FLAGS_NOTRANSPARENCY;
@@ -729,20 +729,20 @@ BOOL DXContext::Internal_Init(DXCONTEXT_PARAMS *pParams, BOOL bFirstInit)
 			return FALSE;
 		}
 
-		SendMessage(m_hwnd_winamp, WM_WA_IPC, (WPARAM)m_hwnd, IPC_SETVISWND);
+		SendMessage(m_hwnd_winlamp, WM_WA_IPC, (WPARAM)m_hwnd, IPC_SETVISWND);
 
 		if (m_current_mode.m_skin)
 		{
-			if (GetWinampVersion(mod1.hwndParent) < 0x5051)
+			if (GetWinLAMPVersion(mod1.hwndParent) < 0x5051)
 				ShowWindow(m_current_mode.parent_window,SW_SHOWNA); // showing the parent wnd will make it size the child, too
 			else
-				SendMessage(m_current_mode.parent_window, WM_USER+102, 0, 0); // benski> major hack alert. winamp's embedwnd will call ShowWindow in response.  SendMessage moves us over to the main thread (we're currently sitting on the viz thread)
+				SendMessage(m_current_mode.parent_window, WM_USER+102, 0, 0); // benski> major hack alert. winlamp's embedwnd will call ShowWindow in response.  SendMessage moves us over to the main thread (we're currently sitting on the viz thread)
 		}		
 	}
 
-	// 8. minimize winamp before creating devices & such, so there aren't
+	// 8. minimize winlamp before creating devices & such, so there aren't
 	//    any confusing window-focus issues
-	MinimizeWinamp(hPluginMonitor);
+	MinimizeWinLAMP(hPluginMonitor);
 
 	// 9. loop to try and create the window.
 	//      if in windowed mode and not enough vidmem, it will try again w/smaller window
@@ -957,11 +957,11 @@ BOOL DXContext::Internal_Init(DXCONTEXT_PARAMS *pParams, BOOL bFirstInit)
 				m_REAL_client_width  = r.right - r.left;
 				m_REAL_client_height = r.bottom - r.top;
 				GetSnappedClientSize();
-				if (m_current_mode.m_skin) // check this here in case they got a non-aligned size by resizing when "integrated with winamp" was unchecked, then checked it & ran the plugin...
+				if (m_current_mode.m_skin) // check this here in case they got a non-aligned size by resizing when "integrated with winlamp" was unchecked, then checked it & ran the plugin...
 				{
-					// STRANGE ALIGNMENTS FOR THE WINDOW FRAME: (required by winamp 2):
+					// STRANGE ALIGNMENTS FOR THE WINDOW FRAME: (required by winlamp 2):
 					// the window frame's width must be divisible by 25, and height by 29.
-					if (GetWinampVersion(mod1.hwndParent) < 0x4000) // ... winamp 5 doesn't have this prob.  (test vs. 0x4000 because winamp5 betas have version tags like 0x4987)
+					if (GetWinLAMPVersion(mod1.hwndParent) < 0x4000) // ... winlamp 5 doesn't have this prob.  (test vs. 0x4000 because winlamp5 betas have version tags like 0x4987)
 					{
 						m_REAL_client_width  = ((m_client_width + margin.left + margin.right)/25)*25 - margin.left - margin.right;
 						m_REAL_client_height = ((m_client_height + margin.top + margin.bottom)/29)*29 - margin.top - margin.bottom;
@@ -1016,9 +1016,9 @@ BOOL DXContext::Internal_Init(DXCONTEXT_PARAMS *pParams, BOOL bFirstInit)
 
 				if (m_current_mode.m_skin)
 				{
-					// STRANGE ALIGNMENTS FOR THE WINDOW FRAME: (required by winamp 2):
+					// STRANGE ALIGNMENTS FOR THE WINDOW FRAME: (required by winlamp 2):
 					// the window frame's width must be divisible by 25, and height by 29.
-					if (GetWinampVersion(mod1.hwndParent) < 0x4000) // ... winamp 5 doesn't have this prob.  (test vs. 0x4000 because winamp5 betas have version tags like 0x4987)
+					if (GetWinLAMPVersion(mod1.hwndParent) < 0x4000) // ... winlamp 5 doesn't have this prob.  (test vs. 0x4000 because winlamp5 betas have version tags like 0x4987)
 					{
 						m_REAL_client_width  = ((m_client_width + margin.left + margin.right)/25)*25 - margin.left - margin.right;
 						m_REAL_client_height = ((m_client_height + margin.top + margin.bottom)/29)*29 - margin.top - margin.bottom;
@@ -1140,7 +1140,7 @@ BOOL DXContext::Internal_Init(DXCONTEXT_PARAMS *pParams, BOOL bFirstInit)
 
 	if (m_current_mode.m_skin)
 	{
-		if (GetWinampVersion(mod1.hwndParent) < 0x5051) 
+		if (GetWinLAMPVersion(mod1.hwndParent) < 0x5051) 
 			SetFocus(m_current_mode.parent_window);
 		else
 			PostMessage(m_current_mode.parent_window, WM_USER+103, 0, 0); 
@@ -1183,7 +1183,7 @@ BOOL DXContext::StartOrRestartDevice(DXCONTEXT_PARAMS *pParams)
 	}
 	else if (m_hwnd)
 	{
-		SendMessage(m_hwnd_winamp, WM_WA_IPC, NULL, IPC_SETVISWND);
+		SendMessage(m_hwnd_winlamp, WM_WA_IPC, NULL, IPC_SETVISWND);
 		m_ignore_wm_destroy = 1;
 		DestroyWindow(m_hwnd);
 		m_ignore_wm_destroy = 0;
@@ -1204,7 +1204,7 @@ BOOL DXContext::StartOrRestartDevice(DXCONTEXT_PARAMS *pParams)
 		SafeRelease(m_lpDevice);
 		// but leave the D3D object!
 
-		RestoreWinamp();
+		RestoreWinLAMP();
 		return Internal_Init(pParams, FALSE);
 	}
 }
@@ -1267,22 +1267,22 @@ void DXContext::SetViewport()
 	m_lpDevice->SetViewport(&v);
 }
 
-void DXContext::MinimizeWinamp(HMONITOR hPluginMonitor)
+void DXContext::MinimizeWinLAMP(HMONITOR hPluginMonitor)
 {
-	// minimize Winamp window
+	// minimize WinLAMP window
 
-	HMONITOR hWinampMon = MonitorFromWindow(m_hwnd_winamp, MONITOR_DEFAULTTONEAREST);
+	HMONITOR hWinLAMPMon = MonitorFromWindow(m_hwnd_winlamp, MONITOR_DEFAULTTONEAREST);
 	HMONITOR hPluginMon = hPluginMonitor;//MonitorFromWindow(m_hwnd, MONITOR_DEFAULTTONEAREST);//m_lpD3D->GetAdapterMonitor(ordinal_adapter);
 
 	if ((m_current_mode.screenmode == FULLSCREEN || m_current_mode.screenmode == FAKE_FULLSCREEN) &&
-	    (m_minimize_winamp) &&
-	    (hWinampMon && hPluginMon && hPluginMon==hWinampMon) &&
-	    (!m_winamp_minimized)
+	    (m_minimize_winlamp) &&
+	    (hWinLAMPMon && hPluginMon && hPluginMon==hWinLAMPMon) &&
+	    (!m_winlamp_minimized)
 	   )
 	{
 		// nitpicky check: if we're in fake fullscreen mode
 		// and are only going to display on half the screen,
-		// don't minimize Winamp.
+		// don't minimize WinLAMP.
 		if (m_current_mode.screenmode == FAKE_FULLSCREEN)
 		{
 			int x = m_monitor_rect.right - m_monitor_rect.left;
@@ -1294,21 +1294,21 @@ void DXContext::MinimizeWinamp(HMONITOR hPluginMonitor)
 			}
 		}
 
-		ShowWindow(m_hwnd_winamp, SW_MINIMIZE);
+		ShowWindow(m_hwnd_winlamp, SW_MINIMIZE);
 		// also restore the focus to the plugin window, since this will steal it:
 		SetFocus(m_hwnd);
 		SetActiveWindow(m_hwnd);
 		SetForegroundWindow(m_hwnd);
-		m_winamp_minimized = 1;
+		m_winlamp_minimized = 1;
 	}
 }
 
-void DXContext::RestoreWinamp()
+void DXContext::RestoreWinLAMP()
 {
-	if (m_winamp_minimized)
+	if (m_winlamp_minimized)
 	{
-		ShowWindow(m_hwnd_winamp, SW_RESTORE);
-		m_winamp_minimized = 0;
+		ShowWindow(m_hwnd_winlamp, SW_RESTORE);
+		m_winlamp_minimized = 0;
 	}
 }
 

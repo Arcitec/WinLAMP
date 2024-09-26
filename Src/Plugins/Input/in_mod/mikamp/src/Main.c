@@ -3,7 +3,7 @@ extern "C" {
 #include "main.h"
 }
 #include "log.h"
-#include "../../winamp/wa_ipc.h"
+#include "../../winlamp/wa_ipc.h"
 #include "../nu/AutoWide.h"
 #include "../nu/AutoCharFn.h"
 #include <shlwapi.h>
@@ -60,7 +60,7 @@ static char ERROR_TITLE[64];
 
 static int          is_tempfile = 0;
 static char         cmdName[2048], saveName[MAX_PATH];
-static char         songTitle[400];                         // as in Winamp
+static char         songTitle[400];                         // as in WinLAMP
 static PlayParams   currParams; 
 
 static HANDLE       thread_handle = INVALID_HANDLE_VALUE;
@@ -732,7 +732,7 @@ static int __cdecl infobox(const char *fileName, HWND hwnd)
     return 0;
 }
 
-/*extern "C" __declspec(dllexport) int winampGetExtendedFileInfo(const char *fn, const char *data, char *dest, int destlen)
+/*extern "C" __declspec(dllexport) int winlampGetExtendedFileInfo(const char *fn, const char *data, char *dest, int destlen)
 {
 	UNIMOD *m=0;
 	PlayParams params;
@@ -805,7 +805,7 @@ static int __cdecl infobox(const char *fileName, HWND hwnd)
 	return 1;
 }*/
 
-extern "C" __declspec(dllexport) int winampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, int destlen)
+extern "C" __declspec(dllexport) int winlampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, int destlen)
 {
 	UNIMOD *m=0;
 	PlayParams params;
@@ -978,7 +978,7 @@ In_Module mikmod =
 };
 
 // =====================================================================================
-extern "C" __declspec(dllexport) In_Module *__cdecl winampGetInModule2()
+extern "C" __declspec(dllexport) In_Module *__cdecl winlampGetInModule2()
 // input module getter. the only thing exported from here.
 // =====================================================================================
 {

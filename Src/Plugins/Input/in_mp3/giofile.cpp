@@ -18,7 +18,7 @@
 #include "api__in_mp3.h"
 #include <time.h>
 #include <locale.h>
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 
 #include "LAMEinfo.h"
 #include "OFL.h"
@@ -90,10 +90,10 @@ char *GetUltravoxUserAgent()
 {
 	if (!ultravoxUserAgent[0])
 	{
-		StringCchPrintfA(ultravoxUserAgent, 128, "User-Agent: WinampMPEG/%01x.%02x, Ultravox/2.1\r\n"
+		StringCchPrintfA(ultravoxUserAgent, 128, "User-Agent: WinLAMPMPEG/%01x.%02x, Ultravox/2.1\r\n"
 			"Ultravox-transport-type: TCP\r\n",
-			WINAMP_VERSION_MAJOR(winampVersion),
-			WINAMP_VERSION_MINOR(winampVersion));
+			WINLAMP_VERSION_MAJOR(winlampVersion),
+			WINLAMP_VERSION_MINOR(winlampVersion));
 	}
 	return ultravoxUserAgent;
 }
@@ -104,9 +104,9 @@ char *GetUserAgent()
 	if (!userAgent[0])
 	{
 
-		StringCchPrintfA(userAgent, 128, "User-Agent: WinampMPEG/%01x.%02x\r\n",
-			WINAMP_VERSION_MAJOR(winampVersion),
-			WINAMP_VERSION_MINOR(winampVersion));
+		StringCchPrintfA(userAgent, 128, "User-Agent: WinLAMPMPEG/%01x.%02x\r\n",
+			WINLAMP_VERSION_MAJOR(winlampVersion),
+			WINLAMP_VERSION_MINOR(winlampVersion));
 	}
 	return userAgent;
 }
@@ -476,18 +476,18 @@ int CGioFile::doConnect(const char *str, int start_offset)
 	m_is_stream = 1;
 	constate = 0;
 	parseURL(str2, &host, &port, &request, &lpinfo);
-	if (port == 80 || !GetPrivateProfileIntA("Winamp", "proxyonly80", 0, INI_FILE))
+	if (port == 80 || !GetPrivateProfileIntA("WinLAMP", "proxyonly80", 0, INI_FILE))
 	{
 		const char *p;
-		const char *winamp_proxy = (const char *)SendMessage(mod.hMainWindow, WM_WA_IPC, 0, IPC_GET_PROXY_STRING);
-		if (!winamp_proxy || winamp_proxy == (char *)1)
+		const char *winlamp_proxy = (const char *)SendMessage(mod.hMainWindow, WM_WA_IPC, 0, IPC_GET_PROXY_STRING);
+		if (!winlamp_proxy || winlamp_proxy == (char *)1)
 		{
 			char temp[256] = {0};
-			GetPrivateProfileStringA("Winamp", "proxy", "", temp, sizeof(temp), INI_FILE);
+			GetPrivateProfileStringA("WinLAMP", "proxy", "", temp, sizeof(temp), INI_FILE);
 			p = temp;
 		}
 		else
-			p = winamp_proxy;
+			p = winlamp_proxy;
 
 		while (p && (*p == ' ' || *p == '\t')) p++;
 		char config_proxy[512] = "http://";

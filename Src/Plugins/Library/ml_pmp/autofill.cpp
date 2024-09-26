@@ -28,7 +28,7 @@
 #include "metadata_utils.h"
 #include "api__ml_pmp.h"
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 
 extern C_ItemList * getSelectedItems(bool all=false);
 

@@ -3,7 +3,7 @@
 #ifndef WA_DLG_IMPLEMENT
 #define WA_DLG_IMPLEMENT
 #endif // WA_DLG_IMPLEMENT
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 #undef WA_DLG_IMPLEMENT
 #include "./skinHelper.h"
 #include "./ratingMenuCustomizer.h"
@@ -22,7 +22,7 @@
 #define BOOL2HRESULT(__result) ((FALSE != (__result)) ? S_OK : E_FAIL)
 
 SkinHelper::SkinHelper(HWND hwndWa)
-	: ref(1), hwndWinamp(hwndWa), mlModule(NULL), mlLoadResult(S_FALSE),
+	: ref(1), hwndWinLAMP(hwndWa), mlModule(NULL), mlLoadResult(S_FALSE),
 	  playlistFont(NULL), initializeColors(TRUE), cchHostCss(0),
 	  mlSkinWindowEx(NULL), mlUnskinWindow(NULL), mlTrackSkinnedPopupMenuEx(NULL),
 	  mlIsSkinnedPopupEnabled(NULL), mlInitSkinnedPopupHook(NULL),
@@ -47,16 +47,16 @@ SkinHelper::~SkinHelper()
 		FreeLibrary(mlModule);
 }
 
-HRESULT SkinHelper::CreateInstance(HWND hwndWinamp, SkinHelper **instance)
+HRESULT SkinHelper::CreateInstance(HWND hwndWinLAMP, SkinHelper **instance)
 {
 	if (NULL == instance) return E_POINTER;
 	
 	*instance = NULL;
 	
-	if (NULL == hwndWinamp || FALSE == IsWindow(hwndWinamp))
+	if (NULL == hwndWinLAMP || FALSE == IsWindow(hwndWinLAMP))
 		return E_INVALIDARG;
 
-	*instance = new SkinHelper(hwndWinamp);
+	*instance = new SkinHelper(hwndWinLAMP);
 	if (NULL == *instance) return E_OUTOFMEMORY;
 
 	return S_OK;
@@ -168,7 +168,7 @@ HRESULT SkinHelper::SkinWindow(HWND hwnd, const GUID *windowGuid, UINT flagsEx, 
 	swp.flagsEx = flagsEx;
 	swp.callbackFF = callbackFF;
 
-	BOOL result = (BOOL)SENDWAIPC(hwndWinamp, IPC_SKINWINDOW, (WPARAM)&swp);
+	BOOL result = (BOOL)SENDWAIPC(hwndWinLAMP, IPC_SKINWINDOW, (WPARAM)&swp);
 	return BOOL2HRESULT(result);
 }
 
@@ -333,7 +333,7 @@ HRESULT SkinHelper::LoadMediaLibraryModule()
 		return mlLoadResult;
 
 	WCHAR szPath[MAX_PATH*2] = {0};
-	PathCombine(szPath, (LPCWSTR)SENDWAIPC(hwndWinamp, IPC_GETPLUGINDIRECTORYW, 0), L"gen_ml.dll");
+	PathCombine(szPath, (LPCWSTR)SENDWAIPC(hwndWinLAMP, IPC_GETPLUGINDIRECTORYW, 0), L"gen_ml.dll");
 
 	mlModule = LoadLibrary(szPath);
 	if (NULL == mlModule)
@@ -359,7 +359,7 @@ HRESULT SkinHelper::LoadMediaLibraryModule()
 
 HRESULT SkinHelper::InitializeColorData()
 {
-	if (NULL == hwndWinamp || !IsWindow(hwndWinamp))
+	if (NULL == hwndWinLAMP || !IsWindow(hwndWinLAMP))
 		return E_UNEXPECTED;
 
 	for (int i = 0; i < ARRAYSIZE(szBrushes); i++)
@@ -373,7 +373,7 @@ HRESULT SkinHelper::InitializeColorData()
 
 	cchHostCss = 0;
 
-	WADlg_init(hwndWinamp);
+	WADlg_init(hwndWinLAMP);
 	initializeColors = FALSE;
 
 	return S_OK;
@@ -381,7 +381,7 @@ HRESULT SkinHelper::InitializeColorData()
 
 HFONT SkinHelper::CreateSkinFont()
 {
-	if (NULL == hwndWinamp || !IsWindow(hwndWinamp))
+	if (NULL == hwndWinLAMP || !IsWindow(hwndWinLAMP))
 		return NULL;
 
 	LOGFONT lf = 
@@ -403,10 +403,10 @@ HFONT SkinHelper::CreateSkinFont()
 	};
 
 						
-	lf.lfHeight = -(INT)SENDWAIPC(hwndWinamp, IPC_GET_GENSKINBITMAP, 3);
-	lf.lfCharSet = (BYTE)SENDWAIPC(hwndWinamp, IPC_GET_GENSKINBITMAP, 2);
+	lf.lfHeight = -(INT)SENDWAIPC(hwndWinLAMP, IPC_GET_GENSKINBITMAP, 3);
+	lf.lfCharSet = (BYTE)SENDWAIPC(hwndWinLAMP, IPC_GET_GENSKINBITMAP, 2);
 					
-	LPCSTR faceNameAnsi = (LPCSTR)SENDWAIPC(hwndWinamp,IPC_GET_GENSKINBITMAP, 1);
+	LPCSTR faceNameAnsi = (LPCSTR)SENDWAIPC(hwndWinLAMP,IPC_GET_GENSKINBITMAP, 1);
 	if (NULL != faceNameAnsi/* && '\0' != faceNameAnsi*/)
 	{
 		INT count = MultiByteToWideChar(CP_ACP, 0, faceNameAnsi, -1, lf.lfFaceName, ARRAYSIZE(lf.lfFaceName));

@@ -86,7 +86,7 @@ int AACDecoderComponent::RegisterServicesSafeModeOk()
 }
 
 AACDecoderComponent aac_decoder_component;
-extern "C" DLLEXPORT ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" DLLEXPORT ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &aac_decoder_component;
 }

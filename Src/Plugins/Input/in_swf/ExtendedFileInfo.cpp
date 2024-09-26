@@ -8,7 +8,7 @@
 	(CSTR_EQUAL == CompareStringA(MAKELCID(MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US), SORT_DEFAULT),\
 								NORM_IGNORECASE, (__keyword), -1, (__string), -1))
 
-extern "C" __declspec( dllexport ) int winampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, int destlen)
+extern "C" __declspec( dllexport ) int winlampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, int destlen)
 {
 	if (TESTKEYWORD("type", data))
 	{

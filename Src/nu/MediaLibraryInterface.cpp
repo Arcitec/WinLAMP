@@ -1,7 +1,7 @@
 #include "MediaLibraryInterface.h"
 #include <commctrl.h>
 #include "../nu/ns_wc.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../Agave/Language/api_language.h"
 #define _ML_HEADER_IMPMLEMENT
 #include "..\Plugins\General\gen_ml/ml_ipc_0313.h"
@@ -153,12 +153,12 @@ void MediaLibraryInterface::PlayStream(wchar_t *url, bool force)
 	{
 		end[ 1 ] = 0; // double null terminate
 
-		mlSendToWinampStruct send;
+		mlSendToWinLAMPStruct send;
 		send.type    = ML_TYPE_STREAMNAMESW;
 		send.enqueue = force ? ( 0 | 2 ) : 0;
 		send.data    = (void *)temp;
 
-		SendMessage( library, WM_ML_IPC, (WPARAM)&send, ML_IPC_SENDTOWINAMP );
+		SendMessage( library, WM_ML_IPC, (WPARAM)&send, ML_IPC_SENDTOWINLAMP );
 	}
 }
 
@@ -186,11 +186,11 @@ void MediaLibraryInterface::PlayStreams(std::vector<const wchar_t*> &urls, bool 
 	}
 	ptr[0] = 0;
 
-	mlSendToWinampStruct send;
+	mlSendToWinLAMPStruct send;
 	send.type = ML_TYPE_STREAMNAMESW;
 	send.enqueue = force?(0 | 2):0;
 	send.data = sendTo;
-	SendMessage(library, WM_ML_IPC, (WPARAM)&send, ML_IPC_SENDTOWINAMP);
+	SendMessage(library, WM_ML_IPC, (WPARAM)&send, ML_IPC_SENDTOWINLAMP);
 	delete [] sendTo;
 }
 
@@ -203,12 +203,12 @@ void MediaLibraryInterface::EnqueueStream(wchar_t *url, bool force)
 	{
 		end[1]=0; // double null terminate
 
-		mlSendToWinampStruct send;
+		mlSendToWinLAMPStruct send;
 		send.type    = ML_TYPE_STREAMNAMESW;
 		send.enqueue = force?(1 | 2):1;
 		send.data    = (void *)temp;
 
-		SendMessage(library, WM_ML_IPC, (WPARAM)&send, ML_IPC_SENDTOWINAMP);
+		SendMessage(library, WM_ML_IPC, (WPARAM)&send, ML_IPC_SENDTOWINLAMP);
 	}
 }
 
@@ -226,7 +226,7 @@ const char *MediaLibraryInterface::GetIniDirectory()
 {
 	if (!iniDirectory)
 	{
-		iniDirectory = (const char*)SendMessage(winamp, WM_WA_IPC, 0, IPC_GETINIDIRECTORY);
+		iniDirectory = (const char*)SendMessage(winlamp, WM_WA_IPC, 0, IPC_GETINIDIRECTORY);
 		if (((unsigned int)(ULONG_PTR)iniDirectory) < 65536)
 			iniDirectory=0;
 	}
@@ -237,7 +237,7 @@ const wchar_t *MediaLibraryInterface::GetIniDirectoryW()
 {
 	if (!iniDirectoryW)
 	{
-		iniDirectoryW = (const wchar_t*)SendMessage(winamp, WM_WA_IPC, 0, IPC_GETINIDIRECTORYW);
+		iniDirectoryW = (const wchar_t*)SendMessage(winlamp, WM_WA_IPC, 0, IPC_GETINIDIRECTORYW);
 		if (((unsigned int)(ULONG_PTR)iniDirectoryW) < 65536)
 			iniDirectoryW=0;
 	}
@@ -305,12 +305,12 @@ void MediaLibraryInterface::PlayFile(const wchar_t *url)
 	{
 		end[1]=0; // double null terminate
 
-		mlSendToWinampStruct send;
+		mlSendToWinLAMPStruct send;
 		send.type    = ML_TYPE_FILENAMESW;
 		send.enqueue = 0 | 2;
 		send.data    = (void *)temp;
 
-		SendMessage(library, WM_ML_IPC, (WPARAM)&send, ML_IPC_SENDTOWINAMP);
+		SendMessage(library, WM_ML_IPC, (WPARAM)&send, ML_IPC_SENDTOWINLAMP);
 	}
 }
 
@@ -323,19 +323,19 @@ void MediaLibraryInterface::EnqueueFile(const wchar_t *url)
 	{
 		end[1]=0; // double null terminate
 
-		mlSendToWinampStruct send;
+		mlSendToWinLAMPStruct send;
 		send.type    = ML_TYPE_FILENAMESW;
 		send.enqueue = 1 | 2;
 		send.data    = (void *)temp;
 
-		SendMessage(library, WM_ML_IPC, (WPARAM)&send, ML_IPC_SENDTOWINAMP);
+		SendMessage(library, WM_ML_IPC, (WPARAM)&send, ML_IPC_SENDTOWINLAMP);
 	}
 }
 
 void MediaLibraryInterface::BuildPluginPath(const TCHAR *filename, TCHAR *path, size_t pathSize)
 {
 	if (!pluginDirectory)
-		pluginDirectory = (const char *)SendMessage(winamp, WM_WA_IPC, 0, IPC_GETPLUGINDIRECTORY);
+		pluginDirectory = (const char *)SendMessage(winlamp, WM_WA_IPC, 0, IPC_GETPLUGINDIRECTORY);
 #ifdef UNICODE
 	StringCchPrintf(path, pathSize, L"%S\\%s", pluginDirectory, filename);
 #else
@@ -359,7 +359,7 @@ void MediaLibraryInterface::AddToMediaLibrary(const wchar_t *filename)
 
 IDispatch *MediaLibraryInterface::GetDispatchObject()
 {
-	IDispatch *dispatch = (IDispatch *)SendMessage(winamp, WM_WA_IPC, 0, IPC_GET_DISPATCH_OBJECT);
+	IDispatch *dispatch = (IDispatch *)SendMessage(winlamp, WM_WA_IPC, 0, IPC_GET_DISPATCH_OBJECT);
 	if (dispatch == (IDispatch *)1)
 		return 0;
 	else
@@ -368,7 +368,7 @@ IDispatch *MediaLibraryInterface::GetDispatchObject()
 
 int MediaLibraryInterface::GetUniqueDispatchId()
 {
-	return (int)(INT_PTR)SendMessage(winamp, WM_WA_IPC, 0, IPC_GET_UNIQUE_DISPATCH_ID);
+	return (int)(INT_PTR)SendMessage(winlamp, WM_WA_IPC, 0, IPC_GET_UNIQUE_DISPATCH_ID);
 }
 
 void MediaLibraryInterface::ListSkinDisableHorizontalScrollbar(int listSkin)
@@ -382,7 +382,7 @@ DWORD MediaLibraryInterface::AddDispatch(wchar_t *name, IDispatch *object)
 	dispatchInfo.name     = name;
 	dispatchInfo.dispatch = object;
 
-	if (SendMessage(winamp, WM_WA_IPC, (WPARAM)&dispatchInfo, IPC_ADD_DISPATCH_OBJECT) == 0)
+	if (SendMessage(winlamp, WM_WA_IPC, (WPARAM)&dispatchInfo, IPC_ADD_DISPATCH_OBJECT) == 0)
 		return dispatchInfo.id;
 	else
 		return 0;
@@ -395,7 +395,7 @@ void MediaLibraryInterface::GetFileInfo(const char *filename, char *title, int t
 	infoStruct.title    = title;
 	infoStruct.titlelen = titleCch;
 
-	SendMessage(winamp, WM_WA_IPC, (WPARAM)&infoStruct, IPC_GET_BASIC_FILE_INFO);
+	SendMessage(winlamp, WM_WA_IPC, (WPARAM)&infoStruct, IPC_GET_BASIC_FILE_INFO);
 
 	*length = infoStruct.length;
 }
@@ -409,7 +409,7 @@ void MediaLibraryInterface::GetFileInfo(const wchar_t *filename, wchar_t *title,
 		infoStruct.title    = title;
 		infoStruct.titlelen = titleCch;
 
-		SendMessage(winamp, WM_WA_IPC, (WPARAM)&infoStruct, IPC_GET_BASIC_FILE_INFOW);
+		SendMessage(winlamp, WM_WA_IPC, (WPARAM)&infoStruct, IPC_GET_BASIC_FILE_INFOW);
 
 		if ( p_length != NULL )
 			*p_length = infoStruct.length;
@@ -421,24 +421,24 @@ void MediaLibraryInterface::GetFileInfo(const wchar_t *filename, wchar_t *title,
 	}
 }
 
-const char *MediaLibraryInterface::GetWinampIni()
+const char *MediaLibraryInterface::GetWinLAMPIni()
 {
-	if (winampIni && *winampIni)
-		return winampIni;
+	if (winlampIni && *winlampIni)
+		return winlampIni;
 
-	winampIni = (const char *)SendMessage(winamp, WM_WA_IPC, 0, IPC_GETINIFILE);
+	winlampIni = (const char *)SendMessage(winlamp, WM_WA_IPC, 0, IPC_GETINIFILE);
 
-	return winampIni;
+	return winlampIni;
 }
 
-const wchar_t *MediaLibraryInterface::GetWinampIniW()
+const wchar_t *MediaLibraryInterface::GetWinLAMPIniW()
 {
-	if (winampIniW && *winampIniW)
-		return winampIniW;
+	if (winlampIniW && *winlampIniW)
+		return winlampIniW;
 
-	winampIniW = (const wchar_t *)SendMessage(winamp, WM_WA_IPC, 0, IPC_GETINIFILEW);
+	winlampIniW = (const wchar_t *)SendMessage(winlamp, WM_WA_IPC, 0, IPC_GETINIFILEW);
 
-	return winampIniW;
+	return winlampIniW;
 }
 
 INT_PTR MediaLibraryInterface::GetChildId(INT_PTR id)

@@ -180,7 +180,7 @@ void DownloadsParse::ReadNodes( const wchar_t *url )
 	XMLNode::NodeList::const_iterator itr;
 	const XMLNode *curNode = xmlDOM.GetRoot();
 
-	curNode = curNode->Get( L"winamp:preferences" );
+	curNode = curNode->Get( L"winlamp:preferences" );
 	if ( curNode )
 	{
 		int version = 1;

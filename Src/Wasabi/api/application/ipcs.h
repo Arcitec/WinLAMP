@@ -1,7 +1,7 @@
 #ifndef _IPCS_H
 #define _IPCS_H
 
-// same value as winamp 2.x
+// same value as winlamp 2.x
 #define WM_WA_IPC WM_USER
 
 #ifdef LINUX

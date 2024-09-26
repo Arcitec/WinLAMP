@@ -3,7 +3,7 @@
 // Used by res.rc
 //
 #define IDS_AVS                         0
-#define IDS_WINAMP_AVS_DISPLAY          1
+#define IDS_WINLAMP_AVS_DISPLAY          1
 #define IDS_AVS_EDITOR                  2
 #define IDS_DOCK_IN_AVS_EDITOR          3
 #define IDS_LEARNING                    5
@@ -11,7 +11,7 @@
 #define IDS_NO_EFFECT_SETTING_SELECTED  7
 #define IDS_SHIFT_X                     8
 #define IDS_ALL                         9
-#define IDS_SAME_AS_WINAMP              10
+#define IDS_SAME_AS_WINLAMP              10
 #define IDS_IDLE                        11
 #define IDS_LOWEST                      12
 #define IDS_NORMAL                      13

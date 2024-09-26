@@ -5,7 +5,7 @@
 #include "cddb.h"
 #include "../nu/AutoWide.h"
 #include "../nu/AutoChar.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../nu/ns_wc.h"
 #include ".\cddbevnt.h"
 #include ".\cddbui.h"
@@ -13,7 +13,7 @@
 #include <api/application/api_application.h>
 #include <atlbase.h>
 #include "../nde/ndestring.h"
-#include "../Winamp/buildtype.h"
+#include "../WinLAMP/buildtype.h"
 #include <commctrl.h>
 #include <strsafe.h>
 

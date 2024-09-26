@@ -2,17 +2,17 @@
 #include <commctrl.h>
 #include <ddraw.h>
 #include <math.h>
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "resource.h"
 #include "../Agave/Language/api_language.h"
 #include <api/service/waServiceFactory.h>
 #include "dd.h"
-#include "../winamp/vis.h"
+#include "../winlamp/vis.h"
 
 int (*warand)(void)=0;
 extern wchar_t szAppName[];
 
-extern void init_inifile(struct winampVisModule *this_mod);
+extern void init_inifile(struct winlampVisModule *this_mod);
 extern wchar_t *ini_file;
 
 static int g_width=640, g_height=480;
@@ -43,7 +43,7 @@ void do_unmin(HWND hwnd)
 	}
 }
 
-static void readconfig(struct winampVisModule *this_mod)
+static void readconfig(struct winlampVisModule *this_mod)
 {
 	init_inifile(this_mod);
 	g_width=GetPrivateProfileIntW(szAppName, L"sdwidth", 640, ini_file);
@@ -84,16 +84,16 @@ static HRESULT WINAPI _cb(LPDDSURFACEDESC lpDDSurfaceDesc,  LPVOID lpContext)
 
 BOOL IsDirectMouseWheelMessage(const UINT uMsg)
 {
-	static UINT WINAMP_WM_DIRECT_MOUSE_WHEEL = WM_NULL;
+	static UINT WINLAMP_WM_DIRECT_MOUSE_WHEEL = WM_NULL;
 
-	if (WM_NULL == WINAMP_WM_DIRECT_MOUSE_WHEEL)
+	if (WM_NULL == WINLAMP_WM_DIRECT_MOUSE_WHEEL)
 	{
-		WINAMP_WM_DIRECT_MOUSE_WHEEL = RegisterWindowMessageW(L"WINAMP_WM_DIRECT_MOUSE_WHEEL");
-		if (WM_NULL == WINAMP_WM_DIRECT_MOUSE_WHEEL)
+		WINLAMP_WM_DIRECT_MOUSE_WHEEL = RegisterWindowMessageW(L"WINLAMP_WM_DIRECT_MOUSE_WHEEL");
+		if (WM_NULL == WINLAMP_WM_DIRECT_MOUSE_WHEEL)
 			return FALSE;
 	}
 
-	return (WINAMP_WM_DIRECT_MOUSE_WHEEL == uMsg);
+	return (WINLAMP_WM_DIRECT_MOUSE_WHEEL == uMsg);
 }
 
 HWND ActiveChildWindowFromPoint(HWND hwnd, POINTS cursor_s, const int *controls, size_t controlsCount)
@@ -194,7 +194,7 @@ static INT_PTR CALLBACK dlgProc1(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM l
 	return 0;
 }
 
-void sd_config(struct winampVisModule *this_mod)
+void sd_config(struct winlampVisModule *this_mod)
 {	
 	if (running) return;
 	running=1;
@@ -239,7 +239,7 @@ static int __inline is_mmx(void) {
 }
 
 
-int sd_init(struct winampVisModule *this_mod)
+int sd_init(struct winlampVisModule *this_mod)
 {
 	if (running) return 1;
 	running=1;
@@ -256,7 +256,7 @@ int sd_init(struct winampVisModule *this_mod)
 	readconfig(this_mod);
 	warand = (int (*)())SendMessage(this_mod->hwndParent, WM_WA_IPC, 0, IPC_GET_RANDFUNC);
  
-	extern void initwindow(struct winampVisModule *this_mod,int,int);
+	extern void initwindow(struct winlampVisModule *this_mod,int,int);
 	initwindow(this_mod,g_width,g_height);
 	if (!g_hwnd) 
 	{
@@ -286,7 +286,7 @@ int sd_init(struct winampVisModule *this_mod)
 }
 
 // render function. This draws a frame. Returns 0 if successful, 1 if visualization should end.
-int sd_render(struct winampVisModule *this_mod)
+int sd_render(struct winlampVisModule *this_mod)
 {
 	unsigned char *in, *out;
 
@@ -305,7 +305,7 @@ int sd_render(struct winampVisModule *this_mod)
 }
 
 // cleanup (opposite of init()). Destroys the window, unregisters the window class
-void sd_quit(struct winampVisModule *this_mod)
+void sd_quit(struct winlampVisModule *this_mod)
 {
 	g_dd.close();
 	moveframe_quit();

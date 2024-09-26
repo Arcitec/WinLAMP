@@ -808,7 +808,7 @@ static void GetDeviceCaps(DEVICEINFO *pDevInfo, INT count)
 	if (SUCCEEDED(hr))
 	{
 		// TODO determine why this is causing trk*.tmp files to be created when called
-		//		which ends up spamming the %temp% folder everytime Winamp starts :o(
+		//		which ends up spamming the %temp% folder everytime WinLAMP starts :o(
 		hr = pdm->Open();
 		if (SUCCEEDED(hr))
 		{

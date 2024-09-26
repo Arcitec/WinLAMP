@@ -30,9 +30,9 @@
 // wasabi based services for localisation support
 #include <api/service/waServiceFactory.h>
 #include "../Agave/Language/api_language.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
-HWND winampwnd = 0;
+HWND winlampwnd = 0;
 api_service *WASABI_API_SVC = 0;
 api_language *WASABI_API_LNG = 0;
 HINSTANCE WASABI_API_LNG_HINST = 0, WASABI_API_ORIG_HINST = 0;
@@ -65,7 +65,7 @@ void GetLocalisationApiService(void)
 		// loader so that we can get the localisation service api for use
 		if(!WASABI_API_SVC)
 		{
-			WASABI_API_SVC = (api_service*)SendMessage(winampwnd, WM_WA_IPC, 0, IPC_GET_API_SERVICE);
+			WASABI_API_SVC = (api_service*)SendMessage(winlampwnd, WM_WA_IPC, 0, IPC_GET_API_SERVICE);
 			if (WASABI_API_SVC == (api_service*)1)
 			{
 				WASABI_API_SVC = NULL;
@@ -474,9 +474,9 @@ extern "C"
 		return 0;
 	}
 
-	void __declspec(dllexport) SetWinampHWND(HWND hwnd)
+	void __declspec(dllexport) SetWinLAMPHWND(HWND hwnd)
 	{
-		winampwnd = hwnd;
+		winlampwnd = hwnd;
 
 		// this is called when the encoder is needed (and is slightly better than the dllmain loading from before)
 

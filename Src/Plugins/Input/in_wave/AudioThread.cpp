@@ -1,6 +1,6 @@
 #include <windows.h>
 #include "main.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "config.h"
 #include "api__in_wave.h"
 #include <shlwapi.h>
@@ -280,7 +280,7 @@ DWORD WINAPI ThreadProcedure( void *data )
 					SleepEx( 10, TRUE ); // sleep for a bit
 				else // yay done playing
 				{
-					PostMessage( plugin.hMainWindow, WM_WA_MPEG_EOF, 0, 0 ); // tell winamp we're stopped
+					PostMessage( plugin.hMainWindow, WM_WA_MPEG_EOF, 0, 0 ); // tell winlamp we're stopped
 					// don't shut down completely yet (mpegeof will trigger a call to stop)
 					ResetEvent( running ); // but we can at least sit in waitformultipleobjects ...
 				}

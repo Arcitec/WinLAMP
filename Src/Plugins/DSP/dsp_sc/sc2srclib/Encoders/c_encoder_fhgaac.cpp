@@ -3,13 +3,13 @@
 
 HINSTANCE C_ENCODER_FHGAAC::hEncoderInstance = NULL;
 
-C_ENCODER_FHGAAC::C_ENCODER_FHGAAC(HWND winamp) : C_ENCODER_NSV(sizeof(T_ENCODER_FHGAAC_INFO)) {
+C_ENCODER_FHGAAC::C_ENCODER_FHGAAC(HWND winlamp) : C_ENCODER_NSV(sizeof(T_ENCODER_FHGAAC_INFO)) {
 	SetName("Fraunhofer Encoder");
-	winampWnd = winamp;
+	winlampWnd = winlamp;
 	ConfigAudio3 = NULL;
 	if(hEncoderInstance == NULL) {
 		wchar_t dir[MAX_PATH] = {0};
-		snwprintf(dir, MAX_PATH, L"%s\\enc_fhgaac.dll", GetPluginDirectoryW(winamp));
+		snwprintf(dir, MAX_PATH, L"%s\\enc_fhgaac.dll", GetPluginDirectoryW(winlamp));
 		hEncoderInstance = LoadLibraryW(dir);
 	}
 
@@ -17,8 +17,8 @@ C_ENCODER_FHGAAC::C_ENCODER_FHGAAC(HWND winamp) : C_ENCODER_NSV(sizeof(T_ENCODER
 		void * CreateAudio3=(void *)GetProcAddress(hEncoderInstance, "CreateAudio3");
 		void * GetAudioTypes3=(void *)GetProcAddress(hEncoderInstance, "GetAudioTypes3");
 		void * ConfigAudio3=(void *)GetProcAddress(hEncoderInstance, "ConfigAudio3");
-		void * SetWinampHWND=(void *)GetProcAddress(hEncoderInstance, "SetWinampHWND");
-		SetEncoder(CreateAudio3,GetAudioTypes3,ConfigAudio3,SetWinampHWND,1);
+		void * SetWinLAMPHWND=(void *)GetProcAddress(hEncoderInstance, "SetWinLAMPHWND");
+		SetEncoder(CreateAudio3,GetAudioTypes3,ConfigAudio3,SetWinLAMPHWND,1);
 	}
 
 	T_ENCODER_FHGAAC_INFO * EncInfo = (T_ENCODER_FHGAAC_INFO *)ExtendedInfoPtr;
@@ -32,11 +32,11 @@ C_ENCODER_FHGAAC::~C_ENCODER_FHGAAC() {
 }
 
 static int cacheVal=0;
-bool C_ENCODER_FHGAAC::isPresent(HWND winamp) {
+bool C_ENCODER_FHGAAC::isPresent(HWND winlamp) {
 	if(cacheVal!=0 && hEncoderInstance!=0) return cacheVal==2;
 	bool ret=false;
 	wchar_t dir[MAX_PATH] = {0};
-	snwprintf(dir, MAX_PATH, L"%s\\enc_fhgaac.dll", GetPluginDirectoryW(winamp));
+	snwprintf(dir, MAX_PATH, L"%s\\enc_fhgaac.dll", GetPluginDirectoryW(winlamp));
 	FILE * f = _wfopen(dir, L"rb");
 	if (f) {
 		fseek(f,0,2);

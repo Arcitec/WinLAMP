@@ -1,7 +1,7 @@
 #include "main.h"
 #include "service.h"
 #include "api__gen_ml.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include <strsafe.h>
 
 #define IS_INVALIDISPATCH(__disp) (((IDispatch *)1) == (__disp) || NULL == (__disp))
@@ -29,7 +29,7 @@ HRESULT OmService::CreateInstance(UINT nId, LPCWSTR pszName, OmService **instanc
 	wchar_t url[256] = {0};
 	if (nId == SERVICE_LABS)
 	{
-		lstrcpynW(url, L"http://www.winamp.com/labs/pc", 256);
+		lstrcpynW(url, L"http://www.winlamp.com/labs/pc", 256);
 	}
 
 	service->SetUrl(url);

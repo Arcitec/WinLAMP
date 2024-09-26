@@ -52,5 +52,5 @@ parent.onAction(String action, String param, int x, int y, int p1, int p2, GuiOb
 getmore.onLeftClick ()
 {
 	group sui = scriptGroup.getParentLayout().findObject("sui.content");
-	sui.sendAction ("browser_navigate", "http://forums.winamp.com/showthread.php?threadid=276371", 0, 0, 0, 0);
+	sui.sendAction ("browser_navigate", "http://forums.winlamp.com/showthread.php?threadid=276371", 0, 0, 0, 0);
 }

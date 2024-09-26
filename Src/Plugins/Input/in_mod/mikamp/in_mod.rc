@@ -335,7 +335,7 @@ BEGIN
     IDS_X_X_X_OF_X_NOT_PLAYING "%d\n%d\n0 of %d\n\nNot Playing..."
     IDS_X_X_X_OF_X_X_OF_X_X_OF_X "%d\n%d\n%d of %d (%d)\n%d of %d\n%d (%d)"
     IDS_X_BTYES_X_OF_X_MINUTES "%d bytes\n%d:%02d minutes\n%d\n%d\n%d"
-    IDS_URLS_ONLY_SUPPORTED_IN_2_10_PLUS "URLs only supported in Winamp 2.10+"
+    IDS_URLS_ONLY_SUPPORTED_IN_2_10_PLUS "URLs only supported in WinLAMP 2.10+"
     IDS_MOD_PLUGIN_ERROR    "Module Plug-in Error"
     IDS_SAVE_MODULE         "Save Module"
     IDS_ALL_FILES           "All files"
@@ -370,7 +370,7 @@ BEGIN
     IDS_FAMILY_STRING_NOISETRACKER "NoiseTracker Module"
     IDS_X_MODULE            "%s Module"
     IDS_X_COMPRESSED_MODULE "%s Compressed Module"
-    IDS_ABOUT_TEXT          "%s\n© 1998-2014 Winamp SA\nWritten by: Justin Frankel & Jake Stine\nBuild date: %hs\n\nMikamp - Nullsoft Module Decoder plug-in\nbased on the Mikmod Sound System\n\nModule loading & rendering by: Jake Stine\nThanks to Jeffrey Lim for additional Impulse Tracker info.\nAdditional code by: Peter Pawlowski & X-Fixer"
+    IDS_ABOUT_TEXT          "%s\n© 1998-2014 WinLAMP SA\nWritten by: Justin Frankel & Jake Stine\nBuild date: %hs\n\nMikamp - Nullsoft Module Decoder plug-in\nbased on the Mikmod Sound System\n\nModule loading & rendering by: Jake Stine\nThanks to Jeffrey Lim for additional Impulse Tracker info.\nAdditional code by: Peter Pawlowski & X-Fixer"
     IDS_CORRUPT_UNSUPPORTED_TYPE "Corrupt file or unsupported module type."
 END
 

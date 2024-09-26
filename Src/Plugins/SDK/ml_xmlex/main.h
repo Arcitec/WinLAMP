@@ -6,7 +6,7 @@
 #include "..\..\General\gen_ml\ml.h"
 #include "..\..\General\gen_ml\config.h"
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 INT_PTR xmlex_pluginMessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR param3);
 extern UINT_PTR xmlex_treeItem;
 

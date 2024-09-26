@@ -12,7 +12,7 @@ Plugin_GetInstance()
 }
 
 extern "C" __declspec(dllexport) ifc_wa5component *
-GetWinamp5SystemComponent()
+GetWinLAMP5SystemComponent()
 {
 	return &component;
 }

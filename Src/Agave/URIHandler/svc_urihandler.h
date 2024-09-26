@@ -19,7 +19,7 @@ public:
 	int ProcessFilename(const wchar_t *filename);
 	int IsMine(const wchar_t *filename); // just like ProcessFilename but don't actually process
 	int EnumProtocols(size_t n, wchar_t *protocol, size_t protocolCch, wchar_t *description, size_t descriptionCch); // return 0 on success
-	int RegisterProtocol(const wchar_t *protocol, const wchar_t *winampexe);
+	int RegisterProtocol(const wchar_t *protocol, const wchar_t *winlampexe);
 	int UnregisterProtocol(const wchar_t *protocol);
 
 	enum
@@ -52,9 +52,9 @@ inline int svc_urihandler::EnumProtocols(size_t n, wchar_t *protocol, size_t pro
 	return _call(ENUMPROTOCOLS, (int)1, n, protocol, protocolCch, description, descriptionCch);
 }
 
-inline int svc_urihandler::RegisterProtocol(const wchar_t *protocol, const wchar_t *winampexe)
+inline int svc_urihandler::RegisterProtocol(const wchar_t *protocol, const wchar_t *winlampexe)
 {
-	return _call(REGISTERPROTOCOL, (int)1, protocol, winampexe);
+	return _call(REGISTERPROTOCOL, (int)1, protocol, winlampexe);
 }
 
 	inline int svc_urihandler::UnregisterProtocol(const wchar_t *protocol)

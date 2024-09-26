@@ -14,7 +14,7 @@ ERRORICON.PNG  2110
 ".\\resources\\pages\\errorIcon.png"
 NAVCANCEL.HTM  HTML
 ".\\resources\\pages\\navCancel.htm"
-WINAMPERROR.CSS  HTML
-".\\resources\\pages\\winampError.css"
+WINLAMPERROR.CSS  HTML
+".\\resources\\pages\\winlampError.css"
 INETDISABLED.HTM  HTML
 ".\\resources\\pages\\inetDisabled.htm"

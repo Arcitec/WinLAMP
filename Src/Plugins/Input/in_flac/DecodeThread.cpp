@@ -14,7 +14,7 @@
 **
 **   3. This notice may not be removed or altered from any source distribution.
 **
-** Author: Ben Allison benski@winamp.com
+** Author: Ben Allison benski@winlamp.com
 ** Created: March 1, 2007
 **
 */
@@ -28,7 +28,7 @@
 #include <locale.h>
 #include <FLAC/all.h>
 #include "StreamFileWin32.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "QuickBuf.h"
 #include "api__in_flv.h"
 #include "../nu/AudioOutput.h"
@@ -577,7 +577,7 @@ DWORD CALLBACK FLACThread(LPVOID param)
 		MessageBox(NULL, L"Cannot stream flac file, please download it", NULL, 0);
 		/*
 			char agent[256] = { 0 };
-			snprintf(agent, 256, "User-Agent: %S/%S", "Winamp", "5.9.1");
+			snprintf(agent, 256, "User-Agent: %S/%S", "WinLAMP", "5.9.1");
 			ret = NXFileOpenProgressiveDownloader(&file, filename, nx_file_FILE_read_binary, 0, agent); // TODO: calculate real user agent
 		*/
 		return NErr_Disabled;

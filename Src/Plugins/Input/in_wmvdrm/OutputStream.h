@@ -156,7 +156,7 @@ int SourceWidth() const
 				break;
 			}
 		} else 		 if (fourcc == BI_BITFIELDS)
-			fourcc = 0; // TODO: calc a CC that winamp likes
+			fourcc = 0; // TODO: calc a CC that winlamp likes
 		return fourcc;
 	}
 

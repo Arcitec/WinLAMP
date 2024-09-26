@@ -1,4 +1,4 @@
-// Winamp error feedback plugin
+// WinLAMP error feedback plugin
 // Copyright (C) 2005 Nullsoft
 
 //#define PLUGIN_DESC "Nullsoft Error Feedback"
@@ -13,7 +13,7 @@
 ServiceWatcher watcher;
 Settings settings;
 prefsDlgRecW prefItem = {0};
-char *winampVersion;
+char *winlampVersion;
 static wchar_t prefsTitle[64];
 
 // wasabi based services for localisation support
@@ -27,7 +27,7 @@ int init(void);
 void config(void);
 void quit(void);
 
-extern "C" winampGeneralPurposePlugin plugin =
+extern "C" winlampGeneralPurposePlugin plugin =
 {
 	GPPHDR_VER_U,
 	"nullsoft(gen_crasher.dll)",
@@ -36,7 +36,7 @@ extern "C" winampGeneralPurposePlugin plugin =
 	quit,
 };
 
-extern "C" __declspec(dllexport) winampGeneralPurposePlugin * winampGetGeneralPurposePlugin() {	return &plugin; }
+extern "C" __declspec(dllexport) winlampGeneralPurposePlugin * winlampGetGeneralPurposePlugin() {	return &plugin; }
 
 int init(void)
 {
@@ -72,7 +72,7 @@ int init(void)
 	prefItem.hInst = WASABI_API_LNG_HINST;
 	prefItem.where = -1;
 	SendMessageA(plugin.hwndParent, WM_WA_IPC, (WPARAM) &prefItem, IPC_ADD_PREFS_DLGW);
-	winampVersion = (char *)SendMessageA(plugin.hwndParent,WM_WA_IPC,0,IPC_GETVERSIONSTRING);
+	winlampVersion = (char *)SendMessageA(plugin.hwndParent,WM_WA_IPC,0,IPC_GETVERSIONSTRING);
 	return GEN_INIT_SUCCESS;
 }
 

@@ -308,7 +308,7 @@ Comment or uncomment the following directives according to the needs of your app
 #define WASABI_WIDGETS_LAYOUTSTATUS
 #define WASABI_WIDGETS_TOOLTIPS
 
-#include "../Winamp/buildType.h"
+#include "../WinLAMP/buildType.h"
 #if defined(_DEBUG) || defined(WASABI_DEBUG)// || defined(INTERNAL) || defined(BETA) || defined(NIGHT)
 #define WASABI_COMPILE_STATSWND
 #endif
@@ -400,7 +400,7 @@ extern void destroyCustomCoreApi(api_core *core);
 
 #define WASABI_GET_TEMPDISABLE_AOT(x) { extern int getAOTTempDisable(); x = getAOTTempDisable(); }
 
-#define WASABI_CHECK_CAN_EXIT(x) { extern int canExitWinamp(); x = canExitWinamp(); }
+#define WASABI_CHECK_CAN_EXIT(x) { extern int canExitWinLAMP(); x = canExitWinLAMP(); }
 
 #define WASABI_CHECK_OFFSCREENCHECK_DISABLE(x) { extern int fsMonitorIsFS(); x = fsMonitorIsFS(); }
 

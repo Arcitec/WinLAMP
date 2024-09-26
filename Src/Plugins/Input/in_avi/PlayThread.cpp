@@ -3,7 +3,7 @@
 #include "../nsavi/nsavi.h"
 #include "interfaces.h"
 #include "../nu/AudioOutput.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <api/service/waservicefactory.h>
 #include "VideoThread.h"
 #include "win32_avi_reader.h"
@@ -219,7 +219,7 @@ static void CALLBACK DSHOWAPC( ULONG_PTR param )
 	{
 		typedef In_Module *( *MODULEGETTER )( );
 
-		MODULEGETTER moduleGetter = (MODULEGETTER)GetProcAddress( in_dshow, "winampGetInModule2" );
+		MODULEGETTER moduleGetter = (MODULEGETTER)GetProcAddress( in_dshow, "winlampGetInModule2" );
 		if ( moduleGetter )
 			dshow_mod_local = moduleGetter();
 	}

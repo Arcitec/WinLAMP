@@ -15,7 +15,7 @@
 #include "gen_ff_ipc.h"
 #include "fsmonitor.h"
 #include <api/wnd/wndclass/foreignwnd.h>
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../gen_hotkeys/wa_hotkeys.h"
 #include <api/script/objects/c_script/c_group.h>
 #include <api/script/objects/c_script/c_text.h>
@@ -81,10 +81,10 @@ static wchar_t szDescription[256];
 #define GET_Y_LPARAM(lp)                        ((int)(short)HIWORD(lp))
 
 #define ID_FILE_SHOWLIBRARY     40379
-#define WINAMP_OPTIONS_PREFS    40012
-#define WINAMP_HELP_ABOUT       40041
-#define WINAMP_LIGHTNING_CLICK  40339
-#define WINAMP
+#define WINLAMP_OPTIONS_PREFS    40012
+#define WINLAMP_HELP_ABOUT       40041
+#define WINLAMP_LIGHTNING_CLICK  40339
+#define WINLAMP
 #define UPDATE_EGG 0xC0DE+2
 #define VIEWPORT 0xC0DE+3
 static int DEFERREDCALLBACKMSG;
@@ -97,8 +97,8 @@ int init();
 void quit_inst();
 void init_inst();
 void ToggleLayout(const wchar_t *containerName);
-void RestoreClassicWinamp(int was_loaded);
-extern "C" winampGeneralPurposePlugin plugin =
+void RestoreClassicWinLAMP(int was_loaded);
+extern "C" winlampGeneralPurposePlugin plugin =
 {
 	GPPHDR_VER_U,
 	"nullsoft(gen_ff.dll)",
@@ -397,7 +397,7 @@ int getAOTTempDisable()
 	return g_fsmonitor->isFullScreen();
 }
 
-LRESULT CallWinampWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT CallWinLAMPWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	return CallWindowProcW(wa_oldWndProc, hwnd, msg, wParam, lParam);
 }
@@ -424,11 +424,11 @@ __declspec(dllexport) BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, L
 //-----------------------------------------------------------------------------------------------
 // core actions implement "play", "stop", etc. wndEmbedded embed wa2 windows into GUID-based wnds
 //-----------------------------------------------------------------------------------------------
-BEGIN_SERVICES(Winamp2_Svcs);
+BEGIN_SERVICES(WinLAMP2_Svcs);
 DECLARE_SERVICETSINGLE(svc_action, CoreActions);
 DECLARE_SERVICETSINGLE(svc_action, MenuActions);
 DECLARE_SERVICETSINGLE(svc_windowCreate, Wa2WndEmbed);
-END_SERVICES(Winamp2_Svcs, _Winamp2_Svcs);
+END_SERVICES(WinLAMP2_Svcs, _WinLAMP2_Svcs);
 
 //-----------------------------------------------------------------------------------------------
 // functions called by the overriden windowproc to create and destroy wndembedders
@@ -685,7 +685,7 @@ int createVid()
 int destroyPl(HWND hwndDlg, int uMsg, WPARAM wParam, LPARAM lParam)
 {
 	ReentryFilter f(&wndMsgFilter, IPC_GETWND_PE);
-	int r = CallWinampWndProc(hwndDlg, uMsg, wParam, lParam);
+	int r = CallWinLAMPWndProc(hwndDlg, uMsg, wParam, lParam);
 	if (f.mustLeave()) return r;
 	if (plWnd != NULL && WASABI_API_WND->rootwndIsValid(plWnd))
 	{
@@ -702,7 +702,7 @@ int destroyPl(HWND hwndDlg, int uMsg, WPARAM wParam, LPARAM lParam)
 int destroyEmb(HWND hwndDlg, int uMsg, WPARAM wParam, LPARAM lParam, embedWindowState *ws)
 {
 	ReentryFilter f(&wndMsgFilter, (intptr_t)ws);
-	int r = CallWinampWndProc(hwndDlg, uMsg, wParam, lParam);
+	int r = CallWinLAMPWndProc(hwndDlg, uMsg, wParam, lParam);
 	if (f.mustLeave() || (ws->flags & EMBED_FLAGS_LEGACY_WND)) return r;
 	if (ws->extra_data[EMBED_STATE_EXTRA_FFROOTWND] == NULL) return r;
 	if (ws->extra_data[EMBED_STATE_EXTRA_REPARENTING] == 1) return r;
@@ -731,7 +731,7 @@ int destroyEmb(HWND hwndDlg, int uMsg, WPARAM wParam, LPARAM lParam, embedWindow
 int destroyMb(HWND hwndDlg, int uMsg, WPARAM wParam, LPARAM lParam)
 {
 	ReentryFilter f(&wndMsgFilter, IPC_GETWND_MB);
-	int r = CallWinampWndProc(hwndDlg, uMsg, wParam, lParam);
+	int r = CallWinLAMPWndProc(hwndDlg, uMsg, wParam, lParam);
 	if (f.mustLeave()) return r;
 
 	if (mbWnd != NULL && WASABI_API_WND->rootwndIsValid(mbWnd)) WASABI_API_WNDMGR->skinwnd_destroy(mbWnd);
@@ -744,7 +744,7 @@ int destroyMb(HWND hwndDlg, int uMsg, WPARAM wParam, LPARAM lParam)
 int destroyVid(HWND hwndDlg, int uMsg, WPARAM wParam, LPARAM lParam)
 {
 	ReentryFilter f(&wndMsgFilter, IPC_GETWND_VIDEO);
-	int r = CallWinampWndProc(hwndDlg, uMsg, wParam, lParam);
+	int r = CallWinLAMPWndProc(hwndDlg, uMsg, wParam, lParam);
 
 	if (f.mustLeave()) return r;
 
@@ -766,11 +766,11 @@ int destroyVid(HWND hwndDlg, int uMsg, WPARAM wParam, LPARAM lParam)
 int m_loading_at_startup;
 int m_are_we_loaded;
 
-#define WINAMP_REFRESHSKIN              40291
-#define WINAMP_OPTIONS_EQ               40036
-#define WINAMP_OPTIONS_DSIZE            40165
-#define WINAMP_OPTIONS_ELAPSED          40037
-#define WINAMP_OPTIONS_REMAINING        40038
+#define WINLAMP_REFRESHSKIN              40291
+#define WINLAMP_OPTIONS_EQ               40036
+#define WINLAMP_OPTIONS_DSIZE            40165
+#define WINLAMP_OPTIONS_ELAPSED          40037
+#define WINLAMP_OPTIONS_REMAINING        40038
 
 //-----------------------------------------------------------------------------------------------
 class MainLayoutMonitor : public H_Layout
@@ -842,7 +842,7 @@ void shutdownFFApi();
 
 
 /*-----------------------------------------------------------------------------------------------
-*	Winamp2 message processor
+*	WinLAMP2 message processor
 */
 
 static void RerouteMessage(MSG *pMsg, ifc_window *wnd)
@@ -1221,13 +1221,13 @@ VOID CALLBACK ViewPortChanged(HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTi
 }
 
 //-----------------------------------------------------------------------------------------------
-// Winamp2 main window subclass
+// WinLAMP2 main window subclass
 //-----------------------------------------------------------------------------------------------
 static LRESULT WINAPI wa_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	static int m_in_skinrefresh;
 
-	if (uMsg == WM_COMMAND && LOWORD(wParam) == WINAMP_REFRESHSKIN)
+	if (uMsg == WM_COMMAND && LOWORD(wParam) == WINLAMP_REFRESHSKIN)
 	{
 		HWND prefs = wa2.getPreferencesWindow();
 		RECT prefrect = {0};
@@ -1239,13 +1239,13 @@ static LRESULT WINAPI wa_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 				SetWindowLongPtrW(prefs, GWLP_HWNDPARENT, (LONG_PTR)hwndDlg);
 		}
 		m_in_skinrefresh++;
-		DWORD b = CallWinampWndProc(hwndDlg, uMsg, wParam, lParam);
+		DWORD b = CallWinLAMPWndProc(hwndDlg, uMsg, wParam, lParam);
 		onSkinSwitch();
 		if (m_are_we_loaded) doplaylistcolors();
 		m_in_skinrefresh--;
 		if (prefs && !wa2.getPreferencesWindow())
 		{
-			SendMessageW(wa2.getMainWindow(), WM_COMMAND, WINAMP_OPTIONS_PREFS, 0);
+			SendMessageW(wa2.getMainWindow(), WM_COMMAND, WINLAMP_OPTIONS_PREFS, 0);
 			SetWindowPos(wa2.getPreferencesWindow(), NULL, prefrect.left, prefrect.top, prefrect.right - prefrect.left, prefrect.bottom - prefrect.top, SWP_NOZORDER | SWP_NOACTIVATE | SWP_DEFERERASE);
 		}
 
@@ -1254,9 +1254,9 @@ static LRESULT WINAPI wa_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 	if (g_Core)
 	{
 		if (uMsg == WM_WA_IPC && lParam == IPC_CB_MISC) g_Core->gotCallback(wParam);
-#define WINAMP_FILE_REPEAT              40022
-#define WINAMP_FILE_SHUFFLE             40023
-#define WINAMP_FILE_MANUALPLADVANCE     40395
+#define WINLAMP_FILE_REPEAT              40022
+#define WINLAMP_FILE_SHUFFLE             40023
+#define WINLAMP_FILE_MANUALPLADVANCE     40395
 #define UPDATE_DISPLAY_TIMER			38
 		if (uMsg == WM_TIMER)
 		{
@@ -1305,33 +1305,33 @@ static LRESULT WINAPI wa_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 				KillTimer(wa2.getMainWindow(), 0xC0DE + 1);
 			}
 		}
-		if (!my_set && (uMsg == WM_COMMAND || uMsg == WM_SYSCOMMAND) && LOWORD(wParam) == WINAMP_FILE_SHUFFLE)
+		if (!my_set && (uMsg == WM_COMMAND || uMsg == WM_SYSCOMMAND) && LOWORD(wParam) == WINLAMP_FILE_SHUFFLE)
 		{
-			DWORD v = CallWinampWndProc(hwndDlg, uMsg, wParam, lParam);
+			DWORD v = CallWinLAMPWndProc(hwndDlg, uMsg, wParam, lParam);
 			int shuf = wa2.getShuffle();
 			if (!shuffle.getValueAsInt() != !shuf) shuffle.setValueAsInt(shuf);
 			return v;
 		}
 		if (!my_set && (uMsg == WM_COMMAND || uMsg == WM_SYSCOMMAND) &&
-		    (LOWORD(wParam) == WINAMP_FILE_REPEAT) ||
-		    (LOWORD(wParam) == WINAMP_FILE_MANUALPLADVANCE))
+		    (LOWORD(wParam) == WINLAMP_FILE_REPEAT) ||
+		    (LOWORD(wParam) == WINLAMP_FILE_MANUALPLADVANCE))
 		{
-			DWORD v = CallWinampWndProc(hwndDlg, uMsg, wParam, lParam);
+			DWORD v = CallWinLAMPWndProc(hwndDlg, uMsg, wParam, lParam);
 			int rep = wa2.getRepeat();
 			int manadv = wa2.getManualPlaylistAdvance();
 			int _v = (rep && manadv) ? -1 : rep;
 			if (repeat.getValueAsInt() != _v) repeat.setValueAsInt(_v);
 			return v;
 		}
-		if ((uMsg == WM_COMMAND || uMsg == WM_SYSCOMMAND) && LOWORD(wParam) == WINAMP_OPTIONS_DSIZE)
+		if ((uMsg == WM_COMMAND || uMsg == WM_SYSCOMMAND) && LOWORD(wParam) == WINLAMP_OPTIONS_DSIZE)
 		{
-			int v = CallWinampWndProc(hwndDlg, uMsg, wParam, lParam);
+			int v = CallWinLAMPWndProc(hwndDlg, uMsg, wParam, lParam);
 			syncDoubleSize();
 			return v;
 		}
-		if ((uMsg == WM_COMMAND || uMsg == WM_SYSCOMMAND) && (LOWORD(wParam) == WINAMP_OPTIONS_ELAPSED || LOWORD(wParam) == WINAMP_OPTIONS_REMAINING))
+		if ((uMsg == WM_COMMAND || uMsg == WM_SYSCOMMAND) && (LOWORD(wParam) == WINLAMP_OPTIONS_ELAPSED || LOWORD(wParam) == WINLAMP_OPTIONS_REMAINING))
 		{
-			int v = CallWinampWndProc(hwndDlg, uMsg, wParam, lParam);
+			int v = CallWinLAMPWndProc(hwndDlg, uMsg, wParam, lParam);
 			syncDisplayMode();
 			return v;
 		}
@@ -1353,7 +1353,7 @@ static LRESULT WINAPI wa_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 			//if (/*todo: configurable */ 1)
 			{
 				uMsg = WM_COMMAND;
-				wParam = WINAMP_MAIN_WINDOW;
+				wParam = WINLAMP_MAIN_WINDOW;
 			}
 		}
 		else if (uMsg == WM_SETTINGCHANGE)
@@ -1370,7 +1370,7 @@ static LRESULT WINAPI wa_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 		}
 		else if (uMsg == WM_DISPLAYCHANGE)
 		{
-			DWORD b = CallWinampWndProc(hwndDlg, uMsg, wParam, lParam);
+			DWORD b = CallWinLAMPWndProc(hwndDlg, uMsg, wParam, lParam);
 			if (!m_in_skinrefresh) doplaylistcolors();
 
 			// filter out our internal skin updates
@@ -1390,27 +1390,27 @@ static LRESULT WINAPI wa_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 
 			if (hmenuPopup && hmenuPopup == mainSendTo.build_hMenu && mainSendTo.mode == 1)
 			{
-				int IPC_LIBRARY_SENDTOMENU = SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINAMP_IPCMESSAGE);
+				int IPC_LIBRARY_SENDTOMENU = SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINLAMP_IPCMESSAGE);
 				if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)&mainSendTo, IPC_LIBRARY_SENDTOMENU) == 0xffffffff)
 					mainSendTo.mode = 2;
 			}
 
-			if(hmenuPopup == wa2.getMenuBarMenu(Winamp2FrontEnd::WA2_MAINMENUBAR_PLAY))
+			if(hmenuPopup == wa2.getMenuBarMenu(WinLAMP2FrontEnd::WA2_MAINMENUBAR_PLAY))
 			{
-				CheckMenuItem((HMENU)wParam, WINAMP_FILE_SHUFFLE, wa2.getShuffle() ? MF_CHECKED : MF_UNCHECKED);
-				CheckMenuItem((HMENU)wParam, WINAMP_FILE_REPEAT, wa2.getRepeat() ? MF_CHECKED : MF_UNCHECKED);
+				CheckMenuItem((HMENU)wParam, WINLAMP_FILE_SHUFFLE, wa2.getShuffle() ? MF_CHECKED : MF_UNCHECKED);
+				CheckMenuItem((HMENU)wParam, WINLAMP_FILE_REPEAT, wa2.getRepeat() ? MF_CHECKED : MF_UNCHECKED);
 			}
 
 			if (hmenuPopup == wa2.getPopupMenu() ||
-			    hmenuPopup == wa2.getMenuBarMenu(Winamp2FrontEnd::WA2_MAINMENUBAR_OPTIONS) ||
-			    hmenuPopup == wa2.getMenuBarMenu(Winamp2FrontEnd::WA2_MAINMENUBAR_WINDOWS))
+			    hmenuPopup == wa2.getMenuBarMenu(WinLAMP2FrontEnd::WA2_MAINMENUBAR_OPTIONS) ||
+			    hmenuPopup == wa2.getMenuBarMenu(WinLAMP2FrontEnd::WA2_MAINMENUBAR_WINDOWS))
 			{
-				if (hmenuPopup == wa2.getMenuBarMenu(Winamp2FrontEnd::WA2_MAINMENUBAR_OPTIONS)) {
-					EnableMenuItem(hmenuPopup, WINAMP_OPTIONS_DSIZE,
+				if (hmenuPopup == wa2.getMenuBarMenu(WinLAMP2FrontEnd::WA2_MAINMENUBAR_OPTIONS)) {
+					EnableMenuItem(hmenuPopup, WINLAMP_OPTIONS_DSIZE,
 								   MF_BYCOMMAND | (cfg_uioptions_uselocks.getValueAsInt() ? MF_ENABLED : MF_GRAYED));
 				}
 				if (hmenuPopup == wa2.getPopupMenu()){
-					EnableMenuItem(GetSubMenu(hmenuPopup, 11 + wa2.adjustOptionsPopupMenu(0)), WINAMP_OPTIONS_DSIZE,
+					EnableMenuItem(GetSubMenu(hmenuPopup, 11 + wa2.adjustOptionsPopupMenu(0)), WINLAMP_OPTIONS_DSIZE,
 								   MF_BYCOMMAND | (cfg_uioptions_uselocks.getValueAsInt() ? MF_ENABLED : MF_GRAYED));
 				}
 
@@ -1423,7 +1423,7 @@ static LRESULT WINAPI wa_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 						Container *cont = SkinParser::enumContainer(i);
 						if (!_wcsicmp(cont->getId(), L"main"))
 						{
-							CheckMenuItem((HMENU)wParam, WINAMP_MAIN_WINDOW, cont->isVisible() ? MF_CHECKED : MF_UNCHECKED);
+							CheckMenuItem((HMENU)wParam, WINLAMP_MAIN_WINDOW, cont->isVisible() ? MF_CHECKED : MF_UNCHECKED);
 							break;
 						}
 					}
@@ -1550,7 +1550,7 @@ static LRESULT WINAPI wa_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 				}
 				// this is where we detect that wa2 wants to open one of its windows (thru popup menu, button, whatever)
 				// when this happens, we create a freeform wndembedder if one doesn't already exist. that embedder will
-				// reparent and resize the wa2 window on its own. when we return, winamp then shows the HWND inside our frame
+				// reparent and resize the wa2 window on its own. when we return, winlamp then shows the HWND inside our frame
 				// as it would show the HWND as a popup normally.
 				case IPC_CB_ONSHOWWND:
 					switch (wParam)
@@ -1618,7 +1618,7 @@ static LRESULT WINAPI wa_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 					break;
 					// here we do the reverse, we detect that wa2 wants to close one of its windows, so we destroy our window
 					// embedder (it will reparent the wa2 window back to its former parent and resize it back to where it was
-					// on its own). when we return, winamp then hides the window.
+					// on its own). when we return, winlamp then hides the window.
 
 					// NOTE! because of this, there might be a split second where the window is seen on the screen as a popup
 					// after you closed the window (this won't happen for static containers [ie: pledit/video in mmd3] since
@@ -1818,7 +1818,7 @@ static LRESULT WINAPI wa_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 			int id = LOWORD(wParam);
 			MenuActions::toggleWindowOption(id - 42000);
 		}
-		else if ((uMsg == WM_COMMAND || uMsg == WM_SYSCOMMAND) && LOWORD(wParam) == WINAMP_MAIN_WINDOW)
+		else if ((uMsg == WM_COMMAND || uMsg == WM_SYSCOMMAND) && LOWORD(wParam) == WINLAMP_MAIN_WINDOW)
 		{
 			for (int i = 0;i < SkinParser::getNumContainers();i++)
 			{
@@ -1830,7 +1830,7 @@ static LRESULT WINAPI wa_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 				}
 			}
 		}
-		else if ((uMsg == WM_COMMAND || uMsg == WM_SYSCOMMAND) && LOWORD(wParam) == WINAMP_OPTIONS_EQ)
+		else if ((uMsg == WM_COMMAND || uMsg == WM_SYSCOMMAND) && LOWORD(wParam) == WINLAMP_OPTIONS_EQ)
 		{
 			if (!gothrueqmsg)
 				return 0;
@@ -1894,7 +1894,7 @@ static LRESULT WINAPI wa_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 		}
 	}
 
-	return CallWinampWndProc(hwndDlg, uMsg, wParam, lParam);
+	return CallWinLAMPWndProc(hwndDlg, uMsg, wParam, lParam);
 }
 
 void onLayoutChanged()
@@ -2067,7 +2067,7 @@ void init_inst()
 	if ( wa2.isWindowVisible( IPC_GETWND_EQ ) )
 	{
 		gothrueqmsg = 1;
-		SendMessageW( plugin.hwndParent, WM_COMMAND, WINAMP_OPTIONS_EQ, 0 );
+		SendMessageW( plugin.hwndParent, WM_COMMAND, WINLAMP_OPTIONS_EQ, 0 );
 		gothrueqmsg = 0;
 		if ( !m_loading_at_startup ) WritePrivateProfileStringW( L"gen_ff", L"classiceq", L"1", INI_FILE );
 	}
@@ -2078,7 +2078,7 @@ void init_inst()
 
 	if ( SendMessageW( plugin.hwndParent, WM_WA_IPC, 0, IPC_ISMAINWNDVISIBLE ) )
 	{
-		SendMessageW( plugin.hwndParent, WM_COMMAND, WINAMP_MAIN_WINDOW, 0 );
+		SendMessageW( plugin.hwndParent, WM_COMMAND, WINLAMP_MAIN_WINDOW, 0 );
 		if ( !m_loading_at_startup ) WritePrivateProfileStringW( L"gen_ff", L"classicmw", L"1", INI_FILE );
 	}
 	else
@@ -2088,7 +2088,7 @@ void init_inst()
 
 	initFFApi();
 
-	// redirect drag and drop to winamp2 by default
+	// redirect drag and drop to winlamp2 by default
 	WASABI_API_WND->setDefaultDropTarget( (void *)wa2.getDropTarget() );
 
 	// this installs a bunch of predefined groups to map wa3 to wa2 functionnality
@@ -2169,8 +2169,8 @@ void quit_inst()
 	KillTimer(wa2.getMainWindow(), 0xC0DE);
 	KillTimer(wa2.getMainWindow(), 0xC0DE + 1);
 
-	EnableMenuItem(wa2.getMenuBarMenu(Winamp2FrontEnd::WA2_MAINMENUBAR_OPTIONS), WINAMP_OPTIONS_DSIZE, MF_ENABLED);
-	EnableMenuItem(GetSubMenu(wa2.getPopupMenu(), 11 + wa2.adjustOptionsPopupMenu(0)), WINAMP_OPTIONS_DSIZE, MF_ENABLED);
+	EnableMenuItem(wa2.getMenuBarMenu(WinLAMP2FrontEnd::WA2_MAINMENUBAR_OPTIONS), WINLAMP_OPTIONS_DSIZE, MF_ENABLED);
+	EnableMenuItem(GetSubMenu(wa2.getPopupMenu(), 11 + wa2.adjustOptionsPopupMenu(0)), WINLAMP_OPTIONS_DSIZE, MF_ENABLED);
 
 	if (oldVideoWnd && oldVideoWndProc)
 		SetWindowLongPtrW(oldVideoWnd, GWLP_WNDPROC, (LONG_PTR)oldVideoWndProc);
@@ -2204,20 +2204,20 @@ void quit_inst()
 
 	int classicmw = GetPrivateProfileIntW(L"gen_ff", L"classicmw", 1, INI_FILE);
 	if (classicmw && !SendMessageW(plugin.hwndParent, WM_WA_IPC, 0, IPC_ISMAINWNDVISIBLE))
-		SendMessageW(plugin.hwndParent, WM_COMMAND, WINAMP_MAIN_WINDOW, 0);
+		SendMessageW(plugin.hwndParent, WM_COMMAND, WINLAMP_MAIN_WINDOW, 0);
 
-	CheckMenuItem(wa2.getPopupMenu(), WINAMP_MAIN_WINDOW, classicmw ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(wa2.getPopupMenu(), WINLAMP_MAIN_WINDOW, classicmw ? MF_CHECKED : MF_UNCHECKED);
 
 	if (GetPrivateProfileIntW(L"gen_ff", L"classiceq", 1, INI_FILE) && !wa2.isWindowVisible(IPC_GETWND_EQ))
 	{
 		gothrueqmsg = 1;
-		SendMessageW(plugin.hwndParent, WM_COMMAND, WINAMP_OPTIONS_EQ, 0);
+		SendMessageW(plugin.hwndParent, WM_COMMAND, WINLAMP_OPTIONS_EQ, 0);
 		gothrueqmsg = 0;
 	}
 
 	if (GetPrivateProfileIntW(L"gen_ff", L"classicpe", 1, INI_FILE) && !wa2.isWindowVisible(IPC_GETWND_PE))
 	{
-		SendMessageW(plugin.hwndParent, WM_COMMAND, WINAMP_OPTIONS_PLEDIT, 0);
+		SendMessageW(plugin.hwndParent, WM_COMMAND, WINLAMP_OPTIONS_PLEDIT, 0);
 	}
 
 	// restore the classic main window to be solid
@@ -2225,7 +2225,7 @@ void quit_inst()
 }
 
 //-----------------------------------------------------------------------------------------------
-// init (from Winamp2)
+// init (from WinLAMP2)
 //-----------------------------------------------------------------------------------------------
 int init()
 {
@@ -2251,10 +2251,10 @@ int init()
 
 	wa2.init(plugin.hwndParent);
 
-	DEFERREDCALLBACKMSG = SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)"gen_ff_deferred", IPC_REGISTER_WINAMP_IPCMESSAGE);
-	UPDATEDIALOGBOXPARENTMSG = SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)"gen_ff_update", IPC_REGISTER_WINAMP_IPCMESSAGE);
+	DEFERREDCALLBACKMSG = SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)"gen_ff_deferred", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	UPDATEDIALOGBOXPARENTMSG = SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)"gen_ff_update", IPC_REGISTER_WINLAMP_IPCMESSAGE);
 
-	// subclass the Winamp2 main window to receive our callbacks
+	// subclass the WinLAMP2 main window to receive our callbacks
 	wa_oldWndProc = (WNDPROC) SetWindowLongPtrW(wa2.getMainWindow(), GWLP_WNDPROC, (LONG_PTR)wa_newWndProc);
 	
 	ffPrefsItem.dlgID = IDD_PREFS;
@@ -2272,11 +2272,11 @@ int init()
 	return 0;
 }
 
-void RestoreClassicWinamp(int was_loaded)
+void RestoreClassicWinLAMP(int was_loaded)
 {
 	// JF> my proposed fix to the problems :)
-	// investigating doing this from winamp.exe on startup, gotta figure it out
-	if (INI_FILE && was_loaded) // restore winamp.ini to about what it shoulda been
+	// investigating doing this from winlamp.exe on startup, gotta figure it out
+	if (INI_FILE && was_loaded) // restore winlamp.ini to about what it shoulda been
 	{
 		int classicpews   = GetPrivateProfileIntW(L"gen_ff", L"classicplws",       0, INI_FILE);
 		int classicwidth  = GetPrivateProfileIntW(L"gen_ff", L"classicplwidth",  275, INI_FILE);
@@ -2288,31 +2288,31 @@ void RestoreClassicWinamp(int was_loaded)
 		wsprintfW(buf, L"%d", classicheight);
 		if (classicpews)
 		{
-			WritePrivateProfileStringW(L"winamp", L"pe_height", L"14", INI_FILE);
-			WritePrivateProfileStringW(L"winamp", L"pe_height_ws", buf, INI_FILE);
+			WritePrivateProfileStringW(L"winlamp", L"pe_height", L"14", INI_FILE);
+			WritePrivateProfileStringW(L"winlamp", L"pe_height_ws", buf, INI_FILE);
 		}
 		else
 		{
-			WritePrivateProfileStringW(L"winamp", L"pe_height", buf, INI_FILE);
-			WritePrivateProfileStringW(L"winamp", L"pe_height_ws", L"", INI_FILE);
+			WritePrivateProfileStringW(L"winlamp", L"pe_height", buf, INI_FILE);
+			WritePrivateProfileStringW(L"winlamp", L"pe_height_ws", L"", INI_FILE);
 		}
 		wsprintfW(buf, L"%d", classicwidth);
-		WritePrivateProfileStringW(L"winamp", L"pe_width", buf, INI_FILE);
+		WritePrivateProfileStringW(L"winlamp", L"pe_width", buf, INI_FILE);
 
-		WritePrivateProfileStringW(L"winamp", L"eq_open", classiceq ? L"1" : L"0", INI_FILE);
-		WritePrivateProfileStringW(L"winamp", L"mw_open", classicmw ? L"1" : L"0", INI_FILE);
+		WritePrivateProfileStringW(L"winlamp", L"eq_open", classiceq ? L"1" : L"0", INI_FILE);
+		WritePrivateProfileStringW(L"winlamp", L"mw_open", classicmw ? L"1" : L"0", INI_FILE);
 	}
 }
 
 //-----------------------------------------------------------------------------------------------
-// quit (from Winamp 2)
+// quit (from WinLAMP 2)
 //-----------------------------------------------------------------------------------------------
 void quit()
 {
 	int was_loaded = m_are_we_loaded;
 	quit_inst();
 
-	RestoreClassicWinamp(was_loaded);
+	RestoreClassicWinLAMP(was_loaded);
 	// restore wa2's windowproc
 	//SetWindowLong(wa2.getMainWindow(), GWL_WNDPROC, (LONG)wa_oldWndProc);
 	shutdownFFApi();
@@ -2349,7 +2349,7 @@ BOOL CALLBACK aboutProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		if (ver)
 		{
 			C_Text t(ver);
-			t.setText(StringPrintfW(L". © 2003-2023 Winamp SA %s", VERSION));
+			t.setText(StringPrintfW(L". © 2003-2023 WinLAMP SA %s", VERSION));
 		}
 		ShowWindow(about_group->gethWnd(), SW_NORMAL);
 		return 1;
@@ -2373,7 +2373,7 @@ BOOL CALLBACK aboutProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 }
 
 //-----------------------------------------------------------------------------------------------
-// configure plugin (from Winamp 2)
+// configure plugin (from WinLAMP 2)
 //-----------------------------------------------------------------------------------------------
 void config()
 {
@@ -2402,7 +2402,7 @@ void config()
 //-----------------------------------------------------------------------------------------------
 // expose the genpurp plugin interface to dll
 //-----------------------------------------------------------------------------------------------
-extern "C" __declspec(dllexport) winampGeneralPurposePlugin * winampGetGeneralPurposePlugin() { return &plugin; }
+extern "C" __declspec(dllexport) winlampGeneralPurposePlugin * winlampGetGeneralPurposePlugin() { return &plugin; }
 
 //-----------------------------------------------------------------------------------------------
 // a window was right clicked where there was no custom context menu available, spawn Wa2's menu
@@ -2592,17 +2592,17 @@ int onCreateExternalWindowGuid(GUID g)
 	}
 	else if (g == preferences_guid)
 	{
-		SendMessageW(wa2.getMainWindow(), WM_COMMAND, WINAMP_OPTIONS_PREFS, 0);
+		SendMessageW(wa2.getMainWindow(), WM_COMMAND, WINLAMP_OPTIONS_PREFS, 0);
 		return 1;
 	}
 	else if (g == about_guid)
 	{
-		SendMessageW(wa2.getMainWindow(), WM_COMMAND, WINAMP_HELP_ABOUT, 0);
+		SendMessageW(wa2.getMainWindow(), WM_COMMAND, WINLAMP_HELP_ABOUT, 0);
 		return 1;
 	}
 	else if (g == lightning_bolt_guid)
 	{
-		SendMessageW(wa2.getMainWindow(), WM_COMMAND, WINAMP_LIGHTNING_CLICK, 0);
+		SendMessageW(wa2.getMainWindow(), WM_COMMAND, WINLAMP_LIGHTNING_CLICK, 0);
 		return 1;
 	}
 	else if (g == colorthemes_guid)
@@ -2646,7 +2646,7 @@ const wchar_t *onTweakContainerNameW(const wchar_t *name)
 	ZERO(tweaked);
 	if (!_wcsicmp(name, WASABI_API_LNG->GetStringFromGUIDW(GenMlLangGUID, plugin.hDllInstance, 18, tweaked, sizeof(tweaked)/sizeof(wchar_t))) ||
 	    !_wcsicmp(name, L"Media Library") ||
-	    !_wcsicmp(name, L"Winamp Library") ||
+	    !_wcsicmp(name, L"WinLAMP Library") ||
 	    !_wcsicmp(name, L"Library"))
 	{
 		return WASABI_API_LNGSTRINGW_BUF(IDS_MEDIA_LIBRARY,tweaked, sizeof(tweaked)/sizeof(wchar_t));
@@ -2679,8 +2679,8 @@ void removeEq()
 {
 	if (eqremoved) return ;
 	eqremoved = 1;
-	eqmenustring = GetMenuItemString(wa2.getPopupMenu(), WINAMP_OPTIONS_EQ, FALSE);
-	RemoveMenu(wa2.getPopupMenu(), WINAMP_OPTIONS_EQ, MF_BYCOMMAND);
+	eqmenustring = GetMenuItemString(wa2.getPopupMenu(), WINLAMP_OPTIONS_EQ, FALSE);
+	RemoveMenu(wa2.getPopupMenu(), WINLAMP_OPTIONS_EQ, MF_BYCOMMAND);
 	wa2.adjustOptionsPopupMenu(-1);
 }
 
@@ -2688,7 +2688,7 @@ void removeEq()
 void restoreEq()
 {
 	if (!eqremoved) return ;
-	MENUITEMINFOW i = {sizeof(i), MIIM_ID | MIIM_STATE | MIIM_TYPE, MFT_STRING, wa2.isWindowVisible(IPC_GETWND_EQ) ? MFS_CHECKED : 0, WINAMP_OPTIONS_EQ};
+	MENUITEMINFOW i = {sizeof(i), MIIM_ID | MIIM_STATE | MIIM_TYPE, MFT_STRING, wa2.isWindowVisible(IPC_GETWND_EQ) ? MFS_CHECKED : 0, WINLAMP_OPTIONS_EQ};
 	i.dwTypeData = eqmenustring.getNonConstVal();
 	InsertMenuItemW(wa2.getPopupMenu(), 8, TRUE, &i);
 	wa2.adjustOptionsPopupMenu(1);
@@ -2700,7 +2700,7 @@ void unpopulateWindowsMenus()
 {
 	if (ffwindowsitempos == -1) return ;
 
-	HMENU menuBarMenu = wa2.getMenuBarMenu(Winamp2FrontEnd::WA2_MAINMENUBAR_WINDOWS);
+	HMENU menuBarMenu = wa2.getMenuBarMenu(WinLAMP2FrontEnd::WA2_MAINMENUBAR_WINDOWS);
 	for(int i = GetMenuItemCount(menuBarMenu)-1; i >= 0; i--)
 	{
 		MENUITEMINFOW info = {sizeof(info), MIIM_DATA, 0, };
@@ -2752,7 +2752,7 @@ void populateWindowsMenus()
 	int pos2 = ffwindowsitempos2;
 	PtrListQuickSorted<StringW, StringWComparator> items;
 
-	HMENU hMenu = wa2.getMenuBarMenu(Winamp2FrontEnd::WA2_MAINMENUBAR_WINDOWS);
+	HMENU hMenu = wa2.getMenuBarMenu(WinLAMP2FrontEnd::WA2_MAINMENUBAR_WINDOWS);
 	HMENU hMenu2 = wa2.getPopupMenu();
 	for (int c = 0;c < SkinParser::getNumContainers();c++)
 	{
@@ -3250,7 +3250,7 @@ const wchar_t *localesCustomGetFile()
 	return langpackfilename;
 #if 0 // old code
 	wchar_t buf[256] = L"";
-	GetPrivateProfileStringW(L"Winamp", L"langpack", L"", buf, 256, AutoWide(INI_FILE));  // TODO: maybe we should change all ini file stuff to W versions
+	GetPrivateProfileStringW(L"WinLAMP", L"langpack", L"", buf, 256, AutoWide(INI_FILE));  // TODO: maybe we should change all ini file stuff to W versions
 	if (*buf == 0)
 		return NULL;
 	wchar_t *p = wcschr(buf, '.');
@@ -3398,7 +3398,7 @@ void onAppBarDockChanged(ifc_window *w)
 
 void onMainLayoutMove(HWND w)
 {
-	// for Winamp to appear on the correct taskbar on Windows 8
+	// for WinLAMP to appear on the correct taskbar on Windows 8
 	// its necessary to set the classic main window to appear on
 	// that monitor and to be on-screen (but hidden) otherwise
 	// Windows will ignore it and it then makes us look buggy.
@@ -3465,7 +3465,7 @@ void updateParentlessOnTop()
 				Layout *l = c->enumLayout(j);
 				if (l != NULL)
 				{
-					// skip windows owned by winamp
+					// skip windows owned by winlamp
 					// skip appbars, they take care of themselves
 					if (l->getNoParent() && !l->appbar_isDocked())
 					{
@@ -3479,17 +3479,17 @@ void updateParentlessOnTop()
 
 void onGoFullscreen()
 {
-	// hidden windows will not receive APPBAR_CALLBACK, so forward it to winamp's main
+	// hidden windows will not receive APPBAR_CALLBACK, so forward it to winlamp's main
 	SendMessageW(wa2.getMainWindow(), APPBAR_CALLBACK, ABN_FULLSCREENAPP, 1);
-	// update ontop flag for windows that are not parented to winamp
+	// update ontop flag for windows that are not parented to winlamp
 	updateParentlessOnTop();
 }
 
 void onCancelFullscreen()
 {
-	// hidden windows will not receive APPBAR_CALLBACK, so forward it to winamp's main
+	// hidden windows will not receive APPBAR_CALLBACK, so forward it to winlamp's main
 	SendMessageW(wa2.getMainWindow(), APPBAR_CALLBACK, ABN_FULLSCREENAPP, 0);
-	// update ontop flag for windows that are not owned by winamp
+	// update ontop flag for windows that are not owned by winlamp
 	updateParentlessOnTop();
 }
 
@@ -3506,7 +3506,7 @@ int processGenericHotkey(const char *hk)
 	return 0;
 }
 
-int canExitWinamp()
+int canExitWinLAMP()
 {
 	return wa2.isExitEnabled();
 }

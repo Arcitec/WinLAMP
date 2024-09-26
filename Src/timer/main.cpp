@@ -78,7 +78,7 @@ void TimerComponent::DeregisterServices(api_service *service)
 }
 
 TimerComponent timerComponent;
-extern "C" __declspec(dllexport) ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" __declspec(dllexport) ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &timerComponent;
 }

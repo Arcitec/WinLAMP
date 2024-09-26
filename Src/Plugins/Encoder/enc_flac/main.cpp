@@ -1,5 +1,5 @@
 #include "api__enc_flac.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "../nsv/enc_if.h"
 #include "../nu/AutoWideFn.h"
 #include "AudioCoderFlac.h"
@@ -14,7 +14,7 @@
 
 #define ENC_VERSION "2.46"
 
-HWND winampwnd = 0;
+HWND winlampwnd = 0;
 int isthemethere = 0;
 api_service *WASABI_API_SVC = 0;
 api_language *WASABI_API_LNG = 0;
@@ -65,7 +65,7 @@ void GetLocalisationApiService(void)
 		// loader so that we can get the localisation service api for use
 		if(!WASABI_API_SVC)
 		{
-			WASABI_API_SVC = (api_service*)SendMessage(winampwnd, WM_WA_IPC, 0, IPC_GET_API_SERVICE);
+			WASABI_API_SVC = (api_service*)SendMessage(winlampwnd, WM_WA_IPC, 0, IPC_GET_API_SERVICE);
 			if (WASABI_API_SVC == (api_service*)1)
 			{
 				WASABI_API_SVC = NULL;
@@ -192,7 +192,7 @@ BOOL CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case WM_COMMAND:
 			if(LOWORD(wParam) == IDC_URL)
 			{
-				SendMessage(winampwnd, WM_WA_IPC, (WPARAM)"http://flac.sf.net/", IPC_OPEN_URL);
+				SendMessage(winlampwnd, WM_WA_IPC, (WPARAM)"http://flac.sf.net/", IPC_OPEN_URL);
 			}
 		break;
 
@@ -312,9 +312,9 @@ extern "C"
 		return 0;
 	}
 
-	void __declspec(dllexport) SetWinampHWND(HWND hwnd)
+	void __declspec(dllexport) SetWinLAMPHWND(HWND hwnd)
 	{
-		winampwnd = hwnd;
+		winlampwnd = hwnd;
 		isthemethere = !SendMessage(hwnd,WM_WA_IPC,IPC_ISWINTHEMEPRESENT,IPC_USE_UXTHEME_FUNC);
 	}
 };

@@ -6,7 +6,7 @@
 #include <dsound.h>
 #include "res_wa2/resource.h"
 #include "api.h"
-#include "../Winamp/out.h"
+#include "../WinLAMP/out.h"
 
 class DsDevEnum
 {

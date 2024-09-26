@@ -11,7 +11,7 @@ typedef struct __BROWSERTHREADCRAEATEPARAM
 	ULONG_PTR		user;
 	HANDLE			readyEvent;
 	HWND				hHost;
-	HWND				hWinamp;
+	HWND				hWinLAMP;
 } BROWSERTHREADCREATEPARAM;
 
 typedef struct __BROWSERTHREAD
@@ -49,7 +49,7 @@ BOOL BrowserThread_SetFlags(UINT flags, UINT flagsMask, BOOL fAlarm)
 }
 
 
-HANDLE BrowserThread_Create(HWND hWinamp, BTCREATEWNDPROC fnCreateWnd, ULONG_PTR user, BTKEYFILTERPROC fnKeyFilter, HWND *pWnd, DWORD *pThreadId)
+HANDLE BrowserThread_Create(HWND hWinLAMP, BTCREATEWNDPROC fnCreateWnd, ULONG_PTR user, BTKEYFILTERPROC fnKeyFilter, HWND *pWnd, DWORD *pThreadId)
 {
 	if (NULL == fnCreateWnd)
 		return NULL;
@@ -70,7 +70,7 @@ HANDLE BrowserThread_Create(HWND hWinamp, BTCREATEWNDPROC fnCreateWnd, ULONG_PTR
 	param.fnKeyFilter = fnKeyFilter;
 	param.user = user;
 	param.readyEvent = CreateEvent(0, TRUE, FALSE, 0); 
-	param.hWinamp = hWinamp;
+	param.hWinLAMP = hWinLAMP;
 
 	HANDLE hThread = CreateThread(NULL, 0, BrowserThread_MainLoop, (LPVOID)&param, 0, &threadId);
 	
@@ -216,7 +216,7 @@ static BOOL CALLBACK BrowserThread_DefaultKeyFilter(HWND hwnd, MSG *pMsg)
 }
 
 
-inline static BOOL BrowserThread_ProcessMessage(HWND hHost, HWND hWinamp, MSG *pMsg, BTKEYFILTERPROC IsHostMessage)
+inline static BOOL BrowserThread_ProcessMessage(HWND hHost, HWND hWinLAMP, MSG *pMsg, BTKEYFILTERPROC IsHostMessage)
 {
 	if (hHost != pMsg->hwnd && FALSE == IsChild(hHost, pMsg->hwnd))
 		return FALSE;
@@ -231,7 +231,7 @@ inline static BOOL BrowserThread_ProcessMessage(HWND hHost, HWND hWinamp, MSG *p
 			case VK_TAB:
 				{
 					HWND hOwner = (HWND)(LONG_PTR)GetWindowLongPtr(hHost, GWLP_HWNDPARENT);
-					if (NULL == hOwner || hWinamp == hOwner) 
+					if (NULL == hOwner || hWinLAMP == hOwner) 
 						hOwner = hHost;
 					return IsDialogMessageW(hOwner, pMsg);
 				}
@@ -251,7 +251,7 @@ inline static BOOL BrowserThread_ProcessMessage(HWND hHost, HWND hWinamp, MSG *p
 			FALSE == IsChild(hHost, targetWindow ) &&
 			GetWindowThreadProcessId(targetWindow, NULL) != GetWindowThreadProcessId(hHost, NULL))
 		{
-			PostMessage(hWinamp, pMsg->message, pMsg->wParam, pMsg->lParam);
+			PostMessage(hWinLAMP, pMsg->message, pMsg->wParam, pMsg->lParam);
 			return TRUE;
 		}
 
@@ -297,7 +297,7 @@ static DWORD CALLBACK BrowserThread_MainLoop(LPVOID param)
 
 	BROWSERTHREADCREATEPARAM *createParam = (BROWSERTHREADCREATEPARAM*)param;
 
-	HWND hWinamp = createParam->hWinamp;
+	HWND hWinLAMP = createParam->hWinLAMP;
 
 	BROWSERTHREAD thread;
 	ZeroMemory(&thread, sizeof(BROWSERTHREAD));
@@ -339,7 +339,7 @@ static DWORD CALLBACK BrowserThread_MainLoop(LPVOID param)
 		return -1;
 	}
 
-	SendMessage(hHost, BTM_INITCONTAINER, (WPARAM)hWinamp, 0L);
+	SendMessage(hHost, BTM_INITCONTAINER, (WPARAM)hWinLAMP, 0L);
 	SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_NORMAL);
 
 	while (0 == (BHTF_QUITLOOP & thread.flags))
@@ -360,7 +360,7 @@ static DWORD CALLBACK BrowserThread_MainLoop(LPVOID param)
 					{
 						if (0 == (BHTF_BEGINDESTROY & thread.flags))
 						{
-							if (FALSE == BrowserThread_ProcessMessage(hHost, hWinamp, &msg, IsHostMessage))
+							if (FALSE == BrowserThread_ProcessMessage(hHost, hWinLAMP, &msg, IsHostMessage))
 							{
 								TranslateMessage(&msg);	
 								DispatchMessageW(&msg);

@@ -833,7 +833,7 @@ void DDraw_Enter(int *w, int *h, int **fb1, int **fb2)
 static unsigned int draw_title_time;
 static char last_title[1024];
 
-extern HWND hwnd_WinampParent;
+extern HWND hwnd_WinLAMPParent;
 
 static void do_gettitle()
 {
@@ -841,10 +841,10 @@ static void do_gettitle()
   {
     char this_title[2048]={0,};
     char *p;
-	  if (IsWindow(hwnd_WinampParent)) 
+	  if (IsWindow(hwnd_WinLAMPParent)) 
     {
       DWORD id;
-      if (!SendMessageTimeout( hwnd_WinampParent,WM_GETTEXT,(WPARAM)sizeof(this_title),(LPARAM)this_title,SMTO_BLOCK,50,&id) || !id) return;
+      if (!SendMessageTimeout( hwnd_WinLAMPParent,WM_GETTEXT,(WPARAM)sizeof(this_title),(LPARAM)this_title,SMTO_BLOCK,50,&id) || !id) return;
     }
 	  p = this_title+strlen(this_title);
 	  while (p >= this_title)
@@ -852,7 +852,7 @@ static void do_gettitle()
 		  char buf[9];
 		  memcpy(buf,p,8);
 		  buf[8]=0;
-		  if (!lstrcmpi(buf,"- Winamp")) break;
+		  if (!lstrcmpi(buf,"- WinLAMP")) break;
 		  p--;
 	  }
 	  if (p >= this_title) p--;

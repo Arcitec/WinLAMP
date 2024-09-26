@@ -3,10 +3,10 @@
 //
 // Version
 //
-#include "../../../Winamp/buildType.h"
+#include "../../../WinLAMP/buildType.h"
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 2,9,3,0
- PRODUCTVERSION WINAMP_PRODUCTVER
+ PRODUCTVERSION WINLAMP_PRODUCTVER
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -22,15 +22,15 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "Comments", "Advanced Visualization Studio"
-            VALUE "CompanyName", "Winamp SA"
-            VALUE "FileDescription", "Winamp Visualization Plug-in"
+            VALUE "CompanyName", "WinLAMP SA"
+            VALUE "FileDescription", "WinLAMP Visualization Plug-in"
             VALUE "FileVersion", "2,9,3,0"
             VALUE "InternalName", "Advanced Visualization Studio"
-            VALUE "LegalCopyright", "Copyright © 2001-2023 Winamp SA"
-            VALUE "LegalTrademarks", "Nullsoft and Winamp are trademarks of Winamp SA"
+            VALUE "LegalCopyright", "Copyright © 2001-2023 WinLAMP SA"
+            VALUE "LegalTrademarks", "Nullsoft and WinLAMP are trademarks of WinLAMP SA"
             VALUE "OriginalFilename", "vis_avs.dll"
-            VALUE "ProductName", "Winamp"
-            VALUE "ProductVersion", STR_WINAMP_PRODUCTVER
+            VALUE "ProductName", "WinLAMP"
+            VALUE "ProductVersion", STR_WINLAMP_PRODUCTVER
         END
     END
     BLOCK "VarFileInfo"

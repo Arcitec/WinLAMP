@@ -72,7 +72,7 @@ BEGIN
     GROUPBOX        "'Now Playing' Service",IDC_STATIC,0,0,272,72
     LTEXT           "This allows you to specify an alternative Now Playing service to use in the 'Now Playing' node (if installed). Leave blank to reset to the default service.",IDC_STATIC,6,11,260,18
     EDITTEXT        IDC_NOWPLAYINGURL,6,33,260,13,ES_AUTOHSCROLL
-    LTEXT           "Note: For now playing lookups to work when using an alternative Now Playing service, the service will need to use the available Winamp Javascript API.",IDC_STATIC,6,51,260,18,WS_DISABLED
+    LTEXT           "Note: For now playing lookups to work when using an alternative Now Playing service, the service will need to use the available WinLAMP Javascript API.",IDC_STATIC,6,51,260,18,WS_DISABLED
     GROUPBOX        "Online Media",IDC_STATIC,0,76,272,146
     GROUPBOX        "General Settings",IDC_STATIC,5,87,260,30
     CONTROL         "Allow sections to auto-resize",IDC_AUTOSIZE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,100,107,10
@@ -102,7 +102,7 @@ STYLE DS_SETFONT | DS_FIXEDSYS | DS_CONTROL | WS_CHILD | WS_CLIPSIBLINGS | WS_CL
 EXSTYLE WS_EX_CONTROLPARENT
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    LTEXT           "Choose Winamp's web services to experience premium media services online.",IDC_LABEL_HEADER,5,6,251,8
+    LTEXT           "Choose WinLAMP's web services to experience premium media services online.",IDC_LABEL_HEADER,5,6,251,8
     LISTBOX         IDC_SERVICELIST,5,24,99,126,LBS_OWNERDRAWFIXED | LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT | LBS_NODATA | WS_VSCROLL | WS_TABSTOP
     CONTROL         "",IDC_PLACEHOLDER,"Static",SS_BLACKRECT | NOT WS_VISIBLE,107,24,148,126
 END
@@ -125,7 +125,7 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     LTEXT           "Group Title",IDC_TITLE,4,0,144,13
     EDITTEXT        IDC_DESCRIPTION,2,15,145,97,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | NOT WS_VISIBLE | NOT WS_BORDER | NOT WS_TABSTOP
-    LTEXT           "to read about Winamp policies.",IDC_HELPTEXT,0,117,147,8
+    LTEXT           "to read about WinLAMP policies.",IDC_HELPTEXT,0,117,147,8
 END
 
 IDD_OPENURL DIALOGEX 0, 0, 220, 54
@@ -372,7 +372,7 @@ BEGIN
     IDS_SERVICEGROUP_FEATUREDLONG "Featured Services"
     IDS_SERVICEGROUP_KNOWNLONG "Already Subscribed Services"
     IDS_SERVICEGROUP_FEATURED_DESC 
-                            "This group contains some great services that we handpicked especially for you - including Winamp Charts & Add-ons. Also, if at any time you would like to try some other services, feel free to discover them by selecting the Online Services page in the Media Library."
+                            "This group contains some great services that we handpicked especially for you - including WinLAMP Charts & Add-ons. Also, if at any time you would like to try some other services, feel free to discover them by selecting the Online Services page in the Media Library."
     IDS_SERVICEGROUP_KNOWN_DESC 
                             "Services that you have already subscribed to."
     IDS_MESSAGEBOX_UNSUBSCRIBE 

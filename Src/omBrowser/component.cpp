@@ -4,7 +4,7 @@
 #include "./serviceFactory.h"
 #include "./utilityFactory.h"
 #include "./wasabiHelper.h"
-#include "./winampHook.h"
+#include "./winlampHook.h"
 #include "./skinHelper.h"
 #include "./browserClass.h"
 #include "./internetFeatures.h"
@@ -18,7 +18,7 @@ static OmServiceFactory serviceFactory;
 static OmUtilityFactory utilityFactory;
 
 OmBrowserComponent::OmBrowserComponent()
-	: wasabiHelper(NULL), winampHook(NULL), skinHelper(NULL), hookCookie(0), internetFeatures(NULL)
+	: wasabiHelper(NULL), winlampHook(NULL), skinHelper(NULL), hookCookie(0), internetFeatures(NULL)
 {
 	InitializeCriticalSection(&lock);
 }
@@ -52,8 +52,8 @@ int OmBrowserComponent::QueryInterface(GUID interface_guid, void **object)
 {
 	if (NULL == object) return E_POINTER;
 
-	if (IsEqualIID(interface_guid, IFC_WinampHook))
-		*object = static_cast<ifc_winamphook*>(this);
+	if (IsEqualIID(interface_guid, IFC_WinLAMPHook))
+		*object = static_cast<ifc_winlamphook*>(this);
 	else
 	{
 		*object = NULL;
@@ -92,15 +92,15 @@ void OmBrowserComponent::ReleaseServices()
 		wasabiHelper = NULL;
 	}
 
-	if (NULL != winampHook)
+	if (NULL != winlampHook)
 	{
-		winampHook->Release();
-		winampHook = NULL;
+		winlampHook->Release();
+		winlampHook = NULL;
 	}
 
 	if (0 != hookCookie) 
 	{
-		UnregisterWinampHook(hookCookie);
+		UnregisterWinLAMPHook(hookCookie);
 		hookCookie = 0;
 	}
 
@@ -135,26 +135,26 @@ void OmBrowserComponent::DeregisterServices(api_service *service)
 	unloadCallbacks.clear();
 }
 
-HRESULT OmBrowserComponent::InitializeComponent(HWND hwndWinamp)
+HRESULT OmBrowserComponent::InitializeComponent(HWND hwndWinLAMP)
 {
 	HRESULT hr(S_FALSE);
 
 	EnterCriticalSection(&lock);
 
-	if(NULL == winampHook)
+	if(NULL == winlampHook)
 	{
-		HRESULT hookResult = WinampHook::CreateInstance(hwndWinamp, &winampHook);
+		HRESULT hookResult = WinLAMPHook::CreateInstance(hwndWinLAMP, &winlampHook);
 		if (FAILED(hookResult) && SUCCEEDED(hr)) hr = hookResult;
 	}
 
 	if (SUCCEEDED(hr) && 0 == hookCookie)
 	{
-		hr = winampHook->RegisterCallback(this, &hookCookie);
+		hr = winlampHook->RegisterCallback(this, &hookCookie);
 	}
 
 	if (NULL == skinHelper)
 	{
-		HRESULT skinResult = SkinHelper::CreateInstance(hwndWinamp, &skinHelper);
+		HRESULT skinResult = SkinHelper::CreateInstance(hwndWinLAMP, &skinHelper);
 		if (FAILED(skinResult) && SUCCEEDED(hr)) hr = skinResult;
 	}
 
@@ -193,37 +193,37 @@ HRESULT OmBrowserComponent::GetSkinHelper(ifc_skinhelper **skinOut)
 	return (NULL != *skinOut) ? S_OK : E_NOINTERFACE;
 }
 
-HRESULT OmBrowserComponent::RegisterWinampHook(ifc_winamphook *hook, UINT *cookieOut)
+HRESULT OmBrowserComponent::RegisterWinLAMPHook(ifc_winlamphook *hook, UINT *cookieOut)
 {
 	if (NULL == cookieOut) return E_POINTER;
 	*cookieOut = NULL;
 
 	EnterCriticalSection(&lock);
-	HRESULT hr = (NULL != winampHook) ? winampHook->RegisterCallback(hook, cookieOut) : E_FAIL;
+	HRESULT hr = (NULL != winlampHook) ? winlampHook->RegisterCallback(hook, cookieOut) : E_FAIL;
 	LeaveCriticalSection(&lock);
 
     return hr;
 }
 
-HRESULT OmBrowserComponent::UnregisterWinampHook(UINT cookie)
+HRESULT OmBrowserComponent::UnregisterWinLAMPHook(UINT cookie)
 {
 	EnterCriticalSection(&lock);
-	HRESULT hr = (NULL != winampHook) ? winampHook->UnregisterCallback(cookie) : E_FAIL;
+	HRESULT hr = (NULL != winlampHook) ? winlampHook->UnregisterCallback(cookie) : E_FAIL;
 	LeaveCriticalSection(&lock);
 
 	return hr;
 }
 
-HRESULT OmBrowserComponent::GetWinampWnd(HWND *hwndWinamp)
+HRESULT OmBrowserComponent::GetWinLAMPWnd(HWND *hwndWinLAMP)
 {
-	if (NULL == hwndWinamp) return E_POINTER;
+	if (NULL == hwndWinLAMP) return E_POINTER;
 
 	EnterCriticalSection(&lock);
-	*hwndWinamp = (NULL != winampHook) ? winampHook->GetWinamp() : NULL;
+	*hwndWinLAMP = (NULL != winlampHook) ? winlampHook->GetWinLAMP() : NULL;
 	LeaveCriticalSection(&lock);
 
 	HRESULT hr;
-	if (NULL == *hwndWinamp) 
+	if (NULL == *hwndWinLAMP) 
 		hr = E_FAIL;
 	else
 		hr = S_OK;
@@ -423,7 +423,7 @@ void OmBrowserComponent::SetInternetFeautures()
 }
 
 static HRESULT
-Component_PrintWinampUA(char *buffer, size_t bufferMax)
+Component_PrintWinLAMPUA(char *buffer, size_t bufferMax)
 {
 	char *cursor = buffer;
 	size_t remaining = bufferMax;
@@ -506,7 +506,7 @@ BOOL OmBrowserComponent::SetUserAgent(void)
 		{
 			buffer[bufferLength - 1] = ' ';
 		}
-		hr = Component_PrintWinampUA(buffer + bufferLength, 
+		hr = Component_PrintWinLAMPUA(buffer + bufferLength, 
 									 bufferSize - bufferLength);
 		if (FAILED(hr))
 		{
@@ -537,13 +537,13 @@ START_MULTIPATCH;
   M_VCB(MPIID_WA5COMPONENT, ifc_wa5component, API_WA5COMPONENT_REGISTERSERVICES, RegisterServices);
   M_CB(MPIID_WA5COMPONENT, ifc_wa5component, 15, RegisterServicesSafeModeOk)
   M_VCB(MPIID_WA5COMPONENT, ifc_wa5component, API_WA5COMPONENT_DEREEGISTERSERVICES, DeregisterServices);
- NEXT_PATCH(MPIID_WINAMPHOOK)
-  M_CB(MPIID_WINAMPHOOK, ifc_winamphook, ADDREF, AddRef);
-  M_CB(MPIID_WINAMPHOOK, ifc_winamphook, RELEASE, Release);
-  M_CB(MPIID_WINAMPHOOK, ifc_winamphook, QUERYINTERFACE, QueryInterface);
-  M_CB(MPIID_WINAMPHOOK, ifc_winamphook, API_RESETFONT, ResetFont);
-  M_CB(MPIID_WINAMPHOOK, ifc_winamphook, API_SKINCHANGED, SkinChanged);
-  M_CB(MPIID_WINAMPHOOK, ifc_winamphook, API_SKINCOLORCHANGE, SkinColorChange);
+ NEXT_PATCH(MPIID_WINLAMPHOOK)
+  M_CB(MPIID_WINLAMPHOOK, ifc_winlamphook, ADDREF, AddRef);
+  M_CB(MPIID_WINLAMPHOOK, ifc_winlamphook, RELEASE, Release);
+  M_CB(MPIID_WINLAMPHOOK, ifc_winlamphook, QUERYINTERFACE, QueryInterface);
+  M_CB(MPIID_WINLAMPHOOK, ifc_winlamphook, API_RESETFONT, ResetFont);
+  M_CB(MPIID_WINLAMPHOOK, ifc_winlamphook, API_SKINCHANGED, SkinChanged);
+  M_CB(MPIID_WINLAMPHOOK, ifc_winlamphook, API_SKINCOLORCHANGE, SkinColorChange);
  END_PATCH
 END_MULTIPATCH;
 #undef CBCLASS

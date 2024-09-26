@@ -25,7 +25,7 @@ inline void * z_malloc(int x)
 
 #include <vorbis\vorbisfile.h>
 #include "c_string.h"
-#include "../Winamp/in2.h"
+#include "../WinLAMP/in2.h"
 
 extern In_Module mod;
 
@@ -188,7 +188,7 @@ extern StringW cur_file;
 extern CRITICAL_SECTION sync;
 
 BOOL modify_file(const wchar_t* url,const vorbis_comment * comments,int links);
-void winampGetExtendedFileInfoW_Cleanup(void);
+void winlampGetExtendedFileInfoW_Cleanup(void);
 void UpdateFileTimeChanged(const wchar_t *fn);
 void do_cfg(int s);
 bool KeywordMatch(const char *mainString, const char *keyword);

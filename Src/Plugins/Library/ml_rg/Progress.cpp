@@ -254,8 +254,8 @@ void DoProgress(WorkQueue &workQueue)
 
 HWND GetDialogBoxParent()
 {
-	HWND parent = (HWND)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETDIALOGBOXPARENT);
+	HWND parent = (HWND)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETDIALOGBOXPARENT);
 	if (!parent || parent == (HWND)1)
-		return plugin.hwndWinampParent;
+		return plugin.hwndWinLAMPParent;
 	return parent;
 }

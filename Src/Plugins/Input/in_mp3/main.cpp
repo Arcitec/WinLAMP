@@ -3,7 +3,7 @@
 #include <time.h>
 #include "DecodeThread.h"
 #include "api__in_mp3.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "../nu/ServiceBuilder.h"
 #include "config.h"
 #include "AlbumArt.h"
@@ -23,7 +23,7 @@ unsigned char config_miscopts=0;
 unsigned char allow_sctitles=1;
 unsigned char sctitle_format=1;
 unsigned char config_eqmode=4,config_http_proxynonport80=1;
-unsigned int winampVersion=0x00005010; // default version # to use if winamp version is 5.1 or less (and therefore doesn't have a valid HWND during Init)
+unsigned int winlampVersion=0x00005010; // default version # to use if winlamp version is 5.1 or less (and therefore doesn't have a valid HWND during Init)
 char config_http_save_dir[MAX_PATH] = "C:\\";
 int config_http_buffersize=64, config_http_prebuffer=40, config_http_prebuffer_underrun=10;
 unsigned char config_downmix=0, config_downsample=0, allow_scartwork=1;
@@ -72,7 +72,7 @@ int init()
 	if (!IsWindow(mod.hMainWindow))
 		return IN_INIT_FAILURE;
 
-	winampVersion = (unsigned int)SendMessage(mod.hMainWindow, WM_WA_IPC, 0, IPC_GETVERSION);
+	winlampVersion = (unsigned int)SendMessage(mod.hMainWindow, WM_WA_IPC, 0, IPC_GETVERSION);
 	mod.service->service_register(&metadataFactory);
 	mod.service->service_register(&albumArtFactory);
 	raw_factory.Register(mod.service, &raw_media_reader_service);
@@ -122,7 +122,7 @@ int isourfile(const wchar_t *fn)
 
 int m_force_seek=-1;
 
-// called when winamp wants to play a file
+// called when winlamp wants to play a file
 int play(const in_char *fn)
 {
 	DWORD thread_id;
@@ -295,8 +295,8 @@ extern In_Module mod =
 {
 	IN_VER_RET,	// defined in IN2.H
 	"nullsoft(in_mp3.dll)",
-	0,	// hMainWindow (filled in by winamp)
-	0,  // hDllInstance (filled in by winamp)
+	0,	// hMainWindow (filled in by winlamp)
+	0,  // hDllInstance (filled in by winlamp)
 	0,
 	// this is a double-null limited list. "EXT\0Description\0EXT\0Description\0" etc.
 	0,	// is_seekable
@@ -321,21 +321,21 @@ extern In_Module mod =
 	setvolume,
 	setpan,
 
-	0,0,0,0,0,0,0,0,0, // visualization calls filled in by winamp
+	0,0,0,0,0,0,0,0,0, // visualization calls filled in by winlamp
 
-	0,0, // dsp calls filled in by winamp
+	0,0, // dsp calls filled in by winlamp
 
 	eq_set,
 
-	NULL,		// setinfo call filled in by winamp
+	NULL,		// setinfo call filled in by winlamp
 
-	0, // out_mod filled in by winamp
+	0, // out_mod filled in by winlamp
 };
 
 // exported symbol. Returns output module.
 extern "C"
 {
-	__declspec(dllexport) In_Module * winampGetInModule2()
+	__declspec(dllexport) In_Module * winlampGetInModule2()
 	{
 		return &mod;
 	}

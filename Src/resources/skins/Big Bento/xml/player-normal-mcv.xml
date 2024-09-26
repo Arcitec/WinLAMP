@@ -184,15 +184,15 @@
 
 <groupdef id="info.component.Cover">
 
-	<AlbumArt id="winamp.albumart" fitparent="1" move="1" rectrgn="1" notfoundImage="winamp.cover.notfound.84x84"/>
-	<script file="scripts/albumart.maki" param="winamp.albumart,winamp.cover.notfound.84x84"/>
+	<AlbumArt id="winlamp.albumart" fitparent="1" move="1" rectrgn="1" notfoundImage="winlamp.cover.notfound.84x84"/>
+	<script file="scripts/albumart.maki" param="winlamp.albumart,winlamp.cover.notfound.84x84"/>
 
 </groupdef>
 
 <groupdef id="info.component.Cover2">
 
-	<AlbumArt id="winamp.albumart" fitparent="1" move="1" rectrgn="1" notfoundImage="winamp.cover.notfound.xxl"/>
-	<script file="scripts/albumart.maki" param="winamp.albumart,winamp.cover.notfound.xxl"/>
+	<AlbumArt id="winlamp.albumart" fitparent="1" move="1" rectrgn="1" notfoundImage="winlamp.cover.notfound.xxl"/>
+	<script file="scripts/albumart.maki" param="winlamp.albumart,winlamp.cover.notfound.xxl"/>
 
 </groupdef>
 
@@ -202,7 +202,7 @@
 
 	<layer x="0" y="0" image="equalizer.background" ghost="1" />
 
-	<layer id="frequency.labels" x="0" y="85" image="equalizer.labels.winamp" ghost="1" />
+	<layer id="frequency.labels" x="0" y="85" image="equalizer.labels.winlamp" ghost="1" />
 
 	<slider
 		id="sCrossfade"

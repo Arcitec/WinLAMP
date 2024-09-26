@@ -2,7 +2,7 @@
 #include "../Plugins/Input/in_mkv/ifc_mkvvideodecoder.h"
 #include "../Plugins/Input/in_mkv/svc_mkvdecoder.h"
 #include <theora/theoradec.h>
-#include "../Winamp/wa_ipc.h" // for YV12_PLANES
+#include "../WinLAMP/wa_ipc.h" // for YV12_PLANES
 
 // {96E5EC72-FE8A-4e9f-B964-D16DA34D2FC9}
 static const GUID mkv_theora_guid = 

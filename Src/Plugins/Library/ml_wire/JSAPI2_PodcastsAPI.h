@@ -3,7 +3,7 @@
 #include <ocidl.h>
 #include <atomic>
 
-#include "../Winamp/JSAPI_Info.h"
+#include "../WinLAMP/JSAPI_Info.h"
 
 namespace JSAPI2
 {

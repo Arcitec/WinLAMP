@@ -2,7 +2,7 @@
 // Microsoft Visual C++ generated include file.
 // Used by Elevator.rc
 //
-#define IDS_WINAMP                      101
+#define IDS_WINLAMP                      101
 #define IDI_ICON1                       102
 
 // Next default values for new objects

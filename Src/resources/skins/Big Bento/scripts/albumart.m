@@ -15,7 +15,7 @@ Internet:	www.skinconsortium.com
 #include <lib/std.mi>
 #include <lib/com/songinfo.m>
 
-#define WEBCOVER_SHOUTCAST "winamp.cover.shoutcast"
+#define WEBCOVER_SHOUTCAST "winlamp.cover.shoutcast"
 
 Function loadFileInfo();
 //Function loadPlaylistArtWork();
@@ -23,7 +23,7 @@ Function loadFileInfo();
 Global Int plArtRetries = 0;
 Global Group scriptGroup;
 Global AlbumArtLayer l_albumart;
-Global String notfoundImage = "winamp.cover.notfound.xxl";
+Global String notfoundImage = "winlamp.cover.notfound.xxl";
 
 System.onScriptLoaded ()
 {

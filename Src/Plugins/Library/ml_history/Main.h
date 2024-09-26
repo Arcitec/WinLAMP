@@ -15,12 +15,12 @@
 #include "../nde/nde_c.h"
 #include "api__ml_history.h"
 
-#include "../Winamp/JSAPI2_svc_apicreator.h"
+#include "../WinLAMP/JSAPI2_svc_apicreator.h"
 
 #include <api/service/waservicefactory.h>
 #include <api/service/services.h>
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 extern bool nde_error;
 extern int history_fn_mode;
 extern wchar_t *history_fn;

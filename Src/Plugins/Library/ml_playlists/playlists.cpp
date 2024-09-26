@@ -166,12 +166,12 @@ void UpdatePlaylists()
 		PostMessage( currentView, WM_APP + 101, 0, 0 );
 }
 
-void Playlist_importFromWinamp()
+void Playlist_importFromWinLAMP()
 {
-	SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_WRITEPLAYLIST );
-	const  wchar_t *m3udir = (const wchar_t *)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETM3UDIRECTORYW );
+	SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_WRITEPLAYLIST );
+	const  wchar_t *m3udir = (const wchar_t *)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETM3UDIRECTORYW );
 	wchar_t s[ MAX_PATH ] = { 0 };
-	PathCombineW( s, m3udir, L"winamp.m3u8" );
+	PathCombineW( s, m3udir, L"winlamp.m3u8" );
 
 	wchar_t filename[ 1024 + 256 ] = { 0 };
 	wchar_t *filenameptr = createPlayListDBFileName( filename );

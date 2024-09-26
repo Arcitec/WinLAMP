@@ -3,7 +3,7 @@
 #include "api__in_flv.h"
 #include <stdio.h>
 #include <api/service/waservicefactory.h>
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "resource.h"
 #include "FileProcessor.h"
 #include "FLVCOM.h"
@@ -426,7 +426,7 @@ In_Module plugin =
 	0
 };
 
-extern "C"	__declspec(dllexport) In_Module * winampGetInModule2()
+extern "C"	__declspec(dllexport) In_Module * winlampGetInModule2()
 {
 	return &plugin;
 }

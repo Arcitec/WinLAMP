@@ -1,5 +1,5 @@
 #include "h264_flv_decoder.h"
-#include "../Winamp/wa_ipc.h" // for YV12_PLANES
+#include "../WinLAMP/wa_ipc.h" // for YV12_PLANES
 #include <Mferror.h>
 
 int FLVDecoderCreator::CreateVideoDecoder(int format_type, int width, int height, ifc_flvvideodecoder **decoder)

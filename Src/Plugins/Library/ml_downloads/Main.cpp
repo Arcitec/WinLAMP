@@ -27,7 +27,7 @@ static void Quit();
 static INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR param3);
 
 DWORD threadStorage=TLS_OUT_OF_INDEXES;
-extern "C" winampMediaLibraryPlugin plugin =
+extern "C" winlampMediaLibraryPlugin plugin =
     {
         MLHDR_VER,
         "nullsoft(ml_downloads.dll)",
@@ -47,7 +47,7 @@ int downloads_treeItem = 0,
 HANDLE hMainThread;
 
 HCURSOR hDragNDropCursor;
-int winampVersion = 0, dirty = 0;
+int winlampVersion = 0, dirty = 0;
 
 api_application *applicationApi = NULL;
 api_explorerfindfile *WASABI_API_EXPLORERFINDFILE = 0;
@@ -205,7 +205,7 @@ int Init()
 			return ML_INIT_FAILURE;
 	}
 
-	winampVersion = (int)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETVERSION );
+	winlampVersion = (int)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETVERSION );
 
 	waServiceFactory *sf = plugin.service->service_getServiceByGuid( DownloadManagerGUID );
 	if ( !sf ) // no sense in continuing
@@ -234,10 +234,10 @@ int Init()
 	plugin.description = (char*)szDescription;
 
 	mediaLibrary.library  = plugin.hwndLibraryParent;
-	mediaLibrary.winamp   = plugin.hwndWinampParent;
+	mediaLibrary.winlamp   = plugin.hwndWinLAMPParent;
 	mediaLibrary.instance = plugin.hDllInstance;
 
-	BuildDefaults( plugin.hwndWinampParent );
+	BuildDefaults( plugin.hwndWinLAMPParent );
 
 	mediaLibrary.BuildPath( L"Plugins\\ml\\downloads.xml", xmlFileName, 1024 );
 	if ( PathFileExists( xmlFileName ) )
@@ -260,7 +260,7 @@ int Init()
 	icons[ 2 ] = mediaLibrary.AddTreeImageBmp( IDB_TREEITEM_DOWNLOADS2 );
 	icons[ 3 ] = mediaLibrary.AddTreeImageBmp( IDB_TREEITEM_DOWNLOADS3 );
 
-	ml_cfg = (wchar_t *)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETMLINIFILEW );
+	ml_cfg = (wchar_t *)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETMLINIFILEW );
 
 	podcast_parent = ( !!GetPrivateProfileInt( L"gen_ml_config", L"podcast_parent", 0, ml_cfg ) );
 	no_auto_hide   = GetPrivateProfileInt( L"gen_ml_config", L"no_auto_hide", 0, ml_cfg );
@@ -381,7 +381,7 @@ INT_PTR MessageProc( int msg, INT_PTR param1, INT_PTR param2, INT_PTR param3 )
 }
 
 
-extern "C" __declspec(dllexport) winampMediaLibraryPlugin *winampGetMediaLibraryPlugin()
+extern "C" __declspec(dllexport) winlampMediaLibraryPlugin *winlampGetMediaLibraryPlugin()
 {
 	return &plugin;
 }

@@ -123,7 +123,7 @@ BEGIN
     IDS_FAMILY_STRING_SFWOW64 "Soundforge Wow 64 Format"
     IDS_FAMILY_STRING_MSWAV "Microsoft Wave Sound Format"
     IDS_FAMILY_STRING_FT2WAV "Fasttracker 2 Waveform"
-    IDS_ABOUT_TEXT          "%s\n© 2005-2023 Winamp SA\nWritten by: Ben Allison\nBuild date: %hs\n\nUses %hs\n© Erik de Castro Lopo"
+    IDS_ABOUT_TEXT          "%s\n© 2005-2023 WinLAMP SA\nWritten by: Ben Allison\nBuild date: %hs\n\nUses %hs\n© Erik de Castro Lopo"
     IDS_FAMILY_STRING_RF64  "RIFF 64 Broadcast Wave Format"
 END
 

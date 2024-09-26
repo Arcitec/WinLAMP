@@ -31,7 +31,7 @@ extern api_memmgr *memoryManager;
 extern api_podcasts *podcastsApi;
 #define AGAVE_API_PODCASTS podcastsApi
 
-#include "../Winamp/api_stats.h"
+#include "../WinLAMP/api_stats.h"
 extern api_stats *statsApi;
 #define AGAVE_API_STATS statsApi
 

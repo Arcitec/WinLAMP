@@ -7,7 +7,7 @@
 **
 **
 ** This header file provides the interfaces implemented by the JTFE plugin for other plugins/services to be able
-** to make use of it's queue which allows for Winamp's playback order to be overriden.
+** to make use of it's queue which allows for WinLAMP's playback order to be overriden.
 **
 ** To use this api assumes you know already how to make use of the wasabi service based system
 ** (see the more complete examples provided in the SDK).

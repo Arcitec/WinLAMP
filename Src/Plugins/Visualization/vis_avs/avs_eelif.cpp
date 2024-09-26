@@ -99,10 +99,10 @@ static double NSEEL_CGEN_CALL gettime_(void *_this, double *sc)
   {
     int pos=0;
 
-    extern HWND hwnd_WinampParent;
-	  if (IsWindow(hwnd_WinampParent)) 
+    extern HWND hwnd_WinLAMPParent;
+	  if (IsWindow(hwnd_WinLAMPParent)) 
     {
-      if (!SendMessageTimeout( hwnd_WinampParent, WM_USER,(WPARAM)!ispos,(LPARAM)105,SMTO_BLOCK,50,(LPDWORD)&pos)) pos=0;
+      if (!SendMessageTimeout( hwnd_WinLAMPParent, WM_USER,(WPARAM)!ispos,(LPARAM)105,SMTO_BLOCK,50,(LPDWORD)&pos)) pos=0;
     }
     if (!ispos) return (double)pos;
     return pos / 1000.0;

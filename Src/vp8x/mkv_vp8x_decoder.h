@@ -7,7 +7,7 @@
 
 #include "../Plugins/Input/in_mkv/svc_mkvdecoder.h"
 #include "../Plugins/Input/in_mkv/ifc_mkvvideodecoder.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 // {23D36C12-E1DF-461b-9616-969C73BD2785}
 static const GUID mkv_vp8_guid =
 { 0x23d36c12, 0xe1df, 0x461b, { 0x96, 0x16, 0x96, 0x9c, 0x73, 0xbd, 0x27, 0x85 } };

@@ -9,8 +9,8 @@
 #include "./skinning.h"
 #include "./stockobjects.h"
 
-#include "../winamp/wa_dlg.h"
-#include "../winamp/gen.h"
+#include "../winlamp/wa_dlg.h"
+#include "../winlamp/gen.h"
 
 #include "resource.h"
 #include "api__gen_ml.h"
@@ -19,7 +19,7 @@
 #include <windowsx.h>
 #include <strsafe.h>
 
-extern "C" winampGeneralPurposePlugin plugin;
+extern "C" winlampGeneralPurposePlugin plugin;
 
 #ifndef LONGX86
 #ifdef _WIN64

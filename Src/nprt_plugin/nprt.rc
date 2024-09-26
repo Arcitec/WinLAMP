@@ -43,14 +43,14 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "Winamp SA"
-            VALUE "FileDescription", "Winamp Application Detector"
-            VALUE "FileOpenName", "winamp"
+            VALUE "CompanyName", "WinLAMP SA"
+            VALUE "FileDescription", "WinLAMP Application Detector"
+            VALUE "FileOpenName", "winlamp"
             VALUE "FileVersion", "1, 0, 0, 1"
             VALUE "InternalName", "AppDetector"
-            VALUE "LegalCopyright", "Copyright © 2009-2014 Winamp SA"
-            VALUE "MIMEType", "application/x-winampx-1.0.0.1"
-            VALUE "ProductName", "Winamp Application Detector"
+            VALUE "LegalCopyright", "Copyright © 2009-2014 WinLAMP SA"
+            VALUE "MIMEType", "application/x-winlampx-1.0.0.1"
+            VALUE "ProductName", "WinLAMP Application Detector"
             VALUE "ProductVersion", "1, 0, 0, 1"
         END
     END

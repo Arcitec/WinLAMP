@@ -1,7 +1,7 @@
 #include "main.h"
 #include "loadini.h"
 #include "AutoWide.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 extern wchar_t INI_FILE[MAX_PATH];
 void IniFile(HWND hMainWindow)
 {

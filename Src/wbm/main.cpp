@@ -79,7 +79,7 @@ static ifc_wa5component *LoadWasabiComponent(const char *filename, api_service *
 	HMODULE wacLib = LoadLibraryA(filename);
 	if (wacLib)
 	{
-		GETCOMPONENT_FUNC f = (GETCOMPONENT_FUNC)GetProcAddress(wacLib, "GetWinamp5SystemComponent");
+		GETCOMPONENT_FUNC f = (GETCOMPONENT_FUNC)GetProcAddress(wacLib, "GetWinLAMP5SystemComponent");
 		if (f)
 		{
 			comp = f();

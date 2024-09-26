@@ -1,5 +1,5 @@
-#ifndef NULLSOFT_WINAMP_OMBROWSER_OBJECT_INTERFACE_HEADER
-#define NULLSOFT_WINAMP_OMBROWSER_OBJECT_INTERFACE_HEADER
+#ifndef NULLSOFT_WINLAMP_OMBROWSER_OBJECT_INTERFACE_HEADER
+#define NULLSOFT_WINLAMP_OMBROWSER_OBJECT_INTERFACE_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -12,7 +12,7 @@ static const GUID OBJ_OmBrowser =
 { 0xd5325eab, 0x9bd7, 0x4382, { 0xa3, 0x1d, 0x38, 0xef, 0x60, 0x30, 0x61, 0xb3 } };
 
 class ifc_ombrowserclass;
-class ifc_winamphook;
+class ifc_winlamphook;
 class ifc_ombrowserregistry;
 class ifc_omservice;
 class ifc_ombrowserevent;
@@ -30,10 +30,10 @@ protected:
 	~obj_ombrowser()                                                  {}
 
 public:
-	HRESULT Initialize( const wchar_t *pszName, HWND hwndWinamp );
+	HRESULT Initialize( const wchar_t *pszName, HWND hwndWinLAMP );
 	HRESULT Finish( void );
-	HRESULT RegisterWinampHook( ifc_winamphook *hook, UINT *cookieOut );
-	HRESULT UnregisterWinampHook( UINT cookie );
+	HRESULT RegisterWinLAMPHook( ifc_winlamphook *hook, UINT *cookieOut );
+	HRESULT UnregisterWinLAMPHook( UINT cookie );
 	HRESULT GetConfig( const GUID *configIfc, void **configOut );
 	HRESULT GetSessionId( LPWSTR pszBuffer, INT cchBufferMax );
 	HRESULT GetClientId( LPWSTR pszBuffer, INT cchBufferMax );
@@ -50,8 +50,8 @@ public:
 	{
 		API_INITIALIZE           =  10,
 		API_FINISH               =  20,
-		API_REGISTERWINAMPHOOK   =  30,
-		API_UNREGISTERWINAMPHOOK =  40,
+		API_REGISTERWINLAMPHOOK   =  30,
+		API_UNREGISTERWINLAMPHOOK =  40,
 		API_GETLANGMODULE        =  60,
 		API_GETCONFIG            =  70,
 		API_GETSESSIONID         =  80,
@@ -67,9 +67,9 @@ public:
 	};
 };
 
-inline HRESULT obj_ombrowser::Initialize( const wchar_t *pszName, HWND hwndWinamp )
+inline HRESULT obj_ombrowser::Initialize( const wchar_t *pszName, HWND hwndWinLAMP )
 {
-	return _call( API_INITIALIZE, (HRESULT)E_NOTIMPL, pszName, hwndWinamp );
+	return _call( API_INITIALIZE, (HRESULT)E_NOTIMPL, pszName, hwndWinLAMP );
 }
 
 inline HRESULT obj_ombrowser::Finish( void )
@@ -77,14 +77,14 @@ inline HRESULT obj_ombrowser::Finish( void )
 	return _call( API_FINISH, (HRESULT)E_NOTIMPL );
 }
 
-inline HRESULT obj_ombrowser::RegisterWinampHook( ifc_winamphook *hook, UINT *hookCookie )
+inline HRESULT obj_ombrowser::RegisterWinLAMPHook( ifc_winlamphook *hook, UINT *hookCookie )
 {
-	return _call( API_REGISTERWINAMPHOOK, (HRESULT)E_NOTIMPL, hook, hookCookie );
+	return _call( API_REGISTERWINLAMPHOOK, (HRESULT)E_NOTIMPL, hook, hookCookie );
 }
 
-inline HRESULT obj_ombrowser::UnregisterWinampHook( UINT hookCookie )
+inline HRESULT obj_ombrowser::UnregisterWinLAMPHook( UINT hookCookie )
 {
-	return _call( API_UNREGISTERWINAMPHOOK, (HRESULT)E_NOTIMPL, hookCookie );
+	return _call( API_UNREGISTERWINLAMPHOOK, (HRESULT)E_NOTIMPL, hookCookie );
 }
 
 inline HRESULT obj_ombrowser::GetConfig( const GUID *configIfc, void **configOut )
@@ -142,4 +142,4 @@ inline HRESULT obj_ombrowser::ShowOptions( HWND hOwner, UINT style, BROWSEROPTIO
 	return _call( API_SHOWOPTIONS, (HRESULT)E_NOTIMPL, hOwner, style, callback, user );
 }
 
-#endif //NULLSOFT_WINAMP_OMBROWSER_OBJECT_INTERFACE_HEADER
+#endif //NULLSOFT_WINLAMP_OMBROWSER_OBJECT_INTERFACE_HEADER

@@ -13,11 +13,11 @@ void SharedMiniBrowser::navigateUrl(const char *url) {
 
     if (!m_inserted) {
       String xml = "buf:\n";
-      xml += "<WinampAbstractionLayer>\n";
+      xml += "<WinLAMPAbstractionLayer>\n";
       xml += "  <groupdef id=\"addon.shared.minibrowser\" name=\"MiniBrowser\">\n";
       xml += "    <browser mainmb=\"1\" x=\"0\" y=\"0\" w=\"0\" h=\"0\" relatw=\"1\" relath=\"1\" />\n";
       xml += "  </groupdef>\n";
-      xml += "</WinampAbstractionLayer>\n";
+      xml += "</WinLAMPAbstractionLayer>\n";
       WASABI_API_SKIN->loadSkinFile(xml);
       m_inserted = 1;
     }

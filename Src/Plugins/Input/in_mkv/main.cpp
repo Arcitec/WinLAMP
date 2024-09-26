@@ -1,7 +1,7 @@
-#include "../Winamp/in2.h"
+#include "../WinLAMP/in2.h"
 #include "api__in_mkv.h"
 #include "MKVInfo.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "main.h"
 #include "MKVPlayer.h"
 #include "MKVDuration.h"
@@ -118,7 +118,7 @@ int IsOurFile(const wchar_t *fn)
 
 DWORD CALLBACK MKVThread(LPVOID param);
 
-int Play(const wchar_t *fn)		// return zero on success, -1 on file-not-found, some other value on other (stopping winamp) error
+int Play(const wchar_t *fn)		// return zero on success, -1 on file-not-found, some other value on other (stopping winlamp) error
 {
 	g_duration=-1000;
 	delete player;
@@ -236,7 +236,7 @@ In_Module plugin =
 	0
 };
 
-extern "C"	__declspec(dllexport) In_Module * winampGetInModule2()
+extern "C"	__declspec(dllexport) In_Module * winlampGetInModule2()
 {
 	return &plugin;
 }

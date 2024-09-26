@@ -65,7 +65,7 @@ BEGIN
     IDS_FLASH_VIDEO         "Flash Video"
     IDS_VP6_FLASH_VIDEO     "VP6 Flash Video"
     IDS_FAMILY_STRING       "Flash Video"
-    IDS_ABOUT_TEXT          "%s\n© 2006-2023 Winamp SA\nWritten by: Ben Allison\nBuild date: %s"
+    IDS_ABOUT_TEXT          "%s\n© 2006-2023 WinLAMP SA\nWritten by: Ben Allison\nBuild date: %s"
 END
 
 #endif    // English (U.S.) resources

@@ -112,7 +112,7 @@
     <ClCompile Include="WaitLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WinampInterface.cpp">
+    <ClCompile Include="WinLAMPInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WMCallback.cpp">
@@ -142,7 +142,7 @@
     <ClCompile Include="..\..\..\nu\listview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Winamp\strutil.cpp">
+    <ClCompile Include="..\..\..\WinLAMP\strutil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -273,7 +273,7 @@
     <ClInclude Include="WaitLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WinampInterface.h">
+    <ClInclude Include="WinLAMPInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WMCallback.h">
@@ -303,7 +303,7 @@
     <ClInclude Include="..\..\Output\out_ds\res_wa2\resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Winamp\strutil.h">
+    <ClInclude Include="..\..\..\WinLAMP\strutil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

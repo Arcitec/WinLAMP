@@ -12,7 +12,7 @@
 //returns handle!=0 if successful, 0 if error
 //size will return the final nb of bytes written to the output, -1 if unknown
 //TODO> add output format stuff (srate, nch, bps)
-extern "C" __declspec(dllexport) intptr_t winampGetExtendedRead_openW(const wchar_t *fn, int *size, int *bps, int *nch, int *srate)
+extern "C" __declspec(dllexport) intptr_t winlampGetExtendedRead_openW(const wchar_t *fn, int *size, int *bps, int *nch, int *srate)
 {
 	s_last_error = NULL;
 	C_CDPlay *wp = NULL;
@@ -116,14 +116,14 @@ extern "C" __declspec(dllexport) intptr_t winampGetExtendedRead_openW(const wcha
 }
 
 //returns nb of bytes read. -1 if read error (like CD ejected). if (ret<len), EOF is assumed
-extern "C" __declspec(dllexport) int winampGetExtendedRead_getData(intptr_t handle, char *dest, int len, int *killswitch)
+extern "C" __declspec(dllexport) int winlampGetExtendedRead_getData(intptr_t handle, char *dest, int len, int *killswitch)
 {
 	s_last_error = NULL;
 	C_CDPlay *wp = (C_CDPlay*)handle;
 	return (wp ? wp->read(dest, len, killswitch) : -1);
 }
 
-extern "C" __declspec(dllexport) void winampGetExtendedRead_close(intptr_t handle)
+extern "C" __declspec(dllexport) void winlampGetExtendedRead_close(intptr_t handle)
 {
 	s_last_error = NULL;
 	C_CDPlay *wp = (C_CDPlay*)handle;
@@ -137,7 +137,7 @@ extern "C" __declspec(dllexport) void winampGetExtendedRead_close(intptr_t handl
 
 // extended info writing (used by gen_ml to update the local CDDB database after a burn)
 
-extern "C" __declspec(dllexport) char * winampGetExtendedRead_lasterror()
+extern "C" __declspec(dllexport) char * winlampGetExtendedRead_lasterror()
 {
 	char * retval = s_last_error;
 	s_last_error = NULL;

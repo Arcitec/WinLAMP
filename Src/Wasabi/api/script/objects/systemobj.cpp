@@ -322,9 +322,9 @@ function_descriptor_struct SystemScriptObjectController::exportedFunction[] =
 	{L"getDownloadPath", 0, (void*)SystemObject::vcpu_getDownloadPath},
 	{L"setDownloadPath", 1, (void*)SystemObject::vcpu_setDownloadPath},
 	{L"getAlbumArt", 1, (void*)SystemObject::vcpu_getAlbumArt},
-	{L"isProVersion", 0, (void*)SystemObject::vcpu_isWinampPro}, // ugh, i hate putting this here but ohh well
+	{L"isProVersion", 0, (void*)SystemObject::vcpu_isWinLAMPPro}, // ugh, i hate putting this here but ohh well
 	{L"enumEmbedGUID", 1, (void*)SystemObject::vcpu_enumEmbedGUID}, // ugh, i hate putting this here but ohh well
-	{L"getWinampVersion",0, (void*)SystemObject::vcpu_getWinampVersion},
+	{L"getWinLAMPVersion",0, (void*)SystemObject::vcpu_getWinLAMPVersion},
 	{L"getBuildNumber",0, (void*)SystemObject::vcpu_getBuildNumber},
 	{L"getFileSize",1, (void*)SystemObject::vcpu_getFileSize},
 	{L"getString", 2, (void*)SystemObject::vcpu_getString},
@@ -573,7 +573,7 @@ void SystemObject::onQuit()
 
 static bool FilterBrowserUrl( const wchar_t *url )
 {
-	const wchar_t filterNowPlaying[] = L"http://client.winamp.com/nowplaying";
+	const wchar_t filterNowPlaying[] = L"http://client.winlamp.com/nowplaying";
 	size_t urlLength, filterLength;
 
 	if ( NULL == url )
@@ -2342,11 +2342,11 @@ scriptVar SystemObject::vcpu_setVideoFullscreen( SCRIPT_FUNCTION_PARAMS, ScriptO
 	const bool vidfs = GET_SCRIPT_BOOLEAN( v );
 	if ( vidfs )
 	{
-		wa2.sendVidCmd( Winamp2FrontEnd::WA2_VIDCMD_FULLSCREEN );
+		wa2.sendVidCmd( WinLAMP2FrontEnd::WA2_VIDCMD_FULLSCREEN );
 	}
 	else
 	{
-		wa2.sendVidCmd( Winamp2FrontEnd::WA2_VIDCMD_EXIT_FS );
+		wa2.sendVidCmd( WinLAMP2FrontEnd::WA2_VIDCMD_EXIT_FS );
 	}
 	return MAKE_SCRIPT_VOID();
 #else
@@ -3419,10 +3419,10 @@ scriptVar SystemObject::vcpu_getAlbumArt( SCRIPT_FUNCTION_PARAMS, ScriptObject *
 	return MAKE_SCRIPT_INT( !!wa2.GetAlbumArt( GET_SCRIPT_STRING( filename ) ) );
 }
 
-scriptVar SystemObject::vcpu_isWinampPro( SCRIPT_FUNCTION_PARAMS, ScriptObject *object )
+scriptVar SystemObject::vcpu_isWinLAMPPro( SCRIPT_FUNCTION_PARAMS, ScriptObject *object )
 {
 	SCRIPT_FUNCTION_INIT;
-	return MAKE_SCRIPT_INT( !!wa2.IsWinampPro() );
+	return MAKE_SCRIPT_INT( !!wa2.IsWinLAMPPro() );
 }
 
 static PtrList<StringW> embed_guids;
@@ -3455,7 +3455,7 @@ scriptVar SystemObject::vcpu_enumEmbedGUID( SCRIPT_FUNCTION_PARAMS, ScriptObject
 	return MAKE_SCRIPT_STRING( L"" );
 }
 
-scriptVar SystemObject::vcpu_getWinampVersion( SCRIPT_FUNCTION_PARAMS, ScriptObject *object )
+scriptVar SystemObject::vcpu_getWinLAMPVersion( SCRIPT_FUNCTION_PARAMS, ScriptObject *object )
 {
 	SCRIPT_FUNCTION_INIT;
 /** This would have been the code to return a double.

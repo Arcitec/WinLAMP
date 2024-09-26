@@ -45,7 +45,7 @@ bool Info::Save(HWND parent)
 		{
 			// TODO: this is a race condition.  we might have stopped in between the above if () and now... 
 			int outTime = mod.GetOutputTime();
-			winamp.PressStop();
+			winlamp.PressStop();
 			wminfo.MakeWritable(filename);	
 
 			SendMessage(parent,WM_USER+1,0,0);
@@ -54,7 +54,7 @@ bool Info::Save(HWND parent)
 			wminfo.Flush();
 			wminfo.MakeReadOnly(filename);
 			mod.startAtMilliseconds=outTime;
-			winamp.PressPlay();
+			winlamp.PressPlay();
 			return true;
 		}
 		else if (!wminfo.MakeReadOnly(filename))
@@ -124,7 +124,7 @@ void Info::SetTag(int n, wchar_t *key)
 	wminfo.SetAttribute(key,val);
 }
 */
-bool WMTagToWinampTag(wchar_t * tag, int len) 
+bool WMTagToWinLAMPTag(wchar_t * tag, int len) 
 {
 	const wchar_t *f = GetAlias_rev(tag);
 	if(f)
@@ -135,7 +135,7 @@ bool WMTagToWinampTag(wchar_t * tag, int len)
 	return false;
 }
 
-bool WinampTagToWMTag(wchar_t * tag, int len) 
+bool WinLAMPTagToWMTag(wchar_t * tag, int len) 
 {
 	const wchar_t *f = GetAlias(tag);
 	if(f)
@@ -233,7 +233,7 @@ static INT_PTR CALLBACK ChildProc_Advanced(HWND hwndDlg, UINT msg, WPARAM wParam
 			wchar_t * value = (wchar_t*)lParam;
 			wchar_t tag[100] = {0};
 			lstrcpynW(tag,(wchar_t*)wParam,100);
-			WinampTagToWMTag(tag,100);
+			WinLAMPTagToWMTag(tag,100);
 			/*
 			Info *info = (Info *)GetWindowLongPtr(hwndDlg, GWLP_USERDATA);
 			if(!*value) info->RemoveMetadata(tag);
@@ -337,7 +337,7 @@ static INT_PTR CALLBACK ChildProc_Advanced(HWND hwndDlg, UINT msg, WPARAM wParam
 					lvi.cchTextMax=1024;
 					lvi.iSubItem=1;
 					SendMessage(GetDlgItem(hwndDlg,IDC_LIST),LVM_SETITEMW,0,(LPARAM)&lvi);
-					WMTagToWinampTag(key,100);
+					WMTagToWinLAMPTag(key,100);
 					ismychange=1;
 					SendMessage(GetParent(hwndDlg),WM_USER,(WPARAM)key,(WPARAM)value);
 					ismychange=0;
@@ -360,7 +360,7 @@ static INT_PTR CALLBACK ChildProc_Advanced(HWND hwndDlg, UINT msg, WPARAM wParam
 					} else {
 						info->SetMetadata(key,value);
 					}
-					WMTagToWinampTag(key,100);
+					WMTagToWinLAMPTag(key,100);
 					ismychange=1;
 					SendMessage(GetParent(hwndDlg),WM_USER,(WPARAM)key,(WPARAM)value);
 					ismychange=0;
@@ -380,7 +380,7 @@ static INT_PTR CALLBACK ChildProc_Advanced(HWND hwndDlg, UINT msg, WPARAM wParam
 						info->RemoveMetadata(sel);
 					ListView_DeleteItem(GetDlgItem(hwndDlg,IDC_LIST),sel);
 					sel=-1;
-					WMTagToWinampTag(tag,100);
+					WMTagToWinLAMPTag(tag,100);
 					ismychange=1;
 					SendMessage(GetParent(hwndDlg),WM_USER,(WPARAM)tag,(WPARAM)L"");
 					ismychange=0;
@@ -401,7 +401,7 @@ static INT_PTR CALLBACK ChildProc_Advanced(HWND hwndDlg, UINT msg, WPARAM wParam
 						--n;
 						wchar_t tag[100] = {0};
 						info->EnumMetadata(n,tag,100,0,0);
-						WMTagToWinampTag(tag,100);
+						WMTagToWinLAMPTag(tag,100);
 						ismychange=0;
 						SendMessage(GetParent(hwndDlg),WM_USER,(WPARAM)tag,(WPARAM)L"");
 						ismychange=1;
@@ -426,9 +426,9 @@ static INT_PTR CALLBACK ChildProc_Advanced(HWND hwndDlg, UINT msg, WPARAM wParam
 
 extern "C"
 {
-	// return 1 if you want winamp to show it's own file info dialogue, 0 if you want to show your own (via In_Module.InfoBox)
-	// if returning 1, remember to implement winampGetExtendedFileInfo("formatinformation")!
-	__declspec(dllexport) int winampUseUnifiedFileInfoDlg(const wchar_t * fn)
+	// return 1 if you want winlamp to show it's own file info dialogue, 0 if you want to show your own (via In_Module.InfoBox)
+	// if returning 1, remember to implement winlampGetExtendedFileInfo("formatinformation")!
+	__declspec(dllexport) int winlampUseUnifiedFileInfoDlg(const wchar_t * fn)
 	{
 		return 1;
 	}
@@ -440,7 +440,7 @@ extern "C"
 	// The window you return will recieve WM_COMMAND, IDOK/IDCANCEL messages when the user clicks OK or Cancel.
 	// when the user edits a field which is duplicated in another pane, do a SendMessage(GetParent(hwnd),WM_USER,(WPARAM)L"fieldname",(LPARAM)L"newvalue");
 	// this will be broadcast to all panes (including yours) as a WM_USER.
-	__declspec(dllexport) HWND winampAddUnifiedFileInfoPane(int n, const wchar_t * filename, HWND parent, wchar_t *name, size_t namelen)
+	__declspec(dllexport) HWND winlampAddUnifiedFileInfoPane(int n, const wchar_t * filename, HWND parent, wchar_t *name, size_t namelen)
 	{
 		if(n == 0) { // add first pane
 			//SetPropW(parent,L"INBUILT_NOWRITEINFO", (HANDLE)1);
@@ -706,13 +706,13 @@ bool FileInfoDialog::Apply()
 		{
 			// TODO: this is a race condition.  we might have stopped in between the above if () and now... 
 			int outTime = mod.GetOutputTime();
-			winamp.PressStop();
+			winlamp.PressStop();
 			wmInfo->MakeWritable(fileName);	
 			WriteEditBoxes();
 			wmInfo->Flush();
 			wmInfo->MakeReadOnly(fileName);
 			mod.startAtMilliseconds=outTime;
-			winamp.PressPlay();
+			winlamp.PressPlay();
 			return true;
 		}
 		else if (!wmInfo->MakeReadOnly(fileName))

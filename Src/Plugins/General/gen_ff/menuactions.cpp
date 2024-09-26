@@ -7,13 +7,13 @@
 #include "resource.h"
 #include <api/locales/xlatstr.h>
 #include "../gen_ml/ml_ipc.h"
-#include "../winamp/gen.h"
+#include "../winlamp/gen.h"
 #include "../Agave/Language/api_language.h"
 #include "../gen_ml/menufucker.h"
-#include "../Winamp/strutil.h"
+#include "../WinLAMP/strutil.h"
 
 extern librarySendToMenuStruct mainSendTo;
-#define WINAMP_OPTIONS_DSIZE            40165
+#define WINLAMP_OPTIONS_DSIZE            40165
 extern void addWindowOptionsToContextMenu(ifc_window *w);
 extern void removeWindowOptionsFromContextMenu();
 extern ifc_window *g_controlMenuTarget;
@@ -76,7 +76,7 @@ MenuActions::~MenuActions()
 static LRESULT sendMlIpc(int msg, WPARAM param) {
 	static HWND mlwnd = NULL;
 	if(!IsWindow(mlwnd)) {
-		int IPC_GETMLWINDOW = (INT)SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"LibraryGetWnd", IPC_REGISTER_WINAMP_IPCMESSAGE);
+		int IPC_GETMLWINDOW = (INT)SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"LibraryGetWnd", IPC_REGISTER_WINLAMP_IPCMESSAGE);
 		if(IPC_GETMLWINDOW > 65536) mlwnd = (HWND)SendMessageW(plugin.hwndParent,WM_WA_IPC,0,IPC_GETMLWINDOW);
 	}
 	if(!IsWindow(mlwnd)) return 0;
@@ -181,27 +181,27 @@ int MenuActions::onActionId(int pvtid, const wchar_t *action, const wchar_t *par
 		}
 	case ACTION_PEADD:
 		{
-			wa2.sendPlCmd(Winamp2FrontEnd::WA2_PLEDITPOPUP_ADD, r.left, r.top, TPM_BOTTOMALIGN | TPM_LEFTALIGN);
+			wa2.sendPlCmd(WinLAMP2FrontEnd::WA2_PLEDITPOPUP_ADD, r.left, r.top, TPM_BOTTOMALIGN | TPM_LEFTALIGN);
 			break;
 		}
 	case ACTION_PEREM:
 		{
-			wa2.sendPlCmd(Winamp2FrontEnd::WA2_PLEDITPOPUP_REM, r.left, r.top, TPM_BOTTOMALIGN | TPM_LEFTALIGN);
+			wa2.sendPlCmd(WinLAMP2FrontEnd::WA2_PLEDITPOPUP_REM, r.left, r.top, TPM_BOTTOMALIGN | TPM_LEFTALIGN);
 			break;
 		}
 	case ACTION_PESEL:
 		{
-			wa2.sendPlCmd(Winamp2FrontEnd::WA2_PLEDITPOPUP_SEL, r.left, r.top, TPM_BOTTOMALIGN | TPM_LEFTALIGN);
+			wa2.sendPlCmd(WinLAMP2FrontEnd::WA2_PLEDITPOPUP_SEL, r.left, r.top, TPM_BOTTOMALIGN | TPM_LEFTALIGN);
 			break;
 		}
 	case ACTION_PEMISC:
 		{
-			wa2.sendPlCmd(Winamp2FrontEnd::WA2_PLEDITPOPUP_MISC, r.left, r.top, TPM_BOTTOMALIGN | TPM_LEFTALIGN);
+			wa2.sendPlCmd(WinLAMP2FrontEnd::WA2_PLEDITPOPUP_MISC, r.left, r.top, TPM_BOTTOMALIGN | TPM_LEFTALIGN);
 			break;
 		}
 	case ACTION_PELIST:
 		{
-			wa2.sendPlCmd(Winamp2FrontEnd::WA2_PLEDITPOPUP_LIST, r.right, r.top, TPM_BOTTOMALIGN | TPM_RIGHTALIGN);
+			wa2.sendPlCmd(WinLAMP2FrontEnd::WA2_PLEDITPOPUP_LIST, r.right, r.top, TPM_BOTTOMALIGN | TPM_RIGHTALIGN);
 			break;
 		}
 	case ACTION_PELISTOFLISTS:
@@ -211,27 +211,27 @@ int MenuActions::onActionId(int pvtid, const wchar_t *action, const wchar_t *par
 		}
 	case ACTION_VIDFS:
 		{
-			wa2.sendVidCmd(Winamp2FrontEnd::WA2_VIDCMD_FULLSCREEN);
+			wa2.sendVidCmd(WinLAMP2FrontEnd::WA2_VIDCMD_FULLSCREEN);
 			break;
 		}
 	case ACTION_VID1X:
 		{
-			wa2.sendVidCmd(Winamp2FrontEnd::WA2_VIDCMD_1X);
+			wa2.sendVidCmd(WinLAMP2FrontEnd::WA2_VIDCMD_1X);
 			break;
 		}
 	case ACTION_VID2X:
 		{
-			wa2.sendVidCmd(Winamp2FrontEnd::WA2_VIDCMD_2X);
+			wa2.sendVidCmd(WinLAMP2FrontEnd::WA2_VIDCMD_2X);
 			break;
 		}
 	case ACTION_VIDTV:
 		{
-			wa2.sendVidCmd(Winamp2FrontEnd::WA2_VIDCMD_LIB);
+			wa2.sendVidCmd(WinLAMP2FrontEnd::WA2_VIDCMD_LIB);
 			break;
 		}
 	case ACTION_VIDMISC:
 		{
-			wa2.sendVidCmd(Winamp2FrontEnd::WA2_VIDPOPUP_MISC, r.right, r.top, TPM_BOTTOMALIGN | TPM_RIGHTALIGN);
+			wa2.sendVidCmd(WinLAMP2FrontEnd::WA2_VIDPOPUP_MISC, r.right, r.top, TPM_BOTTOMALIGN | TPM_RIGHTALIGN);
 			break;
 		}
 	case ACTION_VISNEXT:
@@ -262,7 +262,7 @@ int MenuActions::onActionId(int pvtid, const wchar_t *action, const wchar_t *par
 	case ACTION_TRACKMENU:
 		{
 			extern const wchar_t *GetMenuItemString(HMENU menu, int id, int bypos);
-#define WINAMP_TOGGLE_AUTOSCROLL        40189
+#define WINLAMP_TOGGLE_AUTOSCROLL        40189
 #define ID_RATING5                      40396
 #define ID_RATING4                      40397
 #define ID_RATING3                      40398
@@ -283,7 +283,7 @@ int MenuActions::onActionId(int pvtid, const wchar_t *action, const wchar_t *par
 			StringW olditemstr = GetMenuItemString(songinfomenu, 3, TRUE);
 			RemoveMenu(songinfomenu, 3, MF_BYPOSITION);
 			
-			LRESULT IPC_LIBRARY_SENDTOMENU = SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINAMP_IPCMESSAGE);
+			LRESULT IPC_LIBRARY_SENDTOMENU = SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINLAMP_IPCMESSAGE);
 			HMENU menu = 0;
 			memset(&mainSendTo, 0, sizeof(mainSendTo));
 			if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)0, IPC_LIBRARY_SENDTOMENU) == 0xffffffff)
@@ -303,12 +303,12 @@ int MenuActions::onActionId(int pvtid, const wchar_t *action, const wchar_t *par
 			}
 
 			menufucker_t mf = {sizeof(mf),MENU_SONGTICKER,songinfomenu,0x3000,0x4000,0};
-			pluginMessage message_build = {SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"menufucker_build", IPC_REGISTER_WINAMP_IPCMESSAGE),(intptr_t)&mf,0};
+			pluginMessage message_build = {SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"menufucker_build", IPC_REGISTER_WINLAMP_IPCMESSAGE),(intptr_t)&mf,0};
 			sendMlIpc(ML_IPC_SEND_PLUGIN_MESSAGE,(WPARAM)&message_build);
 			
 			int ret = DoTrackPopup(songinfomenu, TPM_LEFTALIGN | TPM_TOPALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON|TPM_RETURNCMD, p1, p2, wa2.getMainWindow());
 			
-			pluginMessage message_result = {SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"menufucker_result", IPC_REGISTER_WINAMP_IPCMESSAGE),(intptr_t)&mf,ret,0};
+			pluginMessage message_result = {SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"menufucker_result", IPC_REGISTER_WINLAMP_IPCMESSAGE),(intptr_t)&mf,ret,0};
 			sendMlIpc(ML_IPC_SEND_PLUGIN_MESSAGE,(WPARAM)&message_result);
 
 			if (menu)
@@ -342,14 +342,14 @@ int MenuActions::onActionId(int pvtid, const wchar_t *action, const wchar_t *par
 				SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)&mainSendTo, IPC_LIBRARY_SENDTOMENU); // cleanup
 				memset(&mainSendTo, 0, sizeof(mainSendTo));
 			}
-			InsertMenuW(songinfomenu, 3, MF_BYPOSITION | MF_STRING, WINAMP_TOGGLE_AUTOSCROLL, olditemstr);
+			InsertMenuW(songinfomenu, 3, MF_BYPOSITION | MF_STRING, WINLAMP_TOGGLE_AUTOSCROLL, olditemstr);
 			if (ret) SendMessageW(wa2.getMainWindow(), WM_COMMAND, ret, 0); // TODO?
 			
 			break;
 		}
 	case ACTION_SENDTO:
 		{
-			LRESULT IPC_LIBRARY_SENDTOMENU = SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINAMP_IPCMESSAGE);
+			LRESULT IPC_LIBRARY_SENDTOMENU = SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINLAMP_IPCMESSAGE);
 			HMENU menu = 0;
 			memset(&mainSendTo, 0, sizeof(mainSendTo));
 			if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)0, IPC_LIBRARY_SENDTOMENU) == 0xffffffff)
@@ -446,7 +446,7 @@ void MenuActions::installSkinOptions(HMENU menu)
 	if (menu == NULL)
 	{
 		optionsmenu_wa = 1;
-		menu = wa2.getMenuBarMenu(Winamp2FrontEnd::WA2_MAINMENUBAR_OPTIONS);
+		menu = wa2.getMenuBarMenu(WinLAMP2FrontEnd::WA2_MAINMENUBAR_OPTIONS);
 		omenu = GetSubMenu(wa2.getPopupMenu(), 11 + wa2.adjustOptionsPopupMenu(0));
 	}
 	int pos2 = 12;
@@ -539,7 +539,7 @@ void MenuActions::removeSkinOptions()
 		DestroyMenu(menulist.enumItem(j));
 	menulist.removeAll();
 
-	HMENU menu = wa2.getMenuBarMenu(Winamp2FrontEnd::WA2_MAINMENUBAR_OPTIONS);
+	HMENU menu = wa2.getMenuBarMenu(WinLAMP2FrontEnd::WA2_MAINMENUBAR_OPTIONS);
 	HMENU omenu = GetSubMenu(wa2.getPopupMenu(), 11 + wa2.adjustOptionsPopupMenu(0));
 	if (menu && optionsmenuitems)
 	{
@@ -628,7 +628,7 @@ const wchar_t* MenuActions::localizeSkinWindowName(const wchar_t* attr)
 // FIX ME - menu weirdness going on!!
 void MenuActions::installSkinWindowOptions()
 {
-	HMENU menu = wa2.getMenuBarMenu(Winamp2FrontEnd::WA2_MAINMENUBAR_WINDOWS);
+	HMENU menu = wa2.getMenuBarMenu(WinLAMP2FrontEnd::WA2_MAINMENUBAR_WINDOWS);
 	int pos = lowest_witempos = wa2.adjustFFWindowsMenu(0) + NUMSTATICWINDOWS;
 	HMENU omenu = wa2.getPopupMenu();
 	int pos2 = lowest_witempos2 = wa2.adjustOptionsPopupMenu(0) + 6 + NUMSTATICWINDOWS + 1;
@@ -696,7 +696,7 @@ void MenuActions::removeSkinWindowOptions()
 		DestroyMenu(wmenulist.enumItem(j));
 	wmenulist.removeAll();
 
-	HMENU menu = wa2.getMenuBarMenu(Winamp2FrontEnd::WA2_MAINMENUBAR_WINDOWS);
+	HMENU menu = wa2.getMenuBarMenu(WinLAMP2FrontEnd::WA2_MAINMENUBAR_WINDOWS);
 	HMENU omenu = wa2.getPopupMenu();
 	if (menu && windowsmenuitems)
 	{

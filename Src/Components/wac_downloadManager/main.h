@@ -10,7 +10,7 @@
 
 #include "bfc/dispatch.h"
 
-#include "../../Winamp/Singleton.h"
+#include "../../WinLAMP/Singleton.h"
 #include "../../Agave/Component/ifc_wa5component.h"
 
 

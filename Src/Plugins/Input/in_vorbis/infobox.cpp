@@ -1091,7 +1091,7 @@ int RunInfoDlg(const in_char * url,HWND parent)
 InfoDlg* InfoDlg::Instances=0;
 /* end crappy PP dialog */
 
-bool VorbisTagToWinampTag(wchar_t * tag, int len) 
+bool VorbisTagToWinLAMPTag(wchar_t * tag, int len) 
 {
 #define TAG_ALIAS(b,a) if(!_wcsicmp(L ## a, tag)) { lstrcpynW(tag, L ## b, len); return true; }
 	TAG_ALIAS("title", "TITLE");
@@ -1111,7 +1111,7 @@ bool VorbisTagToWinampTag(wchar_t * tag, int len)
 #undef TAG_ALIAS
 }
 
-bool WinampTagToVorbisTag(wchar_t * tag, int len) 
+bool WinLAMPTagToVorbisTag(wchar_t * tag, int len) 
 {
 #define TAG_ALIAS(a,b) if(!_wcsicmp(L ## a, tag)) { lstrcpynW(tag, L ## b, len); return true; }
 	TAG_ALIAS("title", "TITLE");
@@ -1195,7 +1195,7 @@ static INT_PTR CALLBACK ChildProc_Advanced(HWND hwndDlg, UINT msg, WPARAM wParam
 			wchar_t * value = (wchar_t*)lParam;
 			wchar_t tag[100] = {0};
 			lstrcpynW(tag,(wchar_t*)wParam,100);
-			WinampTagToVorbisTag(tag,100);
+			WinLAMPTagToVorbisTag(tag,100);
 			Info *info = (Info *)GetWindowLongPtr(hwndDlg, GWLP_USERDATA);
 			if(!*value) 
 			{
@@ -1336,7 +1336,7 @@ static INT_PTR CALLBACK ChildProc_Advanced(HWND hwndDlg, UINT msg, WPARAM wParam
 					lvi.cchTextMax=1024;
 					lvi.iSubItem=1;
 					SendMessage(GetDlgItem(hwndDlg,IDC_LIST),LVM_SETITEMW,0,(LPARAM)&lvi);
-					VorbisTagToWinampTag(key,100);
+					VorbisTagToWinLAMPTag(key,100);
 					ismychange=1;
 					SendMessage(GetParent(hwndDlg),WM_USER,(WPARAM)key,(WPARAM)value);
 					ismychange=0;
@@ -1359,7 +1359,7 @@ static INT_PTR CALLBACK ChildProc_Advanced(HWND hwndDlg, UINT msg, WPARAM wParam
 					} else {
 						info->SetMetadata(key,value);
 					}
-					VorbisTagToWinampTag(key,100);
+					VorbisTagToWinLAMPTag(key,100);
 					ismychange=1;
 					SendMessage(GetParent(hwndDlg),WM_USER,(WPARAM)key,(WPARAM)value);
 					ismychange=0;
@@ -1379,7 +1379,7 @@ static INT_PTR CALLBACK ChildProc_Advanced(HWND hwndDlg, UINT msg, WPARAM wParam
 						info->RemoveMetadata(sel);
 					ListView_DeleteItem(GetDlgItem(hwndDlg,IDC_LIST),sel);
 					sel=-1;
-					VorbisTagToWinampTag(tag,100);
+					VorbisTagToWinLAMPTag(tag,100);
 					ismychange=1;
 					SendMessage(GetParent(hwndDlg),WM_USER,(WPARAM)tag,(WPARAM)L"");
 					ismychange=0;
@@ -1400,7 +1400,7 @@ static INT_PTR CALLBACK ChildProc_Advanced(HWND hwndDlg, UINT msg, WPARAM wParam
 						--n;
 						wchar_t tag[100] = {0};
 						info->EnumMetadata(n,tag,100,0,0);
-						VorbisTagToWinampTag(tag,100);
+						VorbisTagToWinLAMPTag(tag,100);
 						ismychange=1;
 						SendMessage(GetParent(hwndDlg),WM_USER,(WPARAM)tag,(WPARAM)L"");
 						ismychange=0;
@@ -1424,9 +1424,9 @@ static INT_PTR CALLBACK ChildProc_Advanced(HWND hwndDlg, UINT msg, WPARAM wParam
 
 extern "C"
 {
-	// return 1 if you want winamp to show it's own file info dialogue, 0 if you want to show your own (via In_Module.InfoBox)
-	// if returning 1, remember to implement winampGetExtendedFileInfo("formatinformation")!
-	__declspec(dllexport) int winampUseUnifiedFileInfoDlg(const wchar_t * fn)
+	// return 1 if you want winlamp to show it's own file info dialogue, 0 if you want to show your own (via In_Module.InfoBox)
+	// if returning 1, remember to implement winlampGetExtendedFileInfo("formatinformation")!
+	__declspec(dllexport) int winlampUseUnifiedFileInfoDlg(const wchar_t * fn)
 	{
 		if (PathIsURLW(fn))
 			return 0;
@@ -1440,7 +1440,7 @@ extern "C"
 	// The window you return will recieve WM_COMMAND, IDOK/IDCANCEL messages when the user clicks OK or Cancel.
 	// when the user edits a field which is duplicated in another pane, do a SendMessage(GetParent(hwnd),WM_USER,(WPARAM)L"fieldname",(LPARAM)L"newvalue");
 	// this will be broadcast to all panes (including yours) as a WM_USER.
-	__declspec(dllexport) HWND winampAddUnifiedFileInfoPane(int n, const wchar_t * filename, HWND parent, wchar_t *name, size_t namelen)
+	__declspec(dllexport) HWND winlampAddUnifiedFileInfoPane(int n, const wchar_t * filename, HWND parent, wchar_t *name, size_t namelen)
 	{
 		if(n == 0) { // add first pane
 			SetPropW(parent,L"INBUILT_NOWRITEINFO", (HANDLE)1);

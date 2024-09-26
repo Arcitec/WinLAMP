@@ -96,7 +96,7 @@ BEGIN
     LTEXT           "Buffer-ahead on track change:",-1,8,74,100,8
     CONTROL         "Slider1",IDC_PREBUFFER_2,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,4,84,232,12
     CTEXT           "",IDC_PREBUF_DISP_2,8,96,224,8
-    LTEXT           "Longer buffer gives better skipping (underrun) protection at cost of higher CPU usage when starting (Winamp decodes as fast as possible until buffer is full). Big buffer also causes EQ/DSP setting changes to lag.",-1,2,104,236,25
+    LTEXT           "Longer buffer gives better skipping (underrun) protection at cost of higher CPU usage when starting (WinLAMP decodes as fast as possible until buffer is full). Big buffer also causes EQ/DSP setting changes to lag.",-1,2,104,236,25
     LTEXT           "Prebuffer determines how much data to eat before starting to output; recommended values are 500-1000ms, higher values can cause problems.",-1,2,131,236,16
     CONTROL         "Enable CPU usage control (experimental, keeps CPU usage fluid when starting/seeking, even with very big buffers)",IDC_PREBUF_AUTO,
                     "Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,2,151,220,16
@@ -111,7 +111,7 @@ BEGIN
     CONTROL         "Spin1",IDC_FADE_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,104,7,11,14
     LTEXT           "ms",-1,118,9,10,8
     CONTROL         "Old-style fade on pause",IDC_PAUSEFADE2,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,8,24,116,10
-    CONTROL         "Don't abort fadeout when Winamp is shutting down",IDC_WAITx,
+    CONTROL         "Don't abort fadeout when WinLAMP is shutting down",IDC_WAITx,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,8,36,177,10
     LISTBOX         IDC_LIST,8,50,224,45,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "",IDC_FADE_GROUP,8,95,224,39,WS_DISABLED
@@ -283,7 +283,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_DS_DB               "dB"
-    IDS_ABOUT_TEXT          "%s\n© 2005-2023 Winamp SA\n© 2001-2002 Peter Pawlowski\t\nBuild date: %hs"
+    IDS_ABOUT_TEXT          "%s\n© 2005-2023 WinLAMP SA\n© 2001-2002 Peter Pawlowski\t\nBuild date: %hs"
     IDS_7_1                 "7.1"
 END
 

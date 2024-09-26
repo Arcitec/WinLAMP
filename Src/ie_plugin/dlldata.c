@@ -19,12 +19,12 @@
 extern "C"   {
 #endif
 
-EXTERN_PROXY_FILE( IWinamp )
+EXTERN_PROXY_FILE( IWinLAMP )
 
 
 PROXYFILE_LIST_START
 /* Start of list */
-  REFERENCE_PROXY_FILE( IWinamp ),
+  REFERENCE_PROXY_FILE( IWinLAMP ),
 /* End of list */
 PROXYFILE_LIST_END
 

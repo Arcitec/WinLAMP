@@ -32,7 +32,7 @@ BOOL CALLBACK CrashDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 			wchar_t waPath[2*_MAX_PATH] = {0};
 			if (GetModuleFileName( NULL, waPath, 2*_MAX_PATH ))
 			{
-				settings.WriteWinamp(waPath);
+				settings.WriteWinLAMP(waPath);
 			}
 
 			SetTimer(hwndDlg, 123, 1000, NULL);
@@ -46,7 +46,7 @@ BOOL CALLBACK CrashDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 				SetDlgItemText(hwndDlg, IDC_LBL_STEP, L"Generating log file...");
 				SendMessage(hwndPrg, PBM_SETPOS, 30, 0);
 				UpdateWindow(hwndDlg);
-				if (settings.createLOG) settings.WriteLogCollectResult(CreateLog(gExceptionInfo, L"Winamp"));
+				if (settings.createLOG) settings.WriteLogCollectResult(CreateLog(gExceptionInfo, L"WinLAMP"));
 				SetDlgItemText(hwndDlg, IDC_LBL_STEP, L"Generating dump file...");
 				SendMessage(hwndPrg, PBM_SETPOS, 50, 0);
 				UpdateWindow(hwndDlg);

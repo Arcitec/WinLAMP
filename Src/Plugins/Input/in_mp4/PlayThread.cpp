@@ -1,5 +1,5 @@
 #include "main.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "VideoThread.h"
 #include "AudioSample.h"
 #include "api__in_mp4.h"

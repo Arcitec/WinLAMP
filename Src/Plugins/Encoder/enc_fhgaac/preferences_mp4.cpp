@@ -1,7 +1,7 @@
 #include "../Agave/Language/api_language.h"
 #include "config.h"
 #include "preferences.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <windows.h>
 #include <assert.h>
 #include "resource.h"
@@ -10,7 +10,7 @@
 #include "../nu/Slider.h"
 #include <strsafe.h>
 
-extern HWND winampwnd;
+extern HWND winlampwnd;
 
 INT_PTR CALLBACK Preferences_MP4_DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -54,11 +54,11 @@ INT_PTR CALLBACK Preferences_MP4_DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPA
 		switch (LOWORD(wParam))
 		{
 		case IDC_HELPLINK:
-			SendMessage(winampwnd, WM_WA_IPC, (WPARAM)"http://help.winamp.com/", IPC_OPEN_URL);
+			SendMessage(winlampwnd, WM_WA_IPC, (WPARAM)"http://help.winlamp.com/", IPC_OPEN_URL);
 			break;
 		case IDC_LOGO:
 		case IDC_URL:
-			SendMessage(winampwnd, WM_WA_IPC, (WPARAM)"http://www.iis.fraunhofer.de/en/bf/amm", IPC_OPEN_URL);
+			SendMessage(winlampwnd, WM_WA_IPC, (WPARAM)"http://www.iis.fraunhofer.de/en/bf/amm", IPC_OPEN_URL);
 			break;
 
 

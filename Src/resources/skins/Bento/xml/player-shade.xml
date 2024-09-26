@@ -265,7 +265,7 @@
 		right="window.titlebar.grid.over.right"
 	/>
 
-	<layer x="27" y="6" image="window.titlebar.text.winamp" ghost="1" />
+	<layer x="27" y="6" image="window.titlebar.text.winlamp" ghost="1" />
 
 	<guiobject fitparent="1" rectrgn="1" move="1" id="shade.mousetrap"/>
 
@@ -287,7 +287,7 @@
 		image="window.titlebar.button.minimize.normal"
 		hoverImage="window.titlebar.button.minimize.hover"
 		downImage="window.titlebar.button.minimize.down"
-		tooltip="Minimize Winamp"
+		tooltip="Minimize WinLAMP"
 	/>
 
 	<button 
@@ -296,7 +296,7 @@
 		image="window.titlebar.button.restore.normal"
 		hoverImage="window.titlebar.button.restore.hover"
 		downImage="window.titlebar.button.restore.down"
-		tooltip="Restore Winamp"
+		tooltip="Restore WinLAMP"
 	/>
 
 	<button 
@@ -305,7 +305,7 @@
 		image="window.titlebar.button.maximize.normal"
 		hoverImage="window.titlebar.button.maximize.hover"
 		downImage="window.titlebar.button.maximize.down"
-		tooltip="Maximize Winamp"
+		tooltip="Maximize WinLAMP"
 	/>
 
 	<button 
@@ -323,7 +323,7 @@
 		image="window.titlebar.button.close.normal"
 		hoverImage="window.titlebar.button.close.hover"
 		downImage="window.titlebar.button.close.down"
-		tooltip="Exit Winamp"
+		tooltip="Exit WinLAMP"
 	/>
 
 	<layer x="-5" y="0" w="5" h="18" rectrgn="1" relatx="1" resize="right" image="shade.resizer.right" id="shade.resizer.right"/>

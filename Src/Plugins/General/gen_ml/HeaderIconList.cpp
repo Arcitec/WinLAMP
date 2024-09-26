@@ -2,7 +2,7 @@
 
 #include "../gen_ml/ml.h"
 #include "../gen_ml/ml_ipc_0313.h"
-#include "../Winamp/gen.h"
+#include "../WinLAMP/gen.h"
 
 #define WM_EX_GETREALLIST		(WM_USER + 0x01)
 #define WM_EX_UNLOCKREDRAW		(WM_USER + 0x02)

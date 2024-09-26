@@ -59,7 +59,7 @@ public:
 	void setLibraryParentWnd(HWND hwndParent)
 	{
 		m_libraryparent=hwndParent;
-	}// for Winamp Font getting stuff
+	}// for WinLAMP Font getting stuff
 #endif
 	void setallowfonts(int allow=1);
 	void setwnd(HWND hwnd);

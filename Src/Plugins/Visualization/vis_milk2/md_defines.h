@@ -34,7 +34,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /*
 #define CURRENT_VERSION			220
 #define CURRENT_SUBVERSION		0			// 0=first release, 1=a, 2=b, 3=c... 
-#define MODULEDESC				"MilkDrop 2.2"	// used for module desc (from Winamp/Prefs) + window title for fullscreen mode
+#define MODULEDESC				"MilkDrop 2.2"	// used for module desc (from WinLAMP/Prefs) + window title for fullscreen mode
 #define DLLDESC					"MilkDrop 2.2"	
 #define NAME					"MilkDrop"
 #define TITLE					"MilkDrop"

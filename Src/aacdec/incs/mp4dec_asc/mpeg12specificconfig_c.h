@@ -3,7 +3,7 @@
  *               (C) copyright Fraunhofer - IIS (2003)
  *                        All Rights Reserved
  *
- *   $Header: /cvs/root/winamp/aacdec/incs/mp4dec_asc/mpeg12specificconfig_c.h,v 1.3 2012/05/08 20:16:50 audiodsp Exp $
+ *   $Header: /cvs/root/winlamp/aacdec/incs/mp4dec_asc/mpeg12specificconfig_c.h,v 1.3 2012/05/08 20:16:50 audiodsp Exp $
  *   project : MPEG-4 Audio Decoder
  *   contents/description: MP3OnMP4 specific config interface
  *

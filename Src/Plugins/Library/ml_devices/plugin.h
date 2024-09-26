@@ -1,5 +1,5 @@
-#ifndef _NULLSOFT_WINAMP_ML_DEVICES_PLUGIN_HEADER
-#define _NULLSOFT_WINAMP_ML_DEVICES_PLUGIN_HEADER
+#ifndef _NULLSOFT_WINLAMP_ML_DEVICES_PLUGIN_HEADER
+#define _NULLSOFT_WINLAMP_ML_DEVICES_PLUGIN_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -17,7 +17,7 @@
 typedef void (CALLBACK *PluginUnloadCallback)(void);
 
 HINSTANCE Plugin_GetInstance(void);
-HWND Plugin_GetWinampWindow(void);
+HWND Plugin_GetWinLAMPWindow(void);
 HWND Plugin_GetLibraryWindow(void);
 BOOL Plugin_RegisterUnloadCallback(PluginUnloadCallback callback);
 DeviceImageCache *Plugin_GetImageCache();
@@ -30,4 +30,4 @@ BOOL Plugin_ShowHelp();
 BOOL Plugin_BeginDiscovery();
 BOOL Plugin_OpenUrl(HWND ownerWindow, const wchar_t *url, BOOL forceExternal);
 
-#endif //_NULLSOFT_WINAMP_ML_DEVICES_PLUGIN_HEADER
+#endif //_NULLSOFT_WINLAMP_ML_DEVICES_PLUGIN_HEADER

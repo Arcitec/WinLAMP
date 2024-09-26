@@ -1,11 +1,11 @@
 #pragma once
 #include <bfc/platform/types.h>
-#include "../Winamp/in2.h"
-#include "../Winamp/out.h"
+#include "../WinLAMP/in2.h"
+#include "../WinLAMP/out.h"
 #include "SpillBuffer.h"
 #include <assert.h>
 
-/* A class to manage Winamp input plugin audio output
+/* A class to manage WinLAMP input plugin audio output
 ** It handles the following for you:
 ** * Ensuring that Vis data is sent in chunks of 576
 ** * Dealing with gapless audio 

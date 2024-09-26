@@ -16,9 +16,9 @@ extern api_config *config;
 
 #include "../Agave/Language/api_language.h"
 
-#include "../winamp/api_winamp.h"
-extern api_winamp *winampApi;
-#define WASABI_API_WINAMP winampApi
+#include "../winlamp/api_winlamp.h"
+extern api_winlamp *winlampApi;
+#define WASABI_API_WINLAMP winlampApi
 
 #include <api/memmgr/api_memmgr.h>
 extern api_memmgr *memManagerApi;

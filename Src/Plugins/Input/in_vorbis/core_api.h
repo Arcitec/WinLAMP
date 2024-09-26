@@ -1,9 +1,9 @@
 
-/* Winamp 3 Player core api v0.1
+/* WinLAMP 3 Player core api v0.1
 ** (c)2000 nullsoft jcf/ct/dk
 ** Notes: 
 **			Keep in mind that this header file is subject to change prior to the 
-**		release of Winamp 3.  The ability to configure plug-ins has yet to be 
+**		release of WinLAMP 3.  The ability to configure plug-ins has yet to be 
 **		added and is the first and foremost concern of the engineering team.		
 */
 
@@ -44,7 +44,7 @@ class WReader;
 class WInputInfo;
 
 /* WInfo_callback
-** Player's interface that provides Winamp 3 core functions to your WInputInfo classes
+** Player's interface that provides WinLAMP 3 core functions to your WInputInfo classes
 */
 class WInfo_callback;
 
@@ -59,8 +59,8 @@ class WInputSource;
 class WOutputFilter;
 
 /* WPlayer_callback
-** Player's interface that provides Winamp 3 core functions to your Input Sources and Output Filter plug-ins
-** (Getting a reader for opening a file, sending stuff about what's going on to the Winamp 3 core)
+** Player's interface that provides WinLAMP 3 core functions to your Input Sources and Output Filter plug-ins
+** (Getting a reader for opening a file, sending stuff about what's going on to the WinLAMP 3 core)
 */
 class WPlayer_callback;
 
@@ -71,14 +71,14 @@ class WPlayer_callback
 {
   public:
 	/* GetReader
-	** Allows your Input Source and Output Filter plugins to request a reader from Winamp, 
+	** Allows your Input Source and Output Filter plugins to request a reader from WinLAMP, 
 	** so you don't have to worry about opening files or streams
 	*/
     virtual WReader *GetReader(char *url)=0;
 
 
 	/* The 3 following functions allows your Input Source and Output Filter plugins to send error/warning/status
-	** messages back to the Winamp 3 core
+	** messages back to the WinLAMP 3 core
 	*/
 
 	/* Error
@@ -122,7 +122,7 @@ class WInfo_callback
 {
   public:
 	/* GetReader
-	** Allows your WInfo classes to request a reader from Winamp
+	** Allows your WInfo classes to request a reader from WinLAMP
 	** so you don't have to worry about opening files or streams
 	*/
     virtual WReader *GetReader(char *url)=0;
@@ -140,12 +140,12 @@ class WInputInfo
 	WInputInfo(){ };
 
 	/* m_info
-	** Filled by Winamp. Pointer to WInputInfo callback function
+	** Filled by WinLAMP. Pointer to WInputInfo callback function
 	*/
 	WInfo_callback *m_info;
 
 	/* Open
-	** Called by Winamp to request informations about a specified media (file, url, etc...)
+	** Called by WinLAMP to request informations about a specified media (file, url, etc...)
 	** returns 0 if succesful, 1 if not
 	**
 	** You must open, get all information and close the specified file here and store
@@ -154,19 +154,19 @@ class WInputInfo
 	virtual int  Open(char *url) { return 1; }
 	
 	/* GetTitle
-	** Called by Winamp to get the decoded title about the file opened
+	** Called by WinLAMP to get the decoded title about the file opened
 	** i.e. id3 title name, etc...
 	*/
 	virtual void GetTitle(char *buf, int maxlen) { if (maxlen>0) buf[0]=0; };
 
 	/* GetInfoString
-	** Called by Winamp to get extra informations about the file opened
+	** Called by WinLAMP to get extra informations about the file opened
 	** i.e. "160kbps stereo 44Khz" for MP3 files,"4 channels" for MOD files,etc...
 	*/
 	virtual void GetInfoString(char *buf, int maxlen) { if (maxlen>0) buf[0]=0; };
 
 	/* GetLength
-	** Called by Winamp to retrieves media type length in milliseconds
+	** Called by WinLAMP to retrieves media type length in milliseconds
 	** returns -1 if length is undefined/infinite
 	*/
 	virtual int  GetLength(void) { return -1; };
@@ -192,7 +192,7 @@ class WInputInfo
 
 
 
-/* WINAMP Output Filter NOTIFY MESSAGES 
+/* WINLAMP Output Filter NOTIFY MESSAGES 
 **	Messages returned to notify Output Filter plug-ins of events
 */
 
@@ -225,12 +225,12 @@ class WOutputFilter
 
   public:
 	/* m_player
-	** Filled by Winamp. Pointer to Winamp 3 core player interface
+	** Filled by WinLAMP. Pointer to WinLAMP 3 core player interface
 	*/
 	WPlayer_callback *m_player;
 
 	/* m_next
-	** Internally used by Winamp. Pointer to next activated Output Filter
+	** Internally used by WinLAMP. Pointer to next activated Output Filter
 	*/
 	WOutputFilter *m_next;
 
@@ -252,8 +252,8 @@ class WOutputFilter
 	** bps: Bits per sample (8 or 16)
 	** nch: Number of channels (1 or 2)
 	** srate: Sample rate in Hz
-	** killswitch: Will be set to 1 by winamp if stop if requested. Poll the pointed value very often to
-	**             make sure Winamp doesn't hang
+	** killswitch: Will be set to 1 by winlamp if stop if requested. Poll the pointed value very often to
+	**             make sure WinLAMP doesn't hang
 	**
 	** Returns the number of processed bytes or -1 if unable to open the device or an error occured.
 	**
@@ -267,7 +267,7 @@ class WOutputFilter
 	virtual void FlushSamples(bool *killswitch) { }; 
 
 	/* Restart
-	** Called by Winamp after a seek
+	** Called by WinLAMP after a seek
 	*/
 	virtual void Restart(void) { } 
 
@@ -301,7 +301,7 @@ class WOutputFilter
 	virtual int SetPan(int pan) { return 0; }
 
 	/* Notify
-	** Called by Winamp to notify what's going on
+	** Called by WinLAMP to notify what's going on
 	*/
 	virtual void Notify(WOutputFilterNotifyMsg msg, int data1, int data2) { }
 
@@ -322,7 +322,7 @@ class WInputSource
 
   public:
 	/* m_player
-	** Filled by Winamp. Pointer to Winamp 3 core interface
+	** Filled by WinLAMP. Pointer to WinLAMP 3 core interface
 	*/
 	WPlayer_callback *m_player;
 
@@ -351,8 +351,8 @@ class WInputSource
 	** bps: Bits par sample (8 or 16)
 	** nch: Number of channels (1 or 2)
 	** srate: Sample rate in Hz
-	** killswitch: Will be set to 1 by winamp if stop if requested. Poll the pointed value very often to
-	**              make sure Winamp doesn't hang
+	** killswitch: Will be set to 1 by winlamp if stop if requested. Poll the pointed value very often to
+	**              make sure WinLAMP doesn't hang
 	*/
 	virtual int GetSamples(char *sample_buffer, int bytes, int *bps, int *nch, int *srate, bool *killswitch)=0;
 
@@ -384,19 +384,19 @@ class WInputSource
 	virtual int GetPosition(void) { return 0; }
 
 	/* GetTitle
-	** Called by Winamp to get the decoded title about the file opened
+	** Called by WinLAMP to get the decoded title about the file opened
 	** i.e. stream name, id3 title name, etc...
 	*/
 	virtual void GetTitle(char *buf, int maxlen) { if(maxlen>0) buf[0]=0; };
 
 	/* GetInfoString
-	** Called by Winamp to get extra informations about the file openend
+	** Called by WinLAMP to get extra informations about the file openend
 	** i.e. "32kbps 44khz", etc...
 	*/
 	virtual void GetInfoString(char *buf, int maxlen) { if(maxlen>0) buf[0]=0; };
 
 	/* GetLength
-	** Called by Winamp to retrieves media type length in milliseconds
+	** Called by WinLAMP to retrieves media type length in milliseconds
 	** returns -1 if length is undefined/infinite
 	*/
 	virtual int GetLength(void) { return -1; }
@@ -423,7 +423,7 @@ class WReader
   public:
 
 	/* m_player
-	** Filled by Winamp. Pointer to Winamp 3 core interface
+	** Filled by WinLAMP. Pointer to WinLAMP 3 core interface
 	*/
 	WPlayer_callback *m_player;
 

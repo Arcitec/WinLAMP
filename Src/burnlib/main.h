@@ -10,7 +10,7 @@
 
 extern HINSTANCE	dllInstance;
 extern HMODULE		hResource;
-extern HWND			winampWnd;
+extern HWND			winlampWnd;
 
 #include <api/service/api_service.h>
 #include <api/service/waServiceFactory.h>

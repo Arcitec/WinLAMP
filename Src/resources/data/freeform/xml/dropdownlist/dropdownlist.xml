@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<WinampAbstractionLayer version="0.7">
+<WinLAMPAbstractionLayer version="0.7">
 
 <groupdef id="wasabi.dropdownlist.main.group" inherit_group="wasabi.objectframe.group">
   <Wasabi:Text 
@@ -40,4 +40,4 @@
   <layer x="0" y="-2" relaty="1" w="0" relatw="1" h="2" resize="bottom" />
 </groupdef>
 
-</WinampAbstractionLayer>
+</WinLAMPAbstractionLayer>

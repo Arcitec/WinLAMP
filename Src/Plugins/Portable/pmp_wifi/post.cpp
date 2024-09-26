@@ -18,14 +18,14 @@ static const GUID internetConfigGroupGUID =
 };
 
 
-#define USER_AGENT_SIZE (10 /*User-Agent*/ + 2 /*: */ + 6 /*Winamp*/ + 1 /*/*/ + 1 /*5*/ + 3/*.21*/ + 1 /*Null*/)
+#define USER_AGENT_SIZE (10 /*User-Agent*/ + 2 /*: */ + 6 /*WinLAMP*/ + 1 /*/*/ + 1 /*5*/ + 3/*.21*/ + 1 /*Null*/)
 static void SetUserAgent(api_httpreceiver *http)
 {
 
 	char user_agent[USER_AGENT_SIZE] = {0};
-	int bigVer = ((winampVersion & 0x0000FF00) >> 12);
-	int smallVer = ((winampVersion & 0x000000FF));
-	StringCchPrintfA(user_agent, USER_AGENT_SIZE, "User-Agent: Winamp/%01x.%02x", bigVer, smallVer);
+	int bigVer = ((winlampVersion & 0x0000FF00) >> 12);
+	int smallVer = ((winlampVersion & 0x000000FF));
+	StringCchPrintfA(user_agent, USER_AGENT_SIZE, "User-Agent: WinLAMP/%01x.%02x", bigVer, smallVer);
 	http->addheader(user_agent);
 }
 
@@ -165,8 +165,8 @@ int PostFile(const char *base_url, const wchar_t *filename, const itemRecordW *t
 		http->AddHeaderValue("Content-Type", AutoHeader(mime_type));
 	}
 
-	http->AddHeaderValue("X-Winamp-ID", winamp_id_str);
-	http->AddHeaderValue("X-Winamp-Name", winamp_name);
+	http->AddHeaderValue("X-WinLAMP-ID", winlamp_id_str);
+	http->AddHeaderValue("X-WinLAMP-Name", winlamp_name);
 
 	 http->AddHeaderValue("Expect", "100-continue");
 	/* connect */
@@ -335,8 +335,8 @@ int PostAlbumArt(const char *url, const itemRecordW *track, obj_xml *parser, int
 		http->addheader(data);
 	}
 
-	http->AddHeaderValue("X-Winamp-ID", winamp_id_str);
-	http->AddHeaderValue("X-Winamp-Name", winamp_name);
+	http->AddHeaderValue("X-WinLAMP-ID", winlamp_id_str);
+	http->AddHeaderValue("X-WinLAMP-Name", winlamp_name);
 
 	/* connect */
 	http->AddHeaderValue("Expect", "100-continue");
@@ -475,8 +475,8 @@ int HTTP_Delete(const char *url)
 	http->open(API_DNS_AUTODNS, HTTP_BUFFER_SIZE, (proxy && proxy[0]) ? (const char *)AutoChar(proxy) : NULL);
  	SetUserAgent(http);
 
-	http->AddHeaderValue("X-Winamp-ID", winamp_id_str);
-	http->AddHeaderValue("X-Winamp-Name", winamp_name);
+	http->AddHeaderValue("X-WinLAMP-ID", winlamp_id_str);
+	http->AddHeaderValue("X-WinLAMP-Name", winlamp_name);
 
 	/* connect */
 	http->connect(url, 0, "DELETE");

@@ -175,7 +175,7 @@ BEGIN
     IDS_PLAYBACK__STOP_AFTER_CURRENT "Playback: Stop after current"
     IDS_PLAYBACK__START_OF_LIST "Playback: Start of list"
     IDS_PLAYBACK__END_OF_LIST "Playback: End of list"
-    IDS_UI__BRING_TO_FRONT_OR_HIDE "UI: Bring to front/hide Winamp"
+    IDS_UI__BRING_TO_FRONT_OR_HIDE "UI: Bring to front/hide WinLAMP"
     IDS_RATING__5_STARS     "Rate current item: *****"
     IDS_RATING__4_STARS     "Rate current item: ****"
     IDS_RATING__3_STARS     "Rate current item: ***"

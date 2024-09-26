@@ -58,13 +58,13 @@ public:
 
 	// Implemented in 5.58+
 	// When called this will attempt to set the locale used for numeric representation
-	// to that of the user running the current Winamp instance as long as the language
+	// to that of the user running the current WinLAMP instance as long as the language
 	// and country identifiers match those reported within the language pack (if used)
 	//
 	// If you're running under a different thread then this will need to be called as
 	// the locale is set on a per thread basis which generally means anything under the
-	// Winamp process will be handled correctly unless a UI aspect is running under a
-	// different thread. Internally this is called within winamp.exe and vis_milk2.dll
+	// WinLAMP process will be handled correctly unless a UI aspect is running under a
+	// different thread. Internally this is called within winlamp.exe and vis_milk2.dll
 	BOOL UseUserNumericLocale();
 
 	// Get_C_NumericLocale() is a wrapper for _create_locale(LC_NUMERIC, "C") which can

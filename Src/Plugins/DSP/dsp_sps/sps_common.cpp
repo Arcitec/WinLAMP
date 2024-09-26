@@ -1,12 +1,12 @@
 #include <windows.h>
 #include "resource.h"
-#include "..\..\..\winamp\dsp.h"
+#include "..\..\..\winlamp\dsp.h"
 #include "sps_common.h"
 
 void NSEEL_HOSTSTUB_EnterMutex() {}
 void NSEEL_HOSTSTUB_LeaveMutex() {}
 
-extern winampDSPModule mod;
+extern winlampDSPModule mod;
 
 char *SPSHELP_gethelptext( int sel )
 {

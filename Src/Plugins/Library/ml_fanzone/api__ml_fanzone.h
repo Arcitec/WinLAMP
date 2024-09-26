@@ -5,7 +5,7 @@
 
 #include "../Agave/Language/api_language.h"
 
-#include "../Winamp/api_stats.h"
+#include "../WinLAMP/api_stats.h"
 extern api_stats *statsApi;
 #define AGAVE_API_STATS statsApi
 

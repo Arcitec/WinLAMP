@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<WinampAbstractionLayer version="0.7">
+<WinLAMPAbstractionLayer version="0.7">
 
 <!-- This defines the statusbar content of a layoutstatus object -->
 
@@ -22,4 +22,4 @@
 </groupdef>
 
 
-</WinampAbstractionLayer>
+</WinLAMPAbstractionLayer>

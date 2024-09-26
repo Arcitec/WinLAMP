@@ -64,7 +64,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib msvcrtd.lib libcpmtd.lib rpcrt4.lib"
-				OutputFile="$(ProgramFiles)\winamp\reporter.exe"
+				OutputFile="$(ProgramFiles)\winlamp\reporter.exe"
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames="libcmtd"
 				GenerateDebugInformation="true"
@@ -149,7 +149,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib libcpmt.lib rpcrt4.lib"
-				OutputFile="$(ProgramFiles)\winamp\reporter.exe"
+				OutputFile="$(ProgramFiles)\winlamp\reporter.exe"
 				LinkIncremental="1"
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""

@@ -1,1 +1,1 @@
-#include "../../../Winamp/in2.h"
+#include "../../../WinLAMP/in2.h"

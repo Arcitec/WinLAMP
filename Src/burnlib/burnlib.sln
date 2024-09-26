@@ -8,7 +8,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "burnlibres", "resdll\resdll
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winampv6", "..\Winamp\winampv6.vcproj", "{7DE5C6C7-DAF2-42F9-9324-C8CF4E7E8AC5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winlampv6", "..\WinLAMP\winlampv6.vcproj", "{7DE5C6C7-DAF2-42F9-9324-C8CF4E7E8AC5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8FBD5E01-B920-44D8-9687-88AE0C3CA833} = {8FBD5E01-B920-44D8-9687-88AE0C3CA833}
 		{374717BA-EF3A-4BF6-AC4D-A532E08BE904} = {374717BA-EF3A-4BF6-AC4D-A532E08BE904}

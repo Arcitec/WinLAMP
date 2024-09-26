@@ -75,7 +75,7 @@ public:
 
 	HRESULT STDMETHODCALLTYPE SetupFileType(
 		/* [in, string] */ LPCWSTR programName, 
-		/* [in, string] */ LPCWSTR winamp_file, 
+		/* [in, string] */ LPCWSTR winlamp_file, 
 		/* [in, string] */ LPCWSTR name, 
 		int iconNumber, 
 		/* [in, string] */ LPCWSTR defaultShellCommand,
@@ -84,19 +84,19 @@ public:
 
 	HRESULT STDMETHODCALLTYPE SetupShell(
 		/* [in, string] */ LPCWSTR commandLine, 
-		/* [in, string] */ LPCWSTR winamp_file, 
+		/* [in, string] */ LPCWSTR winlamp_file, 
 		/* [in, string] */ LPCWSTR description, 
 		/* [in, string] */ LPCWSTR commandName,
 		/* [in, string] */ LPCWSTR dragAndDropGUID
 		);
 
 	HRESULT STDMETHODCALLTYPE RemoveShell(
-		/* [in, string] */ LPCWSTR winamp_file,
+		/* [in, string] */ LPCWSTR winlamp_file,
 		/* [in, string] */ LPCWSTR commandName
 		);
 
 	HRESULT STDMETHODCALLTYPE SetupDefaultFileType(
-		/* [in, string] */ LPCWSTR winamp_file,
+		/* [in, string] */ LPCWSTR winlamp_file,
 		/* [in, string] */ LPCWSTR defaultShellCommand
 		);
 
@@ -151,7 +151,7 @@ public:
 	HRESULT STDMETHODCALLTYPE WriteClientUIDKey(LPCWSTR path, LPCWSTR uid_str);
 
 	HRESULT STDMETHODCALLTYPE RegisterProtocol(LPCWSTR protocol, LPCWSTR command, LPCWSTR icon);
-	HRESULT STDMETHODCALLTYPE RegisterCapability(const wchar_t *programName, const wchar_t *winamp_file, const wchar_t *extension);
+	HRESULT STDMETHODCALLTYPE RegisterCapability(const wchar_t *programName, const wchar_t *winlamp_file, const wchar_t *extension);
 
 //private:
 	volatile ULONG refCount;

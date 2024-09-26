@@ -39,7 +39,7 @@ void LoadRG()
 		return ;
 
 	wchar_t path[MAX_PATH] = {0};
-	PathCombineW(path, (wchar_t*)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETSHAREDDLLDIRECTORYW), L"ReplayGainAnalysis.dll");
+	PathCombineW(path, (wchar_t*)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETSHAREDDLLDIRECTORYW), L"ReplayGainAnalysis.dll");
 	rgLib = LoadLibraryW(path);
 
 	if (rgLib)

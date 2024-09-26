@@ -1,13 +1,13 @@
 /*
  * in_openmpt.cpp
  * --------------
- * Purpose: libopenmpt winamp input plugin implementation
+ * Purpose: libopenmpt winlamp input plugin implementation
  * Notes  : (currently none)
  * Authors: OpenMPT Devs
  * The OpenMPT source code is released under the BSD license. Read LICENSE for more details.
  */
 
-#ifndef NO_WINAMP
+#ifndef NO_WINLAMP
 
 #if defined(_MFC_VER) || 1
 #ifndef _CRT_SECURE_NO_WARNINGS
@@ -81,8 +81,8 @@ static const char * in_openmpt_string = "in_openmpt " OPENMPT_API_VERSION_STRING
 #ifndef _MSC_VER
 #define _MSC_VER 1300
 #endif
-#include "winamp/Winamp/IN2.H"
-#include "winamp/Winamp/wa_ipc.h"
+#include "winlamp/WinLAMP/IN2.H"
+#include "winlamp/WinLAMP/wa_ipc.h"
 
 #include <algorithm>
 #include <fstream>
@@ -96,8 +96,8 @@ static const char * in_openmpt_string = "in_openmpt " OPENMPT_API_VERSION_STRING
 
 #define BPS 16
 
-#define WINAMP_DSP_HEADROOM_FACTOR 2
-#define WINAMP_BUFFER_SIZE_FRAMES  576
+#define WINLAMP_DSP_HEADROOM_FACTOR 2
+#define WINLAMP_BUFFER_SIZE_FRAMES  576
 
 #define WM_OPENMPT_SEEK (WM_USER+3)
 
@@ -157,7 +157,7 @@ static inline Tstring StringReplace( Tstring str, const Tstring2 & oldStr_, cons
 	return str;
 }
 
-struct self_winamp_t {
+struct self_winlamp_t {
 	std::vector<char> filetypes_string;
 	libopenmpt::plugin::settings settings;
 	int samplerate;
@@ -173,7 +173,7 @@ struct self_winamp_t {
 	bool paused;
 	std::vector<std::int16_t> buffer;
 	std::vector<std::int16_t> interleaved_buffer;
-	self_winamp_t() : settings(TEXT(SHORT_TITLE), true) {
+	self_winlamp_t() : settings(TEXT(SHORT_TITLE), true) {
 		filetypes_string.clear();
 		settings.changed = apply_options;
 		settings.load();
@@ -196,15 +196,15 @@ struct self_winamp_t {
 		PlayThread = 0;
 		PlayThreadID = 0;
 		paused = false;
-		buffer.resize( WINAMP_BUFFER_SIZE_FRAMES * channels );
-		interleaved_buffer.resize( WINAMP_BUFFER_SIZE_FRAMES * channels * WINAMP_DSP_HEADROOM_FACTOR );
+		buffer.resize( WINLAMP_BUFFER_SIZE_FRAMES * channels );
+		interleaved_buffer.resize( WINLAMP_BUFFER_SIZE_FRAMES * channels * WINLAMP_DSP_HEADROOM_FACTOR );
 	}
-	~self_winamp_t() {
+	~self_winlamp_t() {
 		return;
 	}
 };
 
-static self_winamp_t * self = 0;
+static self_winlamp_t * self = 0;
 
 static void apply_options() {
 	if ( self->mod ) {
@@ -282,7 +282,7 @@ static void about( HWND hwndParent ) {
 
 static void init() {
 	if ( !self ) {
-		self = new self_winamp_t();
+		self = new self_winlamp_t();
 		inmod.FileExtensions = &(self->filetypes_string[0]);
 	}
 }
@@ -469,29 +469,29 @@ static DWORD WINAPI DecodeThread( LPVOID ) {
 			Sleep( 10 );
 		} else {
 			bool dsp_active = inmod.dsp_isactive() ? true : false;
-			if ( inmod.outMod->CanWrite() >= (int)( WINAMP_BUFFER_SIZE_FRAMES * self->channels * sizeof( signed short ) ) * ( dsp_active ? WINAMP_DSP_HEADROOM_FACTOR : 1 ) ) {
+			if ( inmod.outMod->CanWrite() >= (int)( WINLAMP_BUFFER_SIZE_FRAMES * self->channels * sizeof( signed short ) ) * ( dsp_active ? WINLAMP_DSP_HEADROOM_FACTOR : 1 ) ) {
 				int frames = 0;
 				switch ( self->channels ) {
 				case 1:
-					frames = self->mod->read( self->samplerate, WINAMP_BUFFER_SIZE_FRAMES, (&(self->buffer[0]))+0*WINAMP_BUFFER_SIZE_FRAMES );
+					frames = self->mod->read( self->samplerate, WINLAMP_BUFFER_SIZE_FRAMES, (&(self->buffer[0]))+0*WINLAMP_BUFFER_SIZE_FRAMES );
 					for ( int frame = 0; frame < frames; frame++ ) {
-						self->interleaved_buffer[frame*1+0] = self->buffer[0*WINAMP_BUFFER_SIZE_FRAMES+frame];
+						self->interleaved_buffer[frame*1+0] = self->buffer[0*WINLAMP_BUFFER_SIZE_FRAMES+frame];
 					}
 					break;
 				case 2:
-					frames = self->mod->read( self->samplerate, WINAMP_BUFFER_SIZE_FRAMES, (&(self->buffer[0]))+0*WINAMP_BUFFER_SIZE_FRAMES, (&(self->buffer[0]))+1*WINAMP_BUFFER_SIZE_FRAMES );
+					frames = self->mod->read( self->samplerate, WINLAMP_BUFFER_SIZE_FRAMES, (&(self->buffer[0]))+0*WINLAMP_BUFFER_SIZE_FRAMES, (&(self->buffer[0]))+1*WINLAMP_BUFFER_SIZE_FRAMES );
 					for ( int frame = 0; frame < frames; frame++ ) {
-						self->interleaved_buffer[frame*2+0] = self->buffer[0*WINAMP_BUFFER_SIZE_FRAMES+frame];
-						self->interleaved_buffer[frame*2+1] = self->buffer[1*WINAMP_BUFFER_SIZE_FRAMES+frame];
+						self->interleaved_buffer[frame*2+0] = self->buffer[0*WINLAMP_BUFFER_SIZE_FRAMES+frame];
+						self->interleaved_buffer[frame*2+1] = self->buffer[1*WINLAMP_BUFFER_SIZE_FRAMES+frame];
 					}
 					break;
 				case 4:
-					frames = self->mod->read( self->samplerate, WINAMP_BUFFER_SIZE_FRAMES, (&(self->buffer[0]))+0*WINAMP_BUFFER_SIZE_FRAMES, (&(self->buffer[0]))+1*WINAMP_BUFFER_SIZE_FRAMES, (&(self->buffer[0]))+2*WINAMP_BUFFER_SIZE_FRAMES, (&(self->buffer[0]))+3*WINAMP_BUFFER_SIZE_FRAMES );
+					frames = self->mod->read( self->samplerate, WINLAMP_BUFFER_SIZE_FRAMES, (&(self->buffer[0]))+0*WINLAMP_BUFFER_SIZE_FRAMES, (&(self->buffer[0]))+1*WINLAMP_BUFFER_SIZE_FRAMES, (&(self->buffer[0]))+2*WINLAMP_BUFFER_SIZE_FRAMES, (&(self->buffer[0]))+3*WINLAMP_BUFFER_SIZE_FRAMES );
 					for ( int frame = 0; frame < frames; frame++ ) {
-						self->interleaved_buffer[frame*4+0] = self->buffer[0*WINAMP_BUFFER_SIZE_FRAMES+frame];
-						self->interleaved_buffer[frame*4+1] = self->buffer[1*WINAMP_BUFFER_SIZE_FRAMES+frame];
-						self->interleaved_buffer[frame*4+2] = self->buffer[2*WINAMP_BUFFER_SIZE_FRAMES+frame];
-						self->interleaved_buffer[frame*4+3] = self->buffer[3*WINAMP_BUFFER_SIZE_FRAMES+frame];
+						self->interleaved_buffer[frame*4+0] = self->buffer[0*WINLAMP_BUFFER_SIZE_FRAMES+frame];
+						self->interleaved_buffer[frame*4+1] = self->buffer[1*WINLAMP_BUFFER_SIZE_FRAMES+frame];
+						self->interleaved_buffer[frame*4+2] = self->buffer[2*WINLAMP_BUFFER_SIZE_FRAMES+frame];
+						self->interleaved_buffer[frame*4+3] = self->buffer[3*WINLAMP_BUFFER_SIZE_FRAMES+frame];
 					}
 					break;
 				}
@@ -551,8 +551,8 @@ In_Module inmod = {
 	0 // out_mod
 };
 
-extern "C" __declspec(dllexport) In_Module * winampGetInModule2();
-extern "C" __declspec(dllexport) In_Module * winampGetInModule2() {
+extern "C" __declspec(dllexport) In_Module * winlampGetInModule2();
+extern "C" __declspec(dllexport) In_Module * winlampGetInModule2() {
 	return &inmod;
 }
 
@@ -584,4 +584,4 @@ void DllMainDetach() {
 #endif // MPT_WITH_MFC
 
 
-#endif // NO_WINAMP
+#endif // NO_WINLAMP

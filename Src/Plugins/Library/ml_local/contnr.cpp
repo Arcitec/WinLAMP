@@ -34,7 +34,7 @@
    CContainer::CContainer()
 
 **************************************************************************/
-extern IDispatch *winampExternal;
+extern IDispatch *winlampExternal;
 
 CContainer::CContainer()
 {
@@ -961,7 +961,7 @@ HRESULT CContainer::GetDropTarget(IDropTarget __RPC_FAR *pDropTarget, IDropTarge
         
 HRESULT CContainer::GetExternal(IDispatch __RPC_FAR *__RPC_FAR *ppDispatch)
 {
-    *ppDispatch = winampExternal;
+    *ppDispatch = winlampExternal;
 	return S_OK; //E_NOTIMPL;
 }
 

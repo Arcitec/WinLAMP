@@ -288,7 +288,7 @@ ASDevice::ASDevice(IRAPIDevice *pIDevice,IRAPISession *pISession) : pIDevice(pID
 	// default values found. Fill in real values
 	{
 		wchar_t inifile[MAX_PATH] = {0};
-		const char * iniDirectory = (const char*)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETINIDIRECTORY);
+		const char * iniDirectory = (const char*)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETINIDIRECTORY);
 		wchar_t name[256] = {0};
 		lstrcpyn(name,devInfo.bstrName,256);
 		removebadchars(name);
@@ -771,7 +771,7 @@ static BOOL CALLBACK config_dialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LP
 				wchar_t inifil[MAX_PATH] = {0};
 				if(!inifile) {
 					inifile=inifil;
-					const char * iniDirectory = (const char*)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETINIDIRECTORY);
+					const char * iniDirectory = (const char*)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETINIDIRECTORY);
 					wchar_t name[256] = {0};
 					lstrcpyn(name,dev->devInfo.bstrName,256);
 					removebadchars(name);

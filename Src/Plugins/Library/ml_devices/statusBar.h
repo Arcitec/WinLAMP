@@ -1,5 +1,5 @@
-#ifndef _NULLSOFT_WINAMP_ML_DEVICES_STATUS_BAR_HEADER
-#define _NULLSOFT_WINAMP_ML_DEVICES_STATUS_BAR_HEADER
+#ifndef _NULLSOFT_WINLAMP_ML_DEVICES_STATUS_BAR_HEADER
+#define _NULLSOFT_WINLAMP_ML_DEVICES_STATUS_BAR_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -78,4 +78,4 @@ StatusBar_CreateWindow(unsigned long windowExStyle,
 #define STATUSBAR_MOVE_STATUS(/*HWND*/ _hwnd, /*unsigned int*/ _statusId, /*unsigned int */ _statusMove)\
 		((BOOL)SendMessageW((_hwnd), STATUSBAR_WM_MOVE_STATUS, (WPARAM)(_statusId), (LPARAM)(_statusMove)))
 
-#endif //_NULLSOFT_WINAMP_ML_DEVICES_STATUS_BAR_HEADER
+#endif //_NULLSOFT_WINLAMP_ML_DEVICES_STATUS_BAR_HEADER

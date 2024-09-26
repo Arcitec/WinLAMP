@@ -11,7 +11,7 @@
 #include "resource.h"
 #include <api/service/waservicefactory.h>
 #include "../Agave/Language/api_language.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../nu/AutoWideFn.h"
 #include <strsafe.h>
 #include "../nu/AutoWideFn.h"
@@ -20,7 +20,7 @@
 
 #define ENC_VERSION "1.08"
 
-HWND winampwnd = 0;
+HWND winlampwnd = 0;
 api_service *WASABI_API_SVC = 0;
 api_language *WASABI_API_LNG = 0;
 api_application *WASABI_API_APP = 0;
@@ -40,12 +40,12 @@ void GetLocalisationApiService(void)
 	if (!enc_fhg_HINST)
 		enc_fhg_HINST = GetMyInstance();
 
-	if(winampwnd && !WASABI_API_LNG)
+	if(winlampwnd && !WASABI_API_LNG)
 	{
 		// loader so that we can get the localisation service api for use
 		if(!WASABI_API_SVC)
 		{
-			WASABI_API_SVC = (api_service*)SendMessage(winampwnd, WM_WA_IPC, 0, IPC_GET_API_SERVICE);
+			WASABI_API_SVC = (api_service*)SendMessage(winlampwnd, WM_WA_IPC, 0, IPC_GET_API_SERVICE);
 			if (WASABI_API_SVC == (api_service*)1)
 			{
 				WASABI_API_SVC = NULL;
@@ -255,9 +255,9 @@ extern "C"
 		return 0;
 	}
 
-	void __declspec(dllexport) SetWinampHWND(HWND hwnd)
+	void __declspec(dllexport) SetWinLAMPHWND(HWND hwnd)
 	{
-		winampwnd = hwnd;
+		winlampwnd = hwnd;
 
 	}
 }

@@ -1,6 +1,6 @@
 #include "main.h"
 #include "config.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 #include "./skinnedheader.h"
 #include "./skinning.h"
 #include "./ml_imagelist.h"

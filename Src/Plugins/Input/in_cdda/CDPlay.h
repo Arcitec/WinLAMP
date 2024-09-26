@@ -15,7 +15,7 @@ public:
 	virtual void setoutputtime(int time_in_ms)=0;
 	virtual void setvolume(int _a_v, int _a_p)=0;
 
-	//called by winampGetExtendedRead_*
+	//called by winlampGetExtendedRead_*
 	virtual int open(wchar_t drive, int track) { return 1; }
 	virtual int read(char *dest, int len, int *killswitch) { return 0; }
 

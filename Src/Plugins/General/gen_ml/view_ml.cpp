@@ -3,12 +3,12 @@
 #include <windowsx.h>
 #include <time.h>
 #include <rpc.h>
-#include "../winamp/gen.h"
+#include "../winlamp/gen.h"
 #include "resource.h"
 #include "../nu/ns_wc.h"
 #include "config.h"
-#include "../winamp/ipc_pe.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/ipc_pe.h"
+#include "../winlamp/wa_dlg.h"
 
 #include "ml.h"
 #include "ml_ipc.h"
@@ -34,7 +34,7 @@
 #include "./stockobjects.h"
 #include "./service.h"
 #include "./skinnedbutton.h"
-#include "../Winamp/wasabicfg.h"
+#include "../WinLAMP/wasabicfg.h"
 #ifdef _DEBUG
 #define BETA
 #endif
@@ -60,7 +60,7 @@
 #define IDC_NAVIGATION			0x03FD // (this is the same that old versions used)
 
 
-#define MEDIALIBRARY_HELP_URL		L"https://help.winamp.com/hc/articles/8105304048660-The-Winamp-Media-Library"
+#define MEDIALIBRARY_HELP_URL		L"https://help.winlamp.com/hc/articles/8105304048660-The-WinLAMP-Media-Library"
 
 SendToMenu *main_sendtomenu;
 HMENU main_sendto_hmenu;
@@ -342,10 +342,10 @@ static void CreateCurrentView( HWND hwndDlg )
 #if 0
 #ifdef BETA
 		wchar_t pszText[ 32 ] = { 0 };
-		if ( NavItemI_GetInvariantText( hItem, pszText, 32 ) && !lstrcmpW( pszText, L"winamp_labs" ) )
+		if ( NavItemI_GetInvariantText( hItem, pszText, 32 ) && !lstrcmpW( pszText, L"winlamp_labs" ) )
 		{
 			OmService *om_service;
-			OmService::CreateInstance( SERVICE_LABS, L"Winamp Labs", &om_service );
+			OmService::CreateInstance( SERVICE_LABS, L"WinLAMP Labs", &om_service );
 
 			if ( AGAVE_OBJ_BROWSER )
 			{
@@ -530,7 +530,7 @@ static void CALLBACK OnNavCtrl_BeginDrag( HNAVCTRL hMngr, HNAVITEM hItem, POINT 
 {
 #ifdef BETA
 	wchar_t pszText[ 32 ] = { 0 };
-	if ( ( !( sneak & 4 ) ) && NavItemI_GetInvariantText( hItem, pszText, 32 ) && !lstrcmpW( pszText, L"winamp_labs" ) )
+	if ( ( !( sneak & 4 ) ) && NavItemI_GetInvariantText( hItem, pszText, 32 ) && !lstrcmpW( pszText, L"winlamp_labs" ) )
 	{
 		return;
 	}
@@ -1405,7 +1405,7 @@ INT_PTR CALLBACK dialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 				}
 				break;
 				case ID_SHOW_HELP:
-					// do nothing, just need to still F1 from Winamp
+					// do nothing, just need to still F1 from WinLAMP
 					break;
 
 			}

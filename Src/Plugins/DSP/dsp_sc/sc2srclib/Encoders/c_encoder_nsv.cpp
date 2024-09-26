@@ -14,22 +14,22 @@ C_ENCODER_NSV::C_ENCODER_NSV(int ExtInfoSize) : C_ENCODER(ExtInfoSize) {
 	CreateAudio3 = NULL;
 	ConfigAudio3 = NULL;
 	GetAudioTypes3 = NULL;
-	SetWinampHWND = NULL;
+	SetWinLAMPHWND = NULL;
 	SetConfigItem = NULL;
 	GetConfigItem = NULL;
-	winampWnd = NULL;
+	winlampWnd = NULL;
 	fourcc = 0;
 	encoder = NULL;
 }
 
-void C_ENCODER_NSV::SetEncoder(void * CreateAudio3, void * GetAudioTypes3, void * ConfigAudio3, void * SetWinampHWND, int encoderNum) {
+void C_ENCODER_NSV::SetEncoder(void * CreateAudio3, void * GetAudioTypes3, void * ConfigAudio3, void * SetWinLAMPHWND, int encoderNum) {
 	*(void **)&(this->CreateAudio3) = CreateAudio3;
 	*(void **)&(this->GetAudioTypes3) = GetAudioTypes3;
 	*(void **)&(this->ConfigAudio3) = ConfigAudio3;
-	*(void **)&(this->SetWinampHWND) = SetWinampHWND;
+	*(void **)&(this->SetWinLAMPHWND) = SetWinLAMPHWND;
 
-	if(this->SetWinampHWND) {
-		this->SetWinampHWND(winampWnd);
+	if(this->SetWinLAMPHWND) {
+		this->SetWinLAMPHWND(winlampWnd);
 	}
 
 	if(this->GetAudioTypes3) {
@@ -60,7 +60,7 @@ void C_ENCODER_NSV::Reset() {
 	Close();
 
 	if(!configfile) {
-		configfile = GetSCIniFile(winampWnd);
+		configfile = GetSCIniFile(winlampWnd);
 	}
 
 	FillConfFile(configfile);
@@ -131,7 +131,7 @@ void C_ENCODER_NSV::Configure(HWND parent, HINSTANCE hDllInstance) {
 	if(ConfigAudio3) {
 		configfourcc = fourcc;
 		if(!configfile) {
-			configfile = GetSCIniFile(winampWnd);
+			configfile = GetSCIniFile(winlampWnd);
 		}
         
 		::ConfigAudio3 = this->ConfigAudio3;

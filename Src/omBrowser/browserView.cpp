@@ -9,7 +9,7 @@
 #include "./toolbar.h"
 #include "./statusbar.h"
 #include "./curtain.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 
 #include "../Plugins/General/gen_ml/colors.h"
 
@@ -405,10 +405,10 @@ static void BrowserView_OnDestroy(HWND hwnd)
 		if (0 != (WS_VISIBLE & hostStyle))
 			SetWindowLongPtr(hHost, GWL_STYLE, hostStyle & ~WS_VISIBLE);
 		
-		HWND hWinamp;
-		if (SUCCEEDED(Plugin_GetWinampWnd(&hWinamp)))
+		HWND hWinLAMP;
+		if (SUCCEEDED(Plugin_GetWinLAMPWnd(&hWinLAMP)))
 		{
-			SetWindowLongPtr(hHost, GWLP_HWNDPARENT, (LONGX86)(LONG_PTR)hWinamp);
+			SetWindowLongPtr(hHost, GWLP_HWNDPARENT, (LONGX86)(LONG_PTR)hWinLAMP);
 		}
 		
 		if (NULL == view->browserManager || 

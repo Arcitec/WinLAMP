@@ -3,7 +3,7 @@
 #include "mbsvc.h"
 #include "main.h"
 #include "../nu/ns_wc.h"
-#include "../Winamp/buildtype.h"
+#include "../WinLAMP/buildtype.h"
 #include <api/config/items/cfgitem.h>
 #include <wa2frontend.h>
 #include <windows.h>
@@ -623,7 +623,7 @@ STDMETHODIMP BrowserWnd::GetExternal(IDispatch __RPC_FAR *__RPC_FAR *ppDispatch)
 DWORD BrowserWnd::OnGetDownlodFlags(void)
 {
 	return DLCTL_DLIMAGES | DLCTL_VIDEOS |															DLCTL_PRAGMA_NO_CACHE
-#ifdef WINAMP_FINAL_BUILD
+#ifdef WINLAMP_FINAL_BUILD
 		|DLCTL_SILENT
 #endif
 	;

@@ -1,12 +1,12 @@
 #include <precomp.h>
 /*------------------------------------------------------------------------------------------------
- Winamp 2.9/5 frontend class
+ WinLAMP 2.9/5 frontend class
 ------------------------------------------------------------------------------------------------*/
 #include <stdio.h>
 #include "main.h"
 #include "wa2frontend.h"
-#include "../winamp/wa_ipc.h"
-#include "../winamp/ipc_pe.h"
+#include "../winlamp/wa_ipc.h"
+#include "../winlamp/ipc_pe.h"
 #include "../gen_ml/ml.h"
 #include "../gen_ml/main.h"
 #include "../gen_hotkeys/wa_hotkeys.h"
@@ -14,27 +14,27 @@
 #include "resource.h"
 #include "../Agave/Language/api_language.h"
 
-#define WINAMP_EDIT_ID3                 40188
+#define WINLAMP_EDIT_ID3                 40188
 
 
-Winamp2FrontEnd wa2;
+WinLAMP2FrontEnd wa2;
 
-void Winamp2FrontEnd::init(HWND hwndParent)
+void WinLAMP2FrontEnd::init(HWND hwndParent)
 {
-	// find Winamp's HWND so we can talk to it
-	hwnd_winamp = hwndParent; //FindWindow("Winamp v1.x",NULL);
+	// find WinLAMP's HWND so we can talk to it
+	hwnd_winlamp = hwndParent; //FindWindow("WinLAMP v1.x",NULL);
 
-	// check that hwnd_winamp isnt null and that we know about this specific ipc version
+	// check that hwnd_winlamp isnt null and that we know about this specific ipc version
 	getVersion();
 
 	// more init
 	enabled = 1;
 	visible = 1;
 
-	*(void **)&export_sa_get=(void*)SendMessageW(hwnd_winamp,WM_WA_IPC,2,IPC_GETSADATAFUNC);
-	*(void **)&export_sa_setreq=(void *)SendMessageW(hwnd_winamp,WM_WA_IPC,1,IPC_GETSADATAFUNC);
-	*(void **)&export_sa_get_deprecated=(void*)SendMessageW(hwnd_winamp,WM_WA_IPC,0,IPC_GETSADATAFUNC);
-	*(void **)&export_vu_get=(void*)SendMessageW(hwnd_winamp,WM_WA_IPC,0,IPC_GETVUDATAFUNC);
+	*(void **)&export_sa_get=(void*)SendMessageW(hwnd_winlamp,WM_WA_IPC,2,IPC_GETSADATAFUNC);
+	*(void **)&export_sa_setreq=(void *)SendMessageW(hwnd_winlamp,WM_WA_IPC,1,IPC_GETSADATAFUNC);
+	*(void **)&export_sa_get_deprecated=(void*)SendMessageW(hwnd_winlamp,WM_WA_IPC,0,IPC_GETSADATAFUNC);
+	*(void **)&export_vu_get=(void*)SendMessageW(hwnd_winlamp,WM_WA_IPC,0,IPC_GETVUDATAFUNC);
 	if (reinterpret_cast<intptr_t>(export_vu_get) == -1)
 		export_vu_get=0;
 
@@ -42,7 +42,7 @@ void Winamp2FrontEnd::init(HWND hwndParent)
 }
 
 //-----------------------------------------------------------------------------------------------
-Winamp2FrontEnd::Winamp2FrontEnd()
+WinLAMP2FrontEnd::WinLAMP2FrontEnd()
 {
 	m_version = (char *)malloc(64);
 	*m_version = 0;
@@ -63,7 +63,7 @@ Winamp2FrontEnd::Winamp2FrontEnd()
 	video_ideal_height = -1;
 	video_ideal_width = -1;
 
-	hwnd_winamp = hwnd_playlist = NULL;
+	hwnd_winlamp = hwnd_playlist = NULL;
 
 	export_sa_get = 0;
 	export_sa_setreq = 0;
@@ -72,31 +72,31 @@ Winamp2FrontEnd::Winamp2FrontEnd()
 }
 
 //-----------------------------------------------------------------------------------------------
-Winamp2FrontEnd::~Winamp2FrontEnd()
+WinLAMP2FrontEnd::~WinLAMP2FrontEnd()
 {
 	setWindowsVisible(1);
 	free(m_version);
 }
 
 //-----------------------------------------------------------------------------------------------
-const char *Winamp2FrontEnd::getVersion()
+const char *WinLAMP2FrontEnd::getVersion()
 {
-	if (hwnd_winamp == NULL)
+	if (hwnd_winlamp == NULL)
 	{
 		char err[16] = {0};
-		MessageBoxA(NULL, WASABI_API_LNGSTRING(IDS_COULD_NOT_FIND_WINAMP),
+		MessageBoxA(NULL, WASABI_API_LNGSTRING(IDS_COULD_NOT_FIND_WINLAMP),
 		           WASABI_API_LNGSTRING_BUF(IDS_ERROR,err,16), 0);
-		m_version = "Winamp not found";
+		m_version = "WinLAMP not found";
 		return m_version;
 	}
 
-	if (hwnd_winamp == NULL)
+	if (hwnd_winlamp == NULL)
 		return NULL;
 
 	if (*m_version == 0)
 	{
 		// get version number
-		int version = SendMessageW(hwnd_winamp,WM_WA_IPC,0,IPC_GETVERSION);
+		int version = SendMessageW(hwnd_winlamp,WM_WA_IPC,0,IPC_GETVERSION);
 		// check that we support this version of the ipc
 		//assert(((version & 0xFF) >> 8) > 0x20);
 		// format the version number into a string
@@ -106,9 +106,9 @@ const char *Winamp2FrontEnd::getVersion()
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::userButton(int button, int modifier)
+void WinLAMP2FrontEnd::userButton(int button, int modifier)
 {
-	if (!IsWindow(hwnd_winamp)) return;
+	if (!IsWindow(hwnd_winlamp)) return;
 	int mod = 0;
 	switch (modifier)
 	{
@@ -118,64 +118,64 @@ void Winamp2FrontEnd::userButton(int button, int modifier)
 	}
 	switch (button)
 	{
-	case WA2_USERBUTTON_PREV: SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_BUTTON1 + mod,0); break;
-	case WA2_USERBUTTON_PLAY: SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_BUTTON2 + mod,0); break;
-	case WA2_USERBUTTON_PAUSE: SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_BUTTON3 + mod,0); break;
-	case WA2_USERBUTTON_STOP: SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_BUTTON4 + mod,0); break;
-	case WA2_USERBUTTON_NEXT: SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_BUTTON5 + mod,0); break;
+	case WA2_USERBUTTON_PREV: SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_BUTTON1 + mod,0); break;
+	case WA2_USERBUTTON_PLAY: SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_BUTTON2 + mod,0); break;
+	case WA2_USERBUTTON_PAUSE: SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_BUTTON3 + mod,0); break;
+	case WA2_USERBUTTON_STOP: SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_BUTTON4 + mod,0); break;
+	case WA2_USERBUTTON_NEXT: SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_BUTTON5 + mod,0); break;
 	}
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::setOnTop(int ontop)
+void WinLAMP2FrontEnd::setOnTop(int ontop)
 {
 	if (!!ontop == !!isOnTop()) return;
 	toggleOnTop();
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::toggleOnTop()
+void WinLAMP2FrontEnd::toggleOnTop()
 {
-	SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_OPTIONS_AOT, 0);
+	SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_OPTIONS_AOT, 0);
 }
 
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::enqueueFile(const wchar_t *file)
+void WinLAMP2FrontEnd::enqueueFile(const wchar_t *file)
 {
-	if (!IsWindow(hwnd_winamp)) return;
+	if (!IsWindow(hwnd_winlamp)) return;
 	COPYDATASTRUCT cds;
 	cds.dwData = IPC_PLAYFILEW;
 	cds.lpData = (void *)file;
 	cds.cbData = sizeof(wchar_t) * (wcslen(file)+1);
-	SendMessageW(hwnd_winamp,WM_COPYDATA,(WPARAM)NULL,(LPARAM)&cds);
+	SendMessageW(hwnd_winlamp,WM_COPYDATA,(WPARAM)NULL,(LPARAM)&cds);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::isPlaying()
+int WinLAMP2FrontEnd::isPlaying()
 {
-	if (!IsWindow(hwnd_winamp)) return 0;
-	return SendMessageW(hwnd_winamp,WM_WA_IPC,0,IPC_ISPLAYING) == 1;
+	if (!IsWindow(hwnd_winlamp)) return 0;
+	return SendMessageW(hwnd_winlamp,WM_WA_IPC,0,IPC_ISPLAYING) == 1;
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::isPaused()
+int WinLAMP2FrontEnd::isPaused()
 {
-	if (!IsWindow(hwnd_winamp)) return 0;
-	return SendMessageW(hwnd_winamp,WM_WA_IPC,0,IPC_ISPLAYING) == 3;
+	if (!IsWindow(hwnd_winlamp)) return 0;
+	return SendMessageW(hwnd_winlamp,WM_WA_IPC,0,IPC_ISPLAYING) == 3;
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::isStopped()
+int WinLAMP2FrontEnd::isStopped()
 {
-	if (!IsWindow(hwnd_winamp)) return 1;
-	return SendMessageW(hwnd_winamp,WM_WA_IPC,0,IPC_ISPLAYING) == 0;
+	if (!IsWindow(hwnd_winlamp)) return 1;
+	return SendMessageW(hwnd_winlamp,WM_WA_IPC,0,IPC_ISPLAYING) == 0;
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::getPosition()
+int WinLAMP2FrontEnd::getPosition()
 {
-	if ( !IsWindow( hwnd_winamp ) )
+	if ( !IsWindow( hwnd_winlamp ) )
 		return 0;
 
 	if ( got_pos_cache && GetTickCount() < cached_pos_time + 20 )
@@ -184,19 +184,19 @@ int Winamp2FrontEnd::getPosition()
 	got_pos_cache = 1;
 	cached_pos_time = GetTickCount();
 
-	return cached_pos = SendMessageW( hwnd_winamp, WM_WA_IPC, 0, IPC_GETOUTPUTTIME );
+	return cached_pos = SendMessageW( hwnd_winlamp, WM_WA_IPC, 0, IPC_GETOUTPUTTIME );
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::getLength()
+int WinLAMP2FrontEnd::getLength()
 {
 	if ( got_length_cache && GetTickCount() < cached_length_time + 3000 )
 		return cached_length;
 
-	if ( !IsWindow( hwnd_winamp ) )
+	if ( !IsWindow( hwnd_winlamp ) )
 		return 0;
 
-	int l = SendMessageW( hwnd_winamp, WM_WA_IPC, 1, IPC_GETOUTPUTTIME );
+	int l = SendMessageW( hwnd_winlamp, WM_WA_IPC, 1, IPC_GETOUTPUTTIME );
 
 	if ( l == -1 )
 		cached_length = -1;
@@ -210,120 +210,120 @@ int Winamp2FrontEnd::getLength()
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::seekTo(int ms)
+int WinLAMP2FrontEnd::seekTo(int ms)
 {
 	got_pos_cache = 0;
-	if (!IsWindow(hwnd_winamp)) return 0;
-	return SendMessageW(hwnd_winamp,WM_WA_IPC,ms,IPC_JUMPTOTIME);
+	if (!IsWindow(hwnd_winlamp)) return 0;
+	return SendMessageW(hwnd_winlamp,WM_WA_IPC,ms,IPC_JUMPTOTIME);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::setVolume(int v)
+void WinLAMP2FrontEnd::setVolume(int v)
 {
-	if (!IsWindow(hwnd_winamp)) return;
-	SendMessageW(hwnd_winamp,WM_WA_IPC,v,IPC_SETVOLUME);
+	if (!IsWindow(hwnd_winlamp)) return;
+	SendMessageW(hwnd_winlamp,WM_WA_IPC,v,IPC_SETVOLUME);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::getVolume()
+int WinLAMP2FrontEnd::getVolume()
 {
-	if (!IsWindow(hwnd_winamp)) return 255;
-	return SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)-666,IPC_SETVOLUME);
+	if (!IsWindow(hwnd_winlamp)) return 255;
+	return SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)-666,IPC_SETVOLUME);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::setPanning(int p)
+void WinLAMP2FrontEnd::setPanning(int p)
 {
-	if (!IsWindow(hwnd_winamp)) return;
-	SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)p,IPC_SETPANNING);
+	if (!IsWindow(hwnd_winlamp)) return;
+	SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)p,IPC_SETPANNING);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::getPanning()
+int WinLAMP2FrontEnd::getPanning()
 {
-	if (!IsWindow(hwnd_winamp)) return 0;
-	return SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)-666,IPC_SETPANNING);
+	if (!IsWindow(hwnd_winlamp)) return 0;
+	return SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)-666,IPC_SETPANNING);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::getInfo( int what )
+int WinLAMP2FrontEnd::getInfo( int what )
 {
-	if ( !IsWindow( hwnd_winamp ) )
+	if ( !IsWindow( hwnd_winlamp ) )
 		return 0;
 
-	return SendMessageW( hwnd_winamp, WM_WA_IPC, (WPARAM)what, IPC_GETINFO );
+	return SendMessageW( hwnd_winlamp, WM_WA_IPC, (WPARAM)what, IPC_GETINFO );
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::getEqData(int what)
+int WinLAMP2FrontEnd::getEqData(int what)
 {
-	if (!IsWindow(hwnd_winamp)) return 0;
-	return SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)what,IPC_GETEQDATA);
+	if (!IsWindow(hwnd_winlamp)) return 0;
+	return SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)what,IPC_GETEQDATA);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::setEqData(int what, int val)
+void WinLAMP2FrontEnd::setEqData(int what, int val)
 {
-	if (!IsWindow(hwnd_winamp)) return;
-	//SendMessageW(hwnd_winamp,WM_WA_IPC,what,IPC_GETEQDATA); // f this :)
-	SendMessageW(hwnd_winamp,WM_WA_IPC,0xDB000000 | ((what&0xFF) << 16) | (val&0xFFFF),IPC_SETEQDATA);
+	if (!IsWindow(hwnd_winlamp)) return;
+	//SendMessageW(hwnd_winlamp,WM_WA_IPC,what,IPC_GETEQDATA); // f this :)
+	SendMessageW(hwnd_winlamp,WM_WA_IPC,0xDB000000 | ((what&0xFF) << 16) | (val&0xFFFF),IPC_SETEQDATA);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::getShuffle()
+int WinLAMP2FrontEnd::getShuffle()
 {
-	if (!IsWindow(hwnd_winamp)) return 0;
-	return SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)0,IPC_GET_SHUFFLE);
+	if (!IsWindow(hwnd_winlamp)) return 0;
+	return SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)0,IPC_GET_SHUFFLE);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::getRepeat()
+int WinLAMP2FrontEnd::getRepeat()
 {
-	if (!IsWindow(hwnd_winamp)) return 0;
-	return SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)0,IPC_GET_REPEAT);
+	if (!IsWindow(hwnd_winlamp)) return 0;
+	return SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)0,IPC_GET_REPEAT);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::setShuffle(int shuffle)
+void WinLAMP2FrontEnd::setShuffle(int shuffle)
 {
-	if (!IsWindow(hwnd_winamp)) return;
-	SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)shuffle,IPC_SET_SHUFFLE);
+	if (!IsWindow(hwnd_winlamp)) return;
+	SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)shuffle,IPC_SET_SHUFFLE);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::setRepeat(int repeat)
+void WinLAMP2FrontEnd::setRepeat(int repeat)
 {
-	if (!IsWindow(hwnd_winamp)) return;
-	SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)repeat,IPC_SET_REPEAT);
+	if (!IsWindow(hwnd_winlamp)) return;
+	SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)repeat,IPC_SET_REPEAT);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::setManualPlaylistAdvance(int manual)
+void WinLAMP2FrontEnd::setManualPlaylistAdvance(int manual)
 {
-	if (!IsWindow(hwnd_winamp)) return;
-	SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)manual,IPC_SET_MANUALPLADVANCE);
+	if (!IsWindow(hwnd_winlamp)) return;
+	SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)manual,IPC_SET_MANUALPLADVANCE);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::getManualPlaylistAdvance()
+int WinLAMP2FrontEnd::getManualPlaylistAdvance()
 {
-	if (!IsWindow(hwnd_winamp)) return 0;
-	return SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)0,IPC_GET_MANUALPLADVANCE);
+	if (!IsWindow(hwnd_winlamp)) return 0;
+	return SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)0,IPC_GET_MANUALPLADVANCE);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::enableWindows( int enabled )
+void WinLAMP2FrontEnd::enableWindows( int enabled )
 {
-	if ( !IsWindow( hwnd_winamp ) )
+	if ( !IsWindow( hwnd_winlamp ) )
 		return;
 
-	SendMessageW( hwnd_winamp, WM_WA_IPC, enabled ? 0 : 0xdeadbeef, IPC_ENABLEDISABLE_ALL_WINDOWS );
+	SendMessageW( hwnd_winlamp, WM_WA_IPC, enabled ? 0 : 0xdeadbeef, IPC_ENABLEDISABLE_ALL_WINDOWS );
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::areWindowsEnabled()
+int WinLAMP2FrontEnd::areWindowsEnabled()
 {
-	if ( !IsWindow( hwnd_winamp ) )
+	if ( !IsWindow( hwnd_winlamp ) )
 		return 1;
 
 	return 1; // todo !!
@@ -341,41 +341,41 @@ int _IsWindowVisible( HWND w )
 	return !( r.left >= 3000 && r.top >= 3000 );
 }
 
-int Winamp2FrontEnd::isMainWindowVisible()
+int WinLAMP2FrontEnd::isMainWindowVisible()
 {
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)0, IPC_ISMAINWNDVISIBLE);
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)0, IPC_ISMAINWNDVISIBLE);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::setWindowsVisible(int v)
+void WinLAMP2FrontEnd::setWindowsVisible(int v)
 {
 	if (visible == v)
 		return;
 
-	if (!IsWindow(hwnd_winamp))
+	if (!IsWindow(hwnd_winlamp))
 		return;
 
 	if (v)
 	{
 		if (saved_main && ! isMainWindowVisible())
-			SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_MAIN_WINDOW, 0);
+			SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_MAIN_WINDOW, 0);
 		if (saved_eq && !isWindowVisible(IPC_GETWND_EQ))
-			SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_OPTIONS_EQ, 0);
+			SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_OPTIONS_EQ, 0);
 #ifdef MINIBROWSER_SUPPORT
 		if (saved_mb && !isWindowVisible(IPC_GETWND_MB))
-			SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_OPTIONS_MINIBROWSER, 0);
+			SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_OPTIONS_MINIBROWSER, 0);
 #endif
 		if (saved_pe && !isWindowVisible(IPC_GETWND_PE))
-			SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_OPTIONS_PLEDIT, 0);
+			SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_OPTIONS_PLEDIT, 0);
 		if (saved_video && !isWindowVisible(IPC_GETWND_VIDEO))
-			SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_OPTIONS_VIDEO, 0);
+			SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_OPTIONS_VIDEO, 0);
 	}
 	else
 	{
 		if (isMainWindowVisible())
 		{
 			saved_main = 1;
-			SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_MAIN_WINDOW, 0);
+			SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_MAIN_WINDOW, 0);
 		}
 		else
 			saved_main = 0;
@@ -383,7 +383,7 @@ void Winamp2FrontEnd::setWindowsVisible(int v)
 		if (isWindowVisible(IPC_GETWND_EQ))
 		{
 			saved_eq = 1;
-			SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_OPTIONS_EQ, 0);
+			SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_OPTIONS_EQ, 0);
 		}
 		else
 			saved_eq = 0;
@@ -392,14 +392,14 @@ void Winamp2FrontEnd::setWindowsVisible(int v)
 		if (isWindowVisible(IPC_GETWND_MB))
 		{
 			saved_mb = 1;
-			SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_OPTIONS_MINIBROWSER, 0);
+			SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_OPTIONS_MINIBROWSER, 0);
 		}
 		else saved_mb = 0;
 #endif
 		if (isWindowVisible(IPC_GETWND_PE))
 		{
 			saved_pe = 1;
-			SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_OPTIONS_PLEDIT, 0);
+			SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_OPTIONS_PLEDIT, 0);
 		}
 		else
 			saved_pe = 0;
@@ -407,7 +407,7 @@ void Winamp2FrontEnd::setWindowsVisible(int v)
 		if (isWindowVisible(IPC_GETWND_VIDEO))
 		{
 			saved_video = 1;
-			SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_OPTIONS_VIDEO, 0);
+			SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_OPTIONS_VIDEO, 0);
 		}
 		else saved_video = 0;
 	}
@@ -415,323 +415,323 @@ void Winamp2FrontEnd::setWindowsVisible(int v)
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::areWindowsVisible()
+int WinLAMP2FrontEnd::areWindowsVisible()
 {
-	if (!IsWindow(hwnd_winamp))
+	if (!IsWindow(hwnd_winlamp))
 		return 1;
 
 	return visible;
 }
 
 //-----------------------------------------------------------------------------------------------
-HWND Winamp2FrontEnd::getWnd(int wnd)
+HWND WinLAMP2FrontEnd::getWnd(int wnd)
 {
-	if (!IsWindow(hwnd_winamp))
+	if (!IsWindow(hwnd_winlamp))
 		return NULL;
 
-	return (HWND)SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)wnd,IPC_GETWND);
+	return (HWND)SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)wnd,IPC_GETWND);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::getPlaylistLength()
+int WinLAMP2FrontEnd::getPlaylistLength()
 {
-	if (!IsWindow(hwnd_winamp)) return 0;
-	return SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)0,IPC_GETLISTLENGTH);
+	if (!IsWindow(hwnd_winlamp)) return 0;
+	return SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)0,IPC_GETLISTLENGTH);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::getCurPlaylistEntry()
+int WinLAMP2FrontEnd::getCurPlaylistEntry()
 {
-	if (!IsWindow(hwnd_winamp)) return 0;
-	return SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)0,IPC_GETLISTPOS);
+	if (!IsWindow(hwnd_winlamp)) return 0;
+	return SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)0,IPC_GETLISTPOS);
 }
 
 //-----------------------------------------------------------------------------------------------
-const wchar_t *Winamp2FrontEnd::getTitle(int plentry)
+const wchar_t *WinLAMP2FrontEnd::getTitle(int plentry)
 {
-	if (!IsWindow(hwnd_winamp)) return NULL;
-	return (const wchar_t *)SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)plentry,IPC_GETPLAYLISTTITLEW);
+	if (!IsWindow(hwnd_winlamp)) return NULL;
+	return (const wchar_t *)SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)plentry,IPC_GETPLAYLISTTITLEW);
 }
 
 //-----------------------------------------------------------------------------------------------
-const char *Winamp2FrontEnd::getFile(int plentry)
+const char *WinLAMP2FrontEnd::getFile(int plentry)
 {
-	if (!IsWindow(hwnd_winamp)) return NULL;
-	return (const char *)SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)plentry,IPC_GETPLAYLISTFILE);
+	if (!IsWindow(hwnd_winlamp)) return NULL;
+	return (const char *)SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)plentry,IPC_GETPLAYLISTFILE);
 }
 
-const wchar_t *Winamp2FrontEnd::getFileW(int plentry)
+const wchar_t *WinLAMP2FrontEnd::getFileW(int plentry)
 {
-	if (!IsWindow(hwnd_winamp)) return NULL;
-	return (const wchar_t *)SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)plentry,IPC_GETPLAYLISTFILEW);
-}
-
-//-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::playAudioCD(int cd)
-{
-	if (!IsWindow(hwnd_winamp)) return;
-	SendMessageW(hwnd_winamp,WM_COMMAND,ID_MAIN_PLAY_AUDIOCD1+cd,0);
+	if (!IsWindow(hwnd_winlamp)) return NULL;
+	return (const wchar_t *)SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)plentry,IPC_GETPLAYLISTFILEW);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::openFileDialog(HWND w)
+void WinLAMP2FrontEnd::playAudioCD(int cd)
 {
-	if (!IsWindow(hwnd_winamp)) return;
-	SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)w, IPC_OPENFILEBOX);
+	if (!IsWindow(hwnd_winlamp)) return;
+	SendMessageW(hwnd_winlamp,WM_COMMAND,ID_MAIN_PLAY_AUDIOCD1+cd,0);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::openUrlDialog(HWND w)
+void WinLAMP2FrontEnd::openFileDialog(HWND w)
 {
-	if (!IsWindow(hwnd_winamp)) return;
-	SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_BUTTON2_CTRL, 0);
+	if (!IsWindow(hwnd_winlamp)) return;
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)w, IPC_OPENFILEBOX);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::openDirectoryDialog(HWND w)
+void WinLAMP2FrontEnd::openUrlDialog(HWND w)
 {
-	if (!IsWindow(hwnd_winamp)) return;
-	SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)w, IPC_OPENDIRBOX);
+	if (!IsWindow(hwnd_winlamp)) return;
+	SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_BUTTON2_CTRL, 0);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::ejectPopupMenu()
+void WinLAMP2FrontEnd::openDirectoryDialog(HWND w)
 {
-	if (!IsWindow(hwnd_winamp)) return;
-	SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)0, IPC_SPAWNBUTTONPOPUP);
+	if (!IsWindow(hwnd_winlamp)) return;
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)w, IPC_OPENDIRBOX);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::previousPopupMenu()
+void WinLAMP2FrontEnd::ejectPopupMenu()
 {
-	if (!IsWindow(hwnd_winamp)) return;
-	SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)1, IPC_SPAWNBUTTONPOPUP);
+	if (!IsWindow(hwnd_winlamp)) return;
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)0, IPC_SPAWNBUTTONPOPUP);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::nextPopupMenu()
+void WinLAMP2FrontEnd::previousPopupMenu()
 {
-	if (!IsWindow(hwnd_winamp)) return;
-	SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)2, IPC_SPAWNBUTTONPOPUP);
+	if (!IsWindow(hwnd_winlamp)) return;
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)1, IPC_SPAWNBUTTONPOPUP);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::pausePopupMenu()
+void WinLAMP2FrontEnd::nextPopupMenu()
 {
-	if (!IsWindow(hwnd_winamp)) return;
-	SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)3, IPC_SPAWNBUTTONPOPUP);
+	if (!IsWindow(hwnd_winlamp)) return;
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)2, IPC_SPAWNBUTTONPOPUP);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::playPopupMenu()
+void WinLAMP2FrontEnd::pausePopupMenu()
 {
-	if (!IsWindow(hwnd_winamp)) return;
-	SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)4, IPC_SPAWNBUTTONPOPUP);
+	if (!IsWindow(hwnd_winlamp)) return;
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)3, IPC_SPAWNBUTTONPOPUP);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::stopPopupMenu()
+void WinLAMP2FrontEnd::playPopupMenu()
 {
-	if (!IsWindow(hwnd_winamp)) return;
-	SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)5, IPC_SPAWNBUTTONPOPUP);
+	if (!IsWindow(hwnd_winlamp)) return;
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)4, IPC_SPAWNBUTTONPOPUP);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::setDialogBoxParent(HWND w)
+void WinLAMP2FrontEnd::stopPopupMenu()
 {
-	if (!IsWindow(hwnd_winamp)) return;
-	SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)w, IPC_SETDIALOGBOXPARENT);
-}
-
-void Winamp2FrontEnd::updateDialogBoxParent(HWND w)
-{
-	if (!IsWindow(hwnd_winamp)) return;
-	SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)w, IPC_UPDATEDIALOGBOXPARENT);
+	if (!IsWindow(hwnd_winlamp)) return;
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)5, IPC_SPAWNBUTTONPOPUP);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::isOnTop()
+void WinLAMP2FrontEnd::setDialogBoxParent(HWND w)
 {
-	if (!IsWindow(hwnd_winamp)) return 0;
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_IS_AOT);
+	if (!IsWindow(hwnd_winlamp)) return;
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)w, IPC_SETDIALOGBOXPARENT);
+}
+
+void WinLAMP2FrontEnd::updateDialogBoxParent(HWND w)
+{
+	if (!IsWindow(hwnd_winlamp)) return;
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)w, IPC_UPDATEDIALOGBOXPARENT);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::triggerPopupMenu(int x, int y)
+int WinLAMP2FrontEnd::isOnTop()
 {
-	if (!IsWindow(hwnd_winamp)) return;
-	HMENU hMenu = (HMENU)SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)0,IPC_GET_HMENU);
-	DoTrackPopup(hMenu, TPM_RIGHTBUTTON, x, y, hwnd_winamp);
+	if (!IsWindow(hwnd_winlamp)) return 0;
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_IS_AOT);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::triggerEQPresetMenu(int x, int y)
+void WinLAMP2FrontEnd::triggerPopupMenu(int x, int y)
 {
-	waSpawnMenuParms p = {hwnd_winamp, x, y};
-	SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNEQPRESETMENU);
+	if (!IsWindow(hwnd_winlamp)) return;
+	HMENU hMenu = (HMENU)SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)0,IPC_GET_HMENU);
+	DoTrackPopup(hMenu, TPM_RIGHTBUTTON, x, y, hwnd_winlamp);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::triggerFileMenu(int x, int y, int width, int height)
+void WinLAMP2FrontEnd::triggerEQPresetMenu(int x, int y)
 {
-	waSpawnMenuParms2 p = {hwnd_winamp, x, y, width, height};
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNFILEMENU);
+	waSpawnMenuParms p = {hwnd_winlamp, x, y};
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNEQPRESETMENU);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::triggerPlayMenu(int x, int y, int width, int height)
+int WinLAMP2FrontEnd::triggerFileMenu(int x, int y, int width, int height)
 {
-	waSpawnMenuParms2 p = {hwnd_winamp, x, y, width, height};
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNPLAYMENU);
+	waSpawnMenuParms2 p = {hwnd_winlamp, x, y, width, height};
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNFILEMENU);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::triggerOptionsMenu(int x, int y, int width, int height)
+int WinLAMP2FrontEnd::triggerPlayMenu(int x, int y, int width, int height)
 {
-	waSpawnMenuParms2 p = {hwnd_winamp, x, y, width, height};
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNOPTIONSMENU);
+	waSpawnMenuParms2 p = {hwnd_winlamp, x, y, width, height};
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNPLAYMENU);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::triggerWindowsMenu(int x, int y, int width, int height)
+int WinLAMP2FrontEnd::triggerOptionsMenu(int x, int y, int width, int height)
 {
-	waSpawnMenuParms2 p = {hwnd_winamp, x, y, width, height};
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNWINDOWSMENU);
+	waSpawnMenuParms2 p = {hwnd_winlamp, x, y, width, height};
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNOPTIONSMENU);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::triggerHelpMenu(int x, int y, int width, int height)
+int WinLAMP2FrontEnd::triggerWindowsMenu(int x, int y, int width, int height)
 {
-	waSpawnMenuParms2 p = {hwnd_winamp, x, y, width, height};
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNHELPMENU);
+	waSpawnMenuParms2 p = {hwnd_winlamp, x, y, width, height};
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNWINDOWSMENU);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::triggerPEFileMenu(int x, int y, int width, int height)
+int WinLAMP2FrontEnd::triggerHelpMenu(int x, int y, int width, int height)
 {
-	int IPC_GETMLWINDOW=SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)&"LibraryGetWnd",IPC_REGISTER_WINAMP_IPCMESSAGE);
-	if (IPC_GETMLWINDOW > 65536) SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)-1, IPC_GETMLWINDOW);
-	waSpawnMenuParms2 p = {hwnd_winamp, x, y, width, height};
+	waSpawnMenuParms2 p = {hwnd_winlamp, x, y, width, height};
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNHELPMENU);
+}
+
+//-----------------------------------------------------------------------------------------------
+int WinLAMP2FrontEnd::triggerPEFileMenu(int x, int y, int width, int height)
+{
+	int IPC_GETMLWINDOW=SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)&"LibraryGetWnd",IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	if (IPC_GETMLWINDOW > 65536) SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)-1, IPC_GETMLWINDOW);
+	waSpawnMenuParms2 p = {hwnd_winlamp, x, y, width, height};
 	p.wnd = getWnd(IPC_GETWND_PE);
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNPEFILEMENU);
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNPEFILEMENU);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::triggerPEPlaylistMenu(int x, int y, int width, int height)
+int WinLAMP2FrontEnd::triggerPEPlaylistMenu(int x, int y, int width, int height)
 {
-	waSpawnMenuParms2 p = {hwnd_winamp, x, y, width, height};
+	waSpawnMenuParms2 p = {hwnd_winlamp, x, y, width, height};
 	p.wnd = getWnd(IPC_GETWND_PE);
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNPEPLAYLISTMENU);
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNPEPLAYLISTMENU);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::triggerPESortMenu(int x, int y, int width, int height)
+int WinLAMP2FrontEnd::triggerPESortMenu(int x, int y, int width, int height)
 {
-	waSpawnMenuParms2 p = {hwnd_winamp, x, y, width, height};
+	waSpawnMenuParms2 p = {hwnd_winlamp, x, y, width, height};
 	p.wnd = getWnd(IPC_GETWND_PE);
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNPESORTMENU);
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNPESORTMENU);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::triggerPEHelpMenu(int x, int y, int width, int height)
+int WinLAMP2FrontEnd::triggerPEHelpMenu(int x, int y, int width, int height)
 {
-	waSpawnMenuParms2 p = {hwnd_winamp, x, y, width, height};
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNPEHELPMENU);
+	waSpawnMenuParms2 p = {hwnd_winlamp, x, y, width, height};
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNPEHELPMENU);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::triggerPEListOfListsMenu(int x, int y)
+int WinLAMP2FrontEnd::triggerPEListOfListsMenu(int x, int y)
 {
-	int IPC_GETMLWINDOW=SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)&"LibraryGetWnd",IPC_REGISTER_WINAMP_IPCMESSAGE);
-	if (IPC_GETMLWINDOW > 65536) SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)-1, IPC_GETMLWINDOW);
-	waSpawnMenuParms p = {hwnd_winamp, x, y};
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNPELISTOFPLAYLISTS);
+	int IPC_GETMLWINDOW=SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)&"LibraryGetWnd",IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	if (IPC_GETMLWINDOW > 65536) SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)-1, IPC_GETMLWINDOW);
+	waSpawnMenuParms p = {hwnd_winlamp, x, y};
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNPELISTOFPLAYLISTS);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::triggerMLFileMenu(int x, int y, int width, int height)
+int WinLAMP2FrontEnd::triggerMLFileMenu(int x, int y, int width, int height)
 {
-	waSpawnMenuParms2 p = {hwnd_winamp, x, y, width, height};
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNMLFILEMENU);
+	waSpawnMenuParms2 p = {hwnd_winlamp, x, y, width, height};
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNMLFILEMENU);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::triggerMLViewMenu(int x, int y, int width, int height)
+int WinLAMP2FrontEnd::triggerMLViewMenu(int x, int y, int width, int height)
 {
-	waSpawnMenuParms2 p = {hwnd_winamp, x, y, width, height};
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNMLVIEWMENU);
+	waSpawnMenuParms2 p = {hwnd_winlamp, x, y, width, height};
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNMLVIEWMENU);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::triggerMLHelpMenu(int x, int y, int width, int height)
+int WinLAMP2FrontEnd::triggerMLHelpMenu(int x, int y, int width, int height)
 {
-	waSpawnMenuParms2 p = {hwnd_winamp, x, y, width, height};
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNMLHELPMENU);
+	waSpawnMenuParms2 p = {hwnd_winlamp, x, y, width, height};
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)&p, IPC_SPAWNMLHELPMENU);
 }
 
 //-----------------------------------------------------------------------------------------------
-HMENU Winamp2FrontEnd::getPopupMenu()
+HMENU WinLAMP2FrontEnd::getPopupMenu()
 {
-	if (!IsWindow(hwnd_winamp)) return NULL;
-	return (HMENU)SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)0,IPC_GET_HMENU);
+	if (!IsWindow(hwnd_winlamp)) return NULL;
+	return (HMENU)SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)0,IPC_GET_HMENU);
 }
 
 //-----------------------------------------------------------------------------------------------
-HMENU Winamp2FrontEnd::getTopMenu()
+HMENU WinLAMP2FrontEnd::getTopMenu()
 {
-	if (!IsWindow(hwnd_winamp)) return NULL;
-	return (HMENU)SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)-1,IPC_GET_HMENU);
+	if (!IsWindow(hwnd_winlamp)) return NULL;
+	return (HMENU)SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)-1,IPC_GET_HMENU);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::adjustOptionsPopupMenu(int direction)
+int WinLAMP2FrontEnd::adjustOptionsPopupMenu(int direction)
 {
-	if (!IsWindow(hwnd_winamp)) return 0;
-	return SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)direction,IPC_ADJUST_OPTIONSMENUPOS);
+	if (!IsWindow(hwnd_winlamp)) return 0;
+	return SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)direction,IPC_ADJUST_OPTIONSMENUPOS);
 }
 
 //-----------------------------------------------------------------------------------------------
-HMENU Winamp2FrontEnd::getMenuBarMenu(int which)
+HMENU WinLAMP2FrontEnd::getMenuBarMenu(int which)
 {
-	if (!IsWindow(hwnd_winamp)) return NULL;
-	return (HMENU)SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)which+1,IPC_GET_HMENU);
+	if (!IsWindow(hwnd_winlamp)) return NULL;
+	return (HMENU)SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)which+1,IPC_GET_HMENU);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::adjustFFWindowsMenu(int direction)
+int WinLAMP2FrontEnd::adjustFFWindowsMenu(int direction)
 {
-	if (!IsWindow(hwnd_winamp)) return 0;
-	return SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)direction,IPC_ADJUST_FFWINDOWSMENUPOS);
+	if (!IsWindow(hwnd_winlamp)) return 0;
+	return SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)direction,IPC_ADJUST_FFWINDOWSMENUPOS);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::adjustFFOptionsMenu(int direction)
+int WinLAMP2FrontEnd::adjustFFOptionsMenu(int direction)
 {
-	if (!IsWindow(hwnd_winamp)) return 0;
-	return SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)direction,IPC_ADJUST_FFOPTIONSMENUPOS);
+	if (!IsWindow(hwnd_winlamp)) return 0;
+	return SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)direction,IPC_ADJUST_FFOPTIONSMENUPOS);
 }
 
 //-----------------------------------------------------------------------------------------------
-HWND Winamp2FrontEnd::getMainWindow()
+HWND WinLAMP2FrontEnd::getMainWindow()
 {
-	return hwnd_winamp;
+	return hwnd_winlamp;
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::quit()
+void WinLAMP2FrontEnd::quit()
 {
-	if (!IsWindow(hwnd_winamp)) return;
-	SendMessageW(hwnd_winamp,WM_CLOSE,0,0);
+	if (!IsWindow(hwnd_winlamp)) return;
+	SendMessageW(hwnd_winlamp,WM_CLOSE,0,0);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::isWindowVisible(intptr_t which)
+int WinLAMP2FrontEnd::isWindowVisible(intptr_t which)
 {
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, which, IPC_ISWNDVISIBLE);
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, which, IPC_ISWNDVISIBLE);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::setWindowVisible(intptr_t which, int visible)
+void WinLAMP2FrontEnd::setWindowVisible(intptr_t which, int visible)
 {
 	int state = isWindowVisible(which);
 	if (!state == !visible) return;
@@ -740,109 +740,109 @@ void Winamp2FrontEnd::setWindowVisible(intptr_t which, int visible)
 	{
 	case IPC_GETWND_EQ:
 		DebugStringW(L"Showing EQ!!\n");
-		id = WINAMP_OPTIONS_EQ;
+		id = WINLAMP_OPTIONS_EQ;
 		break;
 	case IPC_GETWND_PE:
-		id = WINAMP_OPTIONS_PLEDIT;
+		id = WINLAMP_OPTIONS_PLEDIT;
 		break;
 #ifdef MINIBROWSER_SUPPORT
 	case IPC_GETWND_MB:
-		id = WINAMP_OPTIONS_MINIBROWSER;
+		id = WINLAMP_OPTIONS_MINIBROWSER;
 		break;
 #endif
 	case IPC_GETWND_VIDEO:
-		id = WINAMP_OPTIONS_VIDEO;
+		id = WINLAMP_OPTIONS_VIDEO;
 		break;
 	}
-	SendMessageW(hwnd_winamp, WM_COMMAND, id, 0);
+	SendMessageW(hwnd_winlamp, WM_COMMAND, id, 0);
 }
 
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::sendPlCmd(int which, int x, int y, int menu_align_flag)
+void WinLAMP2FrontEnd::sendPlCmd(int which, int x, int y, int menu_align_flag)
 {
 	windowCommand wc = {which, x, y, menu_align_flag};
-	SendMessageW(hwnd_winamp, WM_WA_IPC, (intptr_t)&wc, IPC_PLCMD);
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, (intptr_t)&wc, IPC_PLCMD);
 }
 
 #ifdef MINIBROWSER_SUPPORT
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::sendMbCmd(int which, int x, int y, int menu_align_flag)
+void WinLAMP2FrontEnd::sendMbCmd(int which, int x, int y, int menu_align_flag)
 {
 	windowCommand wc = {which, x, y, menu_align_flag};
-	SendMessageW(hwnd_winamp, WM_WA_IPC, (intptr_t)&wc, IPC_MBCMD);
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, (intptr_t)&wc, IPC_MBCMD);
 }
 #endif
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::sendVidCmd(int which, int x, int y, int menu_align_flag)
+void WinLAMP2FrontEnd::sendVidCmd(int which, int x, int y, int menu_align_flag)
 {
 	windowCommand wc = {which, x, y, menu_align_flag};
-	SendMessageW(hwnd_winamp, WM_WA_IPC, (intptr_t)&wc, IPC_VIDCMD);
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, (intptr_t)&wc, IPC_VIDCMD);
 }
 
 
 //-----------------------------------------------------------------------------------------------
-#define WINAMP_VISPLUGIN                40192
-void Winamp2FrontEnd::toggleVis()
+#define WINLAMP_VISPLUGIN                40192
+void WinLAMP2FrontEnd::toggleVis()
 {
-	SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_VISPLUGIN, 0);
+	SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_VISPLUGIN, 0);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::isVisRunning()
+int WinLAMP2FrontEnd::isVisRunning()
 {
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_ISVISRUNNING);
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_ISVISRUNNING);
 }
 
 //-----------------------------------------------------------------------------------------------
-HWND Winamp2FrontEnd::getVisWnd()
+HWND WinLAMP2FrontEnd::getVisWnd()
 {
-	return (HWND)SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_GETVISWND);
+	return (HWND)SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_GETVISWND);
 }
 
 //-----------------------------------------------------------------------------------------------
-IDropTarget *Winamp2FrontEnd::getDropTarget()
+IDropTarget *WinLAMP2FrontEnd::getDropTarget()
 {
-	return (IDropTarget *)SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_GETDROPTARGET);
+	return (IDropTarget *)SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_GETDROPTARGET);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::getSamplerate()
+int WinLAMP2FrontEnd::getSamplerate()
 {
-	int realRate = SendMessageW(hwnd_winamp,WM_WA_IPC,5,IPC_GETINFO);
+	int realRate = SendMessageW(hwnd_winlamp,WM_WA_IPC,5,IPC_GETINFO);
 	if (realRate == 1)
-		return 1000*SendMessageW(hwnd_winamp,WM_WA_IPC,0,IPC_GETINFO);
+		return 1000*SendMessageW(hwnd_winlamp,WM_WA_IPC,0,IPC_GETINFO);
 	else
 		return realRate;
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::getBitrate()
+int WinLAMP2FrontEnd::getBitrate()
 {
-	return SendMessageW(hwnd_winamp,WM_WA_IPC,1,IPC_GETINFO);
+	return SendMessageW(hwnd_winlamp,WM_WA_IPC,1,IPC_GETINFO);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::getChannels()
+int WinLAMP2FrontEnd::getChannels()
 {
-	return SendMessageW(hwnd_winamp,WM_WA_IPC,2,IPC_GETINFO);
+	return SendMessageW(hwnd_winlamp,WM_WA_IPC,2,IPC_GETINFO);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::isValidEmbedWndState(embedWindowState *ws)
+int WinLAMP2FrontEnd::isValidEmbedWndState(embedWindowState *ws)
 {
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, (intptr_t)ws, IPC_EMBED_ISVALID);
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, (intptr_t)ws, IPC_EMBED_ISVALID);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::PE_getNumItems()
+int WinLAMP2FrontEnd::PE_getNumItems()
 {
 	return SendMessageW(hwnd_playlist, WM_USER, IPC_PE_GETINDEXTOTAL, 0);
 }
 
 //-----------------------------------------------------------------------------------------------
-fileinfo2 *Winamp2FrontEnd::PE_getFileTitle(int index)
+fileinfo2 *WinLAMP2FrontEnd::PE_getFileTitle(int index)
 {
 	static fileinfo2 fi;
 	fi.fileindex = index;
@@ -853,7 +853,7 @@ fileinfo2 *Winamp2FrontEnd::PE_getFileTitle(int index)
 }
 
 //-----------------------------------------------------------------------------------------------
-fileinfo2W *Winamp2FrontEnd::PE_getFileTitleW(int index)
+fileinfo2W *WinLAMP2FrontEnd::PE_getFileTitleW(int index)
 {
 	static fileinfo2W fi;
 	fi.fileindex = index;
@@ -864,149 +864,149 @@ fileinfo2W *Winamp2FrontEnd::PE_getFileTitleW(int index)
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::PE_getCurrentIndex()
+int WinLAMP2FrontEnd::PE_getCurrentIndex()
 {
 	//return SendMessageW(hwnd_playlist, WM_USER, IPC_PE_GETCURINDEX, 0);
-	return SendMessageW(hwnd_winamp, WM_USER, 0, IPC_GETLISTPOS);
+	return SendMessageW(hwnd_winlamp, WM_USER, 0, IPC_GETLISTPOS);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::PE_setCurrentIndex(int i)
+void WinLAMP2FrontEnd::PE_setCurrentIndex(int i)
 {
-	SendMessageW(hwnd_winamp, WM_WA_IPC, i, IPC_SETPLAYLISTPOS);
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, i, IPC_SETPLAYLISTPOS);
 }
 
 //-----------------------------------------------------------------------------------------------
-HWND Winamp2FrontEnd::getMediaLibrary()
+HWND WinLAMP2FrontEnd::getMediaLibrary()
 {
-	int IPC_GETMLWINDOW=SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)&"LibraryGetWnd",IPC_REGISTER_WINAMP_IPCMESSAGE);
-	return IPC_GETMLWINDOW > 65536 ? (HWND)SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_GETMLWINDOW) : NULL;
+	int IPC_GETMLWINDOW=SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)&"LibraryGetWnd",IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	return IPC_GETMLWINDOW > 65536 ? (HWND)SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_GETMLWINDOW) : NULL;
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::ensureMediaLibraryLoaded()
+void WinLAMP2FrontEnd::ensureMediaLibraryLoaded()
 {
-	int IPC_GETMLWINDOW=SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)&"LibraryGetWnd",IPC_REGISTER_WINAMP_IPCMESSAGE);
-	if (IPC_GETMLWINDOW > 65536) SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)-1, IPC_GETMLWINDOW);
+	int IPC_GETMLWINDOW=SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)&"LibraryGetWnd",IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	if (IPC_GETMLWINDOW > 65536) SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)-1, IPC_GETMLWINDOW);
 }
 
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::hasVideoSupport()
+int WinLAMP2FrontEnd::hasVideoSupport()
 {
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_HAS_VIDEO_SUPPORT);
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_HAS_VIDEO_SUPPORT);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::isPlayingVideo()
+int WinLAMP2FrontEnd::isPlayingVideo()
 {
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_IS_PLAYING_VIDEO) > 0;
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_IS_PLAYING_VIDEO) > 0;
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::isPlayingVideoFullscreen()
+int WinLAMP2FrontEnd::isPlayingVideoFullscreen()
 {
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_IS_FULLSCREEN);
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_IS_FULLSCREEN);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::isDoubleSize()
+int WinLAMP2FrontEnd::isDoubleSize()
 {
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_ISDOUBLESIZE);
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_ISDOUBLESIZE);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::getTimeDisplayMode()
+int WinLAMP2FrontEnd::getTimeDisplayMode()
 {
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_GETTIMEDISPLAYMODE);
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_GETTIMEDISPLAYMODE);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::switchSkin(const wchar_t *skinname)
+void WinLAMP2FrontEnd::switchSkin(const wchar_t *skinname)
 {
 	static StringW wideSkinName;
 	wideSkinName=skinname;
-	PostMessage(hwnd_winamp, WM_WA_IPC, (intptr_t)wideSkinName.getValue(), IPC_SETSKINW);
+	PostMessage(hwnd_winlamp, WM_WA_IPC, (intptr_t)wideSkinName.getValue(), IPC_SETSKINW);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::visNext()
+void WinLAMP2FrontEnd::visNext()
 {
-	PostMessage(hwnd_winamp, WM_COMMAND, ID_VIS_NEXT, 0);
+	PostMessage(hwnd_winlamp, WM_COMMAND, ID_VIS_NEXT, 0);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::visFullscreen()
+void WinLAMP2FrontEnd::visFullscreen()
 {
-	PostMessage(hwnd_winamp, WM_COMMAND, ID_VIS_FS, 0);
+	PostMessage(hwnd_winlamp, WM_COMMAND, ID_VIS_FS, 0);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::visPrev()
+void WinLAMP2FrontEnd::visPrev()
 {
-	PostMessage(hwnd_winamp, WM_COMMAND, ID_VIS_PREV, 0);
+	PostMessage(hwnd_winlamp, WM_COMMAND, ID_VIS_PREV, 0);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::visRandom(int set)
+void WinLAMP2FrontEnd::visRandom(int set)
 {
-	PostMessage(hwnd_winamp, WM_COMMAND, ID_VIS_RANDOM | (set << 16), 0);
+	PostMessage(hwnd_winlamp, WM_COMMAND, ID_VIS_RANDOM | (set << 16), 0);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::pollVisRandom()
+void WinLAMP2FrontEnd::pollVisRandom()
 {
-	PostMessage(hwnd_winamp, WM_COMMAND, ID_VIS_RANDOM | 0xFFFF0000, 0);
+	PostMessage(hwnd_winlamp, WM_COMMAND, ID_VIS_RANDOM | 0xFFFF0000, 0);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::visConfig()
+void WinLAMP2FrontEnd::visConfig()
 {
-	PostMessage(hwnd_winamp, WM_COMMAND, ID_VIS_CFG, 0);
+	PostMessage(hwnd_winlamp, WM_COMMAND, ID_VIS_CFG, 0);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::visMenu()
+void WinLAMP2FrontEnd::visMenu()
 {
-	PostMessage(hwnd_winamp, WM_COMMAND, ID_VIS_MENU, 0);
+	PostMessage(hwnd_winlamp, WM_COMMAND, ID_VIS_MENU, 0);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::getIdealVideoSize(int *w, int *h)
+void WinLAMP2FrontEnd::getIdealVideoSize(int *w, int *h)
 {
 	if (w) *w = video_ideal_width;
 	if (h) *h = video_ideal_height;
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::getStopOnVideoClose()
+int WinLAMP2FrontEnd::getStopOnVideoClose()
 {
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_GETSTOPONVIDEOCLOSE);
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_GETSTOPONVIDEOCLOSE);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::setStopOnVideoClose(int stop)
+void WinLAMP2FrontEnd::setStopOnVideoClose(int stop)
 {
-	SendMessageW(hwnd_winamp, WM_WA_IPC, stop, IPC_SETSTOPONVIDEOCLOSE);
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, stop, IPC_SETSTOPONVIDEOCLOSE);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::GetVideoResize()
+int WinLAMP2FrontEnd::GetVideoResize()
 {
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_GETVIDEORESIZE);
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_GETVIDEORESIZE);
 }
 
 
-void Winamp2FrontEnd::SetVideoResize(int stop)
+void WinLAMP2FrontEnd::SetVideoResize(int stop)
 {
-	SendMessageW(hwnd_winamp, WM_WA_IPC, stop, IPC_SETVIDEORESIZE);
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, stop, IPC_SETVIDEORESIZE);
 }
 
 
 //-----------------------------------------------------------------------------------------------
 BOOL CALLBACK findVisWndProc(HWND hwnd, LPARAM lParam)
 {
-	Winamp2FrontEnd *fe = (Winamp2FrontEnd*)lParam;
+	WinLAMP2FrontEnd *fe = (WinLAMP2FrontEnd*)lParam;
 	if (hwnd == fe->getVisWnd())
 	{
 		fe->setFoundVis(); return FALSE;
@@ -1015,7 +1015,7 @@ BOOL CALLBACK findVisWndProc(HWND hwnd, LPARAM lParam)
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::isVis(HWND hwnd)
+int WinLAMP2FrontEnd::isVis(HWND hwnd)
 {
 	if (hwnd == wa2.getVisWnd()) return 1;
 	foundvis = 0;
@@ -1024,50 +1024,50 @@ int Winamp2FrontEnd::isVis(HWND hwnd)
 }
 
 //-----------------------------------------------------------------------------------------------
-HWND Winamp2FrontEnd::getPreferencesWindow()
+HWND WinLAMP2FrontEnd::getPreferencesWindow()
 {
-	return (HWND)SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_GETPREFSWND);
+	return (HWND)SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_GETPREFSWND);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::setPlEditWidthHeight(int width, int height)
+void WinLAMP2FrontEnd::setPlEditWidthHeight(int width, int height)
 {
 	POINT pt={width, height};
-	SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)&pt, IPC_SET_PE_WIDTHHEIGHT);
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)&pt, IPC_SET_PE_WIDTHHEIGHT);
 }
 
 //-----------------------------------------------------------------------------------------------
-HINSTANCE Winamp2FrontEnd::getLanguagePackInstance()
+HINSTANCE WinLAMP2FrontEnd::getLanguagePackInstance()
 {
-	return (HINSTANCE)SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_GETLANGUAGEPACKINSTANCE);
+	return (HINSTANCE)SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_GETLANGUAGEPACKINSTANCE);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::openTrackInfo()
+void WinLAMP2FrontEnd::openTrackInfo()
 {
-	SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_EDIT_ID3, 0);
+	SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_EDIT_ID3, 0);
 }
 
 //-----------------------------------------------------------------------------------------------
-const char *Winamp2FrontEnd::getOutputPlugin()
+const char *WinLAMP2FrontEnd::getOutputPlugin()
 {
-	return (const char *)SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_GETOUTPUTPLUGIN);
+	return (const char *)SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_GETOUTPUTPLUGIN);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::setDrawBorders(int d)
+void WinLAMP2FrontEnd::setDrawBorders(int d)
 {
-	SendMessageW(hwnd_winamp, WM_WA_IPC, d, IPC_SETDRAWBORDERS);
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, d, IPC_SETDRAWBORDERS);
 }
 
 //-----------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::disableSkinnedCursors(int disable)
+void WinLAMP2FrontEnd::disableSkinnedCursors(int disable)
 {
-	SendMessageW(hwnd_winamp, WM_WA_IPC, disable, IPC_DISABLESKINCURSORS);
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, disable, IPC_DISABLESKINCURSORS);
 }
 
 //-----------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::getMetaData(const wchar_t *filename, const wchar_t *name, wchar_t *data, int data_len)
+int WinLAMP2FrontEnd::getMetaData(const wchar_t *filename, const wchar_t *name, wchar_t *data, int data_len)
 {
 
 	if (!_wcsnicmp(filename, L"file://", 7))
@@ -1079,19 +1079,19 @@ int Winamp2FrontEnd::getMetaData(const wchar_t *filename, const wchar_t *name, w
 		data,
 		data_len,
 	};
-	return SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)&efis,IPC_GET_EXTENDED_FILE_INFOW_HOOKABLE);
+	return SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)&efis,IPC_GET_EXTENDED_FILE_INFOW_HOOKABLE);
 }
 //------------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::invalidateCache()
+void WinLAMP2FrontEnd::invalidateCache()
 {
 	got_length_cache = 0;
 	got_pos_cache = 0;
 }
 
 //------------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::registerGlobalHotkey(const char *name, int msg, int wparam, int lparam, int flags, const char *id)
+void WinLAMP2FrontEnd::registerGlobalHotkey(const char *name, int msg, int wparam, int lparam, int flags, const char *id)
 {
-	int m_genhotkeys_add_ipc=SendMessageW(hwnd_winamp,WM_WA_IPC,(WPARAM)&"GenHotkeysAdd",IPC_REGISTER_WINAMP_IPCMESSAGE);
+	int m_genhotkeys_add_ipc=SendMessageW(hwnd_winlamp,WM_WA_IPC,(WPARAM)&"GenHotkeysAdd",IPC_REGISTER_WINLAMP_IPCMESSAGE);
 	genHotkeysAddStruct hs={0,};
 	hs.name = (char *)name;
 	hs.uMsg = msg;
@@ -1099,129 +1099,129 @@ void Winamp2FrontEnd::registerGlobalHotkey(const char *name, int msg, int wparam
 	hs.lParam = lparam;
 	hs.flags = flags;
 	hs.id = (char *)id;
-	if (m_genhotkeys_add_ipc > 65536) SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)&hs, m_genhotkeys_add_ipc);
+	if (m_genhotkeys_add_ipc > 65536) SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)&hs, m_genhotkeys_add_ipc);
 }
 
 //------------------------------------------------------------------------------------------------
-const char *Winamp2FrontEnd::getVideoInfoString()
+const char *WinLAMP2FrontEnd::getVideoInfoString()
 {
-	return (const char *)SendMessageW(hwnd_winamp, WM_WA_IPC, 4, IPC_GETINFO);
+	return (const char *)SendMessageW(hwnd_winlamp, WM_WA_IPC, 4, IPC_GETINFO);
 }
 
 //------------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::playFile(const wchar_t *file)
+void WinLAMP2FrontEnd::playFile(const wchar_t *file)
 {
-	SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_DELETE);
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_DELETE);
 	COPYDATASTRUCT cds;
 	cds.dwData = IPC_PLAYFILEW;
 	cds.lpData = (void *)file;
 	cds.cbData = sizeof(wchar_t) * (wcslen(file)+1);  // +1 to get the NULL, missing forever
-	SendMessageW(hwnd_winamp, WM_COPYDATA, (WPARAM)hwnd_winamp, (LPARAM)&cds);
-	SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_STARTPLAY);
+	SendMessageW(hwnd_winlamp, WM_COPYDATA, (WPARAM)hwnd_winlamp, (LPARAM)&cds);
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_STARTPLAY);
 }
 
-void Winamp2FrontEnd::clearPlaylist()
+void WinLAMP2FrontEnd::clearPlaylist()
 {
-	SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_DELETE);
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_DELETE);
 }
 
 //------------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::rewind5s()
+void WinLAMP2FrontEnd::rewind5s()
 {
-	SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_REW5S, 0);
+	SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_REW5S, 0);
 }
 
 //------------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::forward5s()
+void WinLAMP2FrontEnd::forward5s()
 {
-	SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_FFWD5S, 0);
+	SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_FFWD5S, 0);
 }
 
 //------------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::endOfPlaylist()
+void WinLAMP2FrontEnd::endOfPlaylist()
 {
-	SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_BUTTON5_CTRL, 0);
+	SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_BUTTON5_CTRL, 0);
 }
 
 //------------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::startOfPlaylist()
+void WinLAMP2FrontEnd::startOfPlaylist()
 {
-	SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_BUTTON1_CTRL, 0);
+	SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_BUTTON1_CTRL, 0);
 }
 
 //------------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::stopWithFade()
+void WinLAMP2FrontEnd::stopWithFade()
 {
-	SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_BUTTON4_SHIFT, 0);
+	SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_BUTTON4_SHIFT, 0);
 }
 
 //------------------------------------------------------------------------------------------------
-void Winamp2FrontEnd::stopAfterCurrent()
+void WinLAMP2FrontEnd::stopAfterCurrent()
 {
-	SendMessageW(hwnd_winamp, WM_COMMAND, WINAMP_BUTTON4_CTRL, 0);
+	SendMessageW(hwnd_winlamp, WM_COMMAND, WINLAMP_BUTTON4_CTRL, 0);
 }
 
 //------------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::isWindowShade(int whichwnd)
+int WinLAMP2FrontEnd::isWindowShade(int whichwnd)
 {
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, whichwnd, IPC_IS_WNDSHADE);
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, whichwnd, IPC_IS_WNDSHADE);
 }
 
 //------------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::getCurTrackRating()
+int WinLAMP2FrontEnd::getCurTrackRating()
 {
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_GETRATING);
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_GETRATING);
 }
 
-void Winamp2FrontEnd::setCurTrackRating(int rating)
+void WinLAMP2FrontEnd::setCurTrackRating(int rating)
 {
-	SendMessageW(hwnd_winamp, WM_WA_IPC, rating, IPC_SETRATING);
-}
-
-//------------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::isExitEnabled()
-{
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_IS_EXIT_ENABLED);
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, rating, IPC_SETRATING);
 }
 
 //------------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::pushExitDisabled()
+int WinLAMP2FrontEnd::isExitEnabled()
 {
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_PUSH_DISABLE_EXIT);
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_IS_EXIT_ENABLED);
 }
 
 //------------------------------------------------------------------------------------------------
-int Winamp2FrontEnd::popExitDisabled()
+int WinLAMP2FrontEnd::pushExitDisabled()
 {
-	return SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_POP_DISABLE_EXIT);
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_PUSH_DISABLE_EXIT);
 }
 
-void Winamp2FrontEnd::GetFileInfo(const wchar_t *filename, wchar_t *title, int titleCch, int *length)
+//------------------------------------------------------------------------------------------------
+int WinLAMP2FrontEnd::popExitDisabled()
+{
+	return SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_POP_DISABLE_EXIT);
+}
+
+void WinLAMP2FrontEnd::GetFileInfo(const wchar_t *filename, wchar_t *title, int titleCch, int *length)
 {
 	basicFileInfoStructW infoStruct = {0};
 	infoStruct.filename = filename;
 	infoStruct.title = title;
 	infoStruct.titlelen = titleCch;
-	SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)&infoStruct, IPC_GET_BASIC_FILE_INFOW);
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)&infoStruct, IPC_GET_BASIC_FILE_INFOW);
 	*length = infoStruct.length;
 }
 
-const wchar_t *Winamp2FrontEnd::GetCurrentTitle()
+const wchar_t *WinLAMP2FrontEnd::GetCurrentTitle()
 {
-	return (const wchar_t *)SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_GET_PLAYING_TITLE);
+	return (const wchar_t *)SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_GET_PLAYING_TITLE);
 }
 
-const wchar_t *Winamp2FrontEnd::GetCurrentFile()
+const wchar_t *WinLAMP2FrontEnd::GetCurrentFile()
 {
-	return (const wchar_t *)SendMessageW(hwnd_winamp, WM_WA_IPC, 0, IPC_GET_PLAYING_FILENAME);
+	return (const wchar_t *)SendMessageW(hwnd_winlamp, WM_WA_IPC, 0, IPC_GET_PLAYING_FILENAME);
 }
 
-void *Winamp2FrontEnd::CanPlay(const wchar_t *fn)
+void *WinLAMP2FrontEnd::CanPlay(const wchar_t *fn)
 {
-	return (void *)SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)fn, IPC_CANPLAY);
+	return (void *)SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)fn, IPC_CANPLAY);
 }
 
-bool Winamp2FrontEnd::IsPlaylist(const wchar_t *fn)
+bool WinLAMP2FrontEnd::IsPlaylist(const wchar_t *fn)
 {
 	return AGAVE_API_PLAYLISTMANAGER->CanLoad(fn);
 }
@@ -1229,7 +1229,7 @@ bool Winamp2FrontEnd::IsPlaylist(const wchar_t *fn)
 
 
 HWND GetMainContainerHWND();
-bool Winamp2FrontEnd::GetAlbumArt(const wchar_t *filename)
+bool WinLAMP2FrontEnd::GetAlbumArt(const wchar_t *filename)
 {
 	// disabled 30 May 2012 as per email from Tejas w.r.t. to Rovi deal ending
 	#if 0
@@ -1253,7 +1253,7 @@ bool Winamp2FrontEnd::GetAlbumArt(const wchar_t *filename)
 		fetch.gracenoteFileId=gracenoteFileId;
 		fetch.year=_wtoi(year);
 
-	int r = SendMessageW(hwnd_winamp, WM_WA_IPC, (WPARAM)&fetch, IPC_FETCH_ALBUMART);
+	int r = SendMessageW(hwnd_winlamp, WM_WA_IPC, (WPARAM)&fetch, IPC_FETCH_ALBUMART);
 	if(r == 0 && fetch.imgData && fetch.imgDataLen) // success, save art in correct location
 	{
 		AGAVE_API_ALBUMART->SetAlbumArt(filename,L"cover",0,0,fetch.imgData,fetch.imgDataLen,fetch.type);
@@ -1299,12 +1299,12 @@ static int getRegVer()
 	return s[2];
 }
 
-bool Winamp2FrontEnd::IsWinampPro()
+bool WinLAMP2FrontEnd::IsWinLAMPPro()
 {
 	return !!getRegVer();
 }
 
-void Winamp2FrontEnd::openUrl(const wchar_t *url)
+void WinLAMP2FrontEnd::openUrl(const wchar_t *url)
 {
 	SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)url, IPC_OPEN_URL);
 }
@@ -1314,7 +1314,7 @@ void Winamp2FrontEnd::openUrl(const wchar_t *url)
 LRESULT sendMlIpc(int msg, WPARAM param)
 {
 	static LRESULT IPC_GETMLWINDOW;
-	if (!IPC_GETMLWINDOW) IPC_GETMLWINDOW = SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"LibraryGetWnd", IPC_REGISTER_WINAMP_IPCMESSAGE);
+	if (!IPC_GETMLWINDOW) IPC_GETMLWINDOW = SendMessageW(plugin.hwndParent, WM_WA_IPC, (WPARAM)&"LibraryGetWnd", IPC_REGISTER_WINLAMP_IPCMESSAGE);
 	HWND mlwnd = (HWND)SendMessageW(plugin.hwndParent, WM_WA_IPC, 0, IPC_GETMLWINDOW);
 
 	if (param == 0 && msg == 0) return (LRESULT)mlwnd;

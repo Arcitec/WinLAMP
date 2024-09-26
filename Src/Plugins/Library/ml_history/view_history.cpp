@@ -14,7 +14,7 @@
 #include "..\..\General\gen_ml/ml_ipc_0313.h"
 #include "../nu/sort.h"
 #include "../nu/menushortcuts.h"
-#include "../Winamp/strutil.h"
+#include "../WinLAMP/strutil.h"
 #include "api__ml_history.h"
 #include <strsafe.h>
 
@@ -297,7 +297,7 @@ static void playFiles(int enqueue, int all)
 		{
 			if ( !cnt )
 			{
-				if ( !enqueue ) SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_DELETE );
+				if ( !enqueue ) SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_DELETE );
 				cnt++;
 			}
 			enqueueFileWithMetaStructW s = { 0 };
@@ -305,12 +305,12 @@ static void playFiles(int enqueue, int all)
 			s.title    = itemCache.Items[ i ].title;
 			s.ext      = NULL;
 			s.length   = itemCache.Items[ i ].length;
-			SendMessage( plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW );
+			SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW );
 		}
 	}
 	if (cnt)
 	{
-		if(!enqueue) SendMessage(plugin.hwndWinampParent, WM_WA_IPC,0,IPC_STARTPLAY);
+		if(!enqueue) SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC,0,IPC_STARTPLAY);
 	}
 }
 
@@ -1167,7 +1167,7 @@ BOOL CALLBACK view_historyDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPAR
 		case WM_INITMENUPOPUP:
 			if (wParam && (HMENU)wParam == s.build_hMenu && s.mode==1)
 			{
-				if (SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU)==0xffffffff)
+				if (SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU)==0xffffffff)
 				s.mode=2;
 			}
 			return 0;
@@ -1238,8 +1238,8 @@ BOOL CALLBACK view_historyDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPAR
 			s.hwnd = 0;
 			s.build_hMenu = 0;
 
-			IPC_LIBRARY_SENDTOMENU = (INT_PTR)SendMessage(plugin.hwndWinampParent, WM_WA_IPC,(WPARAM)&"LibrarySendToMenu",IPC_REGISTER_WINAMP_IPCMESSAGE);
-			if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage(plugin.hwndWinampParent, WM_WA_IPC,(WPARAM)0,IPC_LIBRARY_SENDTOMENU)==0xffffffff)
+			IPC_LIBRARY_SENDTOMENU = (INT_PTR)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC,(WPARAM)&"LibrarySendToMenu",IPC_REGISTER_WINLAMP_IPCMESSAGE);
+			if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC,(WPARAM)0,IPC_LIBRARY_SENDTOMENU)==0xffffffff)
 			{
 				s.mode = 1;
 				s.hwnd = hwndDlg;
@@ -1273,7 +1273,7 @@ BOOL CALLBACK view_historyDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPAR
 				if (s.mode == 2)
 				{
 					s.menu_id = r;
-					if (SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU) == 0xffffffff)
+					if (SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU) == 0xffffffff)
 					{
 						// build my data.
 						s.mode=3;
@@ -1297,7 +1297,7 @@ BOOL CALLBACK view_historyDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPAR
 						
 						s.data = (void*)sendStr.c_str();
 
-						if(SendMessage(plugin.hwndWinampParent, WM_WA_IPC,(WPARAM)&s,IPC_LIBRARY_SENDTOMENU)!=1)
+						if(SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC,(WPARAM)&s,IPC_LIBRARY_SENDTOMENU)!=1)
 						{
 							s.mode=3;
 							s.data_type=ML_TYPE_FILENAMES;
@@ -1320,7 +1320,7 @@ BOOL CALLBACK view_historyDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPAR
 							
 							s.data = (void*)sendStrA.c_str();
 	
-							SendMessage(plugin.hwndWinampParent, WM_WA_IPC,(WPARAM)&s,IPC_LIBRARY_SENDTOMENU);
+							SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC,(WPARAM)&s,IPC_LIBRARY_SENDTOMENU);
 						}
 					}
 				}
@@ -1329,7 +1329,7 @@ BOOL CALLBACK view_historyDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPAR
 			if (s.mode) 
 			{
 				s.mode=4;
-				SendMessage(plugin.hwndWinampParent, WM_WA_IPC,(WPARAM)&s,IPC_LIBRARY_SENDTOMENU); // cleanup
+				SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC,(WPARAM)&s,IPC_LIBRARY_SENDTOMENU); // cleanup
 			}
 
 			sendto_hmenu=0;
@@ -2186,11 +2186,11 @@ void history_onFile(const wchar_t *fn, int offset)
 		NDE_Scanner_New(s);
 		db_setFieldString(s, HISTORYVIEW_COL_FILENAME, filename2[0] ? filename2 : filename);
 
-		int plidx= (int)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETLISTPOS); 
-		const wchar_t *ft=(const wchar_t*)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, plidx, IPC_GETPLAYLISTTITLEW);
+		int plidx= (int)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETLISTPOS); 
+		const wchar_t *ft=(const wchar_t*)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, plidx, IPC_GETPLAYLISTTITLEW);
 		if (!ft || (INT_PTR)ft == 1) ft=fn;
 		const wchar_t *ftp=ft;
-		int length= (int)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 1, IPC_GETOUTPUTTIME);	
+		int length= (int)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 1, IPC_GETOUTPUTTIME);	
 		  
 		if (*ftp == '[' && (ftp=wcsstr(ftp,L"]")))
 		{
@@ -2306,7 +2306,7 @@ void fileInfoDialogs(HWND hwndParent)
 		infoBoxParamW p;
 		p.filename=song->filename;
 		p.parent=hwndParent;
-		if (SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&p,IPC_INFOBOXW)) break;
+		if (SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&p,IPC_INFOBOXW)) break;
 		needref=1;
 
 		EnterCriticalSection(&g_db_cs);
@@ -2319,7 +2319,7 @@ void fileInfoDialogs(HWND hwndParent)
 			bi.length=-1;
 			bi.title=ft;
 			bi.titlelen=ARRAYSIZE(ft);
-			SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&bi,IPC_GET_BASIC_FILE_INFOW);
+			SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&bi,IPC_GET_BASIC_FILE_INFOW);
 
 			db_setFieldInt(s,HISTORYVIEW_COL_LENGTH,bi.length);
 			db_setFieldString(s,HISTORYVIEW_COL_TITLE,ft);

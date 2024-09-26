@@ -30,7 +30,7 @@
     <ClInclude Include="RESOURCE.H">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Winamp\VIS.H">
+    <ClInclude Include="..\WinLAMP\VIS.H">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

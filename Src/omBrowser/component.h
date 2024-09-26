@@ -1,5 +1,5 @@
-#ifndef NULLSOFT_WINAMP_OMBROWSER_COMPONENT_HEADER
-#define NULLSOFT_WINAMP_OMBROWSER_COMPONENT_HEADER
+#ifndef NULLSOFT_WINLAMP_OMBROWSER_COMPONENT_HEADER
+#define NULLSOFT_WINLAMP_OMBROWSER_COMPONENT_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -7,12 +7,12 @@
 
 #include <wtypes.h>
 #include "../Agave/Component/ifc_wa5component.h"
-#include "./ifc_winamphook.h"
+#include "./ifc_winlamphook.h"
 #include <bfc/multipatch.h>
 #include <vector>
 
 class WasabiHelper;
-class WinampHook;
+class WinLAMPHook;
 class SkinHelper;
 class ifc_wasabihelper;
 class ifc_skinhelper;
@@ -20,10 +20,10 @@ class ifc_ombrowserclass;
 class InternetFeatures;
 
 #define MPIID_WA5COMPONENT		10
-#define MPIID_WINAMPHOOK		20
+#define MPIID_WINLAMPHOOK		20
 
 class OmBrowserComponent : public MultiPatch<MPIID_WA5COMPONENT, ifc_wa5component>,
-							public MultiPatch<MPIID_WINAMPHOOK, ifc_winamphook>
+							public MultiPatch<MPIID_WINLAMPHOOK, ifc_winlamphook>
 {
 public:
 	OmBrowserComponent();
@@ -40,18 +40,18 @@ public:
 	int RegisterServicesSafeModeOk();
 	void DeregisterServices(api_service *service);
 	
-	/* ifc_winamphook (partial) */
+	/* ifc_winlamphook (partial) */
 	HRESULT ResetFont(void);
 	HRESULT SkinChanged(const wchar_t *skinName);
 	HRESULT SkinColorChange(const wchar_t *colorTheme);
 
 public:
-	HRESULT InitializeComponent(HWND hwndWinamp);
+	HRESULT InitializeComponent(HWND hwndWinLAMP);
 	HRESULT GetWasabiHelper(ifc_wasabihelper **wasabiOut);
 	HRESULT GetSkinHelper(ifc_skinhelper **skinOut);
-	HRESULT RegisterWinampHook(ifc_winamphook *hook, UINT *cookieOut);
-	HRESULT UnregisterWinampHook(UINT cookie);
-	HRESULT GetWinampWnd(HWND *hwndWinamp);
+	HRESULT RegisterWinLAMPHook(ifc_winlamphook *hook, UINT *cookieOut);
+	HRESULT UnregisterWinLAMPHook(UINT cookie);
+	HRESULT GetWinLAMPWnd(HWND *hwndWinLAMP);
 	HRESULT RegisterUnloadCallback(PLUGINUNLOADCALLBACK callback);
 	HRESULT GetBrowserClass(LPCWSTR pszName, ifc_ombrowserclass **instance);
 	HRESULT UnregisterBrowserClass(LPCWSTR pszName);
@@ -72,7 +72,7 @@ private:
 
 private:
 	WasabiHelper *wasabiHelper;
-	WinampHook *winampHook;
+	WinLAMPHook *winlampHook;
 	SkinHelper *skinHelper;
 	UINT hookCookie;
 	CRITICAL_SECTION lock;
@@ -81,4 +81,4 @@ private:
 	InternetFeatures *internetFeatures;
 };
 
-#endif //NULLSOFT_WINAMP_OMBROWSER_COMPONENT_HEADER
+#endif //NULLSOFT_WINLAMP_OMBROWSER_COMPONENT_HEADER

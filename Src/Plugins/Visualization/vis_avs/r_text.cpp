@@ -291,7 +291,7 @@ void C_THISCLASS::PUT_FLOAT(float f, unsigned char *data, int pos)
 int y = *(int *)&f;
 data[pos]=(y)&255; data[pos+1]=(y>>8)&255; data[pos+2]=(y>>16)&255; data[pos+3]=(y>>24)&255;
 }
-extern HWND hwnd_WinampParent;
+extern HWND hwnd_WinLAMPParent;
 
 
 int  C_THISCLASS::save_config(unsigned char *data) // write configuration to data, return length. config data should not exceed 64k.
@@ -362,10 +362,10 @@ void C_THISCLASS::getWord(int n, char *buf, int maxlen)
 
       int pos=0;
 
-      extern HWND hwnd_WinampParent;
-	    if (IsWindow(hwnd_WinampParent)) 
+      extern HWND hwnd_WinLAMPParent;
+	    if (IsWindow(hwnd_WinLAMPParent)) 
       {
-        if (!SendMessageTimeout( hwnd_WinampParent, WM_USER,(WPARAM)!!islen,(LPARAM)105,SMTO_BLOCK,50,(LPDWORD)&pos)) 
+        if (!SendMessageTimeout( hwnd_WinLAMPParent, WM_USER,(WPARAM)!!islen,(LPARAM)105,SMTO_BLOCK,50,(LPDWORD)&pos)) 
           pos=0;
       }
       if (islen) pos*=1000;
@@ -403,10 +403,10 @@ void C_THISCLASS::getWord(int n, char *buf, int maxlen)
         ltg=now;
 
         char *tpp;
-	      if (IsWindow(hwnd_WinampParent)) 
+	      if (IsWindow(hwnd_WinLAMPParent)) 
         {
           DWORD id;
-          if (!SendMessageTimeout( hwnd_WinampParent,WM_GETTEXT,(WPARAM)sizeof(this_title),(LPARAM)this_title,SMTO_BLOCK,50,&id) || !id) 
+          if (!SendMessageTimeout( hwnd_WinLAMPParent,WM_GETTEXT,(WPARAM)sizeof(this_title),(LPARAM)this_title,SMTO_BLOCK,50,&id) || !id) 
           {
             this_title[0]=0;
           }
@@ -417,7 +417,7 @@ void C_THISCLASS::getWord(int n, char *buf, int maxlen)
 		      char buf[9];
 		      memcpy(buf,tpp,8);
 		      buf[8]=0;
-		      if (!lstrcmpi(buf,"- Winamp")) break;
+		      if (!lstrcmpi(buf,"- WinLAMP")) break;
 		      tpp--;
 	      }
 	      if (tpp >= this_title) tpp--;

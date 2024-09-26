@@ -3,7 +3,7 @@
 
 struct TagAliases
 {
-	const wchar_t *winampTag;
+	const wchar_t *winlampTag;
 	const wchar_t *wmaTag;
 };
 
@@ -42,9 +42,9 @@ const TagAliases aliases[] =
 const wchar_t *GetAlias(const wchar_t *tag)
 {
 	int i = 0;
-	while (aliases[i].winampTag)
+	while (aliases[i].winlampTag)
 	{
-		if (!lstrcmpiW(tag, aliases[i].winampTag))
+		if (!lstrcmpiW(tag, aliases[i].winlampTag))
 			return aliases[i].wmaTag;
 		i++;
 	}
@@ -57,7 +57,7 @@ const wchar_t *GetAlias_rev(const wchar_t *tag)
 	while (aliases[i].wmaTag)
 	{
 		if (!lstrcmpiW(tag, aliases[i].wmaTag))
-			return aliases[i].winampTag;
+			return aliases[i].winlampTag;
 		i++;
 	}
 	return tag;

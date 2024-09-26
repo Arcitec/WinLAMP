@@ -13,7 +13,7 @@
 #define PLUGIN_VERSION_MINOR		1
 
 HINSTANCE Plugin_GetInstance(void);
-HWND Plugin_GetWinamp(void);
+HWND Plugin_GetWinLAMP(void);
 HWND Plugin_GetLibrary(void);
 
 #include "../ml_online/config.h"

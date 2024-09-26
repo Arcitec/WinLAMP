@@ -19,8 +19,8 @@
 #include "../../omBrowser/ifc_ombrowserwndmngr.h"
 #include "../../omBrowser/browserUiCommon.h"
 
-#include "../../winamp/jsapi.h"
-#include "../../winamp/jsapi_CallbackParameters.h"
+#include "../../winlamp/jsapi.h"
+#include "../../winlamp/jsapi_CallbackParameters.h"
 
 #include <api/service/waservicefactory.h>
 
@@ -91,8 +91,8 @@ HRESULT LoginResultWebAuth::InitBrowserManager(obj_ombrowser **browserMngr)
 		hr = E_UNEXPECTED;
 	else
 	{
-		HWND hWinamp = (NULL != WASABI_API_WINAMP) ? WASABI_API_WINAMP->GetMainWindow() : NULL;
-		if (NULL == hWinamp || FAILED((*browserMngr)->Initialize(NULL, hWinamp)))
+		HWND hWinLAMP = (NULL != WASABI_API_WINLAMP) ? WASABI_API_WINLAMP->GetMainWindow() : NULL;
+		if (NULL == hWinLAMP || FAILED((*browserMngr)->Initialize(NULL, hWinLAMP)))
 		{
 			(*browserMngr)->Release();
 			hr =  E_FAIL;

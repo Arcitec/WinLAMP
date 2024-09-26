@@ -2,7 +2,7 @@
 #define NULLSOFT_IN_FLV_VIDEOTHREAD_H
 
 #include "../nsv/dec_if.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "svc_flvdecoder.h"
 #include "ifc_flvvideodecoder.h"
 

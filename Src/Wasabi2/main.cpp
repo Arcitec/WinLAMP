@@ -63,7 +63,7 @@ void ReplicantComponent::DeregisterServices(Wasabi::api_service *service)
 
 static ReplicantComponent component;
 
-extern "C" __declspec(dllexport) Wasabi::ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" __declspec(dllexport) Wasabi::ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &component;
 }

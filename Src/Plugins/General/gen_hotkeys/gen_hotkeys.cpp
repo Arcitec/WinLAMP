@@ -16,7 +16,7 @@
 ///////////////////////////////////////////////////////////
 
 // The global plugin instance
-winampGeneralPurposePlugin psPlugin =
+winlampGeneralPurposePlugin psPlugin =
 {
 	GPPHDR_VER_U,
 	"nullsoft(gen_hotkeys.dll)",
@@ -24,9 +24,9 @@ winampGeneralPurposePlugin psPlugin =
 	pluginConfig,
 	hotkeysClear
 };
-// Winamp's window procdure
+// WinLAMP's window procdure
 WNDPROC lpWndProcOld = NULL;
-static int winampIsUnicode=false;
+static int winlampIsUnicode=false;
 static int appcommand=false;
 // hotkeys
 HOTKEY *g_hotkeys = NULL;
@@ -109,7 +109,7 @@ int pluginInit()
 	// need to have this initialised before we try to do anything with localisation features
 	WASABI_API_START_LANG(psPlugin.hDllInstance,GenHotkeysLangGUID);
 
-	m_genhotkeys_add_ipc = (int)SendMessage(	psPlugin.hwndParent, WM_WA_IPC, (WPARAM) &"GenHotkeysAdd", IPC_REGISTER_WINAMP_IPCMESSAGE);
+	m_genhotkeys_add_ipc = (int)SendMessage(	psPlugin.hwndParent, WM_WA_IPC, (WPARAM) &"GenHotkeysAdd", IPC_REGISTER_WINLAMP_IPCMESSAGE);
 
 	static wchar_t szDescription[256];
 	StringCchPrintfW(szDescription, ARRAYSIZE(szDescription),
@@ -118,10 +118,10 @@ int pluginInit()
 
 	appcommand = GetPrivateProfileIntW(L"gen_hotkeys", L"appcommand", 0, g_iniFile);
 
-	// Save Winamp's window procedure
-	winampIsUnicode = IsWindowUnicode(psPlugin.hwndParent);
+	// Save WinLAMP's window procedure
+	winlampIsUnicode = IsWindowUnicode(psPlugin.hwndParent);
 	lpWndProcOld = (WNDPROC)(LONG_PTR)GetWindowLongPtr(psPlugin.hwndParent, GWLP_WNDPROC);
-	if (winampIsUnicode)
+	if (winlampIsUnicode)
 		SetWindowLongPtrW(psPlugin.hwndParent, GWLP_WNDPROC, (LONGX86)(LONG_PTR)WndProc);
 	else
 		SetWindowLongPtrA(psPlugin.hwndParent, GWLP_WNDPROC, (LONGX86)(LONG_PTR)WndProc);
@@ -226,13 +226,13 @@ void hotkeysInit()
 
 	int enabled = GetPrivateProfileIntW(L"gen_hotkeys", L"enabled", 0, g_iniFile);
 
-	// base the mutex on the current winamp install
-	// (makes it work better with mutliple winamp installs otherwise the older
-	//  "Winamp - gen_hotkeys.dll ^&*#@" mutex prevents different hotkeys from
+	// base the mutex on the current winlamp install
+	// (makes it work better with mutliple winlamp installs otherwise the older
+	//  "WinLAMP - gen_hotkeys.dll ^&*#@" mutex prevents different hotkeys from
 	//  being initialised between the different installs without going to prefs)
 	char mutexStr[MAX_PATH] = {0}, ghkFilename[MAX_PATH] = {0};
 	GetModuleFileName(psPlugin.hDllInstance, ghkFilename, MAX_PATH);
-	StringCchPrintf(mutexStr, MAX_PATH, "Winamp - %s ^&*#@", ghkFilename);
+	StringCchPrintf(mutexStr, MAX_PATH, "WinLAMP - %s ^&*#@", ghkFilename);
 	g_hMutex = CreateMutex(0, TRUE, mutexStr);
 	if (GetLastError() == ERROR_ALREADY_EXISTS)
 		enabled = 0;
@@ -378,7 +378,7 @@ void hotkeysClear()
 //  Plugin export function
 ///////////////////////////////////////////////////////////
 
-extern "C" __declspec(dllexport) winampGeneralPurposePlugin * winampGetGeneralPurposePlugin() { return &psPlugin; }
+extern "C" __declspec(dllexport) winlampGeneralPurposePlugin * winlampGetGeneralPurposePlugin() { return &psPlugin; }
 
 ///////////////////////////////////////////////////////////
 //  DLL Windows message handling procedure
@@ -395,23 +395,23 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case APPCOMMAND_MEDIA_PLAY_PAUSE:
 			{
 				int playing = (int)SendMessage(psPlugin.hwndParent, WM_WA_IPC, 0, IPC_ISPLAYING);
-				SendMessage(hwnd, WM_COMMAND, MAKEWPARAM((playing ? WINAMP_BUTTON3 : WINAMP_BUTTON2),0), 0);
+				SendMessage(hwnd, WM_COMMAND, MAKEWPARAM((playing ? WINLAMP_BUTTON3 : WINLAMP_BUTTON2),0), 0);
 			}
 				break;
 			case APPCOMMAND_MEDIA_NEXTTRACK:
-				SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINAMP_BUTTON5,0), 0);
+				SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINLAMP_BUTTON5,0), 0);
 				return TRUE;
 			case APPCOMMAND_MEDIA_PREVIOUSTRACK:
-				SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINAMP_BUTTON1,0), 0);
+				SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINLAMP_BUTTON1,0), 0);
 				return TRUE;
 			case APPCOMMAND_MEDIA_STOP:
-				SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINAMP_BUTTON4,0), 0);
+				SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINLAMP_BUTTON4,0), 0);
 				return TRUE;
 			case APPCOMMAND_VOLUME_DOWN:
-				SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINAMP_VOLUMEDOWN,0), 0);
+				SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINLAMP_VOLUMEDOWN,0), 0);
 				return TRUE;
 			case APPCOMMAND_VOLUME_UP:
-				SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINAMP_VOLUMEUP,0), 0);
+				SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINLAMP_VOLUMEUP,0), 0);
 				return TRUE;
 			/*case APPCOMMAND_VOLUME_MUTE:
 				return TRUE;*/
@@ -421,9 +421,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				int playing = (int)SendMessage(psPlugin.hwndParent, WM_WA_IPC, 0, IPC_ISPLAYING);
 				 // play if not currently playing/are stopped
-				if(!playing) SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINAMP_BUTTON2,0), 0);
+				if(!playing) SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINLAMP_BUTTON2,0), 0);
 				// if paused then start playing again
-				else if(playing == 3) SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINAMP_BUTTON3,0), 0);
+				else if(playing == 3) SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINLAMP_BUTTON3,0), 0);
 				// otherwise do nothing if playing already (playing == 1)
 			}
 				return TRUE;
@@ -431,15 +431,15 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				int playing = (int)SendMessage(psPlugin.hwndParent, WM_WA_IPC, 0, IPC_ISPLAYING);
 				// if playing then we pause
-				if(playing == 1) SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINAMP_BUTTON3,0), 0);
+				if(playing == 1) SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINLAMP_BUTTON3,0), 0);
 				// otherwise do nothing if already stopped or paused (playing == 0 || playing == 3)
 			}
 				return TRUE;
 			case APPCOMMAND_MEDIA_FAST_FORWARD:
-				SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINAMP_FFWD5S,0), 0);
+				SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINLAMP_FFWD5S,0), 0);
 				return TRUE;
 			case APPCOMMAND_MEDIA_REWIND:
-				SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINAMP_REW5S,0), 0);
+				SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(WINLAMP_REW5S,0), 0);
 				return TRUE;
 		}
 	}
@@ -511,8 +511,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 	}
 
-	// If we don't know how to handle this message, let WinAMP do it for us
-	if (winampIsUnicode)
+	// If we don't know how to handle this message, let WinLAMP do it for us
+	if (winlampIsUnicode)
 		return CallWindowProcW(lpWndProcOld, hwnd, message, wParam, lParam);
 	else
 		return CallWindowProcA(lpWndProcOld, hwnd, message, wParam, lParam);

@@ -3,7 +3,7 @@
  *
  * Manages custom fillbars.
  *
- * @package	com.winamp.maki.lib.community.fillbar
+ * @package	com.winlamp.maki.lib.community.fillbar
  * @author	mpdeimos
  * @date	08/10/01
  * @version	1.0

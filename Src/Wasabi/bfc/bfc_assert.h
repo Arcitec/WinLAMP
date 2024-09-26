@@ -19,7 +19,7 @@ COMEXP void _assert_handler_str(const char *string, const char *reason, const ch
 #endif
 
 // benski> added june 7 2007.. somewhat of a hack - don't want to enable assert's for final builds
-#include "../../Winamp/buildtype.h"
+#include "../../WinLAMP/buildtype.h"
 
 #if defined(_DEBUG) /*|| defined(INTERNAL) */|| defined(BETA)
 #define ASSERTS_ENABLED

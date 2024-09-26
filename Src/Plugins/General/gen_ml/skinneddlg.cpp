@@ -1,4 +1,4 @@
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 #include "./skinneddlg.h"
 
 

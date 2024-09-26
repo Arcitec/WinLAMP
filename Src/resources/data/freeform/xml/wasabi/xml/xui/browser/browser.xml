@@ -1,5 +1,5 @@
 <!-- ==============================================================
-	<Winamp:Browser/>
+	<WinLAMP:Browser/>
 
 	@author:	Martin Poehlmann
 	@version:	1.1
@@ -7,7 +7,7 @@
 	sendActions:	openurl, search
 
 	usage:		1) include init_browser.m in your loadattribs.m
-				2) paste a <winamp:browser/> object somewhere in your skin
+				2) paste a <winlamp:browser/> object somewhere in your skin
 				3) alter the default images if you like
 
 	note:		Design and gammagroups are aligned to fit with
@@ -46,7 +46,7 @@
 	<bitmap id="browser.button.links.hover" file="xml/xui/browser/browser.png" x="113" y="26" h="26" w="21" gammagroup="WindowText"/>
 	<bitmap id="browser.button.links.down" file="xml/xui/browser/browser.png" x="113" y="52" h="26" w="21" gammagroup="WindowText"/>
 
-	<bitmap id="browser.button.search.winamp.normal" file="xml/xui/browser/browser.png" x="45" y="78" h="16" w="25" gammagroup="none"/>
+	<bitmap id="browser.button.search.winlamp.normal" file="xml/xui/browser/browser.png" x="45" y="78" h="16" w="25" gammagroup="none"/>
 	<bitmap id="browser.button.search.google.normal" file="xml/xui/browser/browser.png" x="20" y="78" h="16" w="25" gammagroup="none"/>
 	<bitmap id="browser.button.search.aol.normal" file="xml/xui/browser/browser.png" x="70" y="78" h="16" w="25" gammagroup="none"/>
 	<bitmap id="browser.button.search.eventful.normal" file="xml/xui/browser/browser.png" x="95" y="78" h="16" w="25" gammagroup="none"/>
@@ -101,7 +101,7 @@
 <include file="stringtable.xml"/>
 <include file="icontextbutton.xml"/>
 
-<groupdef id="winamp.xui.browser" embed_xui="webbrowser" xuitag="Winamp:Browser">
+<groupdef id="winlamp.xui.browser" embed_xui="webbrowser" xuitag="WinLAMP:Browser">
 
 	<Button id="browser.back"
 		x="4" h="26" w="21" y="2" rectrgn="1"
@@ -157,7 +157,7 @@
 
 <groupdef id="browser.itself">
 
-	<browser id="webbrowser" fitparent="1" url="http://www.winamp.com" wantfocus="0"/>
+	<browser id="webbrowser" fitparent="1" url="http://www.winlamp.com" wantfocus="0"/>
 
 </groupdef>
 
@@ -172,7 +172,7 @@
 		right="browser.editframe.right"
 	/>
 
-	<Wasabi:HistoryEditBox id="browser.hedit" x="5" h="18" w="-10" relatw="1" y="2" text="http://www.winamp.com" navbuttons="0" wantfocus="0" antialias="0"/>
+	<Wasabi:HistoryEditBox id="browser.hedit" x="5" h="18" w="-10" relatw="1" y="2" text="http://www.winlamp.com" navbuttons="0" wantfocus="0" antialias="0"/>
 
 </groupdef>
 
@@ -192,7 +192,7 @@
 
 	<Wasabi:Button id="search.choose" x="5" y="2" w="31" h="18"
 		tooltip="Choose Your Search Engine"
-		image="browser.button.search.winamp.normal" center_image="1" 
+		image="browser.button.search.winlamp.normal" center_image="1" 
 		action="search" param="choose" action_target="webbrowser"
 	/>
 

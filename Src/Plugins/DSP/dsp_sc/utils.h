@@ -13,21 +13,21 @@ extern char IniName[MAX_PATH],
 			IniEncName[MAX_PATH],
 			IniDir[MAX_PATH];
 
-wchar_t* GetSharedDirectoryW(HWND winamp);
-wchar_t* GetPluginDirectoryW(HWND winamp);
-char* GetIniDirectory(HWND winamp);
-char* GetSCIniFile(HWND winamp);
-void GetDefaultNextTracksLogFile(HWND winamp, int bufferLen, wchar_t* buffer, int index);
+wchar_t* GetSharedDirectoryW(HWND winlamp);
+wchar_t* GetPluginDirectoryW(HWND winlamp);
+char* GetIniDirectory(HWND winlamp);
+char* GetSCIniFile(HWND winlamp);
+void GetDefaultNextTracksLogFile(HWND winlamp, int bufferLen, wchar_t* buffer, int index);
 
 #define NUM_OUTPUTS 5
 extern HANDLE logFiles[NUM_OUTPUTS];
-wchar_t* GetSCLogFile(HWND winamp, int bufferLen, wchar_t* logFile, int index);
+wchar_t* GetSCLogFile(HWND winlamp, int bufferLen, wchar_t* logFile, int index);
 char* CreateLogFileMessage(char* buffer, wchar_t* message, int* len);
 void StartLogging(int index, int clearOnStart);
 void StopLogging(int index);
 
 void StartNextTracks(int index, wchar_t* file);
-void WriteNextTracks(int index, HWND winamp, std::vector<int> nextListIdx, std::vector<std::wstring> nextList, bool xml);
+void WriteNextTracks(int index, HWND winlamp, std::vector<int> nextListIdx, std::vector<std::wstring> nextList, bool xml);
 void StopNextTracks(int index);
 
 void StartSaveEncoded(int index, wchar_t* file);
@@ -39,11 +39,11 @@ HWND LocalisedCreateDialog(HINSTANCE instance, UINT dialog_id, HWND hWndParent, 
 char* LocalisedStringA(UINT uID, char *str, size_t maxlen);
 wchar_t* LocalisedString(UINT uID, wchar_t *str, size_t maxlen);
 
-UINT GetWinampVersion(HWND winamp);
+UINT GetWinLAMPVersion(HWND winlamp);
 
 bool IsVistaUp();
 HINSTANCE GetMyInstance();
-HWND GetWinampHWND(HWND winamp);
+HWND GetWinLAMPHWND(HWND winlamp);
 
 extern int isthemethere;
 BOOL link_handledraw(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);

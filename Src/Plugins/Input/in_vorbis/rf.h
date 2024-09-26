@@ -16,7 +16,7 @@ class WReader
   public:
 
 	/* m_player
-	** Filled by Winamp. Pointer to Winamp 3 core interface
+	** Filled by WinLAMP. Pointer to WinLAMP 3 core interface
 	*/
 	/*WPlayer_callback*/ void *m_player;	//PP: hack. read_file.dll doesn't call it at all. simply don't touch it
 
@@ -100,7 +100,7 @@ typedef struct
 int _stdcall gzip_writefile(char* path,void* buf,DWORD size) - writes a memory block to a GZIP file - in_midi calls it from file info box
 
 other hacks:
-recent versions understand file://... urls, can do partial file access (eg. "partial://00006666-66660000:c:\foo\bar.dat\zzz.wav" (zzz.wav is the "display name" + extension to make winamp select correct plug-in) and auto-detect CD drive letter (eg. #:\x.mp3 will scan all drives for that file; also works with partial:// )
+recent versions understand file://... urls, can do partial file access (eg. "partial://00006666-66660000:c:\foo\bar.dat\zzz.wav" (zzz.wav is the "display name" + extension to make winlamp select correct plug-in) and auto-detect CD drive letter (eg. #:\x.mp3 will scan all drives for that file; also works with partial:// )
 you can (for an example) build a playlist which will play Unreal soundtrack directly from the game CD on any system
 latest read_file.dll is bundled with the midi plug-in: http://www.blorp.com/~peter/zips/in_midi.zip
 */

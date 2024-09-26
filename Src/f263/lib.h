@@ -9,7 +9,7 @@ extern "C" {
 #define F263_ERROR_TOO_MUCH_DATA 2
 #define F263_ERROR_NO_DATA 3
 
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 
 void *F263_CreateDecoder();
 int F263_DecodeFrame(void *context, void *frameData, size_t frameSize, YV12_PLANES *yv12, int *width, int *height, int *keyframe);

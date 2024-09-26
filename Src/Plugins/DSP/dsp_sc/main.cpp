@@ -44,8 +44,8 @@
 #include "api.h"
 #include "include/c_wavein.h"
 #include "crossfader/c_crossfader.h"
-#include <winamp/wa_ipc.h>
-#include <winamp/dsp.h>
+#include <winlamp/wa_ipc.h>
+#include <winlamp/dsp.h>
 #include "nu/servicebuilder.h"
 #include "utils.h"
 #ifdef CAPTURE_TESTING
@@ -65,7 +65,7 @@
 #define SYSTRAY_ICY_ICON	1
 #define SYSTRAY_BASE_MSG	WM_USER
 #define SYSTRAY_MAXIMIZE_MSG	27
-#define DEFAULT_INPUTDEVICE	0 // winamp
+#define DEFAULT_INPUTDEVICE	0 // winlamp
 
 #define DOWNLOAD_URL L"http://www.shoutcast.com/BroadcastNow"
 // 404, change to one of these?
@@ -132,7 +132,7 @@ static CPlayerCallbacks *pCallbacks = NULL;
 #endif
 
 // this is used to help determine if we're running on an older
-// version of Winamp where jnetlib has issues with the re-use
+// version of WinLAMP where jnetlib has issues with the re-use
 // of connection handles when the connection previously failed
 int iscompatibility = 0;
 // used for the about page link so we don't cause win2k issues
@@ -178,10 +178,10 @@ static ARGB32 *streamImage[NUM_OUTPUTS] = {(ARGB32 *)-1, (ARGB32 *)-1, (ARGB32 *
 static int playingImage_w, playingImage_h, playingLength, playingType;
 static int streamLength[NUM_OUTPUTS];
 static bool secChanged[NUM_OUTPUTS];
-void Config(struct winampDSPModule *this_mod);
-int Init(struct winampDSPModule *this_mod);
-int ModifySamples(struct winampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate);
-void Quit(struct winampDSPModule *this_mod);
+void Config(struct winlampDSPModule *this_mod);
+int Init(struct winlampDSPModule *this_mod);
+int ModifySamples(struct winlampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate);
+void Quit(struct winlampDSPModule *this_mod);
 int secureFunc(int key){
 	int res = key * (unsigned long)1103515245;
 	res += (unsigned long)13293;
@@ -189,8 +189,8 @@ int secureFunc(int key){
 	res ^= key;
 	return res;
 }
-winampDSPModule *getModule(int which);
-winampDSPModule module = {
+winlampDSPModule *getModule(int which);
+winlampDSPModule module = {
 	"nullsoft(dsp_sc.dll)",
 	NULL,
 	NULL,
@@ -201,7 +201,7 @@ winampDSPModule module = {
 	NULL
 };
 
-winampDSPHeader header = {
+winlampDSPHeader header = {
 	DSP_HDRVER+1,
 	"Nullsoft " APP_Name " DSP " APP_Version,
 	getModule,
@@ -231,8 +231,8 @@ static ARGB32 * writeImg(const ARGB32 *data, int w, int h, int *length, const wc
 	return NULL;
 }
 
-HICON GetICYIcon(bool winamp = false) {
-	if (!winamp) {
+HICON GetICYIcon(bool winlamp = false) {
+	if (!winlamp) {
 		if (!icy) {
 			icy = (HICON)LoadImage(WASABI_API_ORIG_HINST?WASABI_API_ORIG_HINST:module.hDllInstance,
 								   MAKEINTRESOURCE(IDI_ICY), IMAGE_ICON, 0, 0,
@@ -241,7 +241,7 @@ HICON GetICYIcon(bool winamp = false) {
 		return icy;
 	} else {
 		if (!wa_icy) {
-			wa_icy = (HICON)LoadImage(GetModuleHandle("winamp.exe"),
+			wa_icy = (HICON)LoadImage(GetModuleHandle("winlamp.exe"),
 									  MAKEINTRESOURCE(102), IMAGE_ICON, 0, 0,
 									  LR_SHARED | LR_LOADTRANSPARENT | LR_CREATEDIBSECTION);
 		}
@@ -249,14 +249,14 @@ HICON GetICYIcon(bool winamp = false) {
 	}
 }
 
-BOOL InitLocalisation(HWND winamp) {
-	// if this is valid then we should be running on Winamp 5.5+ so try to get the localisation api
-	if (IsWindow(winamp)) {
-		iscompatibility = 1; ////// SendMessage( winamp, WM_WA_IPC, 0, IPC_IS_COMPATIBILITY_ENABLED );
-		isthemethere = !SendMessage(winamp, WM_WA_IPC, IPC_ISWINTHEMEPRESENT, IPC_USE_UXTHEME_FUNC);
+BOOL InitLocalisation(HWND winlamp) {
+	// if this is valid then we should be running on WinLAMP 5.5+ so try to get the localisation api
+	if (IsWindow(winlamp)) {
+		iscompatibility = 1; ////// SendMessage( winlamp, WM_WA_IPC, 0, IPC_IS_COMPATIBILITY_ENABLED );
+		isthemethere = !SendMessage(winlamp, WM_WA_IPC, IPC_ISWINTHEMEPRESENT, IPC_USE_UXTHEME_FUNC);
 		if (!WASABI_API_LNG_HINST) {
 			// loader so that we can get the localisation service api for use
-			WASABI_API_SVC = (api_service*)SendMessage(winamp, WM_WA_IPC, 0, IPC_GET_API_SERVICE);
+			WASABI_API_SVC = (api_service*)SendMessage(winlamp, WM_WA_IPC, 0, IPC_GET_API_SERVICE);
 			if (WASABI_API_SVC == (api_service*)1) {
 				WASABI_API_SVC = NULL;
 				return FALSE;
@@ -293,37 +293,37 @@ BOOL InitLocalisation(HWND winamp) {
 #ifdef __cplusplus
 extern "C" {
 #endif
-	__declspec(dllexport) winampDSPHeader *winampDSPGetHeader2(HWND hwndParent) {
+	__declspec(dllexport) winlampDSPHeader *winlampDSPGetHeader2(HWND hwndParent) {
 		if (InitLocalisation(hwndParent)) {
 			return &header;
 		}
 		MessageBoxA(module.hwndParent,
 					"You are attempting to use the " APP_Name " plug-in in an\n"
-					"unsupported version of Winamp or in a non-Winamp install or via a\n"
-					"DSP stacker which does not implement the Winamp 5.5+ DSP api.\n\n"
-					"To work this plug-in requires Winamp 5.5 and higher (the most current\n"
-					"release is recommended) or for the non-Winamp install or DSP stacker\n"
-					"to be updated to support the required Winamp api's the plug-in uses.",
+					"unsupported version of WinLAMP or in a non-WinLAMP install or via a\n"
+					"DSP stacker which does not implement the WinLAMP 5.5+ DSP api.\n\n"
+					"To work this plug-in requires WinLAMP 5.5 and higher (the most current\n"
+					"release is recommended) or for the non-WinLAMP install or DSP stacker\n"
+					"to be updated to support the required WinLAMP api's the plug-in uses.",
 					"Nullsoft " APP_Name, MB_ICONEXCLAMATION|MB_APPLMODAL);
 		return 0;
 	}
 
-	__declspec(dllexport) int winampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
+	__declspec(dllexport) int winlampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
 		// this isn't ideal but it ensures that we show a localised version of the message
 		// if not it'll make sure that we're using the plug-in dll's internal resources
 		// though for ease of code handling we have to fill in some of the dsp structures
 		// as the plug-in has effectively been unloaded at this stage for the uninstall.
-		HWND winamp = GetWinampHWND(0);
+		HWND winlamp = GetWinLAMPHWND(0);
 		module.hDllInstance = hDllInst;
-		module.hwndParent = winamp;
-		InitLocalisation(winamp);
+		module.hwndParent = winlamp;
+		InitLocalisation(winlamp);
 
 		wchar_t title[256] = {0};
 		StringCchPrintfW(title, ARRAYSIZE(title), LocalisedString(IDS_PLUGIN_NAME, NULL, 0), APP_Version);
 
 		// prompt to remove the settings files (defaults to no just incase)
 		if (MessageBoxW(hwndDlg, LocalisedString(IDS_PLUGIN_UNINSTALL, NULL, 0), title, MB_YESNO|MB_DEFBUTTON2) == IDYES) {
-			DeleteFile(GetSCIniFile(winamp));
+			DeleteFile(GetSCIniFile(winlamp));
 		}
 		return DSP_PLUGIN_UNINSTALL_NOW;
 	}
@@ -332,7 +332,7 @@ extern "C" {
 }
 #endif
 
-winampDSPModule *getModule(int which) {
+winlampDSPModule *getModule(int which) {
 	if (which == 0) return &module;
 	return NULL;
 }
@@ -472,7 +472,7 @@ HANDLE hthread = NULL;
 DWORD threadid = 0;
 HANDLE hthreadout = NULL;
 DWORD threadoutid = 0;
-HWND hWinamp = NULL;
+HWND hWinLAMP = NULL;
 int ini_modified = 0;
 HANDLE logFiles[NUM_OUTPUTS] = {INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE};
 
@@ -2343,7 +2343,7 @@ static void CheckVersion( HWND hDlg )
 	if ( WAC_API_DOWNLOADMANAGER )
 	{
 		char url[ 128 ] = { 0 };
-		StringCchPrintf( url, ARRAYSIZE( url ), "http://yp.shoutcast.com/update?c=dsp_sc&v=%s&wa=%x", APP_Version, GetWinampVersion( module.hwndParent ) );
+		StringCchPrintf( url, ARRAYSIZE( url ), "http://yp.shoutcast.com/update?c=dsp_sc&v=%s&wa=%x", APP_Version, GetWinLAMPVersion( module.hwndParent ) );
 		updateWnd = hDlg;
 		WAC_API_DOWNLOADMANAGER->DownloadEx( url, &versionCheckCallback, api_downloadManager::DOWNLOADEX_BUFFER );
 	}
@@ -2586,8 +2586,8 @@ static ARGB32 *loadImgFromFile(const wchar_t *file, int *len)
 static wchar_t bytes[32], kilo[32], mega[32], giga[32], tera[32];
 wchar_t* sizeStr(unsigned int size) {
 	static wchar_t temp[256];
-	if (GetWinampVersion(module.hwndParent) >= 0x5064) {
-		// TODO swap over to the native Winamp version on newer clients
+	if (GetWinLAMPVersion(module.hwndParent) >= 0x5064) {
+		// TODO swap over to the native WinLAMP version on newer clients
 		return WASABI_API_LNG->FormattedSizeString(temp, ARRAYSIZE(temp), size);
 	} else {
 		if (!bytes[0]) {
@@ -3017,7 +3017,7 @@ INT_PTR CALLBACK DialogFunc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 						memset(&Output, 0, sizeof (Output));
 
 						// as only 5.61+ supports the IPC_GETNEXTLISTPOS api we check and cache version now
-						doNextLookAhead = (GetWinampVersion(module.hwndParent) >= 0x5061);
+						doNextLookAhead = (GetWinLAMPVersion(module.hwndParent) >= 0x5061);
 
 						/* Load config */
 						LoadConfig();
@@ -3145,7 +3145,7 @@ INT_PTR CALLBACK DialogFunc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 																		IMAGE_ICON, 0, 0, LR_SHARED | LR_LOADTRANSPARENT | LR_CREATEDIBSECTION));
 						}
 
-						CheckRadioButton(hDlg, IDC_INPUT_WINAMP, IDC_INPUT_SOUNDCARD, (IDC_INPUT_WINAMP + InputDevice));
+						CheckRadioButton(hDlg, IDC_INPUT_WINLAMP, IDC_INPUT_SOUNDCARD, (IDC_INPUT_WINLAMP + InputDevice));
 						SendDlgItemMessage(hDlg, IDC_VOLUMEGRAPH_L, PBM_SETRANGE, 0, MAKELONG(0, 90));
 						SendDlgItemMessage(hDlg, IDC_VOLUMEGRAPH_R, PBM_SETRANGE, 0, MAKELONG(0, 90));
 						for (int ii = 0; ii < NUM_OUTPUTS; ii++) {
@@ -3178,7 +3178,7 @@ INT_PTR CALLBACK DialogFunc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 					case IDD_INPUT:
 					{
 						SendDlgItemMessage(hDlg, IDC_INPUTDEVICE, CB_RESETCONTENT, 0, 0);
-						AddInTab(IDD_PANEL_WINAMP, LocalisedString(IDS_INPUT_WINAMP, NULL, 0), hDlg);
+						AddInTab(IDD_PANEL_WINLAMP, LocalisedString(IDS_INPUT_WINLAMP, NULL, 0), hDlg);
 						AddInTab(IDD_PANEL_LINEIN, LocalisedString(IDS_INPUT_SOUNDCARD, NULL, 0), hDlg);
 						SetInTab(InputDevice, hDlg, IDC_INPUTDEVICE);
 						EnableWindowDlgItem(hDlg, IDC_INPUTDEVICE, 1);
@@ -3209,7 +3209,7 @@ INT_PTR CALLBACK DialogFunc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 						break;
 					}
 
-					case IDD_PANEL_WINAMP:
+					case IDD_PANEL_WINLAMP:
 					{
 						wchar_t buf[128] = {0};
 						inWinWa = hDlg;
@@ -3291,7 +3291,7 @@ INT_PTR CALLBACK DialogFunc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 		case WM_USER:
 			{
 				if (lParam == nowPlayingID && wParam == 0) {
-					// Winamp Title handling
+					// WinLAMP Title handling
 					wchar_t title[1024] = {0},
 							next[1024] = {0},
 							song[1024] = {0},
@@ -3304,7 +3304,7 @@ INT_PTR CALLBACK DialogFunc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 					char buffer[1024] = {0},
 						 buffer2[1024] = {0};
 
-					// winamp playlist length in tracks
+					// winlamp playlist length in tracks
 					int len = SendMessage(module.hwndParent, WM_WA_IPC, 0, IPC_GETLISTLENGTH);
 					int curpos = SendMessage(module.hwndParent, WM_WA_IPC, 0, IPC_GETLISTPOS);
 					int pos = curpos + 1;
@@ -3344,9 +3344,9 @@ INT_PTR CALLBACK DialogFunc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 						playingType = 0x4100;	// default in-case of issue
 
 						// attempt to get the type of the image, defaulting to jpeg for older versions
-						// as only on 5.64+ are we able to query Winamp properly for the artwork type
+						// as only on 5.64+ are we able to query WinLAMP properly for the artwork type
 						wchar_t* mimeType = 0, *uiType = L"jpeg";
-						if (GetWinampVersion(module.hwndParent) >= 0x5064)
+						if (GetWinLAMPVersion(module.hwndParent) >= 0x5064)
 						{
 							LPVOID bits;
 							size_t len;
@@ -3369,7 +3369,7 @@ INT_PTR CALLBACK DialogFunc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 									}
 								}
 
-								// update the current artwork on the winamp panel
+								// update the current artwork on the winlamp panel
 								// have to decode as we get the raw data normally
 								HWND artwork = GetDlgItem(inWinWa, IDC_ARTWORK);
 								HBITMAP bm = getBitmap(decompressImage(playingImage, playingLength, &playingImage_w, &playingImage_h), playingImage_w, playingImage_h);
@@ -3383,7 +3383,7 @@ INT_PTR CALLBACK DialogFunc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 								// make sure to free the original image after we've converted
 								ARGB32 *firstPlayingImage = playingImage;
 
-								// update the current artwork on the winamp panel
+								// update the current artwork on the winlamp panel
 								// no need to decode as it's already done by this
 								HWND artwork = GetDlgItem(inWinWa, IDC_ARTWORK);
 								HBITMAP bm = getBitmap(playingImage, playingImage_w, playingImage_h);
@@ -3404,9 +3404,9 @@ INT_PTR CALLBACK DialogFunc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 							StringCchPrintfW(tmp3, ARRAYSIZE(tmp3), L"Playing Artwork: Width=%d; Height=%d; Data=%s;",
 											 playingImage_w, playingImage_h, sizeStr(playingLength));
 
-							// only use this on compatible Winamp installs where possible
+							// only use this on compatible WinLAMP installs where possible
 							wchar_t *mime = 0;
-							if (GetWinampVersion(module.hwndParent) >= 0x5064 &&
+							if (GetWinLAMPVersion(module.hwndParent) >= 0x5064 &&
 								AGAVE_API_ALBUMART && AGAVE_API_ALBUMART->GetAlbumArtOrigin(lastFile, L"cover", &mime)) {
 								if (mime)
 								{
@@ -3436,7 +3436,7 @@ INT_PTR CALLBACK DialogFunc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 						}
 						else
 						{
-							// update the current artwork on the winamp panel
+							// update the current artwork on the winlamp panel
 							// by setting a generic image when nothing loaded
 							HWND artwork = GetDlgItem(inWinWa, IDC_ARTWORK);
 							HBITMAP bmold = (HBITMAP)SendMessage(artwork, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)0);
@@ -4876,12 +4876,12 @@ INT_PTR CALLBACK DialogFunc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 						}
 						break;
 
-					case IDC_INPUT_WINAMP:
+					case IDC_INPUT_WINLAMP:
 					case IDC_INPUT_SOUNDCARD:
 						{
 							// update the input mode from the summary page options
 							HWND inputCtrl = GetDlgItem(wnd[2].hWnd, IDC_INPUTDEVICE);
-							SendMessage(inputCtrl, CB_SETCURSEL, (LOWORD(wParam) - IDC_INPUT_WINAMP), 0);
+							SendMessage(inputCtrl, CB_SETCURSEL, (LOWORD(wParam) - IDC_INPUT_WINLAMP), 0);
 							SendMessage(wnd[2].hWnd, WM_COMMAND, MAKEWPARAM(IDC_INPUTDEVICE,CBN_SELCHANGE), (LPARAM)inputCtrl);
 						}
 						break;
@@ -4894,7 +4894,7 @@ INT_PTR CALLBACK DialogFunc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 									SuspendThread(hthread);
 									Soundcard.Close();
 									InputDevice = this_device;
-									if (InputDevice == 0) { // winamp
+									if (InputDevice == 0) { // winlamp
 										SendMessage(in_wnd[this_device].hWnd, WM_HSCROLL, 0, (LPARAM) GetDlgItem(in_wnd[this_device].hWnd, IDC_MUSSLIDER));
 										SendMessage(in_wnd[this_device].hWnd, WM_HSCROLL, 0, (LPARAM) GetDlgItem(in_wnd[this_device].hWnd, IDC_MUS2SLIDER));
 										SendMessage(in_wnd[this_device].hWnd, WM_HSCROLL, 0, (LPARAM) GetDlgItem(in_wnd[this_device].hWnd, IDC_MICSLIDER));
@@ -4937,7 +4937,7 @@ INT_PTR CALLBACK DialogFunc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 									Soundcard.Create((InputDevice == 0 ? InputConfig.srate : LineInputAttribs[Input_CurSelPos].srate), (InputDevice == 0 ? InputConfig.nch : LineInputAttribs[Input_CurSelPos].nch));
 
 									DisplayDeviceName();
-									CheckRadioButton(wnd[0].hWnd, IDC_INPUT_WINAMP, IDC_INPUT_SOUNDCARD, (IDC_INPUT_WINAMP + InputDevice));
+									CheckRadioButton(wnd[0].hWnd, IDC_INPUT_WINLAMP, IDC_INPUT_SOUNDCARD, (IDC_INPUT_WINLAMP + InputDevice));
 
 									peak_vu_l = peak_vu_r = -90;
 									ResumeThread(hthread);
@@ -5589,7 +5589,7 @@ LRESULT CALLBACK GetMsgProc(int nCode, WPARAM wParam, LPARAM lParam) {
 													IPC_GETPLAYLISTFILEW);
 				wcsncpy(currentFile, (file ? file : L""), MAX_PATH);
 				if (!wcsnicmp(currentFile, lastFile, MAX_PATH)) {
-					// do a 1 second delay since it's likely Winamp will send
+					// do a 1 second delay since it's likely WinLAMP will send
 					// this a few times so we reset the timer everytime so we
 					// only do a proper title update once everything settles
 					KillTimer(hMainDLG, 1337);
@@ -5628,7 +5628,7 @@ void doConfig(HWND hwndParent) {
 				nowPlayingHook2 = SetWindowsHookExW(WH_GETMESSAGE, GetMsgProc, instance, GetCurrentThreadId());
 			}
 			if (nowPlayingID == -1) {
-				nowPlayingID = SendMessage(hwndParent, WM_WA_IPC, (WPARAM)&"dsp_sc_np", IPC_REGISTER_WINAMP_IPCMESSAGE);
+				nowPlayingID = SendMessage(hwndParent, WM_WA_IPC, (WPARAM)&"dsp_sc_np", IPC_REGISTER_WINLAMP_IPCMESSAGE);
 			}
 
 			HWND hwnd = LocalisedCreateDialog(instance, IDD_DIALOG, hwndParent, DialogFunc, IDD_DIALOG);
@@ -5652,22 +5652,22 @@ VOID CALLBACK TimerProc(HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime)
 	doConfig(hwnd);
 }
 
-void Config(winampDSPModule *this_mod) {
-	// this will hold back opening the config dialog on loading until Winamp is in a ready state
+void Config(winlampDSPModule *this_mod) {
+	// this will hold back opening the config dialog on loading until WinLAMP is in a ready state
 	// this resolves a partial fail to load i've often been seeing (plus from some users afaict)
 	SetTimer(this_mod->hwndParent, 999, 1, TimerProc);
 }
 
-int Init(winampDSPModule *this_mod) {
+int Init(winlampDSPModule *this_mod) {
 	instance = this_mod->hDllInstance;
 
-	// this will hold back opening the config dialog on loading until Winamp is in a ready state
+	// this will hold back opening the config dialog on loading until WinLAMP is in a ready state
 	// this resolves a partial fail to load i've often been seeing (plus from some users afaict)
 	SetTimer(this_mod->hwndParent, 999, 1, TimerProc);
 	return 1;
 }
 
-int ModifySamples(winampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate) {
+int ModifySamples(winlampDSPModule *this_mod, short int *samples, int numsamples, int bps, int nch, int srate) {
 	int numorig = numsamples;
 
 	//connect but only if we're meant to be i.e. there's at least 1 active output
@@ -5799,6 +5799,6 @@ int ModifySamples(winampDSPModule *this_mod, short int *samples, int numsamples,
 }
 
 
-void Quit(winampDSPModule *this_mod) {
+void Quit(winlampDSPModule *this_mod) {
 	doQuit();
 }

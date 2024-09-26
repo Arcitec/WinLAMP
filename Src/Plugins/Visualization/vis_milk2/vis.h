@@ -1,1 +1,1 @@
-#include "../Winamp/vis.h"
+#include "../WinLAMP/vis.h"

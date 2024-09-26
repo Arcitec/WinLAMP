@@ -57,7 +57,7 @@ PlaylistsXML::PlaylistsXML(): parser(0), parserFactory(0)
 
 	if (parser)
 	{
-		parser->xmlreader_registerCallback(L"Winamp:Playlists\fplaylist", this);
+		parser->xmlreader_registerCallback(L"WinLAMP:Playlists\fplaylist", this);
 		parser->xmlreader_registerCallback(L"playlists\fplaylist", this);
 		parser->xmlreader_open();
 	}

@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <locale.h>
 #include "resource.h"
-#include "../Winamp/in2.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/in2.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "../nu/AutoChar.h"
 #include "api__in_mp4.h"
 
@@ -678,8 +678,8 @@ In_Module mod =
 {
 	IN_VER_RET, // defined in IN2.H
 	"nullsoft(in_mp4.dll)",		//"Nullsoft MPEG-4 Audio Decoder v1.22"
-	0,    	// hMainWindow (filled in by winamp)
-	0,      // hDllInstance (filled in by winamp)
+	0,    	// hMainWindow (filled in by winlamp)
+	0,      // hDllInstance (filled in by winlamp)
 	0,	    // this is a double-null limited list. "EXT\0Description\0EXT\0Description\0" etc.
 	1,    	// is_seekable
 	1,    	// uses output plug-in system
@@ -703,20 +703,20 @@ In_Module mod =
 	setvolume,
 	setpan,
 
-	0, 0, 0, 0, 0, 0, 0, 0, 0,     // visualization calls filled in by winamp
+	0, 0, 0, 0, 0, 0, 0, 0, 0,     // visualization calls filled in by winlamp
 
-	0, 0,     // dsp calls filled in by winamp
+	0, 0,     // dsp calls filled in by winlamp
 
 	eq_set,
 
-	NULL,    		// setinfo call filled in by winamp
+	NULL,    		// setinfo call filled in by winlamp
 
-	0 // out_mod filled in by winamp
+	0 // out_mod filled in by winlamp
 };
 
 extern "C"
 {
-	__declspec(dllexport) In_Module * winampGetInModule2()
+	__declspec(dllexport) In_Module * winlampGetInModule2()
 	{
 		return &mod;
 	}

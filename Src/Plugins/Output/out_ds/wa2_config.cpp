@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include "ds_ipc.h"
 #include "api.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 bool wa2_GetRealtimeStat(DS2_REALTIME_STAT * stat);
 

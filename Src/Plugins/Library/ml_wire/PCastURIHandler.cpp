@@ -153,13 +153,13 @@ int PCastURIHandler::ProcessFilename(const wchar_t *filename)
 	if (
 		(wcsnicmp(filename, L"pcast://", 8)) == 0 ||
 		(wcsnicmp(filename, L"feed://", 7) == 0) ||
-		(wcsnicmp(filename, L"winamp://Podcast/Subscribe", 26) == 0) ||
-		(wcsnicmp(filename, L"winamp://Podcast/Search", 23) == 0)
+		(wcsnicmp(filename, L"winlamp://Podcast/Subscribe", 26) == 0) ||
+		(wcsnicmp(filename, L"winlamp://Podcast/Search", 23) == 0)
 		)
 	{
 		wchar_t *tempFilename = NULL;
 		wchar_t url[1024] = {0};
-		if (wcsnicmp(filename, L"winamp://Podcast/Subscribe", 26) == 0)
+		if (wcsnicmp(filename, L"winlamp://Podcast/Subscribe", 26) == 0)
 		{
 			// extract/decode and use the url= parameter		
 			if (get_request_parm(filename, L"url", url, 1024) && url[0])
@@ -172,7 +172,7 @@ int PCastURIHandler::ProcessFilename(const wchar_t *filename)
 				return NOT_HANDLED;
 			}
 		}
-		else if (wcsnicmp(filename, L"winamp://Podcast/Search", 23) == 0)
+		else if (wcsnicmp(filename, L"winlamp://Podcast/Search", 23) == 0)
 		{
 // TODO: maybe:			if (get_request_parm(filename, L"url", url, 1024) && url[0])
 			{
@@ -242,8 +242,8 @@ int PCastURIHandler::IsMine(const wchar_t *filename)
 	if (
 		(wcsnicmp(filename, L"pcast://", 8)) == 0 ||
 		(wcsnicmp(filename, L"feed://", 7) == 0) ||
-		(wcsnicmp(filename, L"winamp://Podcast/Subscribe", 26) == 0) ||
-		(wcsnicmp(filename, L"winamp://Podcast/Search", 23) == 0)
+		(wcsnicmp(filename, L"winlamp://Podcast/Subscribe", 26) == 0) ||
+		(wcsnicmp(filename, L"winlamp://Podcast/Search", 23) == 0)
 		)
 		return HANDLED;
 	else

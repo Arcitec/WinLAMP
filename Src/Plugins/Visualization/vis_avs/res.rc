@@ -56,7 +56,7 @@ IDB_TAB_SELECTED        RCDATA  DISCARDABLE     "avs-selected.png"
 IDD_DIALOG1 DIALOGEX 0, 0, 400, 241
 STYLE DS_SETFONT | DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_TOOLWINDOW
-CAPTION "Winamp AVS Editor"
+CAPTION "WinLAMP AVS Editor"
 MENU IDR_MENU1
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
@@ -293,7 +293,7 @@ BEGIN
     CONTROL         "Suppress laser-related messages",IDC_L_SUPPRESS_DIALOGS,
                     "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,
                     99,188,119,10
-    CONTROL         "Suppress laser output when Winamp or AVS/Laser is not active",
+    CONTROL         "Suppress laser output when WinLAMP or AVS/Laser is not active",
                     IDC_L_ACTIVEOUTPUT,"Button",BS_AUTOCHECKBOX | NOT 
                     WS_VISIBLE | WS_TABSTOP,5,198,216,10
     CONTROL         "Suppress laser output",IDC_L_SUPPRESS_OUTPUT,"Button",
@@ -583,7 +583,7 @@ FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "Close",IDOK,77,129,50,14
     LTEXT           "version string",IDC_VERSTR,7,7,191,8
-    LTEXT           "Copyright (C) 1998-2023 Winamp SA",IDC_STATIC,7,16,191,8
+    LTEXT           "Copyright (C) 1998-2023 WinLAMP SA",IDC_STATIC,7,16,191,8
     CTEXT           "Justin Frankel, Francis Gastellu, Christophe Thibault\r\nBrennan Underwood && mig",
                     IDC_STATIC,22,85,168,19
     LTEXT           "Portions Copyright (C) 2010 Cockos Incorporated\r\r\nThis software is BSD-licensed open source.",
@@ -2024,7 +2024,7 @@ BEGIN
     IDS_NO_EFFECT_SETTING_SELECTED "No Effect/Setting Selected"
     IDS_SHIFT_X             "Shift+%d"
     IDS_ALL                 "All"
-    IDS_SAME_AS_WINAMP      "Same as Winamp"
+    IDS_SAME_AS_WINLAMP      "Same as WinLAMP"
     IDS_IDLE                "Idle"
     IDS_LOWEST              "Lowest"
     IDS_NORMAL              "Normal"
@@ -2062,9 +2062,9 @@ BEGIN
                             "Still initializing previous preset"
     IDS_MAIN                "Main"
     IDS_ERROR_CREATING_DDRAW_OBJECT "Error creating ddraw object"
-    IDS_ABOUT_STRING        "\t%s\n\tCopyright (C) 1998-2023 Winamp SA\nPortions Copyright (C) 2010 Cockos Incorporated\r\r\nThis software is BSD-licensed open source.\n\nYou are welcome to use\nAVS at parties, clubs, concerts and whatnot.\nJust give credit where credit is due.\n\nLove,\n    Justin Frankel, Francis Gastellu, Christophe Thibault,\n    Brennan Underwood & mig\n\nSpecial thanks to Steven Wittens and Tom Holden."
+    IDS_ABOUT_STRING        "\t%s\n\tCopyright (C) 1998-2023 WinLAMP SA\nPortions Copyright (C) 2010 Cockos Incorporated\r\r\nThis software is BSD-licensed open source.\n\nYou are welcome to use\nAVS at parties, clubs, concerts and whatnot.\nJust give credit where credit is due.\n\nLove,\n    Justin Frankel, Francis Gastellu, Christophe Thibault,\n    Brennan Underwood & mig\n\nSpecial thanks to Steven Wittens and Tom Holden."
     IDS_ABOUT_AVS           "About AVS"
-    IDS_REQUIRES_2_9_PLUS   "This version of AVS requires Winamp 2.9+"
+    IDS_REQUIRES_2_9_PLUS   "This version of AVS requires WinLAMP 2.9+"
     IDS_AVS_ERROR           "AVS Error"
     IDS_NO_MMX_SUPPORT      "No MMX support found - cannot run AVS!\nGet the non-MMX version."
     IDS_SHIFT_              "shift-"

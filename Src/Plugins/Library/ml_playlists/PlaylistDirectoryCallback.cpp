@@ -1,12 +1,12 @@
 #include "main.h"
 #include "PlaylistDirectoryCallback.h"
 
-PlaylistDirectoryCallback::PlaylistDirectoryCallback(const char *_extlist, const char *winampIni)
+PlaylistDirectoryCallback::PlaylistDirectoryCallback(const char *_extlist, const char *winlampIni)
 		: extlist(_extlist), recurse(true)
 {
-	if (winampIni)
+	if (winlampIni)
 	{
-		int rofiob = GetPrivateProfileIntA("winamp", "rofiob", 1, winampIni);
+		int rofiob = GetPrivateProfileIntA("winlamp", "rofiob", 1, winlampIni);
 		recurse = (rofiob & 2) ? false : true;
 	}
 }

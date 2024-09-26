@@ -1,9 +1,9 @@
 #include "main.h"
 #include "./webinfo_obj.h"
-#include "../winamp/buildtype.h"
+#include "../winlamp/buildtype.h"
 #include "./resource.h"
 #include "api__gen_ml.h"
-#include "../Winamp/buildtype.h"
+#include "../WinLAMP/buildtype.h"
 
 #include <exdisp.h>
 #include <mshtmdid.h>
@@ -11,10 +11,10 @@
 
 #include <strsafe.h>
 
-#define WEBINFO_URL				L"http://client.winamp.com/nowplaying/mini"
+#define WEBINFO_URL				L"http://client.winlamp.com/nowplaying/mini"
 #define WEBINFO_FUNCTION			L"SongInfoCallback"
 
-#define WEBINFO_USERAGENT		L"Winamp File Info"	
+#define WEBINFO_USERAGENT		L"WinLAMP File Info"	
 
 #define WEBINFO_DOWNLOADFLAGS		(	DLCTL_DLIMAGES |					\
 										/*DLCTL_NO_SCRIPTS |*/			\
@@ -129,7 +129,7 @@ HRESULT WebFileInfo::TranslateAccelerator(LPMSG lpMsg, const GUID __RPC_FAR *pgu
 
 HRESULT WebFileInfo::ShowContextMenu(DWORD dwID, POINT __RPC_FAR *ppt, IUnknown __RPC_FAR *pcmdtReserved, IDispatch __RPC_FAR *pdispReserved)
 {
-#ifdef WINAMP_FINAL_BUILD
+#ifdef WINLAMP_FINAL_BUILD
 	return S_OK; // block menu
 #else
 	return E_NOTIMPL;
@@ -181,7 +181,7 @@ DWORD WebFileInfo::OnGetDownlodFlags(void)
 {
 
 	return WEBINFO_DOWNLOADFLAGS
-#ifdef WINAMP_FINAL_BUILD
+#ifdef WINLAMP_FINAL_BUILD
 			|DLCTL_SILENT 
 #endif
 		;

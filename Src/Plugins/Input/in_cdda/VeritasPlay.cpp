@@ -345,7 +345,7 @@ void VeritasPlay::Output(char *buffer, int len)
 	decode_pos_ms += ((len / g_nch / 2) * 1000) / 44100;
 }
 
-int VeritasPlay::read(char *dest, int len, int *killswitch) //called by winampGetExtendedRead_getData
+int VeritasPlay::read(char *dest, int len, int *killswitch) //called by winlampGetExtendedRead_getData
 {
 	bool noAbort=false;
 	int bytesCopied = 0;
@@ -513,7 +513,7 @@ int VeritasPlay::threadProc2()
 #define VERITASPLAY_OPEN_FAIL 1
 #define VERITASPLAY_OPEN_NOPRIMO 2
 
-int VeritasPlay::open(char drive, int track) //called by winampGetExtendedRead
+int VeritasPlay::open(char drive, int track) //called by winlampGetExtendedRead
 {
 	if ((ripping && !config_rip_veritas))
 		return VERITASPLAY_OPEN_FAIL;
@@ -586,7 +586,7 @@ int VeritasPlay::open(char drive, int track) //called by winampGetExtendedRead
 	return VERITASPLAY_OPEN_FAIL;
 }
 
-int VeritasPlay::play(char drive, int track) //called by winamp2
+int VeritasPlay::play(char drive, int track) //called by winlamp2
 {
 	if (!config_use_dae2 || !config_use_veritas)
 		return 1;

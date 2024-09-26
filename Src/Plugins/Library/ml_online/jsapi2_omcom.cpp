@@ -6,7 +6,7 @@
 #include <ifc_omservice.h>
 #include <browserView.h>
 
-#include "../Winamp/JSAPI.h"
+#include "../WinLAMP/JSAPI.h"
 
 
 JSAPI2::OnlineServicesAPI::OnlineServicesAPI(const wchar_t *_key, JSAPI::ifc_info *_info)

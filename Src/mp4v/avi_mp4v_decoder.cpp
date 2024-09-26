@@ -1,5 +1,5 @@
 #include "avi_mp4v_decoder.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "../nsavi/read.h"
 #include <mmsystem.h>
 #include <Amvideo.h>

@@ -18,7 +18,7 @@ CFG=pfc - Win32 Release
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
 !MESSAGE "pfc - Win32 Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "pfc - Win32 Debug Winamp" (based on "Win32 (x86) Static Library")
+!MESSAGE "pfc - Win32 Debug WinLAMP" (based on "Win32 (x86) Static Library")
 !MESSAGE 
 
 # Begin Project
@@ -51,17 +51,17 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo
 
-!ELSEIF  "$(CFG)" == "pfc - Win32 Debug Winamp"
+!ELSEIF  "$(CFG)" == "pfc - Win32 Debug WinLAMP"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "pfc___Win32_Debug_Winamp"
-# PROP BASE Intermediate_Dir "pfc___Win32_Debug_Winamp"
+# PROP BASE Output_Dir "pfc___Win32_Debug_WinLAMP"
+# PROP BASE Intermediate_Dir "pfc___Win32_Debug_WinLAMP"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "pfc___Win32_Debug_Winamp"
-# PROP Intermediate_Dir "pfc___Win32_Debug_Winamp"
+# PROP Output_Dir "pfc___Win32_Debug_WinLAMP"
+# PROP Intermediate_Dir "pfc___Win32_Debug_WinLAMP"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
@@ -79,7 +79,7 @@ LIB32=link.exe -lib
 # Begin Target
 
 # Name "pfc - Win32 Release"
-# Name "pfc - Win32 Debug Winamp"
+# Name "pfc - Win32 Debug WinLAMP"
 # Begin Source File
 
 SOURCE=.\cfg_var.cpp

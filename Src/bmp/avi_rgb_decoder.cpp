@@ -1,5 +1,5 @@
 #include "avi_rgb_decoder.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <bfc/error.h>
 #include <limits.h>
 #include <intsafe.h>

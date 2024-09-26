@@ -1,5 +1,5 @@
 #include "h264_mp4_decoder.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include <Mferror.h>
 uint32_t Read24(const uint8_t *data)
 {

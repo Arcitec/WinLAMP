@@ -1,5 +1,5 @@
 /*
-** Copyright © 2007-2014 Winamp SA
+** Copyright © 2007-2014 WinLAMP SA
 **
 ** This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held 
 ** liable for any damages arising from the use of this software. 
@@ -14,7 +14,7 @@
 **
 **   3. This notice may not be removed or altered from any source distribution.
 **
-** Author: Ben Allison benski@winamp.com
+** Author: Ben Allison benski@winlamp.com
 ** Created: March 1, 2007
 **
 */
@@ -23,7 +23,7 @@
 #include "Metadata.h"
 #include "../Agave/Language/api_language.h"
 #include <api/service/waServiceFactory.h>
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "../nu/Singleton.h"
 #include "../nu/Autochar.h"
 #include <shlwapi.h>
@@ -48,7 +48,7 @@ HINSTANCE WASABI_API_LNG_HINST = 0, WASABI_API_ORIG_HINST = 0;
 HANDLE killswitch=0;
 HANDLE playThread=0;
 
-const wchar_t *winampINI=0;
+const wchar_t *winlampINI=0;
 void Config(HWND hwndParent);
 void About(HWND hwndParent);
 wchar_t pluginName[256] = {0};
@@ -78,13 +78,13 @@ int Init()
 	StringCchPrintfW(pluginName,256,WASABI_API_LNGSTRINGW(IDS_NULLSOFT_FLAC_DECODER),PLUGIN_VER);
 	plugin.description = (char*)pluginName;
 
-	winampINI = (const wchar_t *)SendMessage(plugin.hMainWindow, WM_WA_IPC, 0, IPC_GETINIFILEW);
+	winlampINI = (const wchar_t *)SendMessage(plugin.hMainWindow, WM_WA_IPC, 0, IPC_GETINIFILEW);
 
 	wchar_t exts[1024] = {0};
-	GetPrivateProfileStringW(L"in_flac", L"extensions", DEFAULT_EXTENSIONSW, exts, 1024, winampINI);
+	GetPrivateProfileStringW(L"in_flac", L"extensions", DEFAULT_EXTENSIONSW, exts, 1024, winlampINI);
 	plugin.FileExtensions = BuildExtensions(AutoChar(exts));
 
-	config_average_bitrate = !!GetPrivateProfileIntW(L"in_flac", L"average_bitrate", 1, winampINI);
+	config_average_bitrate = !!GetPrivateProfileIntW(L"in_flac", L"average_bitrate", 1, winlampINI);
 
 	plugin.UsesOutputPlug|=8;
 	return IN_INIT_SUCCESS;
@@ -271,7 +271,7 @@ In_Module plugin =
 	0
 };
 
-extern "C"	__declspec(dllexport) In_Module * winampGetInModule2()
+extern "C"	__declspec(dllexport) In_Module * winlampGetInModule2()
 {
 	return &plugin;
 }

@@ -22,7 +22,7 @@ api_service *WASABI_API_SVC=0;
 api_application *WASABI_API_APP =0;
 api_config *AGAVE_API_CONFIG = 0;
 api_syscb *WASABI_API_SYSCB = 0;
-api_winamp *WASABI_API_WINAMP = 0;
+api_winlamp *WASABI_API_WINLAMP = 0;
 api_memmgr *WASABI_API_MEMMNGR = NULL;
 svc_imageLoader *WASABI_API_PNGLOADER = NULL;
 
@@ -61,7 +61,7 @@ void AuthComponent::RegisterServices(api_service *service)
 	ServiceBuild(WASABI_API_APP, applicationApiServiceGuid);
 	ServiceBuild(AGAVE_API_CONFIG, AgaveConfigGUID);
 	ServiceBuild(WASABI_API_SYSCB, syscbApiServiceGuid);
-	ServiceBuild(WASABI_API_WINAMP, winampApiGuid);
+	ServiceBuild(WASABI_API_WINLAMP, winlampApiGuid);
 
 	ServiceBuild(WASABI_API_LNG, languageApiGUID);
 	// need to have this initialised before we try to do anything with localisation features
@@ -81,7 +81,7 @@ void AuthComponent::DeregisterServices(api_service *service)
 	ServiceRelease(WASABI_API_APP, applicationApiServiceGuid);
 	ServiceRelease(AGAVE_API_CONFIG, AgaveConfigGUID);
 	ServiceRelease(WASABI_API_SYSCB, syscbApiServiceGuid);
-	ServiceRelease(WASABI_API_WINAMP, winampApiGuid);
+	ServiceRelease(WASABI_API_WINLAMP, winlampApiGuid);
 	ServiceRelease(WASABI_API_LNG, languageApiGUID);
 	ServiceRelease(WASABI_API_MEMMNGR, memMgrApiServiceGuid);
 	ServiceRelease(WASABI_API_PNGLOADER, pngLoaderGUID);
@@ -92,7 +92,7 @@ void AuthComponent::DeregisterServices(api_service *service)
 
 static AuthComponent authComponent;
 
-extern "C" __declspec(dllexport) ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" __declspec(dllexport) ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &authComponent;
 }

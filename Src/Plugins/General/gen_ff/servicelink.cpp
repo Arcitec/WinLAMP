@@ -41,8 +41,8 @@
 // song ticker xui object
 #pragma comment(linker, "/include:__link_wa2SongTicker_Svcs")
 
-// Winamp Config script object
-#pragma comment(linker, "/include:__link_WinampConfig_svcs")
+// WinLAMP Config script object
+#pragma comment(linker, "/include:__link_WinLAMPConfig_svcs")
 
 // progress grid xui object 
 #ifdef WASABI_WIDGETS_MEDIASLIDERS

@@ -12,7 +12,7 @@
 
 #include "../nu/AutoLock.h"
 #include "../nu/AutoWide.h"
-#include "../Winamp/strutil.h"
+#include "../WinLAMP/strutil.h"
 #include "../Agave/Language/api_language.h"
 
 /* TODO: implement 2-pass encoding via IWMWriterPreprocess */
@@ -89,7 +89,7 @@ AudioCoderWMA::AudioCoderWMA(int numchannels, int samplerate, int bitspersamp, c
 	error = WMA_NO_ERROR;
 	sink = NULL;
 
-	// Get globals from Winamp.ini config file
+	// Get globals from WinLAMP.ini config file
 	config_bitrate = cfg->config_bitrate;
 	config_samplerate = cfg->config_samplesSec;
 	config_nch = cfg->config_nch;

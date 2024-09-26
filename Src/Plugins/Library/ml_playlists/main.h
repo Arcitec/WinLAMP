@@ -8,7 +8,7 @@
 #include "../../Plugins/General/gen_ml/ml.h"
 #include "../../Plugins/General/gen_ml/ml_ipc.h"
 #include "../../Plugins/General/gen_ml/ml_ipc_0313.h"
-#include "Winamp/wa_ipc.h"
+#include "WinLAMP/wa_ipc.h"
 
 #include "../../Plugins/General/gen_ml/config.h"
 #include "PlaylistInfo.h"
@@ -29,7 +29,7 @@
 
 #include <map>
 
-#define WINAMP_MANAGEPLAYLISTS          40385
+#define WINLAMP_MANAGEPLAYLISTS          40385
 #define ID_DOSHITMENU_ADDNEWPLAYLIST    40031
 
 #ifndef FILENAME_SIZE
@@ -55,7 +55,7 @@ INT_PTR CALLBACK AddPlaylistDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, L
 INT_PTR CALLBACK view_playlistDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM lParam);
 
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 extern HMENU g_context_menus, g_context_menus2, g_context_menus3;
 extern wchar_t g_path[MAX_PATH];
 static const bool ADD_TO_TREE = true;
@@ -75,7 +75,7 @@ enum { SORT_TITLE_ASCENDING, SORT_TITLE_DESCENDING, SORT_NUMBER_ASCENDING, SORT_
 void playlists_Sort(size_t sort_type);
 
 wchar_t *createPlayListDBFileName(wchar_t *filename); // filename is ignored but used for temp space, make sure it's 1024+256 chars =)
-void Playlist_importFromWinamp();
+void Playlist_importFromWinLAMP();
 void Playlist_importFromFile(HWND dlgparent);
 void Playlist_importFromFolders(HWND dlgparent);
 bool FindTreeItem(INT_PTR treeId);
@@ -102,7 +102,7 @@ void FormatLength(wchar_t *str, int length, int buf_len);
 
 extern int IPC_LIBRARY_SENDTOMENU;
 
-void Hook(HWND winamp);
+void Hook(HWND winlamp);
 
 extern INT_PTR sendToIgnoreID;
 extern INT_PTR lastActiveID;

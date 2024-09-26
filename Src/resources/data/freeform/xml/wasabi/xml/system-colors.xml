@@ -10,7 +10,7 @@
 
   Just like in system-elements.xml, the elements beginning with "studio." and "common." have
   been moved to system-element-aliases.xml for backwards compatibility.  If you are building a
-  skin for Winamp3 (Wasabi Build 488), you should override these element IDs and include the
+  skin for WinLAMP3 (Wasabi Build 488), you should override these element IDs and include the
   aliases file in your own skin.
 
 -->

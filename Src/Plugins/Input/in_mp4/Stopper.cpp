@@ -1,6 +1,6 @@
 #include "Stopper.h"
 #include "main.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 
 int m_force_seek=-1;
 

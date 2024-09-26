@@ -44,7 +44,7 @@ RECT rcLlama;
 
 int idxSelected;
 
-wchar_t *url[IMAGES_COUNT - 1] = {	L"http://winamp.com/",
+wchar_t *url[IMAGES_COUNT - 1] = {	L"http://winlamp.com/",
 									L"http://www.codingtechnologies.com/index.htm",
 									L"http://www.iis.fraunhofer.de/index.html",
 									L"http://www.id3.org/",

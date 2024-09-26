@@ -1,7 +1,7 @@
 #pragma once
 #include "../Plugins/Input/in_mkv/ifc_mkvvideodecoder.h"
 #include "../Plugins/Input/in_mkv/svc_mkvdecoder.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 // {0071721C-7B4D-4766-B165-E42BC080DA74}
 static const GUID mkv_flv1_guid = 

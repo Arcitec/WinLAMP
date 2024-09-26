@@ -694,7 +694,7 @@ LRESULT AppBarWnd::wndProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam )
 			}
 			case WM_COMMAND:
 			{
-				// forward onto the main Winamp window and let it do it
+				// forward onto the main WinLAMP window and let it do it
 				if ( HIWORD( wparam ) == THBN_CLICKED )
 				{
 					SendMessageW( plugin.hwndParent, msg, wparam, lparam );

@@ -1,6 +1,6 @@
 #include "main.h"
 #include "../nu/ns_wc.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include <shlwapi.h>
 #include <strsafe.h>
 
@@ -93,7 +93,7 @@ LPWSTR GetExtensionString(LPWSTR pszBuffer, INT cchBufferMax, DWORD fourcc)
 	cfi.format = fourcc;
 	cfi.item = "extension";
 	cfi.len = 10;
-	SENDWAIPC(plugin.hwndWinampParent, IPC_CONVERT_CONFIG_GET_ITEM, (WPARAM)&cfi);
+	SENDWAIPC(plugin.hwndWinLAMPParent, IPC_CONVERT_CONFIG_GET_ITEM, (WPARAM)&cfi);
 	if ('\0' != *configExt)
 	{
 		if (!MultiByteToWideCharSZ(CP_ACP, 0, configExt, -1, pszBuffer, cchBufferMax))

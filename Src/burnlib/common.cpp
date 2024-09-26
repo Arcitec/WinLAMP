@@ -9,7 +9,7 @@ DWORD BeginBurn(obj_primo *primoSDK, DWORD drive, WABURNSTRUCT *burnstruct)
 	burnstruct->primoSDK = primoSDK;
 	burnstruct->drive	= drive;
 	DWORD rc[3]	= { PRIMOSDK_ERROR, PRIMOSDK_ERROR, PRIMOSDK_ERROR};
-	burnstruct->blocker = (PBYTE)("WINAMPBURNER v1.0");
+	burnstruct->blocker = (PBYTE)("WINLAMPBURNER v1.0");
 	DWORD retCode = PRIMOSDK_OK;
 	// init Sonic PrimoSDK 
 	if (!primoSDK)

@@ -282,7 +282,7 @@ INT_PTR pluginMessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_
 		case ML_MSG_WRITE_CONFIG:
 			if (param1)
 			{
-				// only save the ml playlists if saving winamp.m3u/m3u8
+				// only save the ml playlists if saving winlamp.m3u/m3u8
 				// else this will happen everytime the prefs are closed
 				AGAVE_API_PLAYLISTS->Flush();
 			}
@@ -339,8 +339,8 @@ int playlists_ContextMenu( INT_PTR param1, HWND hHost, POINTS pts )
 		case IDC_IMPORT_PLAYLIST_FROM_FILE:
 			Playlist_importFromFile( hHost );
 			break;
-		case IDC_IMPORT_WINAMP_PLAYLIST:
-			Playlist_importFromWinamp();
+		case IDC_IMPORT_WINLAMP_PLAYLIST:
+			Playlist_importFromWinLAMP();
 			break;
 		case ID_PLAYLISTSMENU_IMPORTPLAYLISTFROMFOLDERS:
 			Playlist_importFromFolders( hHost );
@@ -358,7 +358,7 @@ int playlists_ContextMenu( INT_PTR param1, HWND hHost, POINTS pts )
 			playlists_Sort( SORT_NUMBER_DESCENDING );
 			break;
 		case ID_PLAYLISTS_HELP:
-			myOpenURL( hHost, L"https://help.winamp.com/hc/articles/8109547717268-Winamp-Playlists" );
+			myOpenURL( hHost, L"https://help.winlamp.com/hc/articles/8109547717268-WinLAMP-Playlists" );
 			break;
 	}
 

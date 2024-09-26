@@ -1,5 +1,5 @@
-#ifndef NULLSOFT_WINAMP_OMBROWSER_UI_INTERNAL_HEADER
-#define NULLSOFT_WINAMP_OMBROWSER_UI_INTERNAL_HEADER
+#ifndef NULLSOFT_WINLAMP_OMBROWSER_UI_INTERNAL_HEADER
+#define NULLSOFT_WINLAMP_OMBROWSER_UI_INTERNAL_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -34,4 +34,4 @@ HWND BrowserControl_GetOperationWidget(HWND hControl);
 BOOL BrowserControl_UpdateLayout(HWND hControl, BOOL fRedraw, BOOL fFrame, HRGN updateRegion,const POINT *updateOffset);
 BOOL BrowserControl_EnableChildren(HWND hControl, BOOL fEnable);
 BOOL BrowserControl_SetBlockedState(HWND hControl, BOOL fBlocked);
-#endif // NULLSOFT_WINAMP_OMBROWSER_UI_INTERNAL_HEADER
+#endif // NULLSOFT_WINLAMP_OMBROWSER_UI_INTERNAL_HEADER

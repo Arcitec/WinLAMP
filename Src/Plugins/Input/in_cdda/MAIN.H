@@ -2,7 +2,7 @@
 #define NULLSOFT_MAINH
 #include <windows.h>
 #include <stdio.h>
-#include "../Winamp/in2.h"
+#include "../WinLAMP/in2.h"
 #include "audio.h"
 #include "resource.h"
 #include "PlayStatus.h"

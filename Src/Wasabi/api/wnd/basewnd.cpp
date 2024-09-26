@@ -78,7 +78,7 @@ class DragSet : public PtrList<void>, public NamedW {};
 static ifc_window *stickyWnd;
 static RECT sticky;
 
-static UINT WINAMP_WM_DIRECT_MOUSE_WHEEL = WM_NULL;
+static UINT WINLAMP_WM_DIRECT_MOUSE_WHEEL = WM_NULL;
 
 /*api_window *api_window::rootwndFromPoint(POINT &point, int level) {
   api_window *wnd;
@@ -518,8 +518,8 @@ int BaseWnd::onInit()
 		setLayeredWindow(1);
 	}
 
-	if (WM_NULL == WINAMP_WM_DIRECT_MOUSE_WHEEL)
-		WINAMP_WM_DIRECT_MOUSE_WHEEL = RegisterWindowMessageW(L"WINAMP_WM_DIRECT_MOUSE_WHEEL");
+	if (WM_NULL == WINLAMP_WM_DIRECT_MOUSE_WHEEL)
+		WINLAMP_WM_DIRECT_MOUSE_WHEEL = RegisterWindowMessageW(L"WINLAMP_WM_DIRECT_MOUSE_WHEEL");
 
 #endif
 
@@ -1748,7 +1748,7 @@ static BOOL BaseWnd_IsFrameWindow(HWND hwnd)
 	if (NULL == hwnd || !GetClassNameW(hwnd, szClass, ARRAYSIZE(szClass)))
 		return FALSE;
 
-	return EQUAL_CLSNAME(szClass, L"Winamp v1.x") || 
+	return EQUAL_CLSNAME(szClass, L"WinLAMP v1.x") || 
 			EQUAL_CLSNAME(szClass, L"BaseWindow_RootWnd");
 }
 
@@ -2571,8 +2571,8 @@ LRESULT BaseWnd::wndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		} //switch
 
-	if (WINAMP_WM_DIRECT_MOUSE_WHEEL == uMsg && 
-		WM_NULL != WINAMP_WM_DIRECT_MOUSE_WHEEL)
+	if (WINLAMP_WM_DIRECT_MOUSE_WHEEL == uMsg && 
+		WM_NULL != WINLAMP_WM_DIRECT_MOUSE_WHEEL)
 	{
 		wndProc(hWnd, WM_MOUSEWHEEL, wParam, lParam);
 		return TRUE;

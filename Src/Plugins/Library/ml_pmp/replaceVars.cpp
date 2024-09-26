@@ -4,7 +4,7 @@
 #include <strsafe.h>
 #include "api__ml_pmp.h"
 #include "resource1.h"
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 
 wchar_t * FixReplacementVars(wchar_t *str, int str_size, Device * dev, songid_t song);
 BOOL RecursiveCreateDirectory(wchar_t* buf1);

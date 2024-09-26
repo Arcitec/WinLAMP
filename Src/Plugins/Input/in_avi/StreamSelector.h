@@ -1,5 +1,5 @@
 #pragma once
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <bfc/platform/types.h>
 class Streams : public ITrackSelector
 {

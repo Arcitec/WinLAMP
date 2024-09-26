@@ -6,7 +6,7 @@
 #include "../resource.h"
 #include "../api.h"
 
-#include "../../winamp/commandLink.h"
+#include "../../winlamp/commandLink.h"
 
 #include <windows.h>
 #include <commctrl.h>

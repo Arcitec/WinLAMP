@@ -69,7 +69,7 @@
 	<bitmap id="wasabi.tree.background" file="$solid" h="64" w="64" color="8,9,10" gammagroup="PlayerDisplay"/><!-- Tree background bitmap (tile) -->
 	<bitmap id="wasabi.list.background" file="$solid" h="64" w="64" color="8,9,10" gammagroup="PlayerDisplay"/><!-- Tree background bitmap (tile) -->
 
-	<!-- Winamp 5.53+ MediaLibrary PopupMenu -->
+	<!-- WinLAMP 5.53+ MediaLibrary PopupMenu -->
 
 	<color id="wasabi.popupmenu.frame" value="100,103,104" gammagroup="WindowBackground"/>
 	<color id="wasabi.popupmenu.separator" value="36,37,38" gammagroup="WindowBackground"/>

@@ -1,5 +1,5 @@
 #include "main.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include <api/service/waServiceFactory.h>
 #include "../../Agave/Config/api_config.h"
 

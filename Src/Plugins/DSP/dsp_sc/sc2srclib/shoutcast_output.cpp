@@ -5,7 +5,7 @@
 #include "../../sc_serv3/nmrCommon/stl/stringUtils.h"
 #include "../utils.h"
 #include "../nu/ServiceBuilder.h"
-#include <winamp/dsp.h>
+#include <winlamp/dsp.h>
 
 #pragma intrinsic(memcpy, memset)
 
@@ -13,7 +13,7 @@ static char buf[1024];
 static char out[1024];
 
 extern int iscompatibility;
-extern winampDSPModule module;
+extern winlampDSPModule module;
 extern api_service *WASABI_API_SVC;
 
 static api_connection *CreateConnection(const char *url)
@@ -102,7 +102,7 @@ int resolvenow(const char *hostname, unsigned short port, addrinfo **addr, int s
 void compatible_connect(T_OUTPUT *Output, int port) {
 
 	// due to a bug in re-using the connection
-	// with Winamp's jnetlib implementation we
+	// with WinLAMP's jnetlib implementation we
 	// need to do a force drop and make a new
 	// instance so all is initialised properly
 	if (Output->Output && iscompatibility) {

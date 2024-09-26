@@ -10,7 +10,7 @@
 
 int NowPlayingURIHandler::ProcessFilename(const wchar_t *filename)
 {
-	if (!_wcsnicmp(filename, L"winamp://Now Playing", 20) || !_wcsnicmp(filename, L"winamp://Now%20Playing", 22))
+	if (!_wcsnicmp(filename, L"winlamp://Now Playing", 20) || !_wcsnicmp(filename, L"winlamp://Now%20Playing", 22))
 	{
 		size_t index = 0;
 		if (filename[12] == L' ')
@@ -18,8 +18,8 @@ int NowPlayingURIHandler::ProcessFilename(const wchar_t *filename)
 		else
 			index = 22;
 
-		wchar_t fullUrl[1024] = L"http://client.winamp.com/nowplaying";
-		lstrcpynW(fullUrl, AutoWide(g_config->ReadString("nowplayingurl", "http://client.winamp.com/nowplaying")), ARRAYSIZE(fullUrl));
+		wchar_t fullUrl[1024] = L"http://client.winlamp.com/nowplaying";
+		lstrcpynW(fullUrl, AutoWide(g_config->ReadString("nowplayingurl", "http://client.winlamp.com/nowplaying")), ARRAYSIZE(fullUrl));
 
 		if (filename[index] != 0)
 		{
@@ -33,7 +33,7 @@ int NowPlayingURIHandler::ProcessFilename(const wchar_t *filename)
 
 int NowPlayingURIHandler::IsMine(const wchar_t *filename)
 {
-	if (!_wcsnicmp(filename, L"winamp://Now Playing", 20 )  || !_wcsnicmp(filename, L"winamp://Now%20Playing", 22))
+	if (!_wcsnicmp(filename, L"winlamp://Now Playing", 20 )  || !_wcsnicmp(filename, L"winlamp://Now%20Playing", 22))
 		return HANDLED;
 	else
 		return NOT_HANDLED;

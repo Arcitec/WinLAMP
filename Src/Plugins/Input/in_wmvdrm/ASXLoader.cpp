@@ -9,7 +9,7 @@
 #include <api/service/waservicefactory.h>
 #include "../../..\Components\wac_network\wac_network_http_receiver_api.h"
 #include "../nu/AutoChar.h"
-#include "../Winamp/strutil.h"
+#include "../WinLAMP/strutil.h"
 #include <strsafe.h>
 #include "XMLString.h"
 
@@ -357,7 +357,7 @@ int ASXLoader::LoadURL(obj_xml *parser, const wchar_t *url)
 	if (!http)
 		return IFC_PLAYLISTLOADER_FAILED;
 	http->AllowCompression();
-	http->open(API_DNS_AUTODNS, HTTP_BUFFER_SIZE, winamp.GetProxy()); 
+	http->open(API_DNS_AUTODNS, HTTP_BUFFER_SIZE, winlamp.GetProxy()); 
 	SetUserAgent(http);
 	http->connect(AutoChar(url));
 	int ret;

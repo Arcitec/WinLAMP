@@ -2,7 +2,7 @@
 #define PLUGIN_VERSION L"0.57"
 
 #include "NJBDevice.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 
 #define WM_PMP_NJB_DEVICE_CONNECTED (WM_USER+23)
 int init();
@@ -172,8 +172,8 @@ intptr_t MessageProc(int msg, intptr_t param1, intptr_t param2, intptr_t param3)
 }
 
 extern "C" {
-	__declspec( dllexport ) PMPDevicePlugin * winampGetPMPDevicePlugin(){return &plugin;}
-	__declspec( dllexport ) int winampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
+	__declspec( dllexport ) PMPDevicePlugin * winlampGetPMPDevicePlugin(){return &plugin;}
+	__declspec( dllexport ) int winlampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
 		int i = devices.GetSize();
 		while(i-- > 0) ((Device*)devices.Get(i))->Close();
 		return PMP_PLUGIN_UNINSTALL_NOW;

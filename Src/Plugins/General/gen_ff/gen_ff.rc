@@ -159,7 +159,7 @@ BEGIN
     CONTROL         "Allow use of bitmap fonts that have not been mapped",IDC_CHECK_ALLOWBITMAPFONTS,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,101,188,10
     LTEXT           "Replace with :",IDC_STATIC,17,128,46,8
-    GROUPBOX        "TrueType Replacement for Winamp Charset bitmap fonts",IDC_STATIC_TTFOVERRIDE,10,114,244,62
+    GROUPBOX        "TrueType Replacement for WinLAMP Charset bitmap fonts",IDC_STATIC_TTFOVERRIDE,10,114,244,62
     COMBOBOX        IDC_COMBO_TTFOVERRIDE,67,126,179,151,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Slider1",IDC_SLIDER_SCALETTFOVERRIDE,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,16,142,231,10
     LTEXT           "Decrease size",IDC_STATIC_DECREASESIZE,20,151,46,8
@@ -488,9 +488,9 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_COULD_NOT_FIND_WINAMP "Could not find Winamp!"
+    IDS_COULD_NOT_FIND_WINLAMP "Could not find WinLAMP!"
     IDS_ERROR               "Error"
-    IDS_WINAMP_NOT_FOUND    "Winamp not found"
+    IDS_WINLAMP_NOT_FOUND    "WinLAMP not found"
     IDS_VISUALIZATIONS      "Visualizations"
     IDS_MEDIA_LIBRARY       "Media Library"
     IDS_NO_SET              "no set"

@@ -2,7 +2,7 @@
 #include "api.h"
 #include "resource.h"
 
-#include "../Winamp/in2.h"
+#include "../WinLAMP/in2.h"
 
 extern In_Module mod;			// the output module (filled in near the bottom of this file)
 
@@ -69,7 +69,7 @@ extern int config_bufms, config_prebufms, config_underunbuf;
 extern "C" 
 {
 
-	__declspec( dllexport ) int winampSetExtendedFileInfo(const char *fn, const char *data, char *val)
+	__declspec( dllexport ) int winlampSetExtendedFileInfo(const char *fn, const char *data, char *val)
 	{
     if(!fn || !fn[0]) return 0;
 
@@ -180,7 +180,7 @@ extern "C"
   }    
 
 
-	__declspec( dllexport ) int winampWriteExtendedFileInfo()
+	__declspec( dllexport ) int winlampWriteExtendedFileInfo()
 	{
     lastextfn[0]=0; // flush cache
 

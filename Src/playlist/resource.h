@@ -5,7 +5,7 @@
 #define IDS_STRING0                     1
 #define IDS_M3U_PLAYLIST                1
 #define IDS_PLS_PLAYLIST                2
-#define IDS_WINAMP3_PLAYLIST            3
+#define IDS_WINLAMP3_PLAYLIST            3
 #define IDS_ALL_PLAYLIST_TYPES          4
 #define IDS_PLAYLIST                    5
 #define IDS_MPCPL_PLAYLIST              6

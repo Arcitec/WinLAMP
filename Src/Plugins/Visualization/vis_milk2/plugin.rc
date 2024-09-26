@@ -122,7 +122,7 @@ BEGIN
     RTEXT           "Multisampling:",IDC_W_MULTISAMPLING_CAPTION,5,165,46,9,NOT WS_VISIBLE | WS_DISABLED
     COMBOBOX        IDC_WMS,56,163,81,123,CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Allow Page Tearing",IDC_CB_WPT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,126,165,77,10
-    CONTROL         "Integrate with winamp skin",IDC_CB_SKIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,214,164,102,10
+    CONTROL         "Integrate with winlamp skin",IDC_CB_SKIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,214,164,102,10
     CONTROL         "",IDC_STATIC,"Static",SS_GRAYRECT,0,180,318,1
     LTEXT           "Start in...",IDC_STATIC,9,192,61,8
     CONTROL         "&Fullscreen",IDC_CB_FS,"Button",BS_AUTOCHECKBOX | BS_TOP | BS_MULTILINE | WS_TABSTOP,9,203,48,10
@@ -131,7 +131,7 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,78,185,164,10
     CONTROL         "Show '&Press F1 for  Help' message at startup",IDC_CB_PRESS_F1_MSG,
                     "Button",BS_AUTOCHECKBOX | BS_TOP | WS_TABSTOP,78,195,159,10
-    CONTROL         "&Minimize Winamp when going fullscreen",IDC_CB_MIN,
+    CONTROL         "&Minimize WinLAMP when going fullscreen",IDC_CB_MIN,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,78,205,141,10
     CONTROL         "Try to fix slow menus/text (uses more video memory)",IDC_CB_FIXSLOWTEXT,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,78,215,183,10
@@ -462,10 +462,10 @@ IDR_TEXT1               TEXT                    "text1.bin"
 //
 // Version
 //
-#include "../../../Winamp/buildType.h"
+#include "../../../WinLAMP/buildType.h"
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 2,25,4,0
- PRODUCTVERSION WINAMP_PRODUCTVER
+ PRODUCTVERSION WINLAMP_PRODUCTVER
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -480,14 +480,14 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "CompanyName", "Winamp SA"
-            VALUE "FileDescription", "Winamp Visualization Plug-in"
+            VALUE "CompanyName", "WinLAMP SA"
+            VALUE "FileDescription", "WinLAMP Visualization Plug-in"
             VALUE "FileVersion", "2,25,4,0"
             VALUE "InternalName", "Nullsoft Milkdrop v2"
-            VALUE "LegalCopyright", "Copyright © 2001-2023 Winamp SA"
+            VALUE "LegalCopyright", "Copyright © 2001-2023 WinLAMP SA"
             VALUE "OriginalFilename", "vis_milk2.dll"
-            VALUE "ProductName", "Winamp"
-            VALUE "ProductVersion", STR_WINAMP_PRODUCTVER
+            VALUE "ProductName", "WinLAMP"
+            VALUE "ProductVersion", STR_WINLAMP_PRODUCTVER
         END
     END
     BLOCK "VarFileInfo"
@@ -540,7 +540,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_THIS_PLUGIN_NEEDS_MUSIC_TO_RUN 
-                            "This plug-in cannot run without music.\n\nPlease play some music, through Winamp, and then try running the plug-in again."
+                            "This plug-in cannot run without music.\n\nPlease play some music, through WinLAMP, and then try running the plug-in again."
     IDS_NO_MUSIC_PLAYING    "No Music Playing"
     IDS_UNABLE_TO_READ_DATA_FILE_X "Unable to read the data file:\n   %s"
     IDS_COULD_NOT_CREATE_MY_VERTEX_DECLARATION 
@@ -778,7 +778,7 @@ BEGIN
     IDS_CANVAS_STRETCH      "Canvas Stretch"
     IDS_CANVAS_STRETCH_TEXT "MilkDrop works with an internal texture, or canvas, to do all of\nits graphics rendering.  The speed (framerate) that MilkDrop runs\nat is inversely proportional to the number of pixels that are in\nthis canvas.  So, to render things internally at a smaller resolution,\nbut stretch them up for display, you can use this option.  It will\nmake the image look a bit softer and less crisp or detailed,\nbut - especially for older graphics hardware - things will run\nmuch faster.\n\nKeep in mind, a stretch factor of 2X, for example, means that there\nwill be half as manypixels to simulate on both the X and Y axes, \nso MilkDrop will actually run FOUR TIMES as fast.  With a stretch\nfactor of 3X, it will run 9X as fast (hypothetically).  And so on."
     IDS_MAX_IMAGES_BYTES_TEXT 
-                            "This option is only relevant if you've put tons of new textures in your \nwinamp\\plugins\\milkdrop2\\textures directory.   If you have (say you\nset up some kind of art kiosk with thousands of large images), this\noption lets you tweak how much video RAM MilkDrop will try to use to\ncache textures.  The only point of cacheing textures is so that \nwhen loading a new preset, if the preset needs to load textures,\nif they were already loaded once and are still cached in memory, \nthe load will be much smoother.\n\nGo ahead and crank this up; MilkDrop's core internal textures will\nalways take precedence over disk textures anyway, so it's pretty safe."
+                            "This option is only relevant if you've put tons of new textures in your \nwinlamp\\plugins\\milkdrop2\\textures directory.   If you have (say you\nset up some kind of art kiosk with thousands of large images), this\noption lets you tweak how much video RAM MilkDrop will try to use to\ncache textures.  The only point of cacheing textures is so that \nwhen loading a new preset, if the preset needs to load textures,\nif they were already loaded once and are still cached in memory, \nthe load will be much smoother.\n\nGo ahead and crank this up; MilkDrop's core internal textures will\nalways take precedence over disk textures anyway, so it's pretty safe."
     IDS_MENU_EDIT_WARP_SHADER "[ edit warp shader ]"
     IDS_MENU_EDIT_COMPOSITE_SHADER "[ edit composite shader ]"
     IDS_MENU_BLUR1_EDGE_DARKEN_AMOUNT "blur1: edge darken amount"
@@ -1193,9 +1193,9 @@ BEGIN
     IDS_WARNING_PRESET_X_ERROR_IN_PER_VERTEX_CODE 
                             "warning: preset ""%s"": error in 'per-vertex' code"
     IDS_HZ                  "Hz"
-    IDS_HELP_MINIMIZE_WINAMP "Help on 'Minimize Winamp...' checkbox"
-    IDS_HELP_MINIMIZE_WINAMP_HELP 
-                            "Enable this if you can sometimes see the Winamp window flickering\nthrough, when you run the plug-in fullscreen.  Enabling this option\nwill force the Winamp window to minimize whenever the plug-in goes\nfullscreen on the same monitor that the Winamp window is on.\nThe Winamp window will be restored as soon as the plug-in returns\nfrom fullscreen mode.\n\nNote that this also applies for 'fake' fullscreen mode (as well as 'real'\nfullscreen mode).\n\nKeep in mind that when running graphically demanding applications\n(such as this plug-in), it's always good to minimize (or close) as many\nother applications as possible, even if they appear to be idle."
+    IDS_HELP_MINIMIZE_WINLAMP "Help on 'Minimize WinLAMP...' checkbox"
+    IDS_HELP_MINIMIZE_WINLAMP_HELP 
+                            "Enable this if you can sometimes see the WinLAMP window flickering\nthrough, when you run the plug-in fullscreen.  Enabling this option\nwill force the WinLAMP window to minimize whenever the plug-in goes\nfullscreen on the same monitor that the WinLAMP window is on.\nThe WinLAMP window will be restored as soon as the plug-in returns\nfrom fullscreen mode.\n\nNote that this also applies for 'fake' fullscreen mode (as well as 'real'\nfullscreen mode).\n\nKeep in mind that when running graphically demanding applications\n(such as this plug-in), it's always good to minimize (or close) as many\nother applications as possible, even if they appear to be idle."
     IDS_DIRECTX_MISSING_OR_CORRUPT_TEXT 
                             "Failed to initialize DirectX 9.0 or later.\nMilkdrop requires d3dx9_31.dll to be installed.\n\nWould you like to be taken to:\nhttp://www.microsoft.com/download/details.aspx?id=35,\nwhere you can update DirectX 9.0?\n"
     IDS_PARENT_DIRECTORY    "parent directory"
@@ -1291,7 +1291,7 @@ BEGIN
                             "Enable this to force the plug-in to start in desktop mode."
     IDS_HELP_ON_F1          "Help on 'Press F1...' checkbox"
     IDS_HELP_ON_F1_HELP     "Disable this to prevent the 'Press F1 for Help' message\nfrom appearing when the plug-in starts."
-    IDS_CB_SKIN_HELP        "Check this box to 'skin' the plug-in's window frame when it runs\nin a window, so that it looks like the rest of the windows that\nmake up Winamp's interface.\n\nThis feature requires Winamp 2.90 or later; if the box is greyed\nout, it means you need a newer version of Winamp."
+    IDS_CB_SKIN_HELP        "Check this box to 'skin' the plug-in's window frame when it runs\nin a window, so that it looks like the rest of the windows that\nmake up WinLAMP's interface.\n\nThis feature requires WinLAMP 2.90 or later; if the box is greyed\nout, it means you need a newer version of WinLAMP."
     IDS_SAVE_CPU_CHECKBOX   "Help on 'Save CPU' checkbox"
     IDS_SAVE_CPU_CHECKBOX_HELP 
                             "Check this box to lower the amount of CPU (processor) that the plug-in uses\nto monitor and limit the framerate.\n\nWhen this box is unchecked, the plug-in will extremely accurately limit the\nframerate, resulting in ultra-smooth animation.  However, there is some cost\nin terms of CPU time - usually in the range of 0-20%%.\n\nWhen this box is checked, though, the plug-in uses a more lenient algorithm to\nlimit the framerate, which uses virtually no CPU time.  However, the framerate\nwill not be as accurately limited (it might vary over time), and animation is\nnot guaranteed to be perfectly smooth.\n\nNote that you can further decrease CPU usage by:\n  1) decreasing the maximum framerate (via the 'Max Framerate' options)\n  2) allowing page tearing (via the 'Allow Page Tearing' checkboxes)"
@@ -1337,10 +1337,10 @@ BEGIN
     IDS_RESTORE_ALL_DEFAULTS 
                             "Are you sure you want to restore the default settings?\n\nIf you click YES, the config panel will close and the defaults will be restored."
     IDS_RESTORE_ALL_DEFAULTS_TITLE "Restore Default Settings?"
-    IDS_OK_HELP             "Click this button to save your changes and return to Winamp."
-    IDS_CANCEL_HELP         "Click this button to cancel any changes and return to Winamp."
+    IDS_OK_HELP             "Click this button to save your changes and return to WinLAMP."
+    IDS_CANCEL_HELP         "Click this button to cancel any changes and return to WinLAMP."
     IDS_RESTORE_DEFAULTS_HELP 
-                            "Click this button to restore all config panel settings\nto their 'factory' defaults and then return to Winamp."
+                            "Click this button to restore all config panel settings\nto their 'factory' defaults and then return to WinLAMP."
     IDS_DOCUMENTATION_BUTTON_HELP 
                             "Click this button to view the documentation for this plug-in."
     IDS_VIEW_ONLINE_DOCS_HELP 
@@ -1378,7 +1378,7 @@ BEGIN
     IDS_ERROR_CREATING_TEXTURE_FOR_ICON_BITMAPS 
                             "Error creating texture for icon bitmaps"
     IDS_OUTDATED_VMS_DESKTOP_DLL_NEED_TO_REINSTALL 
-                            "It appears that you have an outdated copy of the file 'vms_desktop.dll'\nin your Winamp PLUGINS directory.  Please reinstall the plug-in\nto bring this file up to date."
+                            "It appears that you have an outdated copy of the file 'vms_desktop.dll'\nin your WinLAMP PLUGINS directory.  Please reinstall the plug-in\nto bring this file up to date."
     IDS_ERROR_CREATING_HOOK_PROC_DESKTOP_ICONS_NOT_AVAILABLE 
                             "Error creating hook procedure;\ndesktop icons will not be available."
     IDS_ERROR_UPDATING_ICON_BITMAPS 
@@ -1404,7 +1404,7 @@ BEGIN
     IDS_ERROR_UPDATING_ICON_BITMAPS_SHGETFILEINFO_FAILED 
                             "Error updating icon bitmaps:\nSHGetFileInfo failed."
     IDS_UNABLE_TO_REGISTER_WINDOW_CLASS 
-                            "Unable to register the window class;\nPLEASE RESTART WINAMP."
+                            "Unable to register the window class;\nPLEASE RESTART WINLAMP."
     IDS_DIRECTX_INIT_FAILED "DirectX initialization failed; unknown color format"
 END
 
@@ -1419,16 +1419,16 @@ BEGIN
     IDS_ERROR_CREATING_D3DX_FONTS "Error creating D3DX fonts"
     IDS_UNABLE_TO_INIT_DXCONTEXT 
                             "Unable to initialize DXContext;\nprobably out of memory."
-    IDS_TO_FREE_UP_SOME_MEMORY_RESTART_WINAMP_THEN_GO_TO_CONFIG 
-                            "To free up some memory, please RESTART WINAMP, then return\n   to the plug-in's config panel and try setting your\n   WINDOWED MODE MULTISAMPLING back to 'NONE.'\n\nThen try running the plug-in again."
-    IDS_TO_FREE_UP_SOME_MEMORY_RESTART_WINAMP_THEN_GO_TO_CONFIG_2 
-                            "To free up some memory, please RESTART WINAMP, then return\n   to the plug-in's config panel and try setting your\n   FAKE FULLSCREEN MODE MULTISAMPLING back to 'NONE.'\n\nThen try running the plug-in again."
-    IDS_TO_FREE_UP_SOME_MEMORY_RESTART_WINAMP_THEN_GO_TO_CONFIG_3 
-                            "To free up some memory, please RESTART WINAMP, then return\n   to the plug-in's config panel and try setting your\n   FULLSCREEN MODE MULTISAMPLING back to 'NONE.'\n\nThen try running the plug-in again."
+    IDS_TO_FREE_UP_SOME_MEMORY_RESTART_WINLAMP_THEN_GO_TO_CONFIG 
+                            "To free up some memory, please RESTART WINLAMP, then return\n   to the plug-in's config panel and try setting your\n   WINDOWED MODE MULTISAMPLING back to 'NONE.'\n\nThen try running the plug-in again."
+    IDS_TO_FREE_UP_SOME_MEMORY_RESTART_WINLAMP_THEN_GO_TO_CONFIG_2 
+                            "To free up some memory, please RESTART WINLAMP, then return\n   to the plug-in's config panel and try setting your\n   FAKE FULLSCREEN MODE MULTISAMPLING back to 'NONE.'\n\nThen try running the plug-in again."
+    IDS_TO_FREE_UP_SOME_MEMORY_RESTART_WINLAMP_THEN_GO_TO_CONFIG_3 
+                            "To free up some memory, please RESTART WINLAMP, then return\n   to the plug-in's config panel and try setting your\n   FULLSCREEN MODE MULTISAMPLING back to 'NONE.'\n\nThen try running the plug-in again."
     IDS_TO_FREE_UP_VIDEO_MEMORY 
-                            "To free up some video memory, try the following:\n\n1. Try closing all other applications that might be using video memory, especially:\n\n        * WINDOWS MEDIA PLAYER\n        * any video conferencing software, such as NETMEETING\n        * any DVD playback, TV tuner, or TV capture software\n        * any video editing software\n        * any software that uses Overlays, such as Drempels Desktop\n        * any audio dictation software, such as Dragon NaturallySpeaking\n        * any other 3D programs currently running\n\n2. Also try returning to the config panel (ALT+K) and selecting a display mode\n    that uses less video memory.  16-bit display modes use half as much memory\n    as 32-bit display modes, and lower-resolution display modes (such as 640 x 480)\n    use proportionally less video memory.\n\nAfter making these changes, please RESTART WINAMP before trying to run\nthe plug-in again."
+                            "To free up some video memory, try the following:\n\n1. Try closing all other applications that might be using video memory, especially:\n\n        * WINDOWS MEDIA PLAYER\n        * any video conferencing software, such as NETMEETING\n        * any DVD playback, TV tuner, or TV capture software\n        * any video editing software\n        * any software that uses Overlays, such as Drempels Desktop\n        * any audio dictation software, such as Dragon NaturallySpeaking\n        * any other 3D programs currently running\n\n2. Also try returning to the config panel (ALT+K) and selecting a display mode\n    that uses less video memory.  16-bit display modes use half as much memory\n    as 32-bit display modes, and lower-resolution display modes (such as 640 x 480)\n    use proportionally less video memory.\n\nAfter making these changes, please RESTART WINLAMP before trying to run\nthe plug-in again."
     IDS_TO_FREE_UP_VIDEO_MEMORY_2 
-                            "To free up some video memory, try the following:\n\n1. Try closing all other applications that might be using video memory, especially:\n\n        * WINDOWS MEDIA PLAYER\n        * any video conferencing software, such as NETMEETING\n        * any DVD playback, TV tuner, or TV capture software\n        * any video editing software\n        * any software that uses Overlays, such as Drempels Desktop\n        * any audio dictation software, such as Dragon NaturallySpeaking\n        * any other 3D programs currently running\n\n2. Also try changing your Windows display mode to a lesser bit depth\n    (i.e. 16-bit color), or a smaller resolution.\n\nAfter making these changes, please RESTART WINAMP before trying to run\nthe plug-in again."
+                            "To free up some video memory, try the following:\n\n1. Try closing all other applications that might be using video memory, especially:\n\n        * WINDOWS MEDIA PLAYER\n        * any video conferencing software, such as NETMEETING\n        * any DVD playback, TV tuner, or TV capture software\n        * any video editing software\n        * any software that uses Overlays, such as Drempels Desktop\n        * any audio dictation software, such as Dragon NaturallySpeaking\n        * any other 3D programs currently running\n\n2. Also try changing your Windows display mode to a lesser bit depth\n    (i.e. 16-bit color), or a smaller resolution.\n\nAfter making these changes, please RESTART WINLAMP before trying to run\nthe plug-in again."
     IDS_MILKDROP_SUGGESTION "MILKDROP SUGGESTION"
     IDS_DIRECTX_MISSING_OR_CORRUPT "DirectX Missing or Corrupt"
     IDS_ERROR_THE_PLUGIN_IS_ALREADY_RUNNING 

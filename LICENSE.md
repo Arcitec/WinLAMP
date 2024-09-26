@@ -1,15 +1,15 @@
-# Winamp Collaborative License (WCL) Version 1.0.1
+# WinLAMP Collaborative License (WCL) Version 1.0.1
 
-This License governs the use, modification, and distribution of the Winamp software. 
+This License governs the use, modification, and distribution of the WinLAMP software. 
 By using, Modifying, or distributing this software, you agree to the following terms:
 
 ## Preamble
-The Winamp Collaborative License is a free, copyleft license for software and other kinds of works. It is designed to ensure that you have the freedom to use, Modify, and study the software, but with certain restrictions on the distribution of modifications to maintain the integrity and collaboration of the project.
+The WinLAMP Collaborative License is a free, copyleft license for software and other kinds of works. It is designed to ensure that you have the freedom to use, Modify, and study the software, but with certain restrictions on the distribution of modifications to maintain the integrity and collaboration of the project.
 
 ## TERMS AND CONDITIONS
 
 ### 1. Definitions
-- "This License" refers to version 1.0 of the Winamp Collaborative License.
+- "This License" refers to version 1.0 of the WinLAMP Collaborative License.
 - "The Program" refers to any copyrightable work Licensed under this License.
 - "You" refers to each Licensee, whether an individual or organization.
 - "Modify" means to copy from or adapt all or part of the work in a fashion requiring copyright permission, other than the making of an exact copy.
@@ -25,7 +25,7 @@ You are granted the right to Modify the software for private use only. You may m
 
 ### 4. Contributions
 - Contribution to Project: You are encouraged to contribute improvements, enhancements, and bug fixes back to the project. Contributions must be submitted to the official repository and will be reviewed and incorporated at the discretion of the maintainers.
-- Assignment of Rights: By submitting contributions, you agree that all intellectual property rights, including copyright, in your contributions are assigned to Winamp. You hereby grant Winamp a perpetual, worldwide, non-exclusive, royalty-free license to use, copy, modify, and distribute your contributions as part of the software, without any compensation to you.
+- Assignment of Rights: By submitting contributions, you agree that all intellectual property rights, including copyright, in your contributions are assigned to WinLAMP. You hereby grant WinLAMP a perpetual, worldwide, non-exclusive, royalty-free license to use, copy, modify, and distribute your contributions as part of the software, without any compensation to you.
 - Waiver of Rights: You waive any rights to claim authorship of the contributions or to object to any distortion, mutilation, or other modifications of the contributions.
 
 ### 5. Restrictions

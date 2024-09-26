@@ -19,14 +19,14 @@ struct T_ENCODER_AACP_INFO : public T_ENCODER_NSV_INFO
 
 class C_ENCODER_AACP : public C_ENCODER_NSV {
 private:
-	HWND winamp;
+	HWND winlamp;
 protected:
 	virtual void FillAttribs();
 public:
     static HINSTANCE hEncoderInstance;
     C_ENCODER_AACP(HWND hwnd = 0);
     virtual ~C_ENCODER_AACP();
-    static bool isPresent(HWND winamp);
+    static bool isPresent(HWND winlamp);
     virtual void ReadConfFile(char * conf_file, char * section=NULL);
     virtual void FillConfFile(char * conf_file, char * section=NULL);
     static void Unload() { if(hEncoderInstance) FreeLibrary(hEncoderInstance); hEncoderInstance=0; }

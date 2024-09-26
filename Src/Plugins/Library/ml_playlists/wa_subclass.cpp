@@ -1,5 +1,5 @@
 #include "main.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "replicant/nu/AutoLock.h"
 #include <algorithm>
 
@@ -11,11 +11,11 @@ static HMENU last_playlistsmenu = NULL;
 WORD waMenuID = 0;
 extern int IPC_LIBRARY_PLAYLISTS_REFRESH, IPC_CLOUD_ENABLED;
 
-LRESULT WINAPI WinampProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT WINAPI WinLAMPProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	if (msg == WM_COMMAND || msg == WM_SYSCOMMAND)
 	{
-		if (LOWORD(wParam) == WINAMP_MANAGEPLAYLISTS)
+		if (LOWORD(wParam) == WINLAMP_MANAGEPLAYLISTS)
 		{
 			mediaLibrary.ShowMediaLibrary();
 			mediaLibrary.SelectTreeItem(playlistsTreeId);
@@ -83,8 +83,8 @@ LRESULT WINAPI WinampProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
 		return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-void Hook(HWND winamp)
+void Hook(HWND winlamp)
 {
-	if (IsWindow(winamp))
-		waProc = (WNDPROC)SetWindowLongPtrW(winamp, GWLP_WNDPROC, (LONG_PTR)WinampProcedure);
+	if (IsWindow(winlamp))
+		waProc = (WNDPROC)SetWindowLongPtrW(winlamp, GWLP_WNDPROC, (LONG_PTR)WinLAMPProcedure);
 }

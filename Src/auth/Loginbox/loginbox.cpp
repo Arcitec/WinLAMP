@@ -33,7 +33,7 @@
 #include "../api.h"
 #include "../api_auth.h"
 #include "../../nu/windowsTheme.h"
-#include "../../winamp/commandLink.h"
+#include "../../winlamp/commandLink.h"
 #include "../../ombrowser/ifc_omcacherecord.h"
 
 
@@ -43,7 +43,7 @@
 #include <shlwapi.h>
 #include <strsafe.h>
 
-#define PROVIDERLIST_URL		L"http://client.winamp.com/data/loginproviders"
+#define PROVIDERLIST_URL		L"http://client.winlamp.com/data/loginproviders"
 //#define PROVIDERLIST_URL		L"http://dl.getdropbox.com/u/1994752/loginProviders.xml"
 
 // max mini in dpi

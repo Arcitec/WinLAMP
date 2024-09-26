@@ -125,10 +125,10 @@ HRESULT FileTypeRegistrar::RegisterCDPlayer(const wchar_t *programName)
 			{
 				wchar_t buf3[MAX_PATH] = {0};
 				DWORD st = sizeof(buf3)/sizeof(*buf3);
-				if (RegQueryValueExW(mp3Key, L"Winamp_Back", 0, NULL, (LPBYTE)buf3, &st) != ERROR_SUCCESS ||
+				if (RegQueryValueExW(mp3Key, L"WinLAMP_Back", 0, NULL, (LPBYTE)buf3, &st) != ERROR_SUCCESS ||
 					_wcsicmp(buf3, b))
 				{
-					SetValue(mp3Key, L"Winamp_Back", b);
+					SetValue(mp3Key, L"WinLAMP_Back", b);
 				}
 				SetValue(mp3Key, buf2);
 			}
@@ -154,11 +154,11 @@ HRESULT FileTypeRegistrar::UnregisterCDPlayer(const wchar_t *programName)
 			if (!wcscmp(b, buf2))
 			{
 				s = sizeof(b);
-				if (RegQueryValueExW(mp3Key, L"Winamp_Back", 0, NULL, (LPBYTE)b, &s) == ERROR_SUCCESS)
+				if (RegQueryValueExW(mp3Key, L"WinLAMP_Back", 0, NULL, (LPBYTE)b, &s) == ERROR_SUCCESS)
 				{
 					if (!_wcsicmp(b, buf2)) b[0] = 0;
 					if (SetValue(mp3Key, b) == ERROR_SUCCESS)
-						RegDeleteValueW(mp3Key, L"Winamp_Back");
+						RegDeleteValueW(mp3Key, L"WinLAMP_Back");
 				}
 				else
 				{
@@ -201,7 +201,7 @@ HRESULT FileTypeRegistrar::RegisterType(const wchar_t *extension, const wchar_t 
 		{
 			if (wcsncmp(b, which_str, wcslen(b)))
 			{
-				SetValue(mp3Key, L"Winamp_Back", b);
+				SetValue(mp3Key, L"WinLAMP_Back", b);
 				SetValue(mp3Key, which_str);
 			}
 		}
@@ -260,10 +260,10 @@ HRESULT FileTypeRegistrar::UnregisterType(const wchar_t *extension, const wchar_
 			if (!wcsncmp(b, which_str, len))
 			{
 				s = sizeof(b)/sizeof(*b);
-				if (RegQueryValueExW(mp3Key, L"Winamp_Back", 0, NULL, (LPBYTE)b, &s) == ERROR_SUCCESS)
+				if (RegQueryValueExW(mp3Key, L"WinLAMP_Back", 0, NULL, (LPBYTE)b, &s) == ERROR_SUCCESS)
 				{
 					if (SetValue(mp3Key, b) == ERROR_SUCCESS)
-						RegDeleteValueW(mp3Key, L"Winamp_Back");
+						RegDeleteValueW(mp3Key, L"WinLAMP_Back");
 				}
 				else
 				{
@@ -339,7 +339,7 @@ HRESULT FileTypeRegistrar::AddAgent(const wchar_t *agentFilename)
 
 	if (RegCreateKeyW(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", &key) == ERROR_SUCCESS)
 	{
-		SetValue(key, L"WinampAgent", agentFilename);
+		SetValue(key, L"WinLAMPAgent", agentFilename);
 		RegCloseKey(key);
 	}
 	CreateProcessW(NULL, (LPWSTR)agentFilename, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
@@ -352,8 +352,8 @@ HRESULT FileTypeRegistrar::RemoveAgent()
 {
 	HKEY key = NULL;
 
-	// caller will have done this also, but we'll do it again at elevated level just in case that's where winamp agent is running
-	HWND hwnd = FindWindow(L"WinampAgentMain", NULL);
+	// caller will have done this also, but we'll do it again at elevated level just in case that's where winlamp agent is running
+	HWND hwnd = FindWindow(L"WinLAMPAgentMain", NULL);
 	if (hwnd)
 	{
 		SendMessageW(hwnd, WM_CLOSE, 0, 0);
@@ -361,7 +361,7 @@ HRESULT FileTypeRegistrar::RemoveAgent()
 
 	if (RegOpenKey(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", &key) == ERROR_SUCCESS)
 	{
-		RegDeleteValue(key, L"WinampAgent");
+		RegDeleteValue(key, L"WinLAMPAgent");
 		RegCloseKey(key);
 	}
 	return S_OK;
@@ -427,7 +427,7 @@ HRESULT FileTypeRegistrar::RegisterMediaPlayer(DWORD accessEnabled, const wchar_
 	{
 		if (ERROR_SUCCESS == RegMedia_CreateKey(L"Capabilities",&mp3Key, prog_name))
 		{
-			SetValue(mp3Key,L"ApplicationDescription", L"Winamp. The Ultimate Media Player.");
+			SetValue(mp3Key,L"ApplicationDescription", L"WinLAMP. The Ultimate Media Player.");
 			SetValue(mp3Key,L"ApplicationName", prog_name);
 			RegCloseKey(mp3Key);
 		}
@@ -521,17 +521,17 @@ static LONG RegCreateKey6(HKEY hKey, LPCWSTR lpSubKey, LPCWSTR lpSubKey2, LPCWST
 	return RegCreateKeyW(hKey,temp,phkResult);
 }
 
-HRESULT FileTypeRegistrar::SetupShell(const wchar_t *commandLine, const wchar_t *winamp_file, const wchar_t *description, const wchar_t *commandName, const wchar_t *dragAndDropGUID)
+HRESULT FileTypeRegistrar::SetupShell(const wchar_t *commandLine, const wchar_t *winlamp_file, const wchar_t *description, const wchar_t *commandName, const wchar_t *dragAndDropGUID)
 {
 	HKEY mp3Key = NULL;
 
-	if (RegCreateKey5(HKEY_CLASSES_ROOT,winamp_file, L"\\shell\\", commandName,&mp3Key) == ERROR_SUCCESS)
+	if (RegCreateKey5(HKEY_CLASSES_ROOT,winlamp_file, L"\\shell\\", commandName,&mp3Key) == ERROR_SUCCESS)
 	{
 		SetValue(mp3Key, description);
 		RegCloseKey(mp3Key);
 	}
 
-	if (RegCreateKey6(HKEY_CLASSES_ROOT,winamp_file, L"\\shell\\", commandName, L"\\command",&mp3Key) == ERROR_SUCCESS)
+	if (RegCreateKey6(HKEY_CLASSES_ROOT,winlamp_file, L"\\shell\\", commandName, L"\\command",&mp3Key) == ERROR_SUCCESS)
 	{
 		SetValue(mp3Key, commandLine);
 		RegCloseKey(mp3Key);
@@ -540,7 +540,7 @@ HRESULT FileTypeRegistrar::SetupShell(const wchar_t *commandLine, const wchar_t 
 	/* Drag and Drop stuff */
 	if (dragAndDropGUID && *dragAndDropGUID)
 	{
-		if (RegCreateKey6(HKEY_CLASSES_ROOT,winamp_file, L"\\shell\\", commandName, L"\\DropTarget",&mp3Key) == ERROR_SUCCESS)
+		if (RegCreateKey6(HKEY_CLASSES_ROOT,winlamp_file, L"\\shell\\", commandName, L"\\DropTarget",&mp3Key) == ERROR_SUCCESS)
 		{
 			SetValue(mp3Key, L"Clsid", dragAndDropGUID);
 			RegCloseKey(mp3Key);
@@ -550,34 +550,34 @@ HRESULT FileTypeRegistrar::SetupShell(const wchar_t *commandLine, const wchar_t 
 	return S_OK;
 }
 
-HRESULT FileTypeRegistrar::RemoveShell(const wchar_t *winamp_file, const wchar_t *commandName)
+HRESULT FileTypeRegistrar::RemoveShell(const wchar_t *winlamp_file, const wchar_t *commandName)
 {
 	wchar_t temp[1024] = {0};
-	StringCchPrintfW(temp, 1024, L"%s\\shell\\%s", winamp_file, commandName);
+	StringCchPrintfW(temp, 1024, L"%s\\shell\\%s", winlamp_file, commandName);
 	myRegDeleteKeyEx(HKEY_CLASSES_ROOT, temp);
 	return S_OK;
 }
 
-HRESULT FileTypeRegistrar::SetupFileType(const wchar_t *programName, const wchar_t *winamp_file, const wchar_t *name, int iconNumber, const wchar_t *defaultShellCommand, const wchar_t *iconPath)
+HRESULT FileTypeRegistrar::SetupFileType(const wchar_t *programName, const wchar_t *winlamp_file, const wchar_t *name, int iconNumber, const wchar_t *defaultShellCommand, const wchar_t *iconPath)
 {
 	HKEY mp3Key = NULL;
 	wchar_t str[MAX_PATH+32] = {0};
 
-	if (RegCreateKeyW(HKEY_CLASSES_ROOT,winamp_file,&mp3Key) == ERROR_SUCCESS)
+	if (RegCreateKeyW(HKEY_CLASSES_ROOT,winlamp_file,&mp3Key) == ERROR_SUCCESS)
 	{
 		StringCchCopyW(str,MAX_PATH+32,name);
 		SetValue(mp3Key, str);
 		RegCloseKey(mp3Key);
 	}
 
-	if (RegCreateKey4(HKEY_CLASSES_ROOT,winamp_file, L"\\DefaultIcon",&mp3Key) == ERROR_SUCCESS)
+	if (RegCreateKey4(HKEY_CLASSES_ROOT,winlamp_file, L"\\DefaultIcon",&mp3Key) == ERROR_SUCCESS)
 	{
 		StringCchPrintfW(str,MAX_PATH+32,(iconPath[0]?L"%s":L"%s,%d"),(iconPath[0]?iconPath:programName),iconNumber);
 		SetValue(mp3Key, str);
 		RegCloseKey(mp3Key);
 	}
 
-	if (RegCreateKey4(HKEY_CLASSES_ROOT,winamp_file, L"\\shell",&mp3Key) == ERROR_SUCCESS)
+	if (RegCreateKey4(HKEY_CLASSES_ROOT,winlamp_file, L"\\shell",&mp3Key) == ERROR_SUCCESS)
 	{
 		SetValue(mp3Key, defaultShellCommand);
 		RegCloseKey(mp3Key);
@@ -586,11 +586,11 @@ HRESULT FileTypeRegistrar::SetupFileType(const wchar_t *programName, const wchar
 	return S_OK;
 }
 
-HRESULT FileTypeRegistrar::SetupDefaultFileType(const wchar_t *winamp_file, const wchar_t *defaultShellCommand){
+HRESULT FileTypeRegistrar::SetupDefaultFileType(const wchar_t *winlamp_file, const wchar_t *defaultShellCommand){
 
 	HKEY mp3Key = NULL;
 
-	if (RegCreateKey4(HKEY_CLASSES_ROOT,winamp_file, L"\\shell",&mp3Key) == ERROR_SUCCESS)
+	if (RegCreateKey4(HKEY_CLASSES_ROOT,winlamp_file, L"\\shell",&mp3Key) == ERROR_SUCCESS)
 	{
 		SetValue(mp3Key, defaultShellCommand);
 		RegCloseKey(mp3Key);
@@ -651,28 +651,28 @@ HRESULT FileTypeRegistrar::RegisterGUID(const wchar_t *programName, const wchar_
 }
 
 HRESULT FileTypeRegistrar::RegisterDVDPlayer(const wchar_t *programName, int iconNumber, 
-																						 const wchar_t *which_file /*Winamp.DVD*/, const wchar_t *commandName /* Winamp */,
-																						 const wchar_t *provider /* Nullsoft Winamp */, const wchar_t *description /* Play in Winamp */)
+																						 const wchar_t *which_file /*WinLAMP.DVD*/, const wchar_t *commandName /* WinLAMP */,
+																						 const wchar_t *provider /* Nullsoft WinLAMP */, const wchar_t *description /* Play in WinLAMP */)
 {
 	// TODO: stop hardcoding stuff as soon as we start using this
-	wchar_t winampPath[MAX_PATH+128] = {0}; 
-	wchar_t winampIcon[MAX_PATH] = {0};
+	wchar_t winlampPath[MAX_PATH+128] = {0}; 
+	wchar_t winlampIcon[MAX_PATH] = {0};
 	HKEY mp3Key = NULL;
 
 	// create icon path and exe-with-param path
-	StringCbPrintfW(winampIcon,sizeof(winampIcon), L"\"%s\", %d", programName, iconNumber); 
-	StringCbPrintfW(winampPath,sizeof(winampPath), L"\"%s\" %1", programName);
+	StringCbPrintfW(winlampIcon,sizeof(winlampIcon), L"\"%s\", %d", programName, iconNumber); 
+	StringCbPrintfW(winlampPath,sizeof(winlampPath), L"\"%s\" %1", programName);
 
-	// uncomment if we ever want to overwrite the default icon... not set because we don't have a good dvd icon in winamp.exe
+	// uncomment if we ever want to overwrite the default icon... not set because we don't have a good dvd icon in winlamp.exe
 	/*
 	if (RegOpenKey(HKEY_CLASSES_ROOT,"DVD\\DefaultIcon",&mp3Key) == ERROR_SUCCESS)
 	{
-	RegSetValueExW(mp3Key,NULL,0,REG_SZ,winampIcon,iconSize);
+	RegSetValueExW(mp3Key,NULL,0,REG_SZ,winlampIcon,iconSize);
 	}
 	*/
 	if (RegCreateKeyW(HKEY_CLASSES_ROOT,L"DVD\\shell",&mp3Key) == ERROR_SUCCESS)
 	{
-		// set winamp to be the default player
+		// set winlamp to be the default player
 		SetValue(mp3Key, commandName);
 		RegCloseKey(mp3Key);
 	}
@@ -687,13 +687,13 @@ HRESULT FileTypeRegistrar::RegisterDVDPlayer(const wchar_t *programName, int ico
 	if (RegCreateKey5(HKEY_CLASSES_ROOT,L"DVD\\shell\\", commandName, L"\\command",&mp3Key) == ERROR_SUCCESS)
 	{
 		// set the executable path
-		SetValue(mp3Key, winampPath);
+		SetValue(mp3Key, winlampPath);
 		RegCloseKey(mp3Key);
 	}
 
 	if (RegCreateKeyW(HKEY_LOCAL_MACHINE,L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\AutoplayHandlers\\EventHandlers\\PlayDVDMovieOnArrival",&mp3Key) == ERROR_SUCCESS)
 	{
-		// register winamp for dvd autoplay
+		// register winlamp for dvd autoplay
 		RegSetValueExW(mp3Key,which_file,0,REG_SZ,0,0);
 		RegCloseKey(mp3Key);
 	}
@@ -702,7 +702,7 @@ HRESULT FileTypeRegistrar::RegisterDVDPlayer(const wchar_t *programName, int ico
 	{
 		// autoplay details
 		SetValue(mp3Key,L"Action", description);
-		SetValue(mp3Key,L"DefaultIcon", winampIcon);
+		SetValue(mp3Key,L"DefaultIcon", winlampIcon);
 		SetValue(mp3Key,L"InvokeProgID", L"DVD");
 		SetValue(mp3Key,L"InvokeVerb", commandName);
 		SetValue(mp3Key,L"Provider", provider);
@@ -853,7 +853,7 @@ HRESULT FileTypeRegistrar::WriteProKey(LPCWSTR name, LPCWSTR key)
 {
 	HKEY hkey = NULL;
 
-	if (RegCreateKeyExW(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Nullsoft\\Winamp", 0, 0, 0, KEY_READ | KEY_WRITE, NULL, &hkey, NULL) == ERROR_SUCCESS)
+	if (RegCreateKeyExW(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Nullsoft\\WinLAMP", 0, 0, 0, KEY_READ | KEY_WRITE, NULL, &hkey, NULL) == ERROR_SUCCESS)
 	{
 		if (*name)
 			SetValue(hkey, L"regname", name);
@@ -902,7 +902,7 @@ HRESULT FileTypeRegistrar::WriteClientUIDKey(LPCWSTR path, LPCWSTR uid_str)
 {
 	HKEY hkey = NULL;
 
-	if (RegCreateKeyExW(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Nullsoft\\Winamp", 0, 0, 0, KEY_READ | KEY_WRITE, NULL, &hkey, NULL) == ERROR_SUCCESS)
+	if (RegCreateKeyExW(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Nullsoft\\WinLAMP", 0, 0, 0, KEY_READ | KEY_WRITE, NULL, &hkey, NULL) == ERROR_SUCCESS)
 	{
 		SetValue(hkey, path, uid_str);
 		RegCloseKey(hkey);
@@ -921,7 +921,7 @@ HRESULT FileTypeRegistrar::RegisterProtocol(LPCWSTR protocol, LPCWSTR command, L
 	if (RegCreateKeyW(HKEY_CLASSES_ROOT, protocol, &mp3Key) == ERROR_SUCCESS)
 	{
 		wchar_t regStr[256] = {0};
-		SetValue(mp3Key, L"URL:Winamp Command Handler");
+		SetValue(mp3Key, L"URL:WinLAMP Command Handler");
 		SetValue(mp3Key, L"URL Protocol", L"");
 		RegCloseKey(mp3Key);
 
@@ -943,7 +943,7 @@ HRESULT FileTypeRegistrar::RegisterProtocol(LPCWSTR protocol, LPCWSTR command, L
 	return S_OK;
 }
 
-HRESULT FileTypeRegistrar::RegisterCapability(const wchar_t *programName, const wchar_t *winamp_file, const wchar_t *extension)
+HRESULT FileTypeRegistrar::RegisterCapability(const wchar_t *programName, const wchar_t *winlamp_file, const wchar_t *extension)
 {
 #if defined(_SYSINFOAPI_H_) && defined(NOT_BUILD_WINDOWS_DEPRECATE) && (_WIN32_WINNT >= 0x0501)
 	if (IsWindowsVersionOrGreater(6, 0, 0)) // Vista
@@ -958,7 +958,7 @@ HRESULT FileTypeRegistrar::RegisterCapability(const wchar_t *programName, const 
 		if (ERROR_SUCCESS == RegMedia_CreateKey(L"Capabilities\\FileAssociations", &hkey_file_associations, programName))
 		{
 			RegDeleteValueW(hkey_file_associations, extension); // to make sure that they are all in case that we need
-			SetValue(hkey_file_associations, extension, winamp_file);
+			SetValue(hkey_file_associations, extension, winlamp_file);
 			RegCloseKey(hkey_file_associations);
 		}
 	}

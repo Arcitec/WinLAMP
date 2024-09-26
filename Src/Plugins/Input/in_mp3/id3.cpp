@@ -168,7 +168,7 @@ void ID3_AddSetRating(ID3_Tag *tag, const wchar_t *rating)
 	}
 	if (!frame)
 	{
-		frame = tag->Find(ID3FID_POPULARIMETER, ID3FN_EMAIL, "rating@winamp.com\0");
+		frame = tag->Find(ID3FID_POPULARIMETER, ID3FN_EMAIL, "rating@winlamp.com\0");
 		if (frame) own_frame = true;
 	}
 	if (!frame)
@@ -186,7 +186,7 @@ void ID3_AddSetRating(ID3_Tag *tag, const wchar_t *rating)
 	{
 		frame = new ID3_Frame(ID3FID_POPULARIMETER);
 		if (!config_rating_email[0])
-			frame->Field(ID3FN_EMAIL).Set((uchar *)"rating@winamp.com\0", 18);
+			frame->Field(ID3FN_EMAIL).Set((uchar *)"rating@winlamp.com\0", 18);
 		else
 		{
 			frame->Field(ID3FN_EMAIL).Set((uchar *)config_rating_email, strlen(config_rating_email)+1);
@@ -243,7 +243,7 @@ wchar_t *ID3_GetRating(ID3_Tag *tag, wchar_t *dest, size_t destlen)
 	if (config_rating_email[0])
 		frame = tag->Find(ID3FID_POPULARIMETER, ID3FN_EMAIL, config_rating_email);
 	if (!frame)
-		frame = tag->Find(ID3FID_POPULARIMETER, ID3FN_EMAIL, "rating@winamp.com\0");
+		frame = tag->Find(ID3FID_POPULARIMETER, ID3FN_EMAIL, "rating@winlamp.com\0");
 	if (!frame)
 		frame = tag->Find(ID3FID_POPULARIMETER);
 	if (frame)

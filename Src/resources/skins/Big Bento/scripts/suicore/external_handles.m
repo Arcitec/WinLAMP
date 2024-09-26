@@ -427,7 +427,7 @@ Player.onSwitchToLayout (Layout _layout)
 }
 
 //----------------------------------------------------------------------------------------------------------------
-// Windows that aren't registered with winamp will be handled here, the visibility state is linked to cfgattribs
+// Windows that aren't registered with winlamp will be handled here, the visibility state is linked to cfgattribs
 //----------------------------------------------------------------------------------------------------------------
 
 /*--sui_browser_attrib.onDataChanged ()
@@ -562,18 +562,18 @@ sui_explorer_attrib.onDataChanged ()
 
 
 //----------------------------------------------------------------------------------------------------------------
-// If a link is clicked within winamp this function *should* be called by wasabi core.
-// returning 1 prevents winamp to open the url in an external browser
+// If a link is clicked within winlamp this function *should* be called by wasabi core.
+// returning 1 prevents winlamp to open the url in an external browser
 //----------------------------------------------------------------------------------------------------------------
 
 System.onOpenUrl(string url)
 {
-	// If winamp is in shade mode
+	// If winlamp is in shade mode
 	if (player.getCurLayout() != normal) 
 	{
 		string comp = getPrivateString(getSkinName(), "Component", "Media Library"); // Get the current sui component
 
-		// Can also happen, winamp is in shade - and normal wnd is collapsed
+		// Can also happen, winlamp is in shade - and normal wnd is collapsed
 		if (comp == "Hidden")
 		{
 			player.switchToLayout("normal");

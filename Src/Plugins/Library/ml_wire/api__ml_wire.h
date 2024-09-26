@@ -1,7 +1,7 @@
 #ifndef NULLSOFT_ML_WIRE_API_H
 #define NULLSOFT_ML_WIRE_API_H
 
-#include "../Winamp/JSAPI2_api_security.h"
+#include "../WinLAMP/JSAPI2_api_security.h"
 extern JSAPI2::api_security *jsapi2_security;
 #define AGAVE_API_JSAPI2_SECURITY jsapi2_security
 
@@ -14,7 +14,7 @@ extern JSAPI2::api_security *jsapi2_security;
 extern obj_ombrowser *browserManager;
 #define OMBROWSERMNGR browserManager
 
-#include "../Winamp/api_stats.h"
+#include "../WinLAMP/api_stats.h"
 extern api_stats *statsApi;
 #define AGAVE_API_STATS statsApi
 

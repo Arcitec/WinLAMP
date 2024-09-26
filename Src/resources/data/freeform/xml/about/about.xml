@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<WinampAbstractionLayer version="1.3">
+<WinLAMPAbstractionLayer version="1.3">
 	<elements>
 		<bitmap id="wasabi.gen_ff.about.wasabilogo" file="wasabi.png"/>
 		<bitmap id="wasabi.gen_ff.about.title" file="title.png"/>
@@ -51,4 +51,4 @@
 		<guiobject fitparent="1" />
 		<script file="about.maki"/>
 	</groupdef>
-</WinampAbstractionLayer>
+</WinLAMPAbstractionLayer>

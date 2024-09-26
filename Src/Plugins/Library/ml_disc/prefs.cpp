@@ -2,7 +2,7 @@
 #include "../nu/AutoWide.h"
 #include "./resource.h"
 #include "./settings.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <strsafe.h>
 
 static convertConfigStruct m_ccs;
@@ -157,14 +157,14 @@ static INT_PTR CALLBACK CDPrefs2Proc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPA
 
 			converterEnumFmtStruct enumf = { myEnumProc, (INT)(INT_PTR)hwndDlg };
 			m_has_seled = 0;
-			SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&enumf, IPC_CONVERT_CONFIG_ENUMFMTS);
+			SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&enumf, IPC_CONVERT_CONFIG_ENUMFMTS);
 			if (!m_has_seled)
 			{
 				SendDlgItemMessage(hwndDlg, IDC_ENCFORMAT, CB_SETCURSEL, 0, 0);
 				m_ccs.format = mmioFOURCC('W', 'A', 'V', ' ');
 			}
 
-			HWND h = (HWND)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM) & m_ccs, IPC_CONVERT_CONFIG);
+			HWND h = (HWND)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM) & m_ccs, IPC_CONVERT_CONFIG);
 			doConfigResizeChild(hwndDlg, h);
 		}
 		break;
@@ -177,14 +177,14 @@ static INT_PTR CALLBACK CDPrefs2Proc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPA
 				int sel = (INT)(INT_PTR)SendDlgItemMessage(hwndDlg, IDC_ENCFORMAT, CB_GETCURSEL, 0, 0);
 				if (sel != CB_ERR)
 				{
-					SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&m_ccs, IPC_CONVERT_CONFIG_END);
+					SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&m_ccs, IPC_CONVERT_CONFIG_END);
 					int last = m_ccs.format;
 					if (RegisteredEncoder(last) || last == OLD_AAC_CODEC) Settings_GetDefault(C_EXTRACT, EF_FOURCC, &last);
 
 					m_ccs.format = (int)SendDlgItemMessage(hwndDlg, IDC_ENCFORMAT, CB_GETITEMDATA, sel, 0);
 					Settings_SetInt(C_EXTRACT, EF_FOURCC, m_ccs.format);
 
-					HWND h = (HWND)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM) & m_ccs, IPC_CONVERT_CONFIG);
+					HWND h = (HWND)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM) & m_ccs, IPC_CONVERT_CONFIG);
 					doConfigResizeChild(hwndDlg, h);
 				}
 			}
@@ -192,7 +192,7 @@ static INT_PTR CALLBACK CDPrefs2Proc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPA
 		}
 		break;
 	case WM_DESTROY:
-		SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&m_ccs, IPC_CONVERT_CONFIG_END);
+		SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&m_ccs, IPC_CONVERT_CONFIG_END);
 		break;
 	}
 	return 0;
@@ -295,10 +295,10 @@ static void _dosetsel(HWND hwndDlg)
 			ShowWindow(subWnd, SW_SHOWNA);
 		}
 
-		if(!SendMessage(plugin.hwndWinampParent,WM_WA_IPC,IPC_ISWINTHEMEPRESENT,IPC_USE_UXTHEME_FUNC))
+		if(!SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,IPC_ISWINTHEMEPRESENT,IPC_USE_UXTHEME_FUNC))
 		{
-			SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)tabwnd,IPC_USE_UXTHEME_FUNC);
-			SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)subWnd,IPC_USE_UXTHEME_FUNC);
+			SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)tabwnd,IPC_USE_UXTHEME_FUNC);
+			SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)subWnd,IPC_USE_UXTHEME_FUNC);
 		}
 	}
 }

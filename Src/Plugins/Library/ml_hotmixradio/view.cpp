@@ -371,7 +371,7 @@ INT_PTR CALLBACK view_HOTMIXRADIODialogProc(HWND hwndDlg, UINT uMsg, WPARAM wPar
 			if (wParam && (HMENU)wParam == s.build_hMenu && s.mode==1)
 			{
 				myMenu = TRUE;
-				if(SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU)==0xffffffff)
+				if(SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU)==0xffffffff)
 					s.mode=2;
 				myMenu = FALSE;
 			}

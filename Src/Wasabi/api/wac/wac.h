@@ -18,8 +18,8 @@ class LoadableResource;	// see below
 // 5 -> build #471
 // 6 -> build rc1	
 // 7 -> build 484 (rc5)
-// 8 -> Winamp 5.23 (build 608)
-// 9 -> Winamp 5.4
+// 8 -> WinLAMP 5.23 (build 608)
+// 9 -> WinLAMP 5.4
 #define WA_COMPONENT_VERSION	9
 
 #define DB_DENY  0

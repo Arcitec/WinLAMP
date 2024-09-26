@@ -20,8 +20,8 @@ void HookTerminate();
 
 void DestroyLoader(HWND);
 void BuildLoader(HWND);
-extern int winampVersion;
-void addToLibrary(const DownloadedFile& d); // call in winamp main thread only
+extern int winlampVersion;
+void addToLibrary(const DownloadedFile& d); // call in winlamp main thread only
 void addToLibrary_thread(const DownloadedFile& d); // call from any thread
 
 bool AddPodcastData(const DownloadedFile &data);
@@ -39,7 +39,7 @@ void CloseDatabase();
 #include <shlwapi.h>
 
 extern ATOM VIEWPROP;
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 
 #include "../Components/wac_downloadManager/wac_downloadManager_api.h"
 

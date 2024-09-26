@@ -10,7 +10,7 @@ E-Mail:		martin@skinconsortium.com
 Internet:	www.skinconsortium.com
 		www.martin.deimos.de.vu
 
-		Based on Winamp Modern
+		Based on WinLAMP Modern
 -----------------------------------------------------
 ---------------------------------------------------*/
 

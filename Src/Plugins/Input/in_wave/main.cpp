@@ -1,8 +1,8 @@
 //#define PLUGIN_NAME "Nullsoft Waveform Decoder"
 #define PLUGIN_VERSION L"3.27"
 
-#include "../Winamp/in2.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/in2.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "main.h"
 #include "AudioThread.h"
 #include "resource.h"
@@ -351,7 +351,7 @@ In_Module plugin = {
     0
 };
 
-extern "C"	__declspec( dllexport ) In_Module * winampGetInModule2()
+extern "C"	__declspec( dllexport ) In_Module * winlampGetInModule2()
 {
 	return &plugin;
 }
@@ -361,7 +361,7 @@ inline bool KeywordMatch(const char *mainString, const char *keyword)
 	return !lstrcmpiA(mainString, keyword);
 }
 
-extern "C"	__declspec( dllexport ) int winampGetExtendedFileInfoW( const wchar_t *fn, const char *data, wchar_t *dest, int destlen )
+extern "C"	__declspec( dllexport ) int winlampGetExtendedFileInfoW( const wchar_t *fn, const char *data, wchar_t *dest, int destlen )
 {
 	if ( KeywordMatch( data, "type" ) )
 	{

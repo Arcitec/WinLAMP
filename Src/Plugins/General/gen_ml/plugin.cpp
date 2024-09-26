@@ -1,13 +1,13 @@
 #include "main.h"
 #include "ml.h"
 #include "itemlist.h"
-#include "../winamp/gen.h"
+#include "../winlamp/gen.h"
 #include "config.h"
-#include "../winamp/wa_ipc.h"
-#include "../winamp/ipc_pe.h"
+#include "../winlamp/wa_ipc.h"
+#include "../winlamp/ipc_pe.h"
 #include "resource.h"
 #include "comboskin.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 #include "childwnd.h"
 #include "sendto.h"
 #include "api__gen_ml.h"
@@ -43,7 +43,7 @@
 #define ListView_GetItemW(hwnd, pitem) \
     (BOOL)SNDMSG((hwnd), LVM_GETITEMW, 0, (LPARAM)(LV_ITEMW *)(pitem))
 
-extern "C" winampGeneralPurposePlugin plugin;
+extern "C" winlampGeneralPurposePlugin plugin;
 C_ItemList m_plugins;
 
 static HCURSOR link_hand_cursor;
@@ -108,7 +108,7 @@ void link_handledraw(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	}
 }
 
-/* In Winamp's preferences, Plugins->Media Library  */
+/* In WinLAMP's preferences, Plugins->Media Library  */
 static bool pluginsLoaded;
 INT_PTR CALLBACK PluginsProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -147,7 +147,7 @@ INT_PTR CALLBACK PluginsProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 			wchar_t filename[MAX_PATH] = { 0 }, description[512] = { 0 };
 			for ( int x = 0; x < m_plugins.GetSize(); x++ )
 			{
-				winampMediaLibraryPlugin* mlplugin = (winampMediaLibraryPlugin*)m_plugins.Get(x);
+				winlampMediaLibraryPlugin* mlplugin = (winlampMediaLibraryPlugin*)m_plugins.Get(x);
 
 				if ( mlplugin && mlplugin->hDllInstance )
 				{
@@ -182,7 +182,7 @@ INT_PTR CALLBACK PluginsProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 					int x = 0;
 					for ( x = 0; b && (x != m_plugins.GetSize()); x++ )
 					{
-						winampMediaLibraryPlugin* mlplugin = (winampMediaLibraryPlugin*)m_plugins.Get(x);
+						winlampMediaLibraryPlugin* mlplugin = (winlampMediaLibraryPlugin*)m_plugins.Get(x);
 						if ( mlplugin->hDllInstance == b )
 						{
 							break;
@@ -232,8 +232,8 @@ INT_PTR CALLBACK PluginsProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 					int loaded = (lvi.lParam != -2);
 					if ( loaded )
 					{
-						winampMediaLibraryPlugin* mlplugin;
-						if ( lvi.lParam >= 0 && lvi.lParam < m_plugins.GetSize() && (mlplugin = (winampMediaLibraryPlugin*)m_plugins.Get(lvi.lParam)) )
+						winlampMediaLibraryPlugin* mlplugin;
+						if ( lvi.lParam >= 0 && lvi.lParam < m_plugins.GetSize() && (mlplugin = (winlampMediaLibraryPlugin*)m_plugins.Get(lvi.lParam)) )
 						{
 							EnableWindow(GetDlgItem(hwndDlg, IDC_UNINST), !!mlplugin->hDllInstance);
 
@@ -290,8 +290,8 @@ INT_PTR CALLBACK PluginsProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 				LVITEM lvi = { LVIF_PARAM, ListView_GetSelectionMark(listWindow) };
 				if ( ListView_GetItem(listWindow, &lvi) )
 				{
-					winampMediaLibraryPlugin* mlplugin;
-					if ( lvi.lParam >= 0 && lvi.lParam < m_plugins.GetSize() && (mlplugin = (winampMediaLibraryPlugin*)m_plugins.Get(lvi.lParam)) )
+					winlampMediaLibraryPlugin* mlplugin;
+					if ( lvi.lParam >= 0 && lvi.lParam < m_plugins.GetSize() && (mlplugin = (winlampMediaLibraryPlugin*)m_plugins.Get(lvi.lParam)) )
 					{
 						if ( mlplugin->MessageProc && mlplugin->MessageProc(ML_MSG_CONFIG, (INT_PTR)hwndDlg, 0, 0) )
 						{
@@ -317,27 +317,27 @@ INT_PTR CALLBACK PluginsProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 				LVITEM lvi = { LVIF_PARAM, which_sel };
 				if ( ListView_GetItem(listWindow, &lvi) )
 				{
-					winampMediaLibraryPlugin* mlplugin;
+					winlampMediaLibraryPlugin* mlplugin;
 					wchar_t title[32] = { 0 };
 					int msgBox = MessageBoxW(hwndDlg, WASABI_API_LNGSTRINGW(IDS_UNINSTALL_PROMPT),
 						WASABI_API_LNGSTRINGW_BUF(IDS_UINSTALL_CONFIRMATION, title, 32),
 						MB_YESNO | MB_ICONEXCLAMATION);
 
-					if ( lvi.lParam >= 0 && lvi.lParam < m_plugins.GetSize() && (mlplugin = (winampMediaLibraryPlugin*)m_plugins.Get(lvi.lParam)) && msgBox == IDYES )
+					if ( lvi.lParam >= 0 && lvi.lParam < m_plugins.GetSize() && (mlplugin = (winlampMediaLibraryPlugin*)m_plugins.Get(lvi.lParam)) && msgBox == IDYES )
 					{
 						int ret = 0;
 						int (*pr)(HINSTANCE hDllInst, HWND hwndDlg, int param);
 
-						*(void**)&pr = (void*)GetProcAddress(mlplugin->hDllInstance, "winampUninstallPlugin");
+						*(void**)&pr = (void*)GetProcAddress(mlplugin->hDllInstance, "winlampUninstallPlugin");
 						if ( pr )ret = pr(mlplugin->hDllInstance, hwndDlg, 0);
 						// ok to uninstall but do with a full restart (default/needed in subclassing cases)
 						if ( ret == ML_PLUGIN_UNINSTALL_REBOOT )
 						{
 							wchar_t buf[MAX_PATH] = { 0 };
 							GetModuleFileNameW(mlplugin->hDllInstance, buf, MAX_PATH);
-							WritePrivateProfileStringW(L"winamp", L"remove_genplug", buf, WINAMP_INI);
-							WritePrivateProfileStringW(L"winamp", L"show_prefs", L"-1", WINAMP_INI);
-							PostMessage(plugin.hwndParent, WM_WA_IPC, 0, IPC_RESTARTWINAMP);
+							WritePrivateProfileStringW(L"winlamp", L"remove_genplug", buf, WINLAMP_INI);
+							WritePrivateProfileStringW(L"winlamp", L"show_prefs", L"-1", WINLAMP_INI);
+							PostMessage(plugin.hwndParent, WM_WA_IPC, 0, IPC_RESTARTWINLAMP);
 						}
 						// added from 5.37+ so we can do true on-the-fly removals (will fall back to default if fails)
 						else if ( ret == ML_PLUGIN_UNINSTALL_NOW )
@@ -356,9 +356,9 @@ INT_PTR CALLBACK PluginsProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 							{
 								if ( registrar->DeleteItem(buf) != S_OK )
 								{
-									WritePrivateProfileStringW(L"winamp", L"remove_genplug", buf, WINAMP_INI);
-									WritePrivateProfileStringW(L"winamp", L"show_prefs", L"-1", WINAMP_INI);
-									PostMessage(plugin.hwndParent, WM_WA_IPC, 0, IPC_RESTARTWINAMP);
+									WritePrivateProfileStringW(L"winlamp", L"remove_genplug", buf, WINLAMP_INI);
+									WritePrivateProfileStringW(L"winlamp", L"show_prefs", L"-1", WINLAMP_INI);
+									PostMessage(plugin.hwndParent, WM_WA_IPC, 0, IPC_RESTARTWINLAMP);
 								}
 								else
 									ListView_DeleteItem(listWindow, which_sel);
@@ -392,9 +392,9 @@ INT_PTR CALLBACK PluginsProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 						{
 							if ( registrar->DeleteItem(base) != S_OK )
 							{
-								WritePrivateProfileStringW(L"winamp", L"remove_genplug", base, WINAMP_INI);
-								WritePrivateProfileStringW(L"winamp", L"show_prefs", L"-1", WINAMP_INI);
-								PostMessage(plugin.hwndParent, WM_WA_IPC, 0, IPC_RESTARTWINAMP);
+								WritePrivateProfileStringW(L"winlamp", L"remove_genplug", base, WINLAMP_INI);
+								WritePrivateProfileStringW(L"winlamp", L"show_prefs", L"-1", WINLAMP_INI);
+								PostMessage(plugin.hwndParent, WM_WA_IPC, 0, IPC_RESTARTWINLAMP);
 							}
 							else
 								ListView_DeleteItem(listWindow, which_sel);
@@ -403,9 +403,9 @@ INT_PTR CALLBACK PluginsProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 						// otherwise revert to a standard method
 						else
 						{
-							WritePrivateProfileStringW(L"winamp", L"remove_genplug", base, WINAMP_INI);
-							WritePrivateProfileStringW(L"winamp", L"show_prefs", L"-1", WINAMP_INI);
-							PostMessage(plugin.hwndParent, WM_WA_IPC, 0, IPC_RESTARTWINAMP);
+							WritePrivateProfileStringW(L"winlamp", L"remove_genplug", base, WINLAMP_INI);
+							WritePrivateProfileStringW(L"winlamp", L"show_prefs", L"-1", WINLAMP_INI);
+							PostMessage(plugin.hwndParent, WM_WA_IPC, 0, IPC_RESTARTWINLAMP);
 						}
 					}
 
@@ -417,7 +417,7 @@ INT_PTR CALLBACK PluginsProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 		return FALSE;
 
 		case IDC_PLUGINVERS:
-			myOpenURLWithFallback(hwndDlg, L"http://www.google.com/search?q=Winamp+Library+Plugins", L"http://www.google.com/search?q=Winamp+Library+Plugins");
+			myOpenURLWithFallback(hwndDlg, L"http://www.google.com/search?q=WinLAMP+Library+Plugins", L"http://www.google.com/search?q=WinLAMP+Library+Plugins");
 			return TRUE;
 		}
 	}
@@ -456,7 +456,7 @@ HANDLE GetProfileFileHandle(int mode)
 		if ( hProfile == INVALID_HANDLE_VALUE )
 		{
 			wchar_t profileFile[MAX_PATH] = { 0 };
-			PathCombineW(profileFile, WINAMP_INI_DIR, ((mode == 2) ? L"profile_load.txt" : L"profile.txt"));
+			PathCombineW(profileFile, WINLAMP_INI_DIR, ((mode == 2) ? L"profile_load.txt" : L"profile.txt"));
 			hProfile = CreateFileW(profileFile, GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 			if ( hProfile != INVALID_HANDLE_VALUE )
 			{
@@ -509,8 +509,8 @@ void LoadPlugin(const wchar_t* filename)
 		return;
 	}
 
-	winampMediaLibraryPlugin* (*pr)();
-	pr = (winampMediaLibraryPlugin * (__cdecl*)(void)) GetProcAddress(hLib, "winampGetMediaLibraryPlugin");
+	winlampMediaLibraryPlugin* (*pr)();
+	pr = (winlampMediaLibraryPlugin * (__cdecl*)(void)) GetProcAddress(hLib, "winlampGetMediaLibraryPlugin");
 	if (pr == NULL)
 	{
 		wsprintfW( _log_message_w, L"No entry point found for the plugin '%s'!", filename );
@@ -522,7 +522,7 @@ void LoadPlugin(const wchar_t* filename)
 		return;
 	}
 
-	winampMediaLibraryPlugin* mlplugin = pr();
+	winlampMediaLibraryPlugin* mlplugin = pr();
 	if ( !mlplugin || (mlplugin->version > MLHDR_VER && mlplugin->version < MLHDR_VER_OLD) )
 	{
 		wsprintfW( _log_message_w, L"Either the plugin '%s' can't be loaded, or its version is incorrect!", filename );
@@ -570,7 +570,7 @@ void LoadPlugin(const wchar_t* filename)
 	}
 
 	mlplugin->hwndLibraryParent = g_hwnd;
-	mlplugin->hwndWinampParent  = plugin.hwndParent;
+	mlplugin->hwndWinLAMPParent  = plugin.hwndParent;
 	mlplugin->hDllInstance      = hLib;
 
 	int index = m_plugins.GetSize();
@@ -667,7 +667,7 @@ void unloadMlPlugins()
 	int i = m_plugins.GetSize();
 	while ( i-- > 0 )  // reverse order to aid in not fucking up subclassing shit
 	{
-		winampMediaLibraryPlugin* mlplugin = (winampMediaLibraryPlugin*)m_plugins.Get(i);
+		winlampMediaLibraryPlugin* mlplugin = (winlampMediaLibraryPlugin*)m_plugins.Get(i);
 		wchar_t profile[MAX_PATH * 2] = { 0 }, filename[MAX_PATH] = { 0 };
 		LARGE_INTEGER starttime, endtime;
 		if ( hProfile != INVALID_HANDLE_VALUE )
@@ -707,7 +707,7 @@ INT_PTR plugin_SendMessage(int message_type, INT_PTR param1, INT_PTR param2, INT
 {
 	for ( int i = 0; i < m_plugins.GetSize(); i++ )
 	{
-		winampMediaLibraryPlugin* mlplugin = (winampMediaLibraryPlugin*)m_plugins.Get(i);
+		winlampMediaLibraryPlugin* mlplugin = (winlampMediaLibraryPlugin*)m_plugins.Get(i);
 		if ( mlplugin && mlplugin->MessageProc )
 		{
 			INT_PTR h = mlplugin->MessageProc(message_type, param1, param2, param3);

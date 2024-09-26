@@ -50,7 +50,7 @@ void wa::Components::WAC_DownloadManager_Component::DeregisterServices( api_serv
 }
 
 
-extern "C" WAC_DOWNLOAD_MANAGER_EXPORT ifc_wa5component * GetWinamp5SystemComponent()
+extern "C" WAC_DOWNLOAD_MANAGER_EXPORT ifc_wa5component * GetWinLAMP5SystemComponent()
 {
 	return &_wac_downloadManager_Component;
 }

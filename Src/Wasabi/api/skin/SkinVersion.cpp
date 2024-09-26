@@ -15,7 +15,7 @@ SkinVersionXmlReader::SkinVersionXmlReader(const wchar_t *skinname)
 
 		if (parser)
 		{
-			parser->xmlreader_registerCallback(L"WinampAbstractionLayer", this);
+			parser->xmlreader_registerCallback(L"WinLAMPAbstractionLayer", this);
 			parser->xmlreader_registerCallback(L"WasabiXML", this);
 			parser->xmlreader_open();
 

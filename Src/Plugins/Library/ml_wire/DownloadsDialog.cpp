@@ -891,7 +891,7 @@ void Downloads_InfoBox( HWND parent )
 		if ( fn )
 		{
 			infoBoxParamW p = { parent, fn };
-			SendMessage( plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&p, IPC_INFOBOXW );
+			SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&p, IPC_INFOBOXW );
 		}
 	}
 }
@@ -1193,8 +1193,8 @@ static void DownloadList_RightClick(HWND hwndDlg, HWND listHwnd, POINTS pts)
 
 		{ // send-to menu shit...
 			ZeroMemory( &s, sizeof( s ) );
-			IPC_LIBRARY_SENDTOMENU = SendMessage( plugin.hwndWinampParent, WM_WA_IPC, ( WPARAM ) & "LibrarySendToMenu", IPC_REGISTER_WINAMP_IPCMESSAGE );
-			if ( IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage( plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)0, IPC_LIBRARY_SENDTOMENU ) == 0xffffffff )
+			IPC_LIBRARY_SENDTOMENU = SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, ( WPARAM ) & "LibrarySendToMenu", IPC_REGISTER_WINLAMP_IPCMESSAGE );
+			if ( IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)0, IPC_LIBRARY_SENDTOMENU ) == 0xffffffff )
 			{
 				s.mode        = 1;
 				s.hwnd        = hwndDlg;
@@ -1210,7 +1210,7 @@ static void DownloadList_RightClick(HWND hwndDlg, HWND listHwnd, POINTS pts)
 		if ( !SendMessage( hwndDlg, WM_COMMAND, r, 0 ) )
 		{
 			s.menu_id = r; // more send to menu shit...
-			if ( s.mode == 2 && SendMessage( plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU ) == 0xffffffff )
+			if ( s.mode == 2 && SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU ) == 0xffffffff )
 			{
 				s.mode = 3;
 				s.data_type = ML_TYPE_FILENAMESW;
@@ -1218,7 +1218,7 @@ static void DownloadList_RightClick(HWND hwndDlg, HWND listHwnd, POINTS pts)
 				if ( path )
 				{
 					s.data = path;
-					SendMessage( plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU );
+					SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU );
 					free( path );
 				}
 			}
@@ -1227,7 +1227,7 @@ static void DownloadList_RightClick(HWND hwndDlg, HWND listHwnd, POINTS pts)
 		if ( s.mode )
 		{ // yet more send to menu shit...
 			s.mode = 4;
-			SendMessage( plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU ); // cleanup
+			SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU ); // cleanup
 		}
 
 		if ( NULL != s.build_hMenu )
@@ -1286,7 +1286,7 @@ static BOOL WINAPI DownloadDialog_DlgProc(HWND hwndDlg, UINT msg, WPARAM wParam,
 		case WM_INITMENUPOPUP: // yet yet more send to menu shit...
 		if (wParam && (HMENU)wParam == s.build_hMenu && s.mode==1)
 		{
-			if (SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&s,IPC_LIBRARY_SENDTOMENU)==0xffffffff)
+			if (SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&s,IPC_LIBRARY_SENDTOMENU)==0xffffffff)
 				s.mode=2;
 		}
 			break;

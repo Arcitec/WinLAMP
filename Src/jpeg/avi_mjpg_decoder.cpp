@@ -1,6 +1,6 @@
 #include "api__jpeg.h"
 #include "avi_mjpg_decoder.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <limits.h>
 #include <intsafe.h>
 

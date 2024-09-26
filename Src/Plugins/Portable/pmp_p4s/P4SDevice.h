@@ -18,8 +18,8 @@
 #include "..\..\General\gen_ml/ml.h"
 #include "..\..\Library\ml_pmp/pmp.h"
 #include "..\..\Library\ml_pmp/transcoder.h"
-#include "../winamp/wa_ipc.h"
-#include "../winamp/ipc_pe.h"
+#include "../winlamp/wa_ipc.h"
+#include "../winlamp/ipc_pe.h"
 #include "../Agave/Language/api_language.h"
 #include <api/service/waServiceFactory.h>
 #include "resource1.h"

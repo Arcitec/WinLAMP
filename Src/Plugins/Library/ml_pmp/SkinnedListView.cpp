@@ -7,7 +7,7 @@
 #include <strsafe.h>
 
 extern DeviceView * currentViewedDevice;
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 extern HMENU m_context_menus;
 extern HINSTANCE cloud_hinst;
 extern int IPC_GET_CLOUD_HINST;
@@ -203,14 +203,14 @@ LRESULT SkinnedListView::pmp_listview(HWND hwnd, UINT uMsg, WPARAM wParam, LPARA
 					}
 					else
 					{
-						if (!cloud_hinst) cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
+						if (!cloud_hinst) cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
 						if (cloud_hinst && cloud_hinst != (HINSTANCE)1)
 						{
-							winampMediaLibraryPlugin *(*gp)();
-							gp = (winampMediaLibraryPlugin * (__cdecl *)(void))GetProcAddress(cloud_hinst, "winampGetMediaLibraryPlugin");
+							winlampMediaLibraryPlugin *(*gp)();
+							gp = (winlampMediaLibraryPlugin * (__cdecl *)(void))GetProcAddress(cloud_hinst, "winlampGetMediaLibraryPlugin");
 							if (gp)
 							{
-								winampMediaLibraryPlugin *mlplugin = gp();
+								winlampMediaLibraryPlugin *mlplugin = gp();
 								if (mlplugin && (mlplugin->version >= MLHDR_VER_OLD && mlplugin->version <= MLHDR_VER))
 								{
 									WASABI_API_LNGSTRINGW_BUF(IDS_TRACK_AVAILABLE, tt_buf, ARRAYSIZE(tt_buf));

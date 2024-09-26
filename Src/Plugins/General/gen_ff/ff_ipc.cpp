@@ -1,7 +1,7 @@
 #include "precomp__gen_ff.h"
 #include "gen_ff_ipc.h"
 #include "ff_ipc.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "wa2frontend.h"
 #include <tataki/color/skinclr.h>
 #include <api/wnd/wndclass/buttwnd.h>

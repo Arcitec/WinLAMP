@@ -7,7 +7,7 @@
 #include <math.h>
 #include <ks.h>
 #include "ksmedia.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 extern Out_Module mod;
 

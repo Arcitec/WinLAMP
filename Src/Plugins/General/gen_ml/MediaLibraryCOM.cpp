@@ -3,7 +3,7 @@
 #include "OnlineMediaCOM.h"
 
 
-extern "C" extern winampGeneralPurposePlugin plugin;
+extern "C" extern winlampGeneralPurposePlugin plugin;
 
 extern prefsDlgRecW myPrefsItem;
 

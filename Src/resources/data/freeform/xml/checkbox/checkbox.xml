@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<WinampAbstractionLayer version="0.7">
+<WinLAMPAbstractionLayer version="0.7">
 
 <groupdef id="wasabi.checkbox.group" h="18" autowidthsource="checkbox.text">
 
@@ -58,4 +58,4 @@
 </groupdef>
 
 
-</WinampAbstractionLayer>
+</WinLAMPAbstractionLayer>

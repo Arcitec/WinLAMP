@@ -1,6 +1,6 @@
 #include "main.h"
 #include "api__ml_downloads.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "Defaults.h"
 #include <shlobj.h>
 

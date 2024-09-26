@@ -1,7 +1,7 @@
 #include "./common.h"
 #include "../api.h"
 
-#include "../../winamp/accessibilityConfigGroup.h"
+#include "../../winlamp/accessibilityConfigGroup.h"
 
 #include <shlwapi.h>
 #include <strsafe.h>
@@ -169,12 +169,12 @@ HRESULT LoginBox_GetConfigPath(LPWSTR pszConfig, BOOL fEnsureExist)
 	if (NULL == pszConfig) 
 		return E_INVALIDARG;
 
-	LPCWSTR pszWinamp;
-	pszWinamp = (NULL != WASABI_API_APP) ? WASABI_API_APP->path_getUserSettingsPath(): NULL;
-	if (NULL == pszWinamp) 
+	LPCWSTR pszWinLAMP;
+	pszWinLAMP = (NULL != WASABI_API_APP) ? WASABI_API_APP->path_getUserSettingsPath(): NULL;
+	if (NULL == pszWinLAMP) 
 		return E_FAIL;	
 	
-	if (NULL == PathCombine(pszConfig, pszWinamp, L"Plugins\\loginBox"))
+	if (NULL == PathCombine(pszConfig, pszWinLAMP, L"Plugins\\loginBox"))
 		return E_FAIL;
 	
 	if (FALSE != fEnsureExist)
@@ -591,7 +591,7 @@ BOOL LoginBox_GetWindowTextSize(HWND hwnd, INT idealWidth, INT *pWidth, INT *pHe
 
 BOOL LoginBox_OpenUrl(HWND hOwner, LPCWSTR pszUrl, BOOL forceExternal)
 {
-	if (NULL == WASABI_API_WINAMP)
+	if (NULL == WASABI_API_WINLAMP)
 		return FALSE;
 
 	HCURSOR hCursor = LoadCursor(NULL, IDC_APPSTARTING);
@@ -607,7 +607,7 @@ BOOL LoginBox_OpenUrl(HWND hOwner, LPCWSTR pszUrl, BOOL forceExternal)
 	}
 	else
 	{
-		HRESULT hr = WASABI_API_WINAMP->OpenUrl(hOwner, pszUrl);
+		HRESULT hr = WASABI_API_WINLAMP->OpenUrl(hOwner, pszUrl);
 		result = SUCCEEDED(hr);
 	}
 		

@@ -6,26 +6,26 @@
 api_application *WASABI_API_APP = NULL;
 api_language *WASABI_API_LNG = NULL;
 api_devicemanager *WASABI_API_DEVICES = NULL;
-api_winamp *WASABI_API_WINAMP = NULL;
+api_winlamp *WASABI_API_WINLAMP = NULL;
 
 HINSTANCE WASABI_API_LNG_HINST = NULL;
 HINSTANCE WASABI_API_ORIG_HINST = NULL;
 
 static unsigned long wasabiReference = 0;
 static BOOL defaultServicesLoaded = FALSE;
-EXTERN_C winampMediaLibraryPlugin plugin;
+EXTERN_C winlampMediaLibraryPlugin plugin;
 
 static void Wasabi_Uninitialize()
 {
 	Wasabi_ReleaseInterface(applicationApiServiceGuid, WASABI_API_APP);
 	Wasabi_ReleaseInterface(languageApiGUID, WASABI_API_LNG);
 	Wasabi_ReleaseInterface(DeviceManagerGUID, WASABI_API_DEVICES);
-	Wasabi_ReleaseInterface(winampApiGuid, WASABI_API_WINAMP);
+	Wasabi_ReleaseInterface(winlampApiGuid, WASABI_API_WINLAMP);
 
 	WASABI_API_APP = NULL;
 	WASABI_API_LNG = NULL;
 	WASABI_API_DEVICES = NULL;
-	WASABI_API_WINAMP = NULL;
+	WASABI_API_WINLAMP = NULL;
 	defaultServicesLoaded = FALSE;
 }
 
@@ -44,7 +44,7 @@ BOOL Wasabi_Initialize(HINSTANCE instance)
 	return TRUE;
 }
 
-BOOL Wasabi_InitializeFromWinamp(HINSTANCE instance, HWND winampWindow)
+BOOL Wasabi_InitializeFromWinLAMP(HINSTANCE instance, HWND winlampWindow)
 {
 	return Wasabi_Initialize(instance);
 }
@@ -56,7 +56,7 @@ BOOL Wasabi_LoadDefaultServices(void)
 
 	WASABI_API_APP = Wasabi_QueryInterface(api_application, applicationApiServiceGuid);
 	WASABI_API_DEVICES = Wasabi_QueryInterface(api_devicemanager, DeviceManagerGUID);
-	WASABI_API_WINAMP = Wasabi_QueryInterface(api_winamp, winampApiGuid);
+	WASABI_API_WINLAMP = Wasabi_QueryInterface(api_winlamp, winlampApiGuid);
 
 	WASABI_API_LNG = Wasabi_QueryInterface(api_language, languageApiGUID);
 	if (NULL != WASABI_API_LNG)

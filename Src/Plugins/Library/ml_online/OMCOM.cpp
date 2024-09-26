@@ -23,7 +23,7 @@
 #include <ifc_omfilestorage.h>
 
 
-#include "../Winamp/JSAPI.h" // IDispatch helper macros
+#include "../WinLAMP/JSAPI.h" // IDispatch helper macros
 
 #include <shlwapi.h>
 #include <strsafe.h>
@@ -76,7 +76,7 @@ OMCOM::~OMCOM()
 
 	if (0 != publishCookie)
 	{
-		SENDWAIPC(Plugin_GetWinamp(), IPC_REMOVE_DISPATCH_OBJECT, publishCookie);
+		SENDWAIPC(Plugin_GetWinLAMP(), IPC_REMOVE_DISPATCH_OBJECT, publishCookie);
 		publishCookie = NULL;
 	}
 }
@@ -92,7 +92,7 @@ HRESULT OMCOM::Publish()
 	dispatchInfo.name = L"OnMedia";
 	dispatchInfo.dispatch = this;
 
-	if (0 != SENDWAIPC(Plugin_GetWinamp(), IPC_ADD_DISPATCH_OBJECT, (WPARAM)&dispatchInfo))
+	if (0 != SENDWAIPC(Plugin_GetWinLAMP(), IPC_ADD_DISPATCH_OBJECT, (WPARAM)&dispatchInfo))
 		return E_FAIL;
 	
 	publishCookie = dispatchInfo.id;

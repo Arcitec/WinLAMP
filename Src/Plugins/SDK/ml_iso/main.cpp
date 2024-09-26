@@ -1,5 +1,5 @@
 #include "main.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "api__ml_iso.h"
 #include <api/service/waservicefactory.h>
 
@@ -13,14 +13,14 @@ api_playlistmanager *AGAVE_API_PLAYLISTMANAGER = 0;
 int Init()
 {
 	// this plugin requires an interface only present on 5.54 and up, so we'll just refuse to load on older versions
-	if (SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETVERSION) < 0x5054) 
+	if (SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETVERSION) < 0x5054) 
 		return 1;
 
 	// go ahead and grab the wasabi service manager.  we'll need it later when we get an ISO Creator object
-	WASABI_API_SVC = (api_service *)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_API_SERVICE);
+	WASABI_API_SVC = (api_service *)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_API_SERVICE);
 
 	// get the application API
-	// we need this to get/set Winamp's current working directory
+	// we need this to get/set WinLAMP's current working directory
 	waServiceFactory *factory = WASABI_API_SVC->service_getServiceByGuid(applicationApiServiceGuid);
 	if (factory)
 		WASABI_API_APP = (api_application *)factory->getInterface();
@@ -47,7 +47,7 @@ INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR pa
 {
 	switch(message_type)
 	{
-		// this gets sent when Winamp wants to build the send-to menu.  If we want to be in the send-to
+		// this gets sent when WinLAMP wants to build the send-to menu.  If we want to be in the send-to
 		// we make some API calls during this function
 	case ML_MSG_ONSENDTOBUILD:
 		{
@@ -56,7 +56,7 @@ INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR pa
 
 			// we only accept certain types of sources, so we'll explicitly check
 			// if we were to handle ALL types, checking against the known types
-			// is good practice in case new Winamp versions add additional source types
+			// is good practice in case new WinLAMP versions add additional source types
 			switch(source_type)
 			{
 			case ML_TYPE_ITEMRECORDLIST: // Item Record List.  Used by the local media library
@@ -132,7 +132,7 @@ INT_PTR MessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR pa
 	return 0;
 }
 
-winampMediaLibraryPlugin plugin =
+winlampMediaLibraryPlugin plugin =
 {
 	MLHDR_VER,
 		"ISO Creator",
@@ -144,7 +144,7 @@ winampMediaLibraryPlugin plugin =
 		0,
 };
 
-extern "C" 	__declspec(dllexport) winampMediaLibraryPlugin *winampGetMediaLibraryPlugin()
+extern "C" 	__declspec(dllexport) winlampMediaLibraryPlugin *winlampGetMediaLibraryPlugin()
 	{
 		return &plugin;
 	}

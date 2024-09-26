@@ -50,7 +50,7 @@ Other major contributors and their contributions:
 * i18n support in the XMMS plugin
 
 "X-Fixer" <x-fixer@narod.ru>
-* Configuration system, tag editing, and file info in the Winamp2 plugin
+* Configuration system, tag editing, and file info in the WinLAMP2 plugin
 
 "Matt Zimmerman" <mdz@debian.org>
 * Libtool/autoconf/automake make system, flac man page

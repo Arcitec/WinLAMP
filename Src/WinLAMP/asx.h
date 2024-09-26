@@ -1,0 +1,4 @@
+#ifndef NULLSOFT_WINLAMP_ASX_H
+#define NULLSOFT_WINLAMP_ASX_H
+
+#endif

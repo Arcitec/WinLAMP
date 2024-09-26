@@ -1,7 +1,7 @@
 #include "avi_tscc_decoder.h"
 #include "avi_rle_decoder.h"
 #include "avi_yuv_decoder.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "rle.h"
 #include <limits.h>
 #include <intsafe.h>

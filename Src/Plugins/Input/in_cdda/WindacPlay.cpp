@@ -86,7 +86,7 @@ void WindacPlay::stop()
 	line.outMod->Close();
 }
 
-int WindacPlay::open(wchar_t drive, int track) //called by winampGetExtendedRead
+int WindacPlay::open(wchar_t drive, int track) //called by winlampGetExtendedRead
 {
 	g_drive = drive;
 	if (!inited && !LoadASPI()) 
@@ -183,7 +183,7 @@ int WindacPlay::open(wchar_t drive, int track) //called by winampGetExtendedRead
 	return 0;
 }
 
-int WindacPlay::play(wchar_t drive, int track) //called by winamp2's normal(old) play() interface
+int WindacPlay::play(wchar_t drive, int track) //called by winlamp2's normal(old) play() interface
 {
 	if (open(drive, track)) return 1;
 
@@ -214,7 +214,7 @@ int WindacPlay::play(wchar_t drive, int track) //called by winamp2's normal(old)
 	return 0;
 }
 
-int WindacPlay::read(char *dest, int len, int *killswitch) //called by winampGetExtendedRead_getData
+int WindacPlay::read(char *dest, int len, int *killswitch) //called by winlampGetExtendedRead_getData
 {
 	int l = 0;
 

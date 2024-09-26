@@ -4,7 +4,7 @@
 #include "./wasabi.h"
 #include "./service.h"
 #include "../omBrowser/browserView.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "../replicant/nu/Autowide.h"
 #include "../gen_ml/ml_ipc_0313.h"
 #include "./local_menu.h"
@@ -255,7 +255,7 @@ static HRESULT Navigation_CreateView(HNAVITEM hItem, HWND hParent, HWND *hView)
 
 		if (SUCCEEDED(hr))
 		{
-			hr = OMBROWSERMNGR->Initialize(NULL, Plugin_GetWinamp());
+			hr = OMBROWSERMNGR->Initialize(NULL, Plugin_GetWinLAMP());
 			if (SUCCEEDED(hr))
 			{
 				LPCWSTR forceUrl;
@@ -269,7 +269,7 @@ static HRESULT Navigation_CreateView(HNAVITEM hItem, HWND hParent, HWND *hView)
 
 		wchar_t nowplayingurl[1024] = {0};
 		// May 2022 - this service url is dead and would need either fixing up or replacing
-		lstrcpynW(nowplayingurl, AutoWide(g_config->ReadString("nowplayingurl", "http://client.winamp.com/nowplaying")), ARRAYSIZE(nowplayingurl));
+		lstrcpynW(nowplayingurl, AutoWide(g_config->ReadString("nowplayingurl", "http://client.winlamp.com/nowplaying")), ARRAYSIZE(nowplayingurl));
 		service->SetUrl(nowplayingurl[0] ? nowplayingurl : SERVICE_HOMEURL);
 		service->Release();
 	}
@@ -280,9 +280,9 @@ static BOOL Navigation_GetViewRect(RECT *rect)
 {
 	if (NULL == rect) return FALSE;
 	
-	HWND hWinamp = Plugin_GetWinamp();
+	HWND hWinLAMP = Plugin_GetWinLAMP();
 	HWND hLibrary = Plugin_GetLibrary();
-	if (NULL == hWinamp || NULL == hLibrary) 
+	if (NULL == hWinLAMP || NULL == hLibrary) 
 		return FALSE;
 
 	HWND hFrame = (HWND)SENDMLIPC(hLibrary, ML_IPC_GETCURRENTVIEW, 0);
@@ -308,14 +308,14 @@ static HRESULT Navigation_CreatePopup(HNAVITEM hItem, HWND *hWindow)
 	hr = Navigation_GetService(hLibrary, hItem, &service);
 	if (SUCCEEDED(hr))
 	{
-		HWND hWinamp = Plugin_GetWinamp();
+		HWND hWinLAMP = Plugin_GetWinLAMP();
 
 		if (NULL == OMBROWSERMNGR) 
 			hr = E_UNEXPECTED;
 
 		if (SUCCEEDED(hr))
 		{
-			hr = OMBROWSERMNGR->Initialize(NULL, hWinamp);
+			hr = OMBROWSERMNGR->Initialize(NULL, hWinLAMP);
 			if (SUCCEEDED(hr))
 			{
 				RECT rect;
@@ -328,7 +328,7 @@ static HRESULT Navigation_CreatePopup(HNAVITEM hItem, HWND *hWindow)
 					rect.top += 16;
 					
 					hr = OMBROWSERMNGR->CreatePopup(service, rect.left, rect.top, 
-									rect.right - rect.left, rect.bottom - rect.top,	hWinamp, NULL, 0, hWindow);
+									rect.right - rect.left, rect.bottom - rect.top,	hWinLAMP, NULL, 0, hWindow);
 				}
 			}
 		}
@@ -352,20 +352,20 @@ static void Navigation_OnDestroy()
 
 static void Navigation_OpenPreferences()
 {
-	winampMediaLibraryPlugin *(*gp)();
-	gp = (winampMediaLibraryPlugin * (__cdecl *)(void))GetProcAddress(GetModuleHandle(L"ml_online.dll"), "winampGetMediaLibraryPlugin");
+	winlampMediaLibraryPlugin *(*gp)();
+	gp = (winlampMediaLibraryPlugin * (__cdecl *)(void))GetProcAddress(GetModuleHandle(L"ml_online.dll"), "winlampGetMediaLibraryPlugin");
 	if (gp)
 	{
-		winampMediaLibraryPlugin *mlplugin = gp();
+		winlampMediaLibraryPlugin *mlplugin = gp();
 		if (mlplugin && (mlplugin->version >= MLHDR_VER_OLD && mlplugin->version <= MLHDR_VER))
 		{
 			mlplugin->MessageProc(ML_MSG_CONFIG, 0, 0, 0);
 		}
 		else
-			SendMessage(Plugin_GetWinamp(), WM_WA_IPC, (WPARAM)-1, IPC_OPENPREFSTOPAGE);
+			SendMessage(Plugin_GetWinLAMP(), WM_WA_IPC, (WPARAM)-1, IPC_OPENPREFSTOPAGE);
 	}
 	else
-		SendMessage(Plugin_GetWinamp(), WM_WA_IPC, (WPARAM)-1, IPC_OPENPREFSTOPAGE);
+		SendMessage(Plugin_GetWinLAMP(), WM_WA_IPC, (WPARAM)-1, IPC_OPENPREFSTOPAGE);
 }
 
 static HRESULT Navigation_ShowContextMenu(HNAVITEM hItem, HWND hHost, POINTS pts)
@@ -422,7 +422,7 @@ static HRESULT Navigation_ShowContextMenu(HNAVITEM hItem, HWND hHost, POINTS pts
 				}
 				break;
 			case ID_NAVIGATION_HELP:
-				SENDWAIPC(Plugin_GetWinamp(), IPC_OPEN_URL, L"https://help.winamp.com/hc/articles/8105304048660-The-Winamp-Media-Library");
+				SENDWAIPC(Plugin_GetWinLAMP(), IPC_OPEN_URL, L"https://help.winlamp.com/hc/articles/8105304048660-The-WinLAMP-Media-Library");
 				break;
 
 			case ID_PLUGIN_PREFERENCES:

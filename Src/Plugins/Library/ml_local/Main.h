@@ -7,7 +7,7 @@
 #include "..\..\General\gen_ml/ml.h"
 #include "../nu/MediaLibraryInterface.h"
 #include "../nu/DialogSkinner.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "ml_local.h"
 #include <shlobj.h>
 #include "../nde/nde.h"
@@ -25,8 +25,8 @@
 #define WM_QUERYFILEINFO	(WM_USER + 65) 
 #define WM_SHOWFILEINFO		(WM_USER + 64) // wParam - bForceUpdate, lParam - pszFileName
 
-extern winampMediaLibraryPlugin plugin;
-extern int winampVersion;
+extern winlampMediaLibraryPlugin plugin;
+extern int winlampVersion;
 extern int substantives;
 extern int play_enq_rnd_alt;
 extern bool nde_error;

@@ -1,11 +1,11 @@
 #include "JSAPI2_Playlists.h"
-#include "../Winamp/JSAPI.h"
+#include "../WinLAMP/JSAPI.h"
 #include "api__playlist.h"
-#include "../Winamp/JSAPI_ObjectArray.h"
+#include "../WinLAMP/JSAPI_ObjectArray.h"
 #include "Playlists.h"
 #include "JSAPI2_Playlist.h"
 #include "PlaylistManager.h"
-#include "../Winamp/JSAPI_CallbackParameters.h"
+#include "../WinLAMP/JSAPI_CallbackParameters.h"
 
 extern Playlists playlists;
 

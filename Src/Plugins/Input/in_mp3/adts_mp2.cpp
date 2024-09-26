@@ -1,6 +1,6 @@
 #include "main.h"
 #include "adts_mp2.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include <math.h>
 #include "mpegutil.h"
 #include "../nsutil/pcm.h"

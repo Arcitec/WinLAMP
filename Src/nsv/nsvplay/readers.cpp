@@ -18,7 +18,7 @@ void ReleaseGet(api_httpreceiver *&get)
 #include "../..\Components\wac_network\wac_network_http_receiver_api.h"
 #include <api.h>
 #include <api/service/waservicefactory.h>
-#include "../../Winamp/in2.h"
+#include "../../WinLAMP/in2.h"
 extern In_Module mod;
 
 waServiceFactory *httpFactory = 0;
@@ -231,10 +231,10 @@ void HTTPReader::doConnect(int seekto)
 		if (!m_cons[i].get)
 			break;
 		m_cons[i].get->open(API_DNS_AUTODNS, 65536, (proxy && proxy[0]) ? proxy : NULL);
-#ifdef WINAMP_PLUGIN
-		m_cons[i].get->addheader("User-Agent:Winamp NSV Player/5.12 (ultravox/2.0)");
+#ifdef WINLAMP_PLUGIN
+		m_cons[i].get->addheader("User-Agent:WinLAMP NSV Player/5.12 (ultravox/2.0)");
 #else
- # ifdef WINAMPX
+ # ifdef WINLAMPX
 		m_cons[i].get->addheader("User-Agent:" UNAGI_USER_AGENT " (ultravox/2.0)");
 #  else
 		m_cons[i].get->addheader("User-Agent:NSV Player/0.0 (ultravox/2.0)");
@@ -303,10 +303,10 @@ int HTTPReader::serialconnect(int seekto , int timeout)
 		if (m_cons[i].get == NULL)
 			return 0;
 		m_cons[i].get->open(API_DNS_AUTODNS, 65536, (proxy && proxy[0]) ? proxy : NULL);
-#ifdef WINAMP_PLUGIN
-		m_cons[i].get->addheader("User-Agent:Winamp NSV Player/5.12 (ultravox/2.0)");
+#ifdef WINLAMP_PLUGIN
+		m_cons[i].get->addheader("User-Agent:WinLAMP NSV Player/5.12 (ultravox/2.0)");
 #else
-# ifdef WINAMPX
+# ifdef WINLAMPX
 		m_cons[i].get->addheader("User-Agent:" UNAGI_USER_AGENT " (ultravox/2.0)");
 #  else
 		m_cons[i].get->addheader("User-Agent:NSV Player/0.0 (ultravox/2.0)");
@@ -551,7 +551,7 @@ size_t HTTPReader::read(char *buffer, size_t len)
 					if (v)
 						m_title = _strdup(v);
 				}
-#ifdef WINAMP_PLUGIN
+#ifdef WINLAMP_PLUGIN
 				extern void process_url(char *url);
 				v = m_get->getheader("icy-url");
 				if (v && !strstr(v, "shoutcast.com"))
@@ -630,7 +630,7 @@ size_t HTTPReader::read(char *buffer, size_t len)
 						}
 						return l;
 
-#ifdef WINAMP_PLUGIN
+#ifdef WINLAMP_PLUGIN
 
 					}
 					else if ( classtype == 0x3001 )
@@ -695,7 +695,7 @@ size_t HTTPReader::read(char *buffer, size_t len)
 					{
 						x -= m_meta_size + 1;
 						if (x > start_offs) memcpy(buf + start_offs, buf + start_offs + 1 + m_meta_size, x - start_offs);
-#ifdef WINAMP_PLUGIN
+#ifdef WINLAMP_PLUGIN
 						extern void process_metadata(char *buf, int size);
 						process_metadata(m_meta_buf, m_meta_size);
 #endif
@@ -773,14 +773,14 @@ static void parseURL(char *url, char *lp, char *host, int *port, char *req)
 
 int HTTPReader::getProxyInfo(const char *url, char *out)
 {
-#ifndef WINAMPX
+#ifndef WINLAMPX
 	char INI_FILE[MAX_PATH] = {0};
 	char *p;
 	GetModuleFileNameA(NULL, INI_FILE, sizeof(INI_FILE));
 	p = INI_FILE + strlen(INI_FILE);
 	while (p >= INI_FILE && *p != '.') p--;
 	strcpy(++p, "ini");
-	GetPrivateProfileStringA("Winamp", "proxy", "", out, 8192, INI_FILE);
+	GetPrivateProfileStringA("WinLAMP", "proxy", "", out, 8192, INI_FILE);
 	return !!out[0];
 #else
 	DWORD v = 0;

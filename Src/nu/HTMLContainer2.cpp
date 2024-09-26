@@ -1,5 +1,5 @@
 #include "./HTMLContainer2.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "CGlobalAtom.h"
 
 #include <exdisp.h>
@@ -27,7 +27,7 @@ static UINT WM_REDIRECTNAVIGATE	= 0;
 
 static CGlobalAtom WNDPROP_SCCTRLW(L"SCCTRL");
 
-static UINT WINAMP_WM_DIRECT_MOUSE_WHEEL = WM_NULL;
+static UINT WINLAMP_WM_DIRECT_MOUSE_WHEEL = WM_NULL;
 
 #define REGISTRY_FEATURE_CONTROL		L"Software\\Microsoft\\Internet Explorer\\Main\\FeatureControl"
 #define REGISTRY_FEATURE_USE_LEGACY_JSCRIPT (REGISTRY_FEATURE_CONTROL L"\\FEATURE_USE_LEGACY_JSCRIPT")
@@ -195,7 +195,7 @@ HTMLContainer2::HTMLContainer2(HWND waWindow, HWND hwndParent) :
 							   ref(1), pUnk(NULL), hParent(hwndParent), dwCookie(0),
 							   dwFlags(0), fnBrwoserCB(NULL) ,userData(NULL),
 							   bNavigating(FALSE), hCursors(NULL), nCursors(0),
-							   ensureChakraLoaded(TRUE), winampWindow(waWindow)
+							   ensureChakraLoaded(TRUE), winlampWindow(waWindow)
 {
 	if (NULL == hParent || FALSE == GetClientRect(hParent, &rect))
 		SetRectEmpty(&rect);
@@ -1696,8 +1696,8 @@ void HTMLContainer2::OnBeforeNavigate(IDispatch *pDispatch, VARIANT *URL, VARIAN
 {
 	if (0 == (CF_DISABLEBEFORENAVFILTER & dwFlags))
 	{
-		// follow the Winamp internet preferences options
-		if (!SendMessageW(winampWindow, WM_WA_IPC, 0, IPC_INETAVAILABLE))
+		// follow the WinLAMP internet preferences options
+		if (!SendMessageW(winlampWindow, WM_WA_IPC, 0, IPC_INETAVAILABLE))
 		{
 			LPCWSTR pszTemplate = L"res://";
 			LPCWSTR pszEntry = StrStrIW(URL->bstrVal, pszTemplate);
@@ -2036,8 +2036,8 @@ static LRESULT SubclassControl_WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, L
 		return TRUE;
 	}
 
-	if (WINAMP_WM_DIRECT_MOUSE_WHEEL == uMsg && 
-		WM_NULL != WINAMP_WM_DIRECT_MOUSE_WHEEL)
+	if (WINLAMP_WM_DIRECT_MOUSE_WHEEL == uMsg && 
+		WM_NULL != WINLAMP_WM_DIRECT_MOUSE_WHEEL)
 	{
 		ReplyMessage(TRUE);
 		SendMessageW(hwnd, WM_MOUSEWHEEL, wParam, lParam);
@@ -2063,8 +2063,8 @@ static BOOL SubclassControl_Attach(HWND hControl, HTMLContainer2 *pContainer)
 
 	UINT controlType = SUBCLASS_UNKNOWN;
 
-	if (WM_NULL == WINAMP_WM_DIRECT_MOUSE_WHEEL)
-		WINAMP_WM_DIRECT_MOUSE_WHEEL = RegisterWindowMessageW(L"WINAMP_WM_DIRECT_MOUSE_WHEEL");
+	if (WM_NULL == WINLAMP_WM_DIRECT_MOUSE_WHEEL)
+		WINLAMP_WM_DIRECT_MOUSE_WHEEL = RegisterWindowMessageW(L"WINLAMP_WM_DIRECT_MOUSE_WHEEL");
 
 	WCHAR szClass[128] = {0};
 	if (!GetClassNameW(hControl, szClass, ARRAYSIZE(szClass)))

@@ -52,7 +52,7 @@ nowplaying.onLeftClick ()
 	{
 		icid = "winshadeiconbento";
 	}	
-	System.navigateUrlBrowser("http://client.winamp.com/nowplaying/artist/?icid="+ icid +"&artistName=" + artist);
+	System.navigateUrlBrowser("http://client.winlamp.com/nowplaying/artist/?icid="+ icid +"&artistName=" + artist);
 }
 
 */

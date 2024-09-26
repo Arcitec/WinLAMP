@@ -1,5 +1,5 @@
 #include "ADTS_MPG123.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include <math.h>
 #include "../nsutil/pcm.h"
 #include <assert.h>

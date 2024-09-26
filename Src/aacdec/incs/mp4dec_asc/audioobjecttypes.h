@@ -3,7 +3,7 @@
  *               (C) copyright Fraunhofer - IIS (1998)
  *                        All Rights Reserved
  *
- *   $Header: /cvs/root/winamp/aacdec/incs/mp4dec_asc/audioobjecttypes.h,v 1.3 2012/05/08 20:16:50 audiodsp Exp $
+ *   $Header: /cvs/root/winlamp/aacdec/incs/mp4dec_asc/audioobjecttypes.h,v 1.3 2012/05/08 20:16:50 audiodsp Exp $
  *   contents/description: the MPEG-4 Audio object types
  *
  *   This software and/or program is protected by copyright law and

@@ -3,7 +3,7 @@
 #include "./fileview_internal.h"
 #include "./resource.h"
 #include "./stockobjects.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 #include "../nu/menushortcuts.h"
 #include "../nu/CGlobalAtom.h"
 #include <shlwapi.h>

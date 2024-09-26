@@ -23,7 +23,7 @@ extern api_memmgr *memManagerApi;
 
 #include "../Agave/ExplorerFindFile/api_explorerfindfile.h"
 
-#include "../Winamp/JSAPI2_api_security.h"
+#include "../WinLAMP/JSAPI2_api_security.h"
 extern JSAPI2::api_security *jsapi2_securityApi;
 #define AGAVE_API_JSAPI2_SECURITY jsapi2_securityApi
 

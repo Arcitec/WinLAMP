@@ -3,7 +3,7 @@
 #include ".\cddb.h"
 #include "api__in_cdda.h"
 #include ".\resource.h"
-#include "..\winamp\wa_ipc.h"
+#include "..\winlamp\wa_ipc.h"
 
 #include <api/application/api_application.h>
 
@@ -11,7 +11,7 @@
 #include <commctrl.h>
 #include <strsafe.h>
 
-#include "cddbcontrolwinamp.tlh"
+#include "cddbcontrolwinlamp.tlh"
 
 #define PROP_PRGDLG	L"PRGDLG"
 

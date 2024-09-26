@@ -4,9 +4,9 @@
 #include "api__ml_plg.h"
 #include "../nu/MediaLibraryInterface.h"
 #include "impl_playlist.h"
-//#import	"../gracenote/CDDBControlWinamp.dll" no_namespace, named_guids, raw_interfaces_only
-#include "../gracenote/cddbcontrolwinamp.tlh"
-#include "../winamp/ipc_pe.h"
+//#import	"../gracenote/CDDBControlWinLAMP.dll" no_namespace, named_guids, raw_interfaces_only
+#include "../gracenote/cddbcontrolwinlamp.tlh"
+#include "../winlamp/ipc_pe.h"
 #include "resource.h"
 
 #include <strsafe.h>
@@ -209,7 +209,7 @@ int BackupGracenoteMLDB(void)
 	BOOL result;
 	char path[MAX_PATH] = {0};
 	//PathCombineA(path,mediaLibrary.GetIniDirectory(),"Plugins\\Gracenote");
-	PathCombineA(path,"C:\\Users\\bigg\\AppData\\Roaming\\Winamp\\","Plugins\\Gracenote");
+	PathCombineA(path,"C:\\Users\\bigg\\AppData\\Roaming\\WinLAMP\\","Plugins\\Gracenote");
 	PathAppendA(path, filename);
 	result = DeleteFileA(path);
 	return result;
@@ -227,7 +227,7 @@ void CheckForShutdownError(HRESULT error)
 {
 	if (error != S_OK)
 	{
-		MessageBoxW(plugin.hwndWinampParent, WASABI_API_LNGSTRINGW(IDS_CANNOT_SHUT_DOWN), (LPWSTR)plugin.description, MB_OK| MB_ICONERROR);
+		MessageBoxW(plugin.hwndWinLAMPParent, WASABI_API_LNGSTRINGW(IDS_CANNOT_SHUT_DOWN), (LPWSTR)plugin.description, MB_OK| MB_ICONERROR);
 	}
 }
 
@@ -266,7 +266,7 @@ int DeleteGracenoteMLDB(bool silent)
 		CheckForShutdownError(error);
 
 	// Spawn the working window
-	//HWND hwndResetWorking = WASABI_API_CREATEDIALOG(IDD_NAG, plugin.hwndWinampParent, ResettingProcedure);
+	//HWND hwndResetWorking = WASABI_API_CREATEDIALOG(IDD_NAG, plugin.hwndWinLAMPParent, ResettingProcedure);
 	if (mldbMgr)
 		error = mldbMgr->DeleteDBFiles(deleteFlags, bDataPath);
 	//SendMessage(hwndResetWorking, WM_QUIT, 0, 0);
@@ -304,7 +304,7 @@ static void ConfigureGeneratorPrefs(ICddbPLMoreLikeThisCfg *config)
 //void playPlaylist(Playlist &pl, bool enqueue=false, int startplaybackat=0/*-1 for don't start playback*/, const wchar_t *seedfn=NULL, int useSeed=FALSE)
 void playPlaylist(Playlist &pl, bool enqueue=false, int startplaybackat=0/*-1 for don't start playback*/, int useSeed=FALSE)
 {
-	extern winampMediaLibraryPlugin plugin;
+	extern winlampMediaLibraryPlugin plugin;
 
 	const size_t number_of_seeds = seedPlaylist.GetNumItems();
 	wchar_t seedFilename[MAX_PATH] = {0};
@@ -321,7 +321,7 @@ void playPlaylist(Playlist &pl, bool enqueue=false, int startplaybackat=0/*-1 fo
 			seedPlaylist.GetItem(i, seedFilename, MAX_PATH);			// Get the playlist filename
 
 			enqueueFileWithMetaStructW s={seedFilename,NULL,PathFindExtensionW(seedFilename),-1};
-			SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
+			SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
 		}
 	}
 
@@ -334,14 +334,14 @@ void playPlaylist(Playlist &pl, bool enqueue=false, int startplaybackat=0/*-1 fo
 		//if(seedfn && !_wcsicmp(seedfn,filename))			// Not really sure this is necessary... just making sure that the same file doesnt get added twice
 		//	continue;
 		enqueueFileWithMetaStructW s={filename,NULL,PathFindExtensionW(filename),-1};
-		SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
+		SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
 	}
 
 	if(!enqueue && startplaybackat != -1)
 	{ //play item startplaybackat
-		SendMessage(plugin.hwndWinampParent,WM_WA_IPC,startplaybackat,IPC_SETPLAYLISTPOS);
-		SendMessage(plugin.hwndWinampParent,WM_COMMAND,40047,0); //stop
-		SendMessage(plugin.hwndWinampParent,WM_COMMAND,40045,0); //play
+		SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,startplaybackat,IPC_SETPLAYLISTPOS);
+		SendMessage(plugin.hwndWinLAMPParent,WM_COMMAND,40047,0); //stop
+		SendMessage(plugin.hwndWinLAMPParent,WM_COMMAND,40045,0); //play
 	}
 }
 
@@ -494,14 +494,14 @@ static void TitleTagFreeFuncML(wchar_t *tag_data, void *p)
 void GetTitleFormattingGracenote(const wchar_t *filename, ICddbPL2Result * gracenoteResult, wchar_t * buf, int len)
 {
 	waFormatTitleExtended fmt={ filename, 1, NULL, (void *)gracenoteResult, buf, len, TitleTagFuncGracenote, TitleTagFreeFuncGracenote };
-	SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&fmt, IPC_FORMAT_TITLE_EXTENDED);
+	SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&fmt, IPC_FORMAT_TITLE_EXTENDED);
 }
 
 // Retreive the title formatting for media library
 void GetTitleFormattingML(const wchar_t *filename, itemRecordW *mlResult, wchar_t * buf, int len)
 {
 	waFormatTitleExtended fmt={ filename, 1, NULL, (void *)mlResult, buf, len, TitleTagFuncML, TitleTagFreeFuncML };
-	SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&fmt, IPC_FORMAT_TITLE_EXTENDED);
+	SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&fmt, IPC_FORMAT_TITLE_EXTENDED);
 }
 
 static int MoreLikeTheseSongsFunc(HANDLE handle, void *user_data, intptr_t id)
@@ -582,9 +582,9 @@ static int MoreLikeTheseSongsFunc(HANDLE handle, void *user_data, intptr_t id)
 					
 					length *= 1000;						// Multiply length by 1000 to turn it into milliseconds from seconds
 
-					// Get the winamp user formatted title.
-					wchar_t winamp_title[512] = {0};
-					GetTitleFormattingGracenote(filename, result, winamp_title, 512);
+					// Get the winlamp user formatted title.
+					wchar_t winlamp_title[512] = {0};
+					GetTitleFormattingGracenote(filename, result, winlamp_title, 512);
 					
 					// Only check for the query if the user wants to apply one
 					if ( useMLQuery == TRUE && MatchesQuery(filename, mlQuery ) == false )
@@ -597,7 +597,7 @@ static int MoreLikeTheseSongsFunc(HANDLE handle, void *user_data, intptr_t id)
 
 					// Lets check for the playlist limit to see if we should add this track
 					if ( !PlaylistIsFull(&currentPlaylist, length, size) )
-						currentPlaylist.AppendWithInfo(filename, winamp_title, length, size);
+						currentPlaylist.AppendWithInfo(filename, winlamp_title, length, size);
 					// DONT break here if we are full, keep going as we may find something that will fit into the playlist eventually
 
 					SysFreeString(filename);
@@ -606,7 +606,7 @@ static int MoreLikeTheseSongsFunc(HANDLE handle, void *user_data, intptr_t id)
 				}
 			}
 			/*char cfg[1024 + 32] = {0};
-			char *dir = (char*)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETINIDIRECTORY);
+			char *dir = (char*)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETINIDIRECTORY);
 			PathCombineA(cfg, dir, "Plugins\\gen_ml.ini");
 			int en = GetPrivateProfileIntA("gen_ml_config","enqueuedef",0,cfg);*/
 

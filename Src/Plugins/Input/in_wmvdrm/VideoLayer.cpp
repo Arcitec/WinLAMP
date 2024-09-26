@@ -110,14 +110,14 @@ bool VideoLayer::OpenVideo()
 
 				if (stream->IsVideo() // if it's video
 				    && AcceptableFormat(stream->GetSubType())	 // and a video format we like
-				    && AttemptOpenVideo(stream)) // and winamp was able to open it
+				    && AttemptOpenVideo(stream)) // and winlamp was able to open it
 				{
 					videoOpened = true;
 					int fourcc = stream->FourCC();
 					if (fourcc == '8BGR')
 					{
 						RGBQUAD *palette = stream->CreatePalette();
-						winamp.SetVideoPalette(palette);
+						winlamp.SetVideoPalette(palette);
 						
 						// TODO: don't leak the palette
 					}
@@ -125,7 +125,7 @@ bool VideoLayer::OpenVideo()
 					char status[512] = {0};
 					StringCchPrintfA(status, 512, WASABI_API_LNGSTRING(IDS_WINDOWS_MEDIA_XXX),
 									 stream->DestinationWidth(), stream->DestinationHeight(), cc[0], cc[1], cc[2], cc[3]);
-					winamp.SetVideoStatusText(status);
+					winlamp.SetVideoStatusText(status);
 					converter = MakeConverter(stream);
 					videoOutputNum = output;
 					videoStream = stream;

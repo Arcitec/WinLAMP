@@ -2,7 +2,7 @@
 #include "../xml/obj_xml.h"
 #include "api.h"
 #include "SWFParameters.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "main.h"
 #include <api/service/waServiceFactory.h>
 #include <strsafe.h>

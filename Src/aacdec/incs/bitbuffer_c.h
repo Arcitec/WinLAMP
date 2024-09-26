@@ -14,7 +14,7 @@
  *   civil and criminal penalties, and will be prosecuted to the maximum 
  *   extent possible under law.
  *
- * $Header: /cvs/root/winamp/aacdec/incs/bitbuffer_c.h,v 1.3 2012/05/08 20:16:49 audiodsp Exp $
+ * $Header: /cvs/root/winlamp/aacdec/incs/bitbuffer_c.h,v 1.3 2012/05/08 20:16:49 audiodsp Exp $
  *
 \***************************************************************************/
 

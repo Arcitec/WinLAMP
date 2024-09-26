@@ -2,7 +2,7 @@
 
 <!-- <groupdef id="wdh.browser">
 
-	<Winamp:Browser x="0" y="1" h="-1" w="0" relatw="1" relath="1" id="sui.component.browser"/>
+	<WinLAMP:Browser x="0" y="1" h="-1" w="0" relatw="1" relath="1" id="sui.component.browser"/>
 
 </groupdef> -->
 

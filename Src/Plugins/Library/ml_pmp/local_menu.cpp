@@ -6,7 +6,7 @@
 #include "api__ml_pmp.h"
 #include "main.h"
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 extern HWND hwndMediaView;
 
 #define RATING_MARKER			 MAKELONG(MAKEWORD('R','A'),MAKEWORD('T','E'))

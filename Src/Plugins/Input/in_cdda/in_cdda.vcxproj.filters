@@ -88,7 +88,7 @@
     <ClCompile Include="..\..\..\external_dependencies\libdiscid-0.6.2\src\sha1.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Winamp\strutil.cpp">
+    <ClCompile Include="..\..\..\WinLAMP\strutil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\external_dependencies\libdiscid-0.6.2\src\toc.c">
@@ -132,7 +132,7 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Winamp\strutil.h">
+    <ClInclude Include="..\..\..\WinLAMP\strutil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

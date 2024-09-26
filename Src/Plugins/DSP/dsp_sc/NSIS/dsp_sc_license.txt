@@ -109,7 +109,7 @@ Certain areas of Shoutcast may allow you to post Content (such as comments) that
 
 15. Procedure For Making Claims Of Copyright Infringement.
 
-If you believe that your copyrighted work has been copied and is accessible on the RADIONOMY, Winamp or Shoutcast in a way that constitutes copyright infringement, you may notify RADIONOMY by providing our copyright agent the following information:
+If you believe that your copyrighted work has been copied and is accessible on the RADIONOMY, WinLAMP or Shoutcast in a way that constitutes copyright infringement, you may notify RADIONOMY by providing our copyright agent the following information:
 
 1. an electronic or physical signature of the owner of the copyright or the person authorized to act on the owner's behalf.
 

@@ -1,7 +1,7 @@
 #include "main.h"
 #include "api.h"
 #include <windows.h>
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "FactoryHelper.h"
 #include "MetaTagFactory.h"
 #include "factory_Handler.h"

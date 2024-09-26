@@ -9,7 +9,7 @@
 #define IDS_DONE                        5
 #define IDS_TRANSFER_FAILED             6
 #define IDS_REMOVEABLE_DRIVE_DETECTED   7
-#define IDS_WINAMP_PMP_SUPPORT          8
+#define IDS_WINLAMP_PMP_SUPPORT          8
 #define IDS_MANUAL_CONNECT_PROMPT       9
 #define IDS_WARNING                     10
 #define IDS_LOADING_DRIVE_X             11

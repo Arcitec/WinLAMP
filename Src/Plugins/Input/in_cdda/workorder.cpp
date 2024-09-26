@@ -15,7 +15,7 @@ void OpenMusicIDWorkOrder()
 		PathAppendA(pluginpath, "Gracenote");
 
 		char musicidpath[MAX_PATH] = {0};
-		PathCombineA(musicidpath, pluginpath, "CddbWOManagerWinamp.dll");
+		PathCombineA(musicidpath, pluginpath, "CddbWOManagerWinLAMP.dll");
 
 		musicIDLib = LoadLibraryA(musicidpath);
 		if (musicIDLib)

@@ -58,8 +58,8 @@ StringW *PublicVarManager::translate(const wchar_t *str, GuiObject *o, Container
     ret->replace(L"@SKINPATH@", WASABI_API_SKIN->getSkinPath());
     ret->replace(L"@SKINSPATH@", WASABI_API_SKIN->getSkinsPath());
 	ret->replace(L"@APPDATAPATH@", WASABI_API_APP->path_getUserSettingsPath());
-    //ret->replace(L"@DEFAULTSKINPATH@", StringPathCombine(WASABI_API_SKIN->getSkinsPath(), L"Default")); //Martin> doesn't exist in winamp5, so cut to speed loading
-	ret->replace(L"@WINAMPPATH@", StringPrintfW(L"%s\\", WASABI_API_APP->path_getAppPath()));
+    //ret->replace(L"@DEFAULTSKINPATH@", StringPathCombine(WASABI_API_SKIN->getSkinsPath(), L"Default")); //Martin> doesn't exist in winlamp5, so cut to speed loading
+	ret->replace(L"@WINLAMPPATH@", StringPrintfW(L"%s\\", WASABI_API_APP->path_getAppPath()));
   }
 #ifdef WASABI_COMPILE_COMPONENTS
   ret->replace("@WACDATAPATH@", WASABI_API_APP->path_getComponentDataPath());

@@ -10,8 +10,8 @@
 
 #include <vector>
 
-#define NDE_CACHE_DAT L"winamp_metadata.dat"
-#define NDE_CACHE_IDX L"winamp_metadata.idx"
+#define NDE_CACHE_DAT L"winlamp_metadata.dat"
+#define NDE_CACHE_IDX L"winlamp_metadata.idx"
 
 //Filename="E:\Howling Bells - Into The Chaos.MP3" 
 //Artist="Howling Bells" 
@@ -53,7 +53,7 @@ enum
 	DEVICEVIEW_COL_PLAY_COUNT=14,
 };
 
-#define TAG_CACHE L"winamp_metadata.dat"
+#define TAG_CACHE L"winlamp_metadata.dat"
 #define FIELD_LENGTH 1024
 
 class UsbSong {

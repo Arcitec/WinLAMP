@@ -42,7 +42,7 @@
 		image="window.titlebar.button.restore.normal"
 		hoverImage="window.titlebar.button.restore.hover"
 		downImage="window.titlebar.button.restore.down"
-		tooltip="Restore Winamp"
+		tooltip="Restore WinLAMP"
 	/>
 
 	<button 
@@ -51,7 +51,7 @@
 		image="window.titlebar.button.maximize.normal"
 		hoverImage="window.titlebar.button.maximize.hover"
 		downImage="window.titlebar.button.maximize.down"
-		tooltip="Maximize Winamp"
+		tooltip="Maximize WinLAMP"
 	/>
 
 	<button 

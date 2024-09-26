@@ -23,7 +23,7 @@
 static HCRYPTPROV GetKeySet()
 {
 	HCRYPTPROV hCryptProv;
-	LPCWSTR    UserName = L"WinampKeyContainer";  // name of the key container
+	LPCWSTR    UserName = L"WinLAMPKeyContainer";  // name of the key container
 
 	if ( CryptAcquireContext(
 		&hCryptProv,                 // handle to the CSP

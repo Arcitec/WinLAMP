@@ -74,7 +74,7 @@ public:
 	static const GUID getServiceGuid() { return AuthApiGUID; }
 	int Login(const wchar_t *username, const wchar_t *password, AuthResults *results, ifc_authcallback *callback);
 	int LoginSecurID(const wchar_t *username, const wchar_t *password, const char *context, const wchar_t *securid, AuthResults *results, ifc_authcallback *callback);
-	// realm is just a "named account" kinda thing.  pass realm = GUID_NULL for "default" account, or your own unique name if you need to login with a separate ID from the rest of Winamp
+	// realm is just a "named account" kinda thing.  pass realm = GUID_NULL for "default" account, or your own unique name if you need to login with a separate ID from the rest of WinLAMP
 	int SetCredentials(GUID realm, const char *session_key, const char *token, const wchar_t *username, __time64_t expire);
 	int GetCredentials(GUID realm, char *session_key, size_t session_key_len, char *token, size_t token_len, wchar_t *username, size_t username_len, __time64_t *expire);
 	const char *GetDevID();

@@ -143,21 +143,21 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System\ 
-xcopy /Y /D $(ProjectDir)Cddbx1.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\
-xcopy /Y /D $(ProjectDir)Cddbx2.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)Cddbx3.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)Cddbx4.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)Cddbx5.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CddbWOManagerWinamp.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CDDBUIWinamp.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CddbPlaylist2Winamp.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CddbMusicIDWinamp.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CddbMusicIDUIWinamp.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CddbLinkWinamp.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CDDBControlWinamp.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System\ 
+xcopy /Y /D $(ProjectDir)Cddbx1.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\
+xcopy /Y /D $(ProjectDir)Cddbx2.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)Cddbx3.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)Cddbx4.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)Cddbx5.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CddbWOManagerWinLAMP.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CDDBUIWinLAMP.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CddbPlaylist2WinLAMP.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CddbMusicIDWinLAMP.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CddbMusicIDUIWinLAMP.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CddbLinkWinLAMP.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CDDBControlWinLAMP.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\
 </Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System\'</Message>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -185,21 +185,21 @@ xcopy /Y /D $(ProjectDir)CDDBControlWinamp.dll ..\..\Build\Winamp_$(PlatformShor
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System\ 
-xcopy /Y /D $(ProjectDir)Cddbx1.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\
-xcopy /Y /D $(ProjectDir)Cddbx2.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)Cddbx3.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)Cddbx4.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)Cddbx5.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CddbWOManagerWinamp.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CDDBUIWinamp.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CddbPlaylist2Winamp.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CddbMusicIDWinamp.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CddbMusicIDUIWinamp.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CddbLinkWinamp.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CDDBControlWinamp.dll ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\
+      <Command>xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System\ 
+xcopy /Y /D $(ProjectDir)Cddbx1.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\
+xcopy /Y /D $(ProjectDir)Cddbx2.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)Cddbx3.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)Cddbx4.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)Cddbx5.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CddbWOManagerWinLAMP.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CDDBUIWinLAMP.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CddbPlaylist2WinLAMP.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CddbMusicIDWinLAMP.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CddbMusicIDUIWinLAMP.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CddbLinkWinLAMP.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CDDBControlWinLAMP.dll ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\
 </Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\Winamp_$(PlatformShortName)_$(Configuration)\System\'</Message>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)$(TargetName)$(TargetExt) ..\..\Build\WinLAMP_$(PlatformShortName)_$(Configuration)\System\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -267,21 +267,21 @@ xcopy /Y /D $(ProjectDir)CDDBControlWinamp.dll ..\..\Build\Winamp_$(PlatformShor
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)*.w5s ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\System\ 
-xcopy /Y /D $(ProjectDir)Cddbx1.dll ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\
-xcopy /Y /D $(ProjectDir)Cddbx2.dll ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)Cddbx3.dll ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)Cddbx4.dll ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)Cddbx5.dll ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CddbWOManagerWinamp.dll ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CDDBUIWinamp.dll ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CddbPlaylist2Winamp.dll ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CddbMusicIDWinamp.dll ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CddbMusicIDUIWinamp.dll ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CddbLinkWinamp.dll ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
-xcopy /Y /D $(ProjectDir)CDDBControlWinamp.dll ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\
+      <Command>xcopy /Y /D $(OutDir)*.w5s ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\System\ 
+xcopy /Y /D $(ProjectDir)Cddbx1.dll ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\
+xcopy /Y /D $(ProjectDir)Cddbx2.dll ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)Cddbx3.dll ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)Cddbx4.dll ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)Cddbx5.dll ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CddbWOManagerWinLAMP.dll ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CDDBUIWinLAMP.dll ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CddbPlaylist2WinLAMP.dll ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CddbMusicIDWinLAMP.dll ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CddbMusicIDUIWinLAMP.dll ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CddbLinkWinLAMP.dll ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\ 
+xcopy /Y /D $(ProjectDir)CDDBControlWinLAMP.dll ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\Gracenote\
 </Command>
-      <Message>Post build event: 'xcopy /Y /D $(OutDir)*.w5s ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\System\'</Message>
+      <Message>Post build event: 'xcopy /Y /D $(OutDir)*.w5s ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\System\'</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

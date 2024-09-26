@@ -278,7 +278,7 @@ void Playlist_export( HWND dlgparent, const wchar_t *name, const wchar_t *srcm3u
 	Playlists_ReplaceBadPathChars( temp );
 
 	l.nFilterIndex    = g_config->ReadInt( L"filter", 3 );
-	l.lpstrFilter     = (LPCWSTR)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 3, IPC_GET_PLAYLIST_EXTLISTW );
+	l.lpstrFilter     = (LPCWSTR)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 3, IPC_GET_PLAYLIST_EXTLISTW );
 	l.lpstrFile       = temp;
 	l.nMaxFile        = MAX_PATH;
 	l.lpstrTitle      = WASABI_API_LNGSTRINGW( IDS_EXPORT_PLAYLIST );
@@ -477,8 +477,8 @@ void playlists_Import( HWND hwndDlg, LPARAM lParam )
 			Playlist_importFromFile( hwndDlg );
 			RefreshPlaylistsList();
 			break;
-		case IDC_IMPORT_WINAMP_PLAYLIST:
-			Playlist_importFromWinamp();
+		case IDC_IMPORT_WINLAMP_PLAYLIST:
+			Playlist_importFromWinLAMP();
 			RefreshPlaylistsList();
 			break;
 		case ID_PLAYLISTSIMPORT_IMPORTPLAYLISTSFROMFOLDER:
@@ -523,7 +523,7 @@ void DeletePlaylist( GUID _guid, HWND parent, bool confirm )
 
 	AGAVE_API_PLAYLISTS->RemovePlaylist( info.GetIndex() );
 	// changed in 5.58 to resolve the issue reported at
-	// http://forums.winamp.com/showthread.php?l_plugin_message=2652001#post2652001
+	// http://forums.winlamp.com/showthread.php?l_plugin_message=2652001#post2652001
 	// delete the file after the removal and not before which
 	// fixes issues if removing the currently viewed playlist
 	//DeleteFileW(gs);
@@ -589,7 +589,7 @@ static void playlists_Play( int enqueue )
 
 		if ( !enqueue && !deleted )
 		{
-			SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_DELETE );
+			SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_DELETE );
 			deleted = 1;
 		}
 
@@ -598,11 +598,11 @@ static void playlists_Play( int enqueue )
 		s.ext      = NULL;
 		s.length   = -1;
 
-		SendMessage( plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW );
+		SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW );
 	}
 
 	if ( !enqueue )
-		SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_STARTPLAY );
+		SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_STARTPLAY );
 }
 
 static void playlists_ManageButtons( HWND hwndDlg )

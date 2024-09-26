@@ -29,7 +29,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "support.h"
 #include "utility.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 
 bool g_bDebugOutput = false;
 bool g_bDumpFileCleared = false;
@@ -247,19 +247,19 @@ void MakeProjectionMatrix( D3DXMATRIX* pOut,
     pOut->_34 = 1;
 }
 
-void GetWinampSongTitle(HWND hWndWinamp, wchar_t *szSongTitle, int nSize)
+void GetWinLAMPSongTitle(HWND hWndWinLAMP, wchar_t *szSongTitle, int nSize)
 {
     szSongTitle[0] = 0;
-	lstrcpynW(szSongTitle, (wchar_t*)SendMessage(hWndWinamp, WM_WA_IPC,
-									 SendMessage(hWndWinamp, WM_WA_IPC, 0 , IPC_GETLISTPOS),
+	lstrcpynW(szSongTitle, (wchar_t*)SendMessage(hWndWinLAMP, WM_WA_IPC,
+									 SendMessage(hWndWinLAMP, WM_WA_IPC, 0 , IPC_GETLISTPOS),
 									 IPC_GETPLAYLISTTITLEW), nSize);
 }
 
-void GetWinampSongPosAsText(HWND hWndWinamp, wchar_t *szSongPos)
+void GetWinLAMPSongPosAsText(HWND hWndWinLAMP, wchar_t *szSongPos)
 {
     // note: size(szSongPos[]) must be at least 64.
     szSongPos[0] = 0;
-	int nSongPosMS = SendMessage(hWndWinamp,WM_USER,0,105);
+	int nSongPosMS = SendMessage(hWndWinLAMP,WM_USER,0,105);
     if (nSongPosMS > 0)
     {
 		wchar_t tmp[16];
@@ -274,11 +274,11 @@ void GetWinampSongPosAsText(HWND hWndWinamp, wchar_t *szSongPos)
     }
 }
 
-void GetWinampSongLenAsText(HWND hWndWinamp, wchar_t *szSongLen)
+void GetWinLAMPSongLenAsText(HWND hWndWinLAMP, wchar_t *szSongLen)
 {
     // note: size(szSongLen[]) must be at least 64.
     szSongLen[0] = 0;
-	int nSongLenMS = SendMessage(hWndWinamp,WM_USER,1,105)*1000;
+	int nSongLenMS = SendMessage(hWndWinLAMP,WM_USER,1,105)*1000;
     if (nSongLenMS > 0)
     {
 		int len_s = nSongLenMS/1000;
@@ -288,16 +288,16 @@ void GetWinampSongLenAsText(HWND hWndWinamp, wchar_t *szSongLen)
     }    
 }
 
-float GetWinampSongPos(HWND hWndWinamp)
+float GetWinLAMPSongPos(HWND hWndWinLAMP)
 {
     // returns answer in seconds
-    return (float)SendMessage(hWndWinamp,WM_USER,0,105)*0.001f;
+    return (float)SendMessage(hWndWinLAMP,WM_USER,0,105)*0.001f;
 }
 
-float GetWinampSongLen(HWND hWndWinamp)
+float GetWinLAMPSongLen(HWND hWndWinLAMP)
 {
     // returns answer in seconds
-	return (float)SendMessage(hWndWinamp,WM_USER,1,105);
+	return (float)SendMessage(hWndWinLAMP,WM_USER,1,105);
 }
 
 int GetDX9TexFormatBitsPerPixel(D3DFORMAT fmt)

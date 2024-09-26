@@ -15,7 +15,7 @@
 extern api_gracenote * gracenoteApi;
 #define AGAVE_API_GRACENOTE gracenoteApi
 
-#include "../Winamp/api_decodefile.h"
+#include "../WinLAMP/api_decodefile.h"
 extern api_decodefile *decodeApi;
 #define AGAVE_API_DECODE decodeApi
 
@@ -25,7 +25,7 @@ extern api_mldb *mldbApi;
 
 #include "../Agave/Language/api_language.h"
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 INT_PTR PluginMessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR param3);
 
 LRESULT SetFileInfo(const wchar_t *filename, const wchar_t *metadata, const wchar_t *data);

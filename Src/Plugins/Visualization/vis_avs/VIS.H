@@ -29,7 +29,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 // notes:
 // any window that remains in foreground should optimally pass 
-// keystrokes to the parent (winamp's) window, so that the user
+// keystrokes to the parent (winlamp's) window, so that the user
 // can still control it. unless escape is hit, or some option 
 // key specific to the vis is hit. As for storing configuration,
 // Configuration data should be stored in <dll directory>\plugin.ini
@@ -39,7 +39,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // tested with VC++ 4.2 and 5.0
 
 
-typedef struct winampVisModule {
+typedef struct winlampVisModule {
   char *description; // description of module
   HWND hwndParent;   // parent window (filled in by calling app)
   HINSTANCE hDllInstance; // instance handle to this DLL (filled in by calling app)
@@ -55,22 +55,22 @@ typedef struct winampVisModule {
   unsigned char spectrumData[2][576];
   unsigned char waveformData[2][576];
 
-  void (*Config)(struct winampVisModule *this_mod);  // configuration dialog
-  int (*Init)(struct winampVisModule *this_mod);     // 0 on success, creates window, etc
-  int (*Render)(struct winampVisModule *this_mod);   // returns 0 if successful, 1 if vis should end
-  void (*Quit)(struct winampVisModule *this_mod);    // call when done
+  void (*Config)(struct winlampVisModule *this_mod);  // configuration dialog
+  int (*Init)(struct winlampVisModule *this_mod);     // 0 on success, creates window, etc
+  int (*Render)(struct winlampVisModule *this_mod);   // returns 0 if successful, 1 if vis should end
+  void (*Quit)(struct winlampVisModule *this_mod);    // call when done
 
   void *userData; // user data, optional
-} winampVisModule;
+} winlampVisModule;
 
 typedef struct {
   int version;       // VID_HDRVER
   char *description; // description of library
-  winampVisModule* (*getModule)(int);
-} winampVisHeader;
+  winlampVisModule* (*getModule)(int);
+} winlampVisHeader;
 
 // exported symbols
-typedef winampVisHeader* (*winampVisGetHeaderType)();
+typedef winlampVisHeader* (*winlampVisGetHeaderType)();
 
 // version of current module (0x101 == 1.01)
 #define VIS_HDRVER 0x101

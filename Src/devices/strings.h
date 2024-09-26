@@ -1,5 +1,5 @@
-#ifndef _NULLSOFT_WINAMP_DEVICES_STRINGS_HEADER
-#define _NULLSOFT_WINAMP_DEVICES_STRINGS_HEADER
+#ifndef _NULLSOFT_WINLAMP_DEVICES_STRINGS_HEADER
+#define _NULLSOFT_WINLAMP_DEVICES_STRINGS_HEADER
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -56,4 +56,4 @@ AnsiString_ToUnicode(unsigned int codePage,
 					 const char *string, 
 					 int stringLength);
 
-#endif //_NULLSOFT_WINAMP_DEVICES_STRINGS_HEADER
+#endif //_NULLSOFT_WINLAMP_DEVICES_STRINGS_HEADER

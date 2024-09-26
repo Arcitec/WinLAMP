@@ -6,7 +6,7 @@
 #include <api/service/svcs/svc_imgload.h>
 #include "./local_menu.h"
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 
 #define WM_EX_GETREALLIST	(WM_USER + 0x01)
 
@@ -16,7 +16,7 @@ extern winampMediaLibraryPlugin plugin;
 AlbumArtListView::AlbumArtListView(ListContents * lc, int dlgitem, HWND libraryParent, HWND parent, bool enableHeaderMenu)
 	:	SkinnedListView(lc,dlgitem,libraryParent,parent,enableHeaderMenu), hbmpNames(NULL),
 		classicnotfoundW(0), classicnotfoundH(0), ratingrow(-1), itemHeight(0), textHeight(0), ratingTop(0),
-		notfound(L"winamp.cover.notfound"), notfound60(L"winamp.cover.notfound.60"), notfound90(L"winamp.cover.notfound.90")
+		notfound(L"winlamp.cover.notfound"), notfound60(L"winlamp.cover.notfound.60"), notfound90(L"winlamp.cover.notfound.90")
 {
 	this->hwndDlg = parent;
 	this->dlgitem = dlgitem;

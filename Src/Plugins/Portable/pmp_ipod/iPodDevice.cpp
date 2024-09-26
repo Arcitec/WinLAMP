@@ -3,7 +3,7 @@
 #include "..\..\General\gen_ml/itemlist.h"
 #include "../nu/AutoWide.h"
 #include "../nu/AutoChar.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <math.h>
 #include "../Agave/Language/api_language.h"
 #include "api.h"
@@ -457,7 +457,7 @@ static __int64 fileSize(const wchar_t * filename)
 void GetFileInfo(const wchar_t * file, const wchar_t * metadata, wchar_t * buf, int len) {
 	buf[0]=0;
 	extendedFileInfoStructW m = {file,metadata,buf,(size_t)len};
-	SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&m,IPC_GET_EXTENDED_FILE_INFOW);
+	SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&m,IPC_GET_EXTENDED_FILE_INFOW);
 }
 
 __int64 GetFileInfoInt64(wchar_t * file, wchar_t * metadata, BOOL *w=NULL) {
@@ -501,7 +501,7 @@ int iPodDevice::transferTrackToDevice(const itemRecordW *track,void * callbackCo
 	if(!_wcsicmp(ext,L".mp4")) {
 		wchar_t buf[100]=L"0";
 		extendedFileInfoStructW m = {infile,L"type",buf,100};
-		SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&m,IPC_GET_EXTENDED_FILE_INFOW);
+		SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&m,IPC_GET_EXTENDED_FILE_INFOW);
 		if(!wcscmp(buf,L"1")) { video=true; wcsncpy(ext,L".m4v",10); }
 		else wcsncpy(ext,L".m4a",10);
 	}
@@ -529,7 +529,7 @@ int iPodDevice::transferTrackToDevice(const itemRecordW *track,void * callbackCo
 		wchar_t buf[100]=L"";
 		int which = AGAVE_API_CONFIG->GetUnsigned(playbackConfigGroupGUID, L"replaygain_source", 0);
 		extendedFileInfoStructW m = {infile,which?L"replaygain_album_gain":L"replaygain_track_gain",buf,100};
-		SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&m,IPC_GET_EXTENDED_FILE_INFOW);
+		SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&m,IPC_GET_EXTENDED_FILE_INFOW);
 		if(buf[0]) {
 			double gain = _wtof(&buf[buf[0]==L'+'?1:0]);
 			mhit->soundcheck = (unsigned long)(1000.0 * pow(10.0,-0.1*gain));
@@ -703,8 +703,8 @@ void iPodDevice::deleteTrack(songid_t songid) {
 	wcscat(file,t);
 
 	//check this file isn't playing...
-	wchar_t* curPlaying = (wchar_t*)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_GET_PLAYING_FILENAME);
-	if(curPlaying && !_wcsicmp(curPlaying,file))  SendMessage(plugin.hwndWinampParent,WM_COMMAND,40047,0); //stop
+	wchar_t* curPlaying = (wchar_t*)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_GET_PLAYING_FILENAME);
+	if(curPlaying && !_wcsicmp(curPlaying,file))  SendMessage(plugin.hwndWinLAMPParent,WM_COMMAND,40047,0); //stop
 
 	//delete :)
 	// benski> we might have a file that has been deleted from the disk but not the DB
@@ -1135,7 +1135,7 @@ void getTitle(Device * dev, songid_t song, const wchar_t * filename, wchar_t * b
 	buf[0]=0; buf[len-1]=0;
 	tagItem item = {song,dev,filename};
 	waFormatTitleExtended fmt={filename,0,NULL,&item,buf,len,tagFunc,tagFreeFunc};
-	SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&fmt, IPC_FORMAT_TITLE_EXTENDED);
+	SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&fmt, IPC_FORMAT_TITLE_EXTENDED);
 }
 
 bool iPodDevice::playTracks(songid_t * songidList, int listLength, int startPlaybackAt, bool enqueue) {
@@ -1143,9 +1143,9 @@ bool iPodDevice::playTracks(songid_t * songidList, int listLength, int startPlay
 	wchar_t wbuf[2048]=L"";
 
 	if(!enqueue) { //clear playlist
-		SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_DELETE);
-		/*int l=SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_PE_GETINDEXTOTAL);
-		while(l>=0) SendMessage(plugin.hwndWinampParent,WM_WA_IPC,--l,IPC_PE_DELETEINDEX);*/
+		SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_DELETE);
+		/*int l=SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_PE_GETINDEXTOTAL);
+		while(l>=0) SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,--l,IPC_PE_DELETEINDEX);*/
 	}
 
 	for(int i=0; i<listLength; i++) {
@@ -1156,18 +1156,18 @@ bool iPodDevice::playTracks(songid_t * songidList, int listLength, int startPlay
 		getTitle(this,songidList[i],wbuf,title,2048);
 
 		/*enqueueFileWithMetaStruct s={buf,strdup(AutoChar(title)),getTrackLength(songidList[i])/1000};
-		SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILE);
+		SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILE);
 		free((void*)s.title);*/
 
 		enqueueFileWithMetaStructW s={wbuf,_wcsdup(title),PathFindExtensionW(wbuf),getTrackLength(songidList[i]) / 1000};
-		SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
+		SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_PLAYFILEW);
 		free((void*)s.title);
 	}
 
 	if(!enqueue) { //play item startPlaybackAt
-		SendMessage(plugin.hwndWinampParent,WM_WA_IPC,startPlaybackAt,IPC_SETPLAYLISTPOS);
-		SendMessage(plugin.hwndWinampParent,WM_COMMAND,40047,0); //stop
-		SendMessage(plugin.hwndWinampParent,WM_COMMAND,40045,0); //play
+		SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,startPlaybackAt,IPC_SETPLAYLISTPOS);
+		SendMessage(plugin.hwndWinLAMPParent,WM_COMMAND,40047,0); //stop
+		SendMessage(plugin.hwndWinLAMPParent,WM_COMMAND,40045,0); //play
 	}
 	return true;
 }

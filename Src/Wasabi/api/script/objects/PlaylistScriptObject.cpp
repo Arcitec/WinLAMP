@@ -211,11 +211,11 @@ scriptVar SPlaylist::script_vcpu_setTrackRating(SCRIPT_FUNCTION_PARAMS, ScriptOb
 {
 	SCRIPT_FUNCTION_INIT
 
-	HWND hwnd_winamp = wa2.getMainWindow();
+	HWND hwnd_winlamp = wa2.getMainWindow();
 
 	int cur_pos = wa2.PE_getCurrentIndex();
 	wa2.PE_setCurrentIndex(GET_SCRIPT_INT(i));
-	SendMessageW(hwnd_winamp, WM_WA_IPC, GET_SCRIPT_INT(rating), IPC_SETRATING);
+	SendMessageW(hwnd_winlamp, WM_WA_IPC, GET_SCRIPT_INT(rating), IPC_SETRATING);
 	wa2.PE_setCurrentIndex(cur_pos);
 
 	RETURN_SCRIPT_VOID;
@@ -225,12 +225,12 @@ scriptVar SPlaylist::script_vcpu_getTrackRating(SCRIPT_FUNCTION_PARAMS, ScriptOb
 {
 	SCRIPT_FUNCTION_INIT
 
-	HWND hwnd_winamp = wa2.getMainWindow();
+	HWND hwnd_winlamp = wa2.getMainWindow();
 
 	int cur_pos = wa2.PE_getCurrentIndex();
 	wa2.PE_setCurrentIndex(GET_SCRIPT_INT(i));
 	int r = 0;
-	r = SendMessageW(hwnd_winamp, WM_WA_IPC, GET_SCRIPT_INT(i), IPC_GETRATING);
+	r = SendMessageW(hwnd_winlamp, WM_WA_IPC, GET_SCRIPT_INT(i), IPC_GETRATING);
 	wa2.PE_setCurrentIndex(cur_pos);
 
 	return MAKE_SCRIPT_INT(r);

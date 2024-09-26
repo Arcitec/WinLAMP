@@ -7,7 +7,7 @@
 extern api_application *applicationApi;
 #define WASABI_API_APP applicationApi
 
-#include "../Winamp/api_stats.h"
+#include "../WinLAMP/api_stats.h"
 extern api_stats *statsApi;
 #define AGAVE_API_STATS statsApi
 

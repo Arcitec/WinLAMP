@@ -5,7 +5,7 @@
 #include <api/service/services.h>
 #include "../nsv/svc_nsvFactory.h"
 #include <api/service/waservicefactory.h>
-#include "../../Winamp/in2.h"
+#include "../../WinLAMP/in2.h"
 extern In_Module mod;
 
 // you should probably override these in your project settings
@@ -22,7 +22,7 @@ extern In_Module mod;
 
 //#define DLL_DECODER_SUPPORT_NOCURDIR
 
-#ifdef WINAMP_PLUGIN
+#ifdef WINLAMP_PLUGIN
 #  ifndef DLL_DECODER_SUPPORT
 #    define DLL_DECODER_SUPPORT
 #  endif
@@ -511,7 +511,7 @@ void Decoders_Init(char *wapluginspath)
   }
 #endif
 
-#ifndef WINAMPX
+#ifndef WINLAMPX
   strncpy(buf, DLL_Dir, MAX_PATH);
   strncat(buf, "\\nsvdec_*.dll", MAX_PATH);
   h = FindFirstFileA(buf,&fd);

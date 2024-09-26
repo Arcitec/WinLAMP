@@ -45,7 +45,7 @@ HANDLE killEvent = 0;
 static int ThreadInitFunc(HANDLE handle, void *user_data, intptr_t param);
 static int ThreadQuitFunc(HANDLE handle, void *user_data, intptr_t param);
 
-HANDLE hWinampThread=NULL;
+HANDLE hWinLAMPThread=NULL;
 
 class MyNotification : public IWMDMNotification {
 public:
@@ -252,7 +252,7 @@ int init()
 	GetVersionEx(&osvi);
 	if(osvi.dwMajorVersion < 5) return -1;
 	if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion < 1) return -1;
-	hWinampThread = GetCurrentThread();
+	hWinLAMPThread = GetCurrentThread();
 	InitializeCriticalSection(&csTransfers);
   
 	Tataki::Init(plugin.service);
@@ -440,7 +440,7 @@ void checkForDevices(BOOL *killSwitch)
 			}
 			pIDeviceOld->Release();
 		}
-		// We should release this pointer but it appears to make winamp not shut down properly if we do.
+		// We should release this pointer but it appears to make winlamp not shut down properly if we do.
 		// This function will only be called a small number of times, so I propose that we don't free it
 		// until this error can be better investigated. --will
 		pIEnumDev->Release();
@@ -500,7 +500,7 @@ int SynchronousProcedureCall(void * p, ULONG_PTR dwParam) {
   s->param = dwParam;
   s->proc = p;
   s->state = 0;
-  if(!QueueUserAPC(spc_caller,hWinampThread,(ULONG_PTR)s)) { DeleteCriticalSection(&s->lock); free(s); return 1; } //failed
+  if(!QueueUserAPC(spc_caller,hWinLAMPThread,(ULONG_PTR)s)) { DeleteCriticalSection(&s->lock); free(s); return 1; } //failed
   int i=0, state;
   do {
     SleepEx(10,true);
@@ -562,8 +562,8 @@ BOOL FormatResProtocol(const wchar_t *resourceName, const wchar_t *resourceType,
 }
 
 extern "C" {
-	__declspec( dllexport ) PMPDevicePlugin * winampGetPMPDevicePlugin(){return &plugin;}
-	__declspec( dllexport ) int winampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
+	__declspec( dllexport ) PMPDevicePlugin * winlampGetPMPDevicePlugin(){return &plugin;}
+	__declspec( dllexport ) int winlampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
 		int i = devices.GetSize();
 		while(i-- > 0) ((Device*)devices.Get(i))->Close();
 		return PMP_PLUGIN_UNINSTALL_NOW;

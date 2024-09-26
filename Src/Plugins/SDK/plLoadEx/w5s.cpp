@@ -2,8 +2,8 @@
 
 ExComponent exComponent; // our component
 
-// Winamp GetProcAddress()'s this after loading your w5s file
-extern "C" __declspec(dllexport) ifc_wa5component *GetWinamp5SystemComponent()
+// WinLAMP GetProcAddress()'s this after loading your w5s file
+extern "C" __declspec(dllexport) ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &exComponent;
 }

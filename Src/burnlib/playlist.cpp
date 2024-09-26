@@ -1,7 +1,7 @@
 #include "./playlist.h"
 #include "../Agave/DecodeFile/ifc_audiostream.h"
 #include <strsafe.h>
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 BurnerPlaylist::BurnerPlaylist()
 {
@@ -307,14 +307,14 @@ DWORD BurnerPlaylist::AddCompilationToCDDB(void)
 	StringCchPrintfW(buf, 64, L"cda://%c.cda", (char)drive);
 	extendedFileInfoStructW efis = { buf, L"album", albumbuf, 256, };
 	
-	if (SendMessageW(winampWnd, WM_WA_IPC, (WPARAM)&efis, IPC_SET_EXTENDED_FILE_INFOW))
+	if (SendMessageW(winlampWnd, WM_WA_IPC, (WPARAM)&efis, IPC_SET_EXTENDED_FILE_INFOW))
 	{
 		efis.metadata = L"albumartist";
 		efis.ret = L"Various Artists";
-		SendMessageW(winampWnd, WM_WA_IPC, (WPARAM)&efis, IPC_SET_EXTENDED_FILE_INFOW);
+		SendMessageW(winlampWnd, WM_WA_IPC, (WPARAM)&efis, IPC_SET_EXTENDED_FILE_INFOW);
 		efis.metadata = L"genre";
 		efis.ret = L"Mix";
-		SendMessageW(winampWnd, WM_WA_IPC, (WPARAM)&efis, IPC_SET_EXTENDED_FILE_INFOW);
+		SendMessageW(winlampWnd, WM_WA_IPC, (WPARAM)&efis, IPC_SET_EXTENDED_FILE_INFOW);
 		SYSTEMTIME syst;
 		GetLocalTime(&syst);
 		if (syst.wYear)
@@ -323,7 +323,7 @@ DWORD BurnerPlaylist::AddCompilationToCDDB(void)
 			StringCchPrintfW(yearbuf, 64, L"%04d", syst.wYear);
 			efis.metadata = L"year";
 			efis.ret = yearbuf;
-			SendMessageW(winampWnd, WM_WA_IPC, (WPARAM)&efis, IPC_SET_EXTENDED_FILE_INFOW);
+			SendMessageW(winlampWnd, WM_WA_IPC, (WPARAM)&efis, IPC_SET_EXTENDED_FILE_INFOW);
 		}
 		wchar_t buf2[32] = {0};
 		int index = 1;
@@ -337,16 +337,16 @@ DWORD BurnerPlaylist::AddCompilationToCDDB(void)
 				lstrcpynW(buf2, L"title", 32);
 				efis.metadata = buf2;
 				efis.ret = const_cast<wchar_t*>(BurnerVector::at(i)->GetTitle());
-				SendMessageW(winampWnd, WM_WA_IPC, (WPARAM)&efis, IPC_SET_EXTENDED_FILE_INFOW);
+				SendMessageW(winlampWnd, WM_WA_IPC, (WPARAM)&efis, IPC_SET_EXTENDED_FILE_INFOW);
 
 				lstrcpynW(buf2, L"artist", 32);
 				efis.ret=L"Various Artists"; // TODO: use actual track artist
-				SendMessageW(winampWnd, WM_WA_IPC, (WPARAM)&efis, IPC_SET_EXTENDED_FILE_INFOW);
+				SendMessageW(winlampWnd, WM_WA_IPC, (WPARAM)&efis, IPC_SET_EXTENDED_FILE_INFOW);
 
 				index++;
 			}
 		}
-		SendMessageW(winampWnd, WM_WA_IPC, (WPARAM)0, IPC_WRITE_EXTENDED_FILE_INFO);
+		SendMessageW(winlampWnd, WM_WA_IPC, (WPARAM)0, IPC_WRITE_EXTENDED_FILE_INFO);
 	}
 	return 1;
 }

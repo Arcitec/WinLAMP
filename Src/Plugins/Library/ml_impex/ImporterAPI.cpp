@@ -7,7 +7,7 @@
 #include <api/service/waservicefactory.h>
 #include <shlobj.h>
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 
 int Load(const wchar_t *filename, obj_xml *parser)
 {

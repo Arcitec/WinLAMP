@@ -43,7 +43,7 @@ static void Quit();
 static INT_PTR PluginMessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_PTR param3);
 
 #define PLUG_VER L"1.29"
-extern "C" winampMediaLibraryPlugin plugin =
+extern "C" winlampMediaLibraryPlugin plugin =
 {
     MLHDR_VER,
     "nullsoft(ml_rg.dll)",
@@ -84,9 +84,9 @@ int Init()
 
 	plugin.description = (char *)szDescription;
 
-	ml_rg_config_ipc = (DWORD)SendMessageA( plugin.hwndWinampParent, WM_WA_IPC, ( WPARAM ) & "ml_rg_config", IPC_REGISTER_WINAMP_IPCMESSAGE );
+	ml_rg_config_ipc = (DWORD)SendMessageA( plugin.hwndWinLAMPParent, WM_WA_IPC, ( WPARAM ) & "ml_rg_config", IPC_REGISTER_WINLAMP_IPCMESSAGE );
 
-	iniFile               = (char *)SendMessage( plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETINIFILE );
+	iniFile               = (char *)SendMessage( plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETINIFILE );
 	config_ask            = GetPrivateProfileIntA( "ml_rg", "config_ask", config_ask, iniFile );
 	config_ask_each_album = GetPrivateProfileIntA( "ml_rg", "config_ask_each_album", config_ask_each_album, iniFile );
 
@@ -346,7 +346,7 @@ INT_PTR PluginMessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_
 	else if (message_type == ML_MSG_CONFIG)
 	{
 		ml_rg_open_prefs = TRUE;
-		SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 42, IPC_OPENPREFSTOPAGE);
+		SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 42, IPC_OPENPREFSTOPAGE);
 		ml_rg_open_prefs = FALSE;
 		return 1;
 	}
@@ -354,7 +354,7 @@ INT_PTR PluginMessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_
 	// so that we can enable the embedded controls and return the RGConfig proc
 	else if (message_type == ml_rg_config_ipc)
 	{
-		// sanity check by winamp.exe to make sure that we're valid
+		// sanity check by winlamp.exe to make sure that we're valid
 		if(!param1)
 		{
 			return 1;
@@ -377,12 +377,12 @@ INT_PTR PluginMessageProc(int message_type, INT_PTR param1, INT_PTR param2, INT_
 }
 
 extern "C" {
-	__declspec(dllexport) winampMediaLibraryPlugin *winampGetMediaLibraryPlugin()
+	__declspec(dllexport) winlampMediaLibraryPlugin *winlampGetMediaLibraryPlugin()
 	{
 		return &plugin;
 	}
 
-	__declspec( dllexport ) int winampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
+	__declspec( dllexport ) int winlampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param) {
 		uninstalling = 1;
 
 		// prompt to remove our settings with default as no (just incase)
@@ -394,7 +394,7 @@ extern "C" {
 
 		// also attempt to remove the ReplayGainAnalysis.dll so everything is kept cleaner
 		wchar_t path[MAX_PATH] = {0};
-		PathCombineW(path, (wchar_t*)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETSHAREDDLLDIRECTORYW), L"ReplayGainAnalysis.dll");
+		PathCombineW(path, (wchar_t*)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETSHAREDDLLDIRECTORYW), L"ReplayGainAnalysis.dll");
 
 		// if we get a handle then try to lower the handle count so we can delete
 		HINSTANCE rgLib = GetModuleHandleW(path);

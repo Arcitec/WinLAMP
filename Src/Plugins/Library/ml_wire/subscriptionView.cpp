@@ -569,11 +569,11 @@ static INT SubscriptionView_Play(HWND hwnd, size_t iChannel, size_t *indexList, 
 	{
 		*c = L'\0';
 		// make sure this is initialised as default handler requires this being zeroed
-		mlSendToWinampStruct send = {ML_TYPE_STREAMNAMESW,pszBuffer,0};
+		mlSendToWinLAMPStruct send = {ML_TYPE_STREAMNAMESW,pszBuffer,0};
 		// otherwise we've a specific action and need to tell ML to do as we want
 		if (TRUE == fForce)
 			send.enqueue = ((FALSE == fEnqueue) ? 0 : 1) | 2;
-		SENDMLIPC(plugin.hwndLibraryParent, ML_IPC_SENDTOWINAMP, (WPARAM)&send);
+		SENDMLIPC(plugin.hwndLibraryParent, ML_IPC_SENDTOWINLAMP, (WPARAM)&send);
 	}
 
 	free(pszBuffer);
@@ -699,8 +699,8 @@ static HMENU PodcastItem_GetMenu(HWND hwnd, HMENU baseMenu, INT iItem)
 
 	{ // send-to menu shit...
 		ZeroMemory(&s, sizeof(s));
-		IPC_LIBRARY_SENDTOMENU = SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINAMP_IPCMESSAGE);
-		if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)0, IPC_LIBRARY_SENDTOMENU) == 0xffffffff)
+		IPC_LIBRARY_SENDTOMENU = SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"LibrarySendToMenu", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+		if (IPC_LIBRARY_SENDTOMENU > 65536 && SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)0, IPC_LIBRARY_SENDTOMENU) == 0xffffffff)
 		{
 			s.mode = 1;
 			s.hwnd = hwnd;
@@ -1167,7 +1167,7 @@ static void SubscriptionView_ListContextMenu(HWND hwnd, INT controlId, POINTS pt
 		if (!SendMessage(hwnd, WM_COMMAND, r, 0))
 		{
 			s.menu_id = r;
-			if (s.mode == 2 && SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU) == 0xffffffff)
+			if (s.mode == 2 && SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU) == 0xffffffff)
 			{
 				s.mode = 3;
 
@@ -1175,7 +1175,7 @@ static void SubscriptionView_ListContextMenu(HWND hwnd, INT controlId, POINTS pt
 				if (path && *path)
 				{
 					s.data = path;
-					SendMessage(plugin.hwndWinampParent, WM_WA_IPC,(WPARAM)&s, IPC_LIBRARY_SENDTOMENU);
+					SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC,(WPARAM)&s, IPC_LIBRARY_SENDTOMENU);
 					free(path);
 				}
 			}
@@ -1184,7 +1184,7 @@ static void SubscriptionView_ListContextMenu(HWND hwnd, INT controlId, POINTS pt
 		if (s.mode)
 		{
 			s.mode=4;
-			SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&s,IPC_LIBRARY_SENDTOMENU); // cleanup
+			SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&s,IPC_LIBRARY_SENDTOMENU); // cleanup
 		}
 	}
 
@@ -2086,7 +2086,7 @@ static INT_PTR SubscriptionView_OnInitDialog(HWND hwnd, HWND hFocus, LPARAM lPar
 	OmService *service = (OmService*)lParam;
 	HWND hBrowser = NULL;
 	if (NULL != OMBROWSERMNGR && 
-		SUCCEEDED(OMBROWSERMNGR->Initialize(NULL, plugin.hwndWinampParent)) &&
+		SUCCEEDED(OMBROWSERMNGR->Initialize(NULL, plugin.hwndWinLAMPParent)) &&
 		SUCCEEDED(OMBROWSERMNGR->CreateView(service, hwnd, NAVIGATE_BLANK, NBCS_NOTOOLBAR | NBCS_NOSTATUSBAR, &hBrowser)))
 	{
 		HWND hTarget = GetDlgItem(hwnd, IDC_DESCRIPTION);
@@ -2241,7 +2241,7 @@ static void PodcastCommand_OnVisitSite(HWND hwnd)
 	if (NULL == podcast || NULL == podcast->infoUrl) 
 		return;
 
-	SENDWAIPC(plugin.hwndWinampParent, IPC_OPEN_URL, podcast->infoUrl);
+	SENDWAIPC(plugin.hwndWinLAMPParent, IPC_OPEN_URL, podcast->infoUrl);
 }
 
 static void PodcastCommand_OnRefreshChannel(HWND hwnd)
@@ -2645,7 +2645,7 @@ static INT_PTR CALLBACK SubscriptionView_DlgProc(HWND hwnd, UINT uMsg, WPARAM wP
 		case WM_INITMENUPOPUP:
 			if (wParam && (HMENU)wParam == s.build_hMenu && s.mode==1)
 			{
-				if (SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU) == 0xffffffff)
+				if (SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&s, IPC_LIBRARY_SENDTOMENU) == 0xffffffff)
 					s.mode = 2;
 			}
 			return 0;

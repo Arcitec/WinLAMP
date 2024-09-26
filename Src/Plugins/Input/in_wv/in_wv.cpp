@@ -15,7 +15,7 @@
 #include "in2.h"
 #include "wavpack.h"
 #include "resource.h"
-#include "wasabi/winamp/wa_ipc.h"
+#include "wasabi/winlamp/wa_ipc.h"
 #include "wasabi/wasabi.h"
 #include "wasabi/nu/autochar.h"
 #include "wasabi/nu/autowide.h"
@@ -159,7 +159,7 @@ void init() /* any one-time initialization goes here (configuration reading, etc
 {
 	if (mod.hMainWindow)
 	{
-		// load all of the required wasabi services from the winamp client
+		// load all of the required wasabi services from the winlamp client
 		WASABI_API_SVC = (api_service *)SendMessage(mod.hMainWindow, WM_WA_IPC, 0, IPC_GET_API_SERVICE);
 		if (WASABI_API_SVC == (api_service *)1)
 			WASABI_API_SVC=0;
@@ -713,9 +713,9 @@ DWORD WINAPI __stdcall DecodeThread(void *b)
     return 0;
 }
 
-/********* These functions provide the "transcoding" mode of winamp. *********/
+/********* These functions provide the "transcoding" mode of winlamp. *********/
 
-extern "C" __declspec (dllexport) intptr_t winampGetExtendedRead_open (const char *fn, int *size, int *bps, int *nch, int *srate)
+extern "C" __declspec (dllexport) intptr_t winlampGetExtendedRead_open (const char *fn, int *size, int *bps, int *nch, int *srate)
 {
     struct wpcnxt *cnxt = (struct wpcnxt *)malloc(sizeof (struct wpcnxt));
     int num_chans, sample_rate, open_flags;
@@ -792,7 +792,7 @@ extern "C" __declspec (dllexport) intptr_t winampGetExtendedRead_open (const cha
     return (intptr_t) cnxt;
 }
 
-extern "C" __declspec (dllexport) intptr_t winampGetExtendedRead_getData (intptr_t handle, char *dest, int len, int *killswitch)
+extern "C" __declspec (dllexport) intptr_t winlampGetExtendedRead_getData (intptr_t handle, char *dest, int len, int *killswitch)
 {
     struct wpcnxt *cnxt = (struct wpcnxt *)handle;
     int num_chans = WavpackGetReducedChannels(cnxt->wpc);
@@ -833,7 +833,7 @@ extern "C" __declspec (dllexport) intptr_t winampGetExtendedRead_getData (intptr
     return used;
 }
 
-extern "C" __declspec (dllexport) int winampGetExtendedRead_setTime (intptr_t handle, int millisecs)
+extern "C" __declspec (dllexport) int winlampGetExtendedRead_setTime (intptr_t handle, int millisecs)
 {
     struct wpcnxt *cnxt = (struct wpcnxt *) handle;
     int sample_rate = WavpackGetSampleRate(cnxt->wpc);
@@ -841,7 +841,7 @@ extern "C" __declspec (dllexport) int winampGetExtendedRead_setTime (intptr_t ha
     return WavpackSeekSample(cnxt->wpc, (int)(sample_rate / 1000.0 * millisecs));
 }
 
-extern "C" __declspec (dllexport) void winampGetExtendedRead_close (intptr_t handle)
+extern "C" __declspec (dllexport) void winlampGetExtendedRead_close (intptr_t handle)
 {
     struct wpcnxt *cnxt = (struct wpcnxt *) handle;
 
@@ -857,7 +857,7 @@ extern "C" __declspec (dllexport) void winampGetExtendedRead_close (intptr_t han
 }
 
 /* This is a generic function to read WavPack samples and convert them to a
- * form usable by winamp. It includes conversion of any WavPack format
+ * form usable by winlamp. It includes conversion of any WavPack format
  * (including ieee float) to 16, 24, or 32-bit integers (with noise shaping
  * for the 16-bit case) and replay gain implementation (with optional soft
  * clipping). It is used by both the regular "play" code and the newer
@@ -981,7 +981,7 @@ static int read_samples (struct wpcnxt *cnxt, int num_samples)
     return samples;
 }
 
-extern "C" __declspec (dllexport) In_Module * winampGetInModule2()
+extern "C" __declspec (dllexport) In_Module * winlampGetInModule2()
 {
     return &mod;
 }
@@ -1074,7 +1074,7 @@ static WavpackStreamReader freader = {
 	get_length, can_seek, write_bytes
 };
 
-/* These functions provide UNICODE support for the winamp media library */
+/* These functions provide UNICODE support for the winlamp media library */
 
 static int metadata_we_can_write(const char *metadata);
 
@@ -1094,14 +1094,14 @@ static void close_context(struct wpcnxt *cxt)
 
 #ifdef ANSI_METADATA
 
-extern "C" __declspec (dllexport) int winampGetExtendedFileInfo(char *filename, char *metadata, char *ret, int retlen)
+extern "C" __declspec (dllexport) int winlampGetExtendedFileInfo(char *filename, char *metadata, char *ret, int retlen)
 {
     int open_flags = OPEN_TAGS;
     char error[128];
     int retval = 0;
 
 #ifdef DEBUG_CONSOLE
-    sprintf (error, "winampGetExtendedFileInfo (%s)\n", metadata);
+    sprintf (error, "winlampGetExtendedFileInfo (%s)\n", metadata);
     debug_write (error);
 #endif
 
@@ -1256,14 +1256,14 @@ extern "C" __declspec (dllexport) int winampGetExtendedFileInfo(char *filename, 
 
 #ifdef UNICODE_METADATA
 
-extern "C" __declspec (dllexport) int winampGetExtendedFileInfoW (wchar_t *filename, char *metadata, wchar_t *ret, int retlen)
+extern "C" __declspec (dllexport) int winlampGetExtendedFileInfoW (wchar_t *filename, char *metadata, wchar_t *ret, int retlen)
 {
     char error[128], res[256];
     int open_flags = OPEN_TAGS;
     int retval = 0;
 
 #ifdef DEBUG_CONSOLE
-    sprintf (error, "winampGetExtendedFileInfoW (%s)\n", metadata);
+    sprintf (error, "winlampGetExtendedFileInfoW (%s)\n", metadata);
     debug_write (error);
 #endif
 
@@ -1414,12 +1414,12 @@ extern "C" __declspec (dllexport) int winampGetExtendedFileInfoW (wchar_t *filen
 
 #ifdef ANSI_METADATA
 
-extern "C" int __declspec (dllexport) winampSetExtendedFileInfo(const char *filename, const char *metadata, char *val)
+extern "C" int __declspec (dllexport) winlampSetExtendedFileInfo(const char *filename, const char *metadata, char *val)
 {
     char error[128];
 
 #ifdef DEBUG_CONSOLE
-    sprintf (error, "winampSetExtendedFileInfo (%s=%s)\n", metadata, val);
+    sprintf (error, "winlampSetExtendedFileInfo (%s=%s)\n", metadata, val);
     debug_write (error);
 #endif
 
@@ -1450,14 +1450,14 @@ extern "C" int __declspec (dllexport) winampSetExtendedFileInfo(const char *file
 
 #ifdef UNICODE_METADATA
 
-extern "C" int __declspec (dllexport) winampSetExtendedFileInfoW(const wchar_t *filename, const char *metadata, wchar_t *val)
+extern "C" int __declspec (dllexport) winlampSetExtendedFileInfoW(const wchar_t *filename, const char *metadata, wchar_t *val)
 {
     char error[128], utf8_val[256];
 
 	lstrcpyn(utf8_val,AutoChar(val, CP_UTF8),sizeof(utf8_val) - 1);
 
 #ifdef DEBUG_CONSOLE
-    sprintf (error, "winampSetExtendedFileInfoW (%s=%s)\n", metadata, utf8_val);
+    sprintf (error, "winlampSetExtendedFileInfoW (%s=%s)\n", metadata, utf8_val);
     debug_write (error);
 #endif
 
@@ -1498,10 +1498,10 @@ extern "C" int __declspec (dllexport) winampSetExtendedFileInfoW(const wchar_t *
 
 #endif
 
-extern "C" int __declspec (dllexport) winampWriteExtendedFileInfo(void)
+extern "C" int __declspec (dllexport) winlampWriteExtendedFileInfo(void)
 {
 #ifdef DEBUG_CONSOLE
-    debug_write ("winampWriteExtendedFileInfo ()\n");
+    debug_write ("winlampWriteExtendedFileInfo ()\n");
 #endif
 
     if (edit.wpc)
@@ -1521,9 +1521,9 @@ extern "C" int __declspec (dllexport) winampWriteExtendedFileInfo(void)
     return 1;
 }
 
-// return 1 if you want winamp to show it's own file info dialogue, 0 if you want to show your own (via In_Module.InfoBox)
-// if returning 1, remember to implement winampGetExtendedFileInfo("formatinformation")!
-extern "C" __declspec(dllexport) int winampUseUnifiedFileInfoDlg(const wchar_t * fn)
+// return 1 if you want winlamp to show it's own file info dialogue, 0 if you want to show your own (via In_Module.InfoBox)
+// if returning 1, remember to implement winlampGetExtendedFileInfo("formatinformation")!
+extern "C" __declspec(dllexport) int winlampUseUnifiedFileInfoDlg(const wchar_t * fn)
 {
     return 1;
 }
@@ -1825,7 +1825,7 @@ int WavPack_SetAlbumArt(const wchar_t *filename, const wchar_t *type, void *bits
 	free (buffer);
 
 	if (retval) {
-		winampWriteExtendedFileInfo ();
+		winlampWriteExtendedFileInfo ();
 		return 0;
 	}
 	else {
@@ -1874,7 +1874,7 @@ int WavPack_DeleteAlbumArt(const wchar_t *filename, const wchar_t *type)
     }
 
 	if (WavpackDeleteTagItem (edit.wpc, "Cover Art (Front)")) {
-		winampWriteExtendedFileInfo ();
+		winlampWriteExtendedFileInfo ();
 		return 0;
 	}
 	else {
@@ -2055,7 +2055,7 @@ static void UTF8ToAnsi(char *string, int len)
     free (temp);
 }
 
-extern "C" __declspec(dllexport) int winampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param)
+extern "C" __declspec(dllexport) int winlampUninstallPlugin(HINSTANCE hDllInst, HWND hwndDlg, int param)
 {
 	// as we're not hooking anything and have no settings we can support an on-the-fly uninstall action
 	return IN_PLUGIN_UNINSTALL_NOW;

@@ -121,7 +121,7 @@ BEGIN
     IDS_FAMILY_STRING_MPEG  "MPEG Video Format"
     IDS_FAMILY_STRING_MPEG2 "MPEG-2 Video Format"
     IDS_FAMILY_STRING_AVI   "AVI Video Format"
-    IDS_ABOUT_TEXT          "%s\n© 2003-2023 Winamp SA\n\nBuild date: %hs"
+    IDS_ABOUT_TEXT          "%s\n© 2003-2023 WinLAMP SA\n\nBuild date: %hs"
     IDS_TRACK_X             "Track %d"
     IDS_TRACK_1             "Track 1"
     IDS_FAMILY_STRING_MOV   "QuickTime Movie"

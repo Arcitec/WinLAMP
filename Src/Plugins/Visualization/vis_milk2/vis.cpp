@@ -47,23 +47,23 @@ api_application *WASABI_API_APP = 0;
 api_syscb *WASABI_API_SYSCB = 0;
 HINSTANCE WASABI_API_LNG_HINST = 0, WASABI_API_ORIG_HINST = 0;
 
-void config(struct winampVisModule *this_mod); // configuration dialog
-int init(struct winampVisModule *this_mod);       // initialization for module
-int render1(struct winampVisModule *this_mod);  // rendering for module 1
-void quit(struct winampVisModule *this_mod);   // deinitialization for module
+void config(struct winlampVisModule *this_mod); // configuration dialog
+int init(struct winlampVisModule *this_mod);       // initialization for module
+int render1(struct winlampVisModule *this_mod);  // rendering for module 1
+void quit(struct winlampVisModule *this_mod);   // deinitialization for module
 
 // our only plugin module in this plugin:
-winampVisModule mod1 =
+winlampVisModule mod1 =
 {
     MODULEDESC,
     NULL,	// hwndParent
     NULL,	// hDllInstance
     0,		// sRate
     0,		// nCh
-    0,		// latencyMS - tells winamp how much in advance you want the audio data, 
+    0,		// latencyMS - tells winlamp how much in advance you want the audio data, 
 			//             in ms.
-    10,		// delayMS - if winamp tells the plugin to render a frame and it takes
-			//           less than this # of milliseconds, winamp will sleep (go idle)
+    10,		// delayMS - if winlamp tells the plugin to render a frame and it takes
+			//           less than this # of milliseconds, winlamp will sleep (go idle)
             //           for the remainder.  In effect, this limits the framerate of
             //           the plugin.  A value of 10 would cause a fps limit of ~100.
             //           Derivation: (1000 ms/sec) / (10 ms/frame) = 100 fps.
@@ -79,7 +79,7 @@ winampVisModule mod1 =
 
 // getmodule routine from the main header. Returns NULL if an invalid module was requested,
 // otherwise returns either mod1, mod2 or mod3 depending on 'which'.
-winampVisModule *getModule(int which)
+winlampVisModule *getModule(int which)
 {
     switch (which)
     {
@@ -91,7 +91,7 @@ winampVisModule *getModule(int which)
 }
 
 // Module header, includes version, description, and address of the module retriever function
-winampVisHeader hdr = { VIS_HDRVER, DLLDESC, getModule };
+winlampVisHeader hdr = { VIS_HDRVER, DLLDESC, getModule };
 
 // use this to get our own HINSTANCE since overriding DllMain(..) causes instant crashes (should see why)
 static HINSTANCE GetMyInstance()
@@ -107,7 +107,7 @@ static HINSTANCE GetMyInstance()
 #ifdef __cplusplus
 extern "C" {
 #endif
-	__declspec( dllexport ) winampVisHeader *winampVisGetHeader(HWND hwndParent)
+	__declspec( dllexport ) winlampVisHeader *winlampVisGetHeader(HWND hwndParent)
 	{
 		if(!WASABI_API_LNG_HINST)
 		{
@@ -135,7 +135,7 @@ extern "C" {
 			** 1 - does yes for the 3 different prompt types
 			** 2 - does Ctrl+Y for stopping display of custom message of song title
 			** 3 - something for preset editing (not 100% sure what)
-			** 4 - used for the previous track sent to Winamp
+			** 4 - used for the previous track sent to WinLAMP
 			*/
 			WASABI_API_LNGSTRING_BUF(IDS_KEY_MAPPINGS, keyMappings, 8);
 
@@ -150,7 +150,7 @@ extern "C" {
 }
 #endif
  
-bool WaitUntilPluginFinished(HWND hWndWinamp)
+bool WaitUntilPluginFinished(HWND hWndWinLAMP)
 {
     int slept = 0;
     while (!g_bFullyExited && slept < 1000)
@@ -162,7 +162,7 @@ bool WaitUntilPluginFinished(HWND hWndWinamp)
     if (!g_bFullyExited)
     {
 		wchar_t title[64];
-        MessageBoxW(hWndWinamp, WASABI_API_LNGSTRINGW(IDS_ERROR_THE_PLUGIN_IS_ALREADY_RUNNING),
+        MessageBoxW(hWndWinLAMP, WASABI_API_LNGSTRINGW(IDS_ERROR_THE_PLUGIN_IS_ALREADY_RUNNING),
 				    WASABI_API_LNGSTRINGW_BUF(IDS_MILKDROP_ERROR, title, 64),
 				    MB_OK|MB_SETFOREGROUND|MB_TOPMOST);
         return false;
@@ -171,18 +171,18 @@ bool WaitUntilPluginFinished(HWND hWndWinamp)
     return true;
 }
 
-HWND GetDialogBoxParent(HWND winamp)
+HWND GetDialogBoxParent(HWND winlamp)
 {
-	HWND parent = (HWND)SendMessage(winamp, WM_WA_IPC, 0, IPC_GETDIALOGBOXPARENT);
+	HWND parent = (HWND)SendMessage(winlamp, WM_WA_IPC, 0, IPC_GETDIALOGBOXPARENT);
 	if (!parent || parent == (HWND)1)
-		return winamp;
+		return winlamp;
 	return parent;
 }
 
 // configuration. Passed this_mod, as a "this" parameter. Allows you to make one configuration
 // function that shares code for all your modules (you don't HAVE to use it though, you can make
 // config1(), config2(), etc...)
-void config(struct winampVisModule *this_mod)
+void config(struct winlampVisModule *this_mod)
 {
     if (!g_bFullyExited)
     {
@@ -205,9 +205,9 @@ int fallback_rand_fn(void) {
 // initialization. Registers our window class, creates our window, etc. Again, this one works for
 // both modules, but you could make init1() and init2()...
 // returns 0 on success, 1 on failure.
-int init(struct winampVisModule *this_mod)
+int init(struct winlampVisModule *this_mod)
 {
-    DWORD version = GetWinampVersion(mod1.hwndParent);
+    DWORD version = GetWinLAMPVersion(mod1.hwndParent);
 
 	if (!warand)
     {
@@ -223,9 +223,9 @@ int init(struct winampVisModule *this_mod)
         return 1;        
     }
 
-    if (GetWinampVersion(mod1.hwndParent) < 0x4000)
+    if (GetWinLAMPVersion(mod1.hwndParent) < 0x4000)
     {
-        // query winamp for its playback state
+        // query winlamp for its playback state
         LRESULT ret = SendMessage(this_mod->hwndParent, WM_USER, 0, 104); 
         // ret=1: playing, ret=3: paused, other: stopped
 
@@ -259,7 +259,7 @@ int init(struct winampVisModule *this_mod)
 }
 
 // render function for oscilliscope. Returns 0 if successful, 1 if visualization should end.
-int render1(struct winampVisModule *this_mod)
+int render1(struct winlampVisModule *this_mod)
 {
 	if (g_plugin.PluginRender(this_mod->waveformData[0], this_mod->waveformData[1]))
 		return 0;    // ok
@@ -268,7 +268,7 @@ int render1(struct winampVisModule *this_mod)
 }
 
 // cleanup (opposite of init()). Should destroy the window, unregister the window class, etc.
-void quit(struct winampVisModule *this_mod)
+void quit(struct winlampVisModule *this_mod)
 {
 	g_plugin.PluginQuit();
 	g_bFullyExited = true;

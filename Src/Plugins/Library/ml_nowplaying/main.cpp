@@ -6,7 +6,7 @@
 #include "./wasabiCallback.h"
 #include "../nu/MediaLibraryInterface.h"
 #include "../replicant/nu/AutoChar.h"
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include "handler.h"
 #include "../nu/Singleton.h"
 #include "../ml_online/config.h"
@@ -23,7 +23,7 @@ static INT Plugin_Init(void);
 static void Plugin_Quit(void);
 static INT_PTR Plugin_MessageProc(INT msg, INT_PTR param1, INT_PTR param2, INT_PTR param3);
 
-EXTERN_C winampMediaLibraryPlugin plugin =
+EXTERN_C winlampMediaLibraryPlugin plugin =
 {
 	MLHDR_VER,
 	"nullsoft(ml_nowplaying.dll)",
@@ -40,9 +40,9 @@ HINSTANCE Plugin_GetInstance(void)
 	return plugin.hDllInstance;
 }
 
-HWND Plugin_GetWinamp(void)
+HWND Plugin_GetWinLAMP(void)
 {
-	return plugin.hwndWinampParent;
+	return plugin.hwndWinLAMPParent;
 }
 
 HWND Plugin_GetLibrary(void)
@@ -72,7 +72,7 @@ static INT Plugin_Init(void)
 	}
 
 	mediaLibrary.library = plugin.hwndLibraryParent;
-	mediaLibrary.winamp = plugin.hwndWinampParent;
+	mediaLibrary.winlamp = plugin.hwndWinLAMPParent;
 	mediaLibrary.instance = plugin.hDllInstance;
 
 	initConfigCache();
@@ -93,7 +93,7 @@ static INT Plugin_Init(void)
 		dispatchInfo.name =(LPWSTR)externalDispatch->GetName();
 		dispatchInfo.dispatch = externalDispatch;
 
-		if (0 == SENDWAIPC(Plugin_GetWinamp(), IPC_ADD_DISPATCH_OBJECT, (WPARAM)&dispatchInfo))
+		if (0 == SENDWAIPC(Plugin_GetWinLAMP(), IPC_ADD_DISPATCH_OBJECT, (WPARAM)&dispatchInfo))
 			externalCookie = dispatchInfo.id;
 
 		externalDispatch->Release();
@@ -137,8 +137,8 @@ static void Plugin_Quit(void)
 
 	if (0 != externalCookie)
 	{
-		HWND hWinamp = Plugin_GetWinamp();
-		SENDWAIPC(hWinamp, IPC_REMOVE_DISPATCH_OBJECT, (WPARAM)externalCookie);
+		HWND hWinLAMP = Plugin_GetWinLAMP();
+		SENDWAIPC(hWinLAMP, IPC_REMOVE_DISPATCH_OBJECT, (WPARAM)externalCookie);
 		externalCookie = 0;
 	}
 	uri_handler_factory.Deregister(plugin.service);
@@ -154,7 +154,7 @@ static INT_PTR Plugin_MessageProc(INT msg, INT_PTR param1, INT_PTR param2, INT_P
 	return FALSE;
 }
 
-EXTERN_C __declspec(dllexport) winampMediaLibraryPlugin *winampGetMediaLibraryPlugin()
+EXTERN_C __declspec(dllexport) winlampMediaLibraryPlugin *winlampGetMediaLibraryPlugin()
 {
 	return &plugin;
 }

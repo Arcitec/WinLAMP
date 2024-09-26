@@ -10,7 +10,7 @@
 #include "resource.h"
 #include "../nu/ns_wc.h"
 
-#define IPC_GETINIFILE 334 // returns a pointer to winamp.ini
+#define IPC_GETINIFILE 334 // returns a pointer to winlamp.ini
 #define WM_WA_IPC WM_USER
 
 #define VIDUSER_SET_TRACKSELINTERFACE 0x1003 // give your ITrackSelector interface as param2
@@ -34,7 +34,7 @@
 #include "header_avi.h"
 #include "header_mpg.h"
 #include "header_wav.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "../nsutil/pcm.h"
 
 static Header *infoHeader=0;
@@ -985,25 +985,25 @@ int play(const wchar_t *fn)
 			// check for URL launch (WMA/ASF/...)
 			handleNotifyEvents();
 			releaseObjects();
-#ifdef WINAMPX
+#ifdef WINLAMPX
 			if ((hr == CLASS_E_CLASSNOTAVAILABLE) || (hr == VFW_E_UNSUPPORTED_VIDEO) || (hr == VFW_E_NO_DECOMPRESSOR))
 			{
 				if (ReportMissingCodec(fn)) // returns true if we sent a message
 					return -500;  // Unsupported format
 				return -200; // Can't play file
 			}
-#endif // WINAMPX
+#endif // WINLAMPX
 			return 1;
 		}
 
-#ifdef WINAMPX
+#ifdef WINLAMPX
 		// Check if it's a partial playing of the file (likely video missing)
 		if ((hr == VFW_S_PARTIAL_RENDER) || (hr == VFW_S_VIDEO_NOT_RENDERED))
 		{
 			if (!ReportMissingCodec(fn)) // Report the missing codec if we can determine it
-				mod.fire_winampstatus(WINAMPX_STATUS_MISSING_AVI_CODEC, 0); // If we can't report a null codec missing
+				mod.fire_winlampstatus(WINLAMPX_STATUS_MISSING_AVI_CODEC, 0); // If we can't report a null codec missing
 		}
-#endif // WINAMPX
+#endif // WINLAMPX
 	}
 
 	// check if video has been negociated
@@ -1179,7 +1179,7 @@ int play(const wchar_t *fn)
 		//open video stuff
 		m_video_output->extended(VIDUSER_SET_THREAD_SAFE, 0, 0); // we are NOT thread safe - we call draw() than a different thread than open()
 		m_video_output->open(video_w,video_h,0,aspect,video_mediatype);
-#ifdef WINAMPX
+#ifdef WINLAMPX
 		if (has_palette)
 		{
 			m_video_output->extended(VIDUSER_SET_PALETTE, (int)palette, 0);
@@ -1368,8 +1368,8 @@ In_Module mod =
 {
 	IN_VER_RET,	// defined in IN2.H
 	"nullsoft(in_dshow.dll)",
-	0,	// hMainWindow (filled in by winamp)
-	0,  // hDllInstance (filled in by winamp)
+	0,	// hMainWindow (filled in by winlamp)
+	0,  // hDllInstance (filled in by winlamp)
 	/*"MPG;MPEG;M2V\0MPG File (*.MPG;*.MPEG;*.M2V)\0"
 	"AVI\0AVI File (*.AVI)\0"
 	"ASF;WMV\0ASF/WMV File (*.ASF;*.WMV)\0"*/
@@ -1393,11 +1393,11 @@ In_Module mod =
 	setoutputtime,
 	setvolume,
 	setpan,
-	0,0,0,0,0,0,0,0,0, // visualization calls filled in by winamp
-	0,0, // dsp calls filled in by winamp
+	0,0,0,0,0,0,0,0,0, // visualization calls filled in by winlamp
+	0,0, // dsp calls filled in by winlamp
 	eq_set,
-	NULL,		// setinfo call filled in by winamp
-	0 // out_mod filled in by winamp
+	NULL,		// setinfo call filled in by winlamp
+	0 // out_mod filled in by winlamp
 };
 
 static char default_extlist[]="MPG;MPEG;M2V";
@@ -1443,12 +1443,12 @@ BOOL HasFileTimeChanged(const wchar_t *fn)
 extern "C"
 {
 
-	__declspec(dllexport) In_Module * winampGetInModule2()
+	__declspec(dllexport) In_Module * winlampGetInModule2()
 	{
 		return &mod;
 	}
 
-	_declspec(dllexport) int winampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, int destlen)
+	_declspec(dllexport) int winlampGetExtendedFileInfoW(const wchar_t *fn, const char *data, wchar_t *dest, int destlen)
 	{
 		if (!fn || !*fn)
 		{

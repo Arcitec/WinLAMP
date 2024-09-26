@@ -1,7 +1,7 @@
 #pragma once
 #include "..\..\General\gen_ml\ml.h"
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 
 void ConvertItemRecordListToISO(const itemRecordList *list);
 void ConvertFilenamesToISO(const char *filenames);

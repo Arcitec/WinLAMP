@@ -69,7 +69,7 @@ typedef struct __CMDBARCREATESTRUCT
 		((HWND)SNDMSG((__hwndViewContainer), VCM_GETMININFOVISIBLE, 0, 0L))
 
 
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 extern LARGE_INTEGER freq;
 
 void CleanupDirectoryString(LPTSTR pszDirectory);

@@ -42,7 +42,7 @@
     <ClInclude Include="..\..\General\gen_ml\ml.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Winamp\wa_ipc.h">
+    <ClInclude Include="..\..\..\WinLAMP\wa_ipc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,7 +2,7 @@
 #include "./api__ml_online.h"
 #include "./main.h"
 
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 
 #include <strsafe.h>
 
@@ -167,7 +167,7 @@ HWND Plugin_GetDialogOwner(void)
 	if (NULL == hOwner || FALSE == IsWindowVisible(hOwner) ||
 		FALSE == IsWindowEnabled(hOwner))
 	{
-		hOwner = Plugin_GetWinamp();
+		hOwner = Plugin_GetWinLAMP();
 		if (NULL != hOwner)
 		{
 			HWND hDlgParent = (HWND)SENDWAIPC(hOwner, IPC_GETDIALOGBOXPARENT, 0L);
@@ -249,7 +249,7 @@ HRESULT Plugin_BuildActionUrl(LPWSTR *ppStringOut, LPCWSTR pszAction, UINT *pSer
 		return E_INVALIDARG;
 	}
 	
-	const WCHAR szPrefix[] = L"http://services.winamp.com/svc/action?action=%s\0";
+	const WCHAR szPrefix[] = L"http://services.winlamp.com/svc/action?action=%s\0";
 	const WCHAR szService[] = L"&svc_id=%u\0";
 	const WCHAR szClient[] = L"&unique_id=%s\0";
 

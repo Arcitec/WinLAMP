@@ -764,7 +764,7 @@
 /include/vorbis/win32/VS2005
 /include/vorbis/win32/VS2008
 /include/vorbis/win32/VS2010
-/include/winamp/*
+/include/winlamp/*
 /include/xmplay/*
 /include/zlib/*.d
 /include/zlib/*.o

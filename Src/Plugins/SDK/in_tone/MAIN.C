@@ -1,5 +1,5 @@
 /*
-** Example Winamp input plug-in
+** Example WinLAMP input plug-in
 ** Copyright (c) 1998, Justin Frankel/Nullsoft Inc.
 */
 
@@ -9,7 +9,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "../Winamp/in2.h"
+#include "../WinLAMP/in2.h"
 
 #define WM_WA_MPEG_EOF WM_USER+2
 
@@ -195,7 +195,7 @@ In_Module mod =
 
 };
 
-__declspec( dllexport ) In_Module * winampGetInModule2()
+__declspec( dllexport ) In_Module * winlampGetInModule2()
 {
 	return &mod;
 }

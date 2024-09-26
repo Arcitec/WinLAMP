@@ -12,7 +12,7 @@ static void Plugin_Quit();
 static INT_PTR 
 Plugin_MessageProc(INT msg, INT_PTR param1, INT_PTR param2, INT_PTR param3);
 
-extern "C"  winampMediaLibraryPlugin plugin =
+extern "C"  winlampMediaLibraryPlugin plugin =
 {
 	MLHDR_VER,
 	"nullsoft(ml_devices.dll)",
@@ -35,9 +35,9 @@ Plugin_GetInstance(void)
 }
 
 HWND 
-Plugin_GetWinampWindow(void)
+Plugin_GetWinLAMPWindow(void)
 {
-	return plugin.hwndWinampParent;
+	return plugin.hwndWinLAMPParent;
 }
 
 HWND 
@@ -63,7 +63,7 @@ static int Plugin_Init()
 //	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | 
 //					_CRTDBG_CHECK_ALWAYS_DF | _CRTDBG_CHECK_CRT_DF);
 
-	if (FALSE == Wasabi_InitializeFromWinamp(plugin.hDllInstance, plugin.hwndWinampParent))
+	if (FALSE == Wasabi_InitializeFromWinLAMP(plugin.hDllInstance, plugin.hwndWinLAMPParent))
 		return ML_INIT_FAILURE;
 
 	Wasabi_LoadDefaultServices();
@@ -297,7 +297,7 @@ Plugin_ShowHelp()
 	if (L'\0' == buffer[0])
 	{
 		if (FAILED(StringCchCopy(buffer, ARRAYSIZE(buffer), 
-					L"https://help.winamp.com/hc/articles/8106455294612-Winamp-Portables-Guide")))
+					L"https://help.winlamp.com/hc/articles/8106455294612-WinLAMP-Portables-Guide")))
 		{
 			return FALSE;
 		}
@@ -326,7 +326,7 @@ Plugin_OpenUrl(HWND ownerWindow, const wchar_t *url, BOOL forceExternal)
 	BOOL result;
 	HCURSOR cursor;
 
-	if (NULL == WASABI_API_WINAMP)
+	if (NULL == WASABI_API_WINLAMP)
 		return FALSE;
 
 	cursor = LoadCursor(NULL, IDC_APPSTARTING);
@@ -340,7 +340,7 @@ Plugin_OpenUrl(HWND ownerWindow, const wchar_t *url, BOOL forceExternal)
 	}
 	else
 	{
-		HRESULT hr = WASABI_API_WINAMP->OpenUrl(ownerWindow, url);
+		HRESULT hr = WASABI_API_WINLAMP->OpenUrl(ownerWindow, url);
 		result = SUCCEEDED(hr);
 	}
 		
@@ -350,8 +350,8 @@ Plugin_OpenUrl(HWND ownerWindow, const wchar_t *url, BOOL forceExternal)
 	return result;
 }
 
-EXTERN_C __declspec(dllexport) winampMediaLibraryPlugin *
-winampGetMediaLibraryPlugin()
+EXTERN_C __declspec(dllexport) winlampMediaLibraryPlugin *
+winlampGetMediaLibraryPlugin()
 {
 	return &plugin;
 }

@@ -1,7 +1,7 @@
 #ifndef __WA2WNDEMBED_H
 #define __WA2WNDEMBED_H
 
-#include "../winamp/wa_ipc.h"
+#include "../winlamp/wa_ipc.h"
 #include <api/service/svcs/svc_wndcreate.h>
 #include <bfc/depview.h>
 #include <bfc/reentryfilter.h>

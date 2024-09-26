@@ -55,7 +55,7 @@
     <ClCompile Include="..\..\..\nu\sort.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Winamp\strutil.cpp">
+    <ClCompile Include="..\..\..\WinLAMP\strutil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -93,7 +93,7 @@
     <ClInclude Include="..\..\..\nu\sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Winamp\strutil.h">
+    <ClInclude Include="..\..\..\WinLAMP\strutil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\nu\MediaLibraryInterface.h">

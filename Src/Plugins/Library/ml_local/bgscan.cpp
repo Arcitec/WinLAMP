@@ -1,7 +1,7 @@
 #include "main.h"
 #include "resource.h"
 #include "api_mldb.h"
-#include "../Winamp/strutil.h"
+#include "../WinLAMP/strutil.h"
 
 enum {
 	STATUS_SEARCHING,
@@ -43,7 +43,7 @@ static bool ScanCancelled(HANDLE *events, int count)
 static bool SupportedType(const wchar_t *ext)
 {
 	if (!scan_extlist) 
-		scan_extlist=(wchar_t*)SendMessage(plugin.hwndWinampParent,WM_WA_IPC,0,IPC_GET_EXTLISTW);
+		scan_extlist=(wchar_t*)SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,0,IPC_GET_EXTLISTW);
 
 	// dunno how this would happen but should verify
 	if (!scan_extlist || scan_extlist == (wchar_t *)1)
@@ -495,10 +495,10 @@ void Scan_ScanFolders(HWND parent, size_t count, wchar_t **paths, int *guess, in
 	if (g_table && ScanCreateThread())
 	{
 		ScanFoldersParams *params = new ScanFoldersParams(paths, count, guess, meta, recurse);
-		WASABI_API_LNG->LDialogBoxParamW(WASABI_API_LNG->FindDllHandleByGUID(WinampLangGUID),
-										 GetModuleHandleW(L"winamp.exe"), IDD_ADDSTUFF,
+		WASABI_API_LNG->LDialogBoxParamW(WASABI_API_LNG->FindDllHandleByGUID(WinLAMPLangGUID),
+										 GetModuleHandleW(L"winlamp.exe"), IDD_ADDSTUFF,
 										 parent, (DLGPROC)ScanFileUI, (LPARAM)params);
-		PostMessage(plugin.hwndWinampParent,WM_WA_IPC,NDE_Table_GetRecordsCount(g_table),IPC_STATS_LIBRARY_ITEMCNT);
+		PostMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,NDE_Table_GetRecordsCount(g_table),IPC_STATS_LIBRARY_ITEMCNT);
 	}
 	else
 	{
@@ -686,7 +686,7 @@ again:
 			}
 		}
 
-		PostMessage(plugin.hwndWinampParent,WM_WA_IPC,NDE_Table_GetRecordsCount(g_table),IPC_STATS_LIBRARY_ITEMCNT);
+		PostMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,NDE_Table_GetRecordsCount(g_table),IPC_STATS_LIBRARY_ITEMCNT);
 	}
 	else
 	{
@@ -932,9 +932,9 @@ void Scan_RemoveFiles(HWND parent)
 	if (g_table && ScanCreateThread())
 	{
 		RemoveFilesParams *params = new RemoveFilesParams();
-		WASABI_API_LNG->LDialogBoxParamW(WASABI_API_LNG->FindDllHandleByGUID(WinampLangGUID),
-										 GetModuleHandleW(L"winamp.exe"), IDD_ADDSTUFF,
+		WASABI_API_LNG->LDialogBoxParamW(WASABI_API_LNG->FindDllHandleByGUID(WinLAMPLangGUID),
+										 GetModuleHandleW(L"winlamp.exe"), IDD_ADDSTUFF,
 										 parent, (DLGPROC)RemoveFilesUI, (LPARAM)params);
-		PostMessage(plugin.hwndWinampParent,WM_WA_IPC,NDE_Table_GetRecordsCount(g_table),IPC_STATS_LIBRARY_ITEMCNT);
+		PostMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,NDE_Table_GetRecordsCount(g_table),IPC_STATS_LIBRARY_ITEMCNT);
 	}
 }

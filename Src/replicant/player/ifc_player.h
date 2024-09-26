@@ -6,7 +6,7 @@
 #include "audio/ifc_equalizer.h"
 #include "nx/nxuri.h"
 
-/* implemented by Winamp (or whatever application)
+/* implemented by WinLAMP (or whatever application)
 your ifc_playback implementation should call this with events
 
 TODO: benski> should we require the ifc_playback object to get passed in to each function? 

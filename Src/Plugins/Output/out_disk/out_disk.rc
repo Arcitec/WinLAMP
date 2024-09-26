@@ -163,7 +163,7 @@ STRINGTABLE
 BEGIN
     IDS_NOT_A_PCM_WAV_FILE  "Not a PCM WAV file"
     IDS_ERROR_INITIALIZING_OUTPUT "Error initializing output."
-    IDS_ABOUT_TEXT          "%s\n© 2005-2023 Winamp SA\n© 2001-2002 Peter Pawlowski\nBuild date: %hs"
+    IDS_ABOUT_TEXT          "%s\n© 2005-2023 WinLAMP SA\n© 2001-2002 Peter Pawlowski\nBuild date: %hs"
     IDS_SETTINGS_TITLE      "%s Settings"
 END
 

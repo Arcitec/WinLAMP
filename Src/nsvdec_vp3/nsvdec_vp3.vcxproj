@@ -86,7 +86,7 @@
       <IgnoreSpecificDefaultLibraries>msvprt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)nsvdec_vp3.dll ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\plugins\ </Command>
+      <Command>xcopy /Y /D $(OutDir)nsvdec_vp3.dll ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\ </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -122,7 +122,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /D $(OutDir)nsvdec_vp3.dll ..\..\..\Winamp_$(PlatformShortName)_$(Configuration)\plugins\ </Command>
+      <Command>xcopy /Y /D $(OutDir)nsvdec_vp3.dll ..\..\..\WinLAMP_$(PlatformShortName)_$(Configuration)\plugins\ </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

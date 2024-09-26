@@ -4,7 +4,7 @@
 #include <bfc/dispatch.h>
 #include <bfc/platform/guid.h>
 #include <bfc/std_mkncc.h>
-// manages Winamp's master list of playlists
+// manages WinLAMP's master list of playlists
 
 /* Important note to users of this API:
  This API does not actually parse or in any way read the contents of the playlist files themselves.

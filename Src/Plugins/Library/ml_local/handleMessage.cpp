@@ -94,7 +94,7 @@ LRESULT IPC_SetFileRatingW(INT_PTR file_rating)
 				else
 					buf[0] = 0;
 				updateFileInfo(filename, DB_FIELDNAME_rating, buf);
-				SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_WRITE_EXTENDED_FILE_INFO);
+				SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_WRITE_EXTENDED_FILE_INFO);
 			}
 		}
 
@@ -133,7 +133,7 @@ int getFileInfo(const char *filename, char *metadata, char *dest, int len)
     dest,
     len,
   };
-  int r = SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efis,IPC_GET_EXTENDED_FILE_INFO); //will return 1 if wa2 supports this IPC call
+  int r = SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efis,IPC_GET_EXTENDED_FILE_INFO); //will return 1 if wa2 supports this IPC call
   m_calling_getfileinfo=0;
   return r;
 }
@@ -290,7 +290,7 @@ static int getFileInfoW(const wchar_t *filename, const wchar_t *metadata, wchar_
 		dest,
 		len,
 	};
-	int r = SendMessage(plugin.hwndWinampParent,WM_WA_IPC,(WPARAM)&efis,IPC_GET_EXTENDED_FILE_INFOW); //will return 1 if wa2 supports this IPC call
+	int r = SendMessage(plugin.hwndWinLAMPParent,WM_WA_IPC,(WPARAM)&efis,IPC_GET_EXTENDED_FILE_INFOW); //will return 1 if wa2 supports this IPC call
 	m_calling_getfileinfoW=0;
 	return r;
 }
@@ -727,7 +727,7 @@ INT_PTR HandleIpcMessage(INT_PTR msg, INT_PTR param)
 						else
 							buf[0] = 0;
 						updateFileInfo(item->filename, DB_FIELDNAME_rating, buf);
-						SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_WRITE_EXTENDED_FILE_INFO);
+						SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_WRITE_EXTENDED_FILE_INFO);
 					}
 				}
 				if (item->lastplay >= 0) db_setFieldInt(s, MAINTABLE_ID_LASTPLAY, (int)item->lastplay);

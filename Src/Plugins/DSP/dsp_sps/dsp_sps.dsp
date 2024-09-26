@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /base:"0x8000000" /entry:"DllMain" /dll /map /machine:I386 /out:"C:/progra~1/winamp/plugins/dsp_sps.dll" /opt:nowin98
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /base:"0x8000000" /entry:"DllMain" /dll /map /machine:I386 /out:"C:/progra~1/winlamp/plugins/dsp_sps.dll" /opt:nowin98
 # SUBTRACT LINK32 /pdb:none /debug
 
 !ELSEIF  "$(CFG)" == "dsp_sps - Win32 Debug"
@@ -79,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /out:"C:/progra~1/winamp/plugins/dsp_sps.dll" /pdbtype:sept
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /out:"C:/progra~1/winlamp/plugins/dsp_sps.dll" /pdbtype:sept
 
 !ENDIF 
 
@@ -178,7 +178,7 @@ SOURCE=.\sps_common.cpp
 # PROP Default_Filter "*.h"
 # Begin Source File
 
-SOURCE=..\Winamp\api_language.h
+SOURCE=..\WinLAMP\api_language.h
 # End Source File
 # Begin Source File
 
@@ -186,7 +186,7 @@ SOURCE=..\Wasabi\api\service\api_service.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\Winamp\lang.h
+SOURCE=..\WinLAMP\lang.h
 # End Source File
 # Begin Source File
 
@@ -194,7 +194,7 @@ SOURCE=..\gen_hotkeys\wa_hotkeys.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\Winamp\wa_ipc.h
+SOURCE=..\WinLAMP\wa_ipc.h
 # End Source File
 # Begin Source File
 
@@ -207,7 +207,7 @@ SOURCE=.\api.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\Winamp\DSP.H
+SOURCE=..\WinLAMP\DSP.H
 # End Source File
 # Begin Source File
 

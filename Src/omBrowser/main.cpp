@@ -146,9 +146,9 @@ LPWSTR Plugin_MultiByteToWideChar(UINT codePage, DWORD dwFlags, LPCSTR lpMultiBy
 	return buffer;
 }
 
-HRESULT Plugin_Initialize(HWND hwndWinamp)
+HRESULT Plugin_Initialize(HWND hwndWinLAMP)
 {
-	return component.InitializeComponent(hwndWinamp);
+	return component.InitializeComponent(hwndWinLAMP);
 }
 
 HRESULT Plugin_GetWasabiHelper(ifc_wasabihelper **wasabiHelper)
@@ -172,20 +172,20 @@ HRESULT Plugin_GetBrowserSkin(ifc_skinnedbrowser **skinnedBrowser)
 	return hr;
 }
 
-HRESULT Plugin_GetWinampWnd(HWND *hwndWinamp)
+HRESULT Plugin_GetWinLAMPWnd(HWND *hwndWinLAMP)
 {
-	return component.GetWinampWnd(hwndWinamp);
+	return component.GetWinLAMPWnd(hwndWinLAMP);
 }
 
 
-HRESULT Plugin_RegisterWinampHook(ifc_winamphook *hook, UINT *cookieOut)
+HRESULT Plugin_RegisterWinLAMPHook(ifc_winlamphook *hook, UINT *cookieOut)
 {
-	return component.RegisterWinampHook(hook, cookieOut);
+	return component.RegisterWinLAMPHook(hook, cookieOut);
 }
 
-HRESULT Plugin_UnregisterWinampHook(UINT cookie)
+HRESULT Plugin_UnregisterWinLAMPHook(UINT cookie)
 {
-	return component.UnregisterWinampHook(cookie);
+	return component.UnregisterWinLAMPHook(cookie);
 }
 
 
@@ -511,8 +511,8 @@ HRESULT Plugin_MakeResourcePath(LPWSTR pszBuffer, UINT cchBufferMax, HINSTANCE h
 					if (SUCCEEDED(wasabi->GetApplicationApi(&application)) && application != NULL)
 					{
 						WCHAR szPlugin[MAX_PATH] = {0};
-						HINSTANCE hWinamp = application->main_gethInstance();
-						if (NULL != hWinamp && 0 != GetModuleFileName(hWinamp, szPlugin, ARRAYSIZE(szPlugin)))
+						HINSTANCE hWinLAMP = application->main_gethInstance();
+						if (NULL != hWinLAMP && 0 != GetModuleFileName(hWinLAMP, szPlugin, ARRAYSIZE(szPlugin)))
 						{
 							PathRemoveFileSpec(szPlugin);
 							INT cchCommon = PathCommonPrefix(cursor, szPlugin, NULL);
@@ -629,19 +629,19 @@ HRESULT Plugin_ResolveRelativePath(LPCWSTR pszPath, ifc_omservicehost *host, LPW
 
 BOOL Plugin_IsDirectMouseWheelMessage(const UINT uMsg)
 {
-	static UINT WINAMP_WM_DIRECT_MOUSE_WHEEL = WM_NULL;
+	static UINT WINLAMP_WM_DIRECT_MOUSE_WHEEL = WM_NULL;
 
-	if (WM_NULL == WINAMP_WM_DIRECT_MOUSE_WHEEL)
+	if (WM_NULL == WINLAMP_WM_DIRECT_MOUSE_WHEEL)
 	{
-		WINAMP_WM_DIRECT_MOUSE_WHEEL = RegisterWindowMessageW(L"WINAMP_WM_DIRECT_MOUSE_WHEEL");
-		if (WM_NULL == WINAMP_WM_DIRECT_MOUSE_WHEEL)
+		WINLAMP_WM_DIRECT_MOUSE_WHEEL = RegisterWindowMessageW(L"WINLAMP_WM_DIRECT_MOUSE_WHEEL");
+		if (WM_NULL == WINLAMP_WM_DIRECT_MOUSE_WHEEL)
 			return FALSE;
 	}
 
-	return (WINAMP_WM_DIRECT_MOUSE_WHEEL == uMsg);
+	return (WINLAMP_WM_DIRECT_MOUSE_WHEEL == uMsg);
 }
 
-extern "C" __declspec(dllexport) ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" __declspec(dllexport) ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &component;
 }

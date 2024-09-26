@@ -8,7 +8,7 @@
 #include "./toolbarRating.h"
 #include "./toolbarProgress.h"
 #include "./toolbarAddress.h"
-#include "../winamp/wa_dlg.h"
+#include "../winlamp/wa_dlg.h"
 #include "../Plugins/General/gen_ml/ml_ipc_0313.h"
 #include "./ifc_imageloader.h"
 #include "./ifc_skinhelper.h"

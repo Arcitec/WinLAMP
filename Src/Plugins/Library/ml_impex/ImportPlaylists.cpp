@@ -6,7 +6,7 @@
 #include "resource.h"
 #include "../plist/loader.h"
 #include "../playlist/ifc_playlist.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include <shlwapi.h>
 
 struct iTunesFileInfo
@@ -24,7 +24,7 @@ struct iTunesFileInfo
 	uint64_t length;
 };
 typedef std::map<int64_t, iTunesFileInfo*> FilesList;
-extern winampMediaLibraryPlugin plugin;
+extern winlampMediaLibraryPlugin plugin;
 int Load(const wchar_t *filename, obj_xml *parser);
 
 class PlistPlaylist : public ifc_playlist
@@ -204,11 +204,11 @@ HINSTANCE cloud_hinst = 0;
 int IPC_GET_CLOUD_HINST = -1, IPC_GET_CLOUD_ACTIVE = -1;
 int cloudAvailable()
 {
-	if (IPC_GET_CLOUD_HINST == -1) IPC_GET_CLOUD_HINST = (INT)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"WinampCloud", IPC_REGISTER_WINAMP_IPCMESSAGE);
-	if (IPC_GET_CLOUD_ACTIVE == -1) IPC_GET_CLOUD_ACTIVE = (INT)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"WinampCloudActive", IPC_REGISTER_WINAMP_IPCMESSAGE);
-	if (!cloud_hinst) cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
+	if (IPC_GET_CLOUD_HINST == -1) IPC_GET_CLOUD_HINST = (INT)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"WinLAMPCloud", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	if (IPC_GET_CLOUD_ACTIVE == -1) IPC_GET_CLOUD_ACTIVE = (INT)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"WinLAMPCloudActive", IPC_REGISTER_WINLAMP_IPCMESSAGE);
+	if (!cloud_hinst) cloud_hinst = (HINSTANCE)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_CLOUD_HINST);
 
-	return (/*0/*/!(!cloud_hinst || cloud_hinst == (HINSTANCE)1 || !SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GET_CLOUD_ACTIVE))/**/);
+	return (/*0/*/!(!cloud_hinst || cloud_hinst == (HINSTANCE)1 || !SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GET_CLOUD_ACTIVE))/**/);
 }
 
 static void AddPlaylist(plistDict *playlist,  FilesList &files)
@@ -257,7 +257,7 @@ static void AddPlaylist(plistDict *playlist,  FilesList &files)
 			PathAppendW(destination, playlist_filename);
 
 			static wchar_t ml_ini_file[MAX_PATH] = {0};
-			if (!ml_ini_file[0]) lstrcpynW(ml_ini_file, (const wchar_t*)SendMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, IPC_GETMLINIFILEW), MAX_PATH);
+			if (!ml_ini_file[0]) lstrcpynW(ml_ini_file, (const wchar_t*)SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, IPC_GETMLINIFILEW), MAX_PATH);
 			size_t cloud = (cloudAvailable() ? GetPrivateProfileIntW(L"gen_ml_config", L"cloud_always", 1, ml_ini_file) : 0);
 
 			AGAVE_API_PLAYLISTMANAGER->Save(destination, &plist_playlist);
@@ -274,7 +274,7 @@ static void AddPlaylist(plistDict *playlist,  FilesList &files)
 			}
 			AGAVE_API_PLAYLISTS->Unlock();
 
-			PostMessage(plugin.hwndWinampParent, WM_WA_IPC, 0, SendMessage(plugin.hwndWinampParent, WM_WA_IPC, (WPARAM)&"ml_playlist_refresh", IPC_REGISTER_WINAMP_IPCMESSAGE));
+			PostMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, 0, SendMessage(plugin.hwndWinLAMPParent, WM_WA_IPC, (WPARAM)&"ml_playlist_refresh", IPC_REGISTER_WINLAMP_IPCMESSAGE));
 		}
 	}
 }

@@ -3,7 +3,7 @@
 #include "main.h"
 #include "pdtimer.h"
 #include "mpegutil.h"
-#include "../Winamp/wa_ipc.h"
+#include "../WinLAMP/wa_ipc.h"
 #include "config.h"
 #include <shlwapi.h>
 #include "adts.h"
@@ -677,7 +677,7 @@ DWORD DecodeLoop::Loop()
 	if (OpenOutput(g_nch, g_srate, (int)g_bits) == 0)
 		return 0;
 
-	/* ----- send info to winamp and vis: bitrate, etc ----- */
+	/* ----- send info to winlamp and vis: bitrate, etc ----- */
 	g_br = (int)decoder->GetCurrentBitrate();
 
 	g_br_add = g_br;
@@ -688,7 +688,7 @@ DWORD DecodeLoop::Loop()
 	// initialize visualization stuff
 	mod.SAVSAInit((maxlatency << g_ds), g_srate);
 	mod.VSASetInfo(g_srate, g_nch);
-	/* ----- end send info to winamp and vis ----- */
+	/* ----- end send info to winlamp and vis ----- */
 
 	if (file.IsSeekable() && g_br)
 	{
@@ -720,7 +720,7 @@ DWORD DecodeLoop::Loop()
 
 			if (!mod.outMod->IsPlaying())
 			{
-				// we're done playing, so tell Winamp and quit the thread.
+				// we're done playing, so tell WinLAMP and quit the thread.
 				if (!killDecodeThread) PostMessage(mod.hMainWindow, WM_WA_MPEG_EOF, 0, 0);
 				done=3;
 				break;

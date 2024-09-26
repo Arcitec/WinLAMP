@@ -55,9 +55,9 @@ void XSPFComponent::DeregisterServices(api_service *service)
 }
 
 static XSPFComponent xspfComponent;
-// Winamp calls this function after it LoadLibrary's your W5S
+// WinLAMP calls this function after it LoadLibrary's your W5S
 // you need to turn a pointer to your component.
-extern "C" __declspec(dllexport) ifc_wa5component *GetWinamp5SystemComponent()
+extern "C" __declspec(dllexport) ifc_wa5component *GetWinLAMP5SystemComponent()
 {
 	return &xspfComponent;
 }

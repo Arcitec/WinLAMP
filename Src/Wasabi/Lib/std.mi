@@ -7,7 +7,7 @@
 #ifndef __STD_MI
 #define __STD_MI
 
-#define MC_TARGET "Winamp 5.66 (skin version 1.36)"
+#define MC_TARGET "WinLAMP 5.66 (skin version 1.36)"
 #define VCPU_VERSION 2
 
 #define deprecated //
@@ -55,8 +55,8 @@ extern class @{9B3B4B82-667A-420e-8FFC-794115809C02}@ Object &TreeItem;
 deprecated extern class @{1D8631C8-80D0-4792-9F98-BD5D36B49136}@ GuiObject &MenuButton;
 extern class @{C7ED3199-5319-4798-9863-60B15A298CAA}@ GuiObject &CheckBox;
 deprecated extern class @{2D2D1376-BE0A-4CB9-BC0C-57E6E4C999F5}@ GuiObject &Form;
-extern class @{E2BBC14D-84F6-4173-BDB3-B2EB2F665550}@ GuiObject &Frame;	// Winamp 5.5
-extern class @{73C00594-961F-401B-9B1B-672427AC4165}@ GuiObject	&Menu;	// Winamp 5.52
+extern class @{E2BBC14D-84F6-4173-BDB3-B2EB2F665550}@ GuiObject &Frame;	// WinLAMP 5.5
+extern class @{73C00594-961F-401B-9B1B-672427AC4165}@ GuiObject	&Menu;	// WinLAMP 5.52
 
 deprecated define Component WindowHolder
 
@@ -210,7 +210,7 @@ extern System.onHideLayout(Layout _layout);
  onViewPortChanged()
 
  Hookable. Event happens when the Windows viewport has changed.
- Note: The monitor Winamp is currently on may not be related to
+ Note: The monitor WinLAMP is currently on may not be related to
        the Windows message which led to generating this event.
 
  @param  width   The new viewport width or -1 if not given by the OS.
@@ -221,7 +221,7 @@ extern System.onViewPortChanged(int width, int height);
 /**
  onStop()
 
- Hookable. Event happens when Winamp3 stops playing a file.
+ Hookable. Event happens when WinLAMP3 stops playing a file.
  No params.
 */
 extern System.onStop();
@@ -229,7 +229,7 @@ extern System.onStop();
 /**
  onPlay()
 
- Hookable. Event happens when Winamp3 starts playing a file.
+ Hookable. Event happens when WinLAMP3 starts playing a file.
  No params.
 */
 extern System.onPlay();
@@ -237,7 +237,7 @@ extern System.onPlay();
 /**
  onPause()
 
- Hookable. Event happens when Winamp3 pauses playback.
+ Hookable. Event happens when WinLAMP3 pauses playback.
  No params.
 */
 extern System.onPause();
@@ -245,7 +245,7 @@ extern System.onPause();
 /**
  onResume()
 
- Hookable. Event happens when Winamp3 resumes playback.
+ Hookable. Event happens when WinLAMP3 resumes playback.
  Event only happens when the song was previously set in a paused state.
  No params.
 */
@@ -1248,7 +1248,7 @@ extern System.debugString(String str, Int severity);
  interval between messages is specified in milliseconds.
  Here's an example:
 
- ddeSend("mIRC", "/msg #channel I'm using Winamp3", 300);
+ ddeSend("mIRC", "/msg #channel I'm using WinLAMP3", 300);
 
  @param  application   The DDE server name of the application.
  @param  command       The command to send.
@@ -1346,7 +1346,7 @@ extern System.popMainBrowser();
 extern System.navigateUrl(String url);
 extern System.navigateUrlBrowser(String url); //Requires 5.53 // will call an onOpenUrl requuest and then navigate to an extern browser, can also be used to open nowplaying
 
-extern Boolean System.onOpenURL(string url); //Requires 5.5 // called everytime winamp wants to open a website in an extern browser, return 1 to cancel this opening and open in your browser
+extern Boolean System.onOpenURL(string url); //Requires 5.5 // called everytime winlamp wants to open a website in an extern browser, return 1 to cancel this opening and open in your browser
 
 /**
  isObjectValid()
@@ -1485,7 +1485,7 @@ extern Boolean System.isNamedWindowVisible(String guidorgroup);
 //extern System.setAtom(String atomname, Object object);
 //extern Object System.getAtom(String atomname);
 extern System.invokeDebugger();
-extern int System.hasVideoSupport(); // requires 5.666 - returns 1 if video support is enabled in Winamp
+extern int System.hasVideoSupport(); // requires 5.666 - returns 1 if video support is enabled in WinLAMP
 extern Int System.isVideo();
 extern Int System.isVideoFullscreen();
 extern System.setVideoFullscreen(Boolean fullscreen); // requires 5.8
@@ -1510,7 +1510,7 @@ extern Double System.getRuntimeVersion(); // returns the maki runtime version, u
 //extern System.hideWa2Component(String guid);
 
 extern boolean system.isProVersion(); //Requires 5.5
-extern String System.getWinampVersion(); //Requires 5.51
+extern String System.getWinLAMPVersion(); //Requires 5.51
 extern Int System.getBuildNumber(); //Requires 5.51
 
 extern int System.getFileSize(String fullfilename); //Requires 5.51
@@ -1637,17 +1637,17 @@ extern Container.toggle();
 extern Int Container.isDynamic();
 
 extern Container.setName(String name);
-extern String Container.getName(); //requires Winamp 5.53
-extern String Container.getGuid(); //requires Winamp 5.53
+extern String Container.getName(); //requires WinLAMP 5.53
+extern String Container.getGuid(); //requires WinLAMP 5.53
 extern Layout Container.getCurLayout();
-extern Container.onAddContent(GuiObject wnd, String id, String guid); //requires Winamp 5.51
+extern Container.onAddContent(GuiObject wnd, String id, String guid); //requires WinLAMP 5.51
 
 //*****************************************************************************
 // WAC CLASS
 //*****************************************************************************
 /**
  WAC Class.
- Not used in Winamp5.
+ Not used in WinLAMP5.
 
  @short    .
  @author   Nullsoft Inc.
@@ -1880,8 +1880,8 @@ extern GuiObject.onRightButtonDblClk(int x, int y);
 */
 extern GuiObject.onLeftButtonDblClk(int x, int y);
 
-extern int GuiObject.onMouseWheelUp(int clicked , int lines); // Requires 5.54 - return 1 if you don't want to send the handle to winamp
-extern int GuiObject.onMouseWheelDown(int clicked , int lines); // Requires 5.54 - return 1 if you don't want to send the handle to winamp
+extern int GuiObject.onMouseWheelUp(int clicked , int lines); // Requires 5.54 - return 1 if you don't want to send the handle to winlamp
+extern int GuiObject.onMouseWheelDown(int clicked , int lines); // Requires 5.54 - return 1 if you don't want to send the handle to winlamp
 
 /**
  onMouseMove()
@@ -2245,7 +2245,7 @@ deprecated extern FeedWatcher.onFeedChange(String new_feeddata);
 extern WindowHolder.setRegionFromMap(Map regionmap, Int threshold, Boolean reverse);
 extern WindowHolder.setRegion(Region reg);
 extern GuiObject WindowHolder.getContent();
-extern String WindowHolder.getGuid();	// Fixed in Winamp 5.53 - returns the guid of the current window. If the WindowHolder is not visible the zero-guid is displayed
+extern String WindowHolder.getGuid();	// Fixed in WinLAMP 5.53 - returns the guid of the current window. If the WindowHolder is not visible the zero-guid is displayed
 extern String WindowHolder.getComponentName(); // Requires 5.54
 
 deprecated extern WindowHolder.onGetWac(Wac wacobj);
